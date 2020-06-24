@@ -1,0 +1,21 @@
+# This is a sample build configuration for Java (Maven).
+# Check our guides at https://confluence.atlassian.com/x/zd-5Mw for more examples.
+# Only use spaces to indent your .yml configuration.
+# -----
+# You can specify a custom docker image from Docker Hub as your build environment.
+image: openjdk:13-alpine
+
+pipelines:
+  default:
+    - step:
+        caches:
+          - maven
+        script: # Modify the commands below to build your repository.
+          - mkdir ~/downloads
+          - wget -P  ~/downloads/ https://downloads.apache.org/maven/maven-3/3.6.3/binaries/apache-maven-3.6.3-bin.zip
+          - unzip ~/downloads/apache-maven-3.6.3-bin.zip -d /usr/local/
+          - ls -alt /usr/local/
+          - echo "Hello World! I am Dynamo Framework"
+          - which java
+          - /usr/local/apache-maven-3.6.3/bin/mvn clean validate
+          - /usr/local/apache-maven-3.6.3/bin/mvn clean package -Dmaven.test.skip=true
