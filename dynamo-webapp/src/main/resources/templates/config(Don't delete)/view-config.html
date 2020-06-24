@@ -1,0 +1,101 @@
+<!doctype html>
+<html class="no-js" lang="" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sd="http://www.thymeleaf.org/spring-data"
+	layout:decorator="config/layout">
+<head>
+<meta charset="utf-8">
+</meta>
+<meta name="description" content="">
+</meta>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+</meta>
+<title>Config View</title>
+</head>
+<body>
+	<div layout:fragment="content">
+		<div class="container-fluid mt-5">
+			<div class="mt-8">
+				<div class="container-fluid">
+					<div class="card  box-s-top0 px-3">
+						<div class="card-body pt-1">
+
+							<div class="row bb">
+								<h5 class="tbhead col-6 mb-0 bold">View Config</h5>
+								<div class="col-6 pt-1rem pb-1rem pr-0">
+
+									<a class="white"
+										th:href="@{'/admin/configManagement/editConfig?id=' + ${config.id}}"><button
+											type="button"
+											class="table-button btn-outline-secondary tbheadbt float-right"
+											data-toggle="modal" data-target="#card2">
+											<i class="fa fa-edit"></i> Edit Config
+										</button></a>
+								</div>
+
+							</div>
+
+							<div class="row pt-2">
+
+								<div class="col-md-3 col-sm-2 text-md-right text-sm-left">
+									<h6 class="lh-2">
+										<b>No : </b>
+									</h6>
+								</div>
+								<div class="col-md-9 col-sm-10 pl-md-0 pl-sm-1">
+									<p th:text="${config.id}"></p>
+								</div>
+
+								<div class="col-md-3 col-sm-2 text-md-right text-sm-left">
+									<h6 class="lh-2">
+										<b>Application : </b>
+									</h6>
+								</div>
+								<div class="col-md-9 col-sm-10 pl-md-0 pl-sm-1">
+									<p th:text="${config.application}"></p>
+								</div>
+
+								<div class="col-md-3 col-sm-2 text-md-right text-sm-left">
+									<h6 class="lh-2">
+										<b>Profile : </b>
+									</h6>
+								</div>
+								<div class="col-md-9 col-sm-10 pl-md-0 pl-sm-1">
+									<p th:text="${config.profile}"></p>
+								</div>
+
+								<div class="col-md-3 col-sm-2 text-md-right text-sm-left">
+									<h6 class="lh-2">
+										<b>Label : </b>
+									</h6>
+								</div>
+								<div class="col-md-9 col-sm-10 pl-md-0 pl-sm-1">
+									<p th:text="${config.label}"></p>
+								</div>
+
+								<div class="col-md-3 col-sm-2 text-md-right text-sm-left">
+									<h6 class="lh-2">
+										<b>Key : </b>
+									</h6>
+								</div>
+								<div class="col-md-9 col-sm-10 pl-md-0 pl-sm-1">
+									<p th:text="${config.key}"></p>
+								</div>
+
+								<div class="col-md-3 col-sm-2 text-md-right text-sm-left">
+									<h6 class="lh-2">
+										<b>Value : </b>
+									</h6>
+								</div>
+								<div class="col-md-9 col-sm-10 pl-md-0 pl-sm-1">
+									<p th:text="${config.value}"></p>
+								</div>
+							</div>
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

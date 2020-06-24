@@ -1,0 +1,105 @@
+version: 1
+
+#!RESULT OK
+#!CONNECTION ldap://52.3.51.119:10389
+#!DATE 2017-10-17T17:18:37.781
+dn: ou=Users,dc=example,dc=com
+objectClass: organizationalUnit
+objectClass: top
+ou: Users
+
+#!RESULT OK
+#!CONNECTION ldap://52.3.51.119:10389
+#!DATE 2017-10-17T17:18:38.222
+dn: ou=Groups,dc=example,dc=com
+objectClass: organizationalUnit
+objectClass: top
+ou: Groups
+
+#!RESULT OK
+#!CONNECTION ldap://52.3.51.119:10389
+#!DATE 2017-10-17T17:18:38.559
+dn: ou=roles,dc=example,dc=com
+objectClass: organizationalUnit
+objectClass: top
+ou: roles
+
+#!RESULT OK
+#!CONNECTION ldap://52.3.51.119:10389
+#!DATE 2017-10-17T17:18:38.898
+dn: cn=sivaram,ou=Users,dc=example,dc=com
+objectClass: organizationalPerson
+objectClass: person
+objectClass: inetOrgPerson
+objectClass: top
+cn: sivaram
+sn: m
+uid: siva
+userPassword:: e1NIQX1uVTRlSTcxYmNuQkdxZU8wdDl0WHZZMXU1b1E9
+
+#!RESULT OK
+#!CONNECTION ldap://52.3.51.119:10389
+#!DATE 2017-10-17T17:18:39.203
+dn: cn=software engineer,ou=roles,dc=example,dc=com
+objectClass: groupOfNames
+objectClass: top
+cn: software engineer
+member: cn=karthik,ou=Users,dc=example,dc=com
+member: cn=gowtham,ou=Users,dc=example,dc=com
+
+#!RESULT OK
+#!CONNECTION ldap://52.3.51.119:10389
+#!DATE 2017-10-17T17:18:39.532
+dn: cn=president,ou=Groups,dc=example,dc=com
+objectClass: groupOfNames
+objectClass: top
+cn: president
+member: cn=sivaram,ou=Users,dc=example,dc=com
+
+#!RESULT OK
+#!CONNECTION ldap://52.3.51.119:10389
+#!DATE 2017-10-17T17:18:39.870
+dn: cn=karthik,ou=Users,dc=example,dc=com
+objectClass: organizationalPerson
+objectClass: person
+objectClass: inetOrgPerson
+objectClass: top
+cn: karthik
+sn: cm
+uid: kar
+userPassword:: e1NIQX1uVTRlSTcxYmNuQkdxZU8wdDl0WHZZMXU1b1E9
+
+#!RESULT OK
+#!CONNECTION ldap://52.3.51.119:10389
+#!DATE 2017-10-17T17:18:40.174
+dn: cn=business analyst,ou=roles,dc=example,dc=com
+objectClass: groupOfNames
+objectClass: top
+cn: business analyst
+member: cn=sivaram,ou=Users,dc=example,dc=com
+
+#!RESULT OK
+#!CONNECTION ldap://52.3.51.119:10389
+#!DATE 2017-10-17T17:18:40.535
+dn: cn=gowtham,ou=Users,dc=example,dc=com
+objectClass: organizationalPerson
+objectClass: person
+objectClass: inetOrgPerson
+objectClass: top
+cn: gowtham
+sn: jayaraman
+uid: gow
+userPassword:: e1NIQX1uVTRlSTcxYmNuQkdxZU8wdDl0WHZZMXU1b1E9
+
+
+#!RESULT OK
+#!CONNECTION ldap://52.3.51.119:10389
+#!DATE 2017-10-17T17:18:40.849
+dn: cn=project lead,ou=Groups,dc=example,dc=com
+objectClass: groupOfNames
+objectClass: top
+cn: project lead
+member: cn=karthik,ou=Users,dc=example,dc=com
+
+
+

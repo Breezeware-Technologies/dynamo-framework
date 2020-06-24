@@ -1,0 +1,30 @@
+<!doctype html>
+<html class="no-js" lang="" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sd="http://www.thymeleaf.org/spring-data"
+	layout:decorator="config/layout">
+<head>
+<meta charset="utf-8">
+</meta>
+<meta name="description" content="">
+</meta>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+</meta>
+<title> Config</title>
+</head>
+<body>
+	<div th:fragment="footer">
+		<footer class="footer mt-4">
+			<div>
+				<p class="mb-0">
+					© <span
+						th:text="${@environment.getProperty('dynamo.applicationCopyrightYear')}">Year</span>.
+					<span th:text="${@environment.getProperty('dynamo.applicationOwner')}"></span>
+					<a  th:href="@{/releasenotes}" target="_blank">---
+						Release Notes ---</a>
+				</p>
+			</div>
+		</footer>
+	</div>
+
+</body>
+</html>

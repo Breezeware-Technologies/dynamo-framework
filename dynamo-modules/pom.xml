@@ -1,0 +1,184 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>net.breezeware.dynamo</groupId>
+		<artifactId>dynamo-framework</artifactId>
+		<version>1.6.1</version>
+	</parent>
+	<artifactId>dynamo-modules</artifactId>
+	<packaging>pom</packaging>
+	<name>Dynamo Modules</name>
+	<description>Dynamo Modules project containing other sub modules</description>
+
+	<!-- #################### MODULES #################### -->
+
+	<modules>
+		<module>dynamo-util</module>
+		<module>dynamo-audit</module>
+		<module>dynamo-auth</module>
+		<module>dynamo-drools</module>
+		<module>dynamo-apps</module>
+		<module>dynamo-organization</module>
+		<module>dynamo-ldap</module>
+		<module>dynamo-config</module>
+		<module>dynamo-communication</module>
+	</modules>
+
+	<!-- #################### DEPENDENCY MANAGEMENT #################### -->
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>net.breezeware.dynamo</groupId>
+				<artifactId>dynamo-dependencies</artifactId>
+				<version>${project.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
+	<!-- #################### DEPENDENCIES - Common to all modules #################### -->
+
+	<dependencies>
+		<!-- ******************** Spring Boot Starter - Security ******************** -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-security</artifactId>
+		</dependency>
+
+		<!-- ******************** Spring Cloud Config Client ******************** -->
+<!-- 		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-config-client</artifactId>
+		</dependency>
+ -->
+		<!-- ******************** Spring Boot Starter Data JPA ******************** -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-jpa</artifactId>
+		</dependency>
+
+		<!-- ******************** Spring Boot Starter Test ******************** -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+		</dependency>
+
+		<!-- ******************** TEST NG ******************** -->
+		<dependency>
+			<groupId>org.testng</groupId>
+			<artifactId>testng</artifactId>
+		</dependency>
+
+		<!-- ******************** PostgreSQL DB ******************** -->
+		<dependency>
+			<groupId>org.postgresql</groupId>
+			<artifactId>postgresql</artifactId>
+		</dependency>
+
+		<!-- ******************** Query DSL predicate ******************** -->
+		<dependency>
+			<groupId>com.querydsl</groupId>
+			<artifactId>querydsl-core</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>com.querydsl</groupId>
+			<artifactId>querydsl-apt</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>com.querydsl</groupId>
+			<artifactId>querydsl-jpa</artifactId>
+		</dependency>
+
+		<!-- ******************** Servlet ******************** -->
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+			<scope>provided</scope>
+		</dependency>
+
+		<!-- ******************** Logging ******************** -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-log4j2</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+		</dependency>
+
+		<!-- ******************** Jackson ******************** -->
+
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-core</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-annotations</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>com.fasterxml.jackson.dataformat</groupId>
+			<artifactId>jackson-dataformat-yaml</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+
+		<!-- ******************** Lombok ******************** -->
+
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<scope>provided</scope>
+		</dependency>
+
+		<!-- ******************** GSON JSON Parser ******************** -->
+		<dependency>
+			<groupId>com.google.code.gson</groupId>
+			<artifactId>gson</artifactId>
+		</dependency>
+	</dependencies>
+
+	<!-- #################### BUILD CONFIGURATIONS - Common to all modules #################### -->
+
+	<build>
+		<plugins>
+			<!-- ******************** QueryDSL ******************** -->
+			<plugin>
+				<groupId>com.mysema.maven</groupId>
+				<artifactId>apt-maven-plugin</artifactId>
+				<executions>
+					<execution>
+						<phase>generate-sources</phase>
+						<goals>
+							<goal>process</goal>
+						</goals>
+						<configuration>
+							<!-- Specifies the directory in which the query types are generated -->
+							<outputDirectory>target/generated-sources</outputDirectory>
+							<!-- States that the APT code generator should look for JPA annotations -->
+							<processor>com.querydsl.apt.jpa.JPAAnnotationProcessor</processor>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+
+
+</project>

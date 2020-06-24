@@ -1,0 +1,180 @@
+<!doctype html>
+<html class="no-js" lang="" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sd="http://www.thymeleaf.org/spring-data"
+	layout:decorator="dynamo-organization/usermanagement/layout">
+<head>
+<title>Users</title>
+</head>
+<body>
+	<div layout:fragment="content">
+		<div class="container-fluid">
+			<div class=" mt-8">
+				<div class="box-s borrad">
+					<div class="container-fluid">
+						<div class="row headtb mt-2 borrad-top">
+							<div class="col-md-6 col-sm-6 col-4 p-0">
+								<h6 class="tbhead bold text-md-left">Users</h6>
+							</div>
+							
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="col-md-12 search pt-1 pb-1">
+							<div class="form formbg">
+								<form class="pl-3 text-container" id="myform"
+									th:action="@{/organization/orgUsers}">
+									<div class=" row col-md-12">
+										<div class=" row more-text2 col-md-4 mt-1">
+											<div class="row">
+												<div class="form-group m-0 col-4  text-right p-0 pr-3">
+													<label for="email" class="control-label">Email
+														Address</label>
+												</div>
+												<div class="form-group m-0 col-8  p-0 pr-3">
+													<input id="email" name="email"
+														th:value="${#httpServletRequest.getParameter('email')}"
+														type="text" class="form-control"
+														autofocus="autofocus" />
+												</div>
+											</div>
+										</div>
+
+										<div class="row more-text2 col-md-4 mt-1">
+											<div class="row">
+												<div class="form-group m-0 col-4 text-right p-0 pr-3">
+													<label for="firstName" class="control-label">First
+														Name</label>
+												</div>
+												<div class="form-group m-0 col-8 p-0 pr-3">
+													<input id="firstName" name="firstName"
+														th:value="${#httpServletRequest.getParameter('firstName')}"
+														type="text" class="form-control notsplcha"
+														autofocus="autofocus" />
+												</div>
+											</div>
+
+										</div>
+										
+										<div class="row more-text2 col-md-4 mt-1">
+											<div class="row">
+												<div class="form-group m-0 col-4 text-right p-0 pr-3">
+													<label for="lastName" class="control-label">Last
+														Name</label>
+												</div>
+												<div class="form-group m-0 col-8 p-0 pr-3">
+													<input id="lastName" name="lastName"
+														th:value="${#httpServletRequest.getParameter('lastName')}"
+														type="text" class="form-control notsplcha"
+														autofocus="autofocus" />
+												</div>
+											</div>
+										</div>
+										<div class="row more-text2 col-md-4 mt-2">
+											<div class="row">
+												<div class="form-group m-0 col-4 text-right p-0 pr-3">
+													<label for="userUniqueId" class="control-label">User
+														ID</label>
+												</div>
+												<div class="form-group m-0 col-8 p-0 pr-3">
+													<input id="userUniqueId" name="userUniqueId"
+														th:value="${#httpServletRequest.getParameter('userUniqueId')}"
+														type="text" class="form-control notsplcha"
+														autofocus="autofocus" />
+												</div>
+											</div>
+										</div>
+										
+										<div class="more-text2 col-md-6 mt-2">
+											<div class="row ml-md-0 ml-sm-2 text-sm-center ml-sm-19">
+												<div class=" form-group m-0 col-12 mt-1  p-0">
+													<button type="submit"
+														class="btn btn-outline-success btn-pm mr-sm-3 mr-3 float-left">
+														<i class="fa fa-search d-none d-sm-none d-md-inline-block"
+															aria-hidden="true"></i> Search
+													</button>
+													<button type="button"
+														class="btn reset btn-outline-info btn-pm mr-sm-3 mr-3 float-left">
+														<i
+															class="fas fa-minus-circle d-none d-sm-none d-md-inline-block"></i>
+														Clear
+													</button>
+													
+												</div>
+											</div>
+										</div>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+
+
+					<div class="tb">
+						<table class="table vertical-table">
+							<thead>
+								<tr>
+									<th style="width: 10% !important;"><a
+										class="sorted sortable black" sd:pagination-sort="email">
+											Email</a></th>
+									<th style="width: 10% !important;"><a
+										class="sorted sortable black"
+										sd:pagination-sort="userUniqueId"> User ID</a></th>
+									<th style="width: 10% !important;"><a
+										class="sorted sortable black" sd:pagination-sort="firstName">First
+											Name</a></th>
+									<th style="width: 10% !important;"><a
+										class="sorted sortable black" sd:pagination-sort="lastName">Last
+											Name</a></th>
+									<!-- <th style="width: 9% !important;"><a
+								class="sorted sortable black1"
+								sd:pagination-sort="middleInitial">Middle Initial</a></th> -->
+									<th style="width: 9% !important;"><a
+										class="sorted sortable black" sd:pagination-sort="status">Status</a></th>
+									<th style="width: 15% !important;">Groups</th>
+									<th style="width: 16% !important;">Roles</th>
+									<th style="width: 20% !important;">Action</th>
+
+								</tr>
+							</thead>
+							<tbody>
+								<tr th:each="user : ${pagedUsers}">
+									<td data-label="Email" th:text="${user.email}" />
+									<td data-label="User ID" th:text="${user.userUniqueId}" />
+									<td data-label="First Name" th:text="${user.firstName}" />
+									<td data-label="Last Name" th:text="${user.lastName}" />
+									<!-- <td th:text="${user.middleInitial}" /> -->
+									<td data-label="Status" th:text="${user.status}" />
+									<td data-label="Groups" th:text="${user.userGroupsCsv}" />
+									<td data-label="Roles" th:text="${user.userRolesCsv}" />
+									<td data-label="Action"><a
+										th:href="@{'/organization/editUser?userId=' + ${user.id}}">
+											<button type="submit"
+												class="table-button btn-outline-secondary tbheadbt ">
+												<i class="fa fa-edit d-none d-sm-none d-md-inline-block "></i>
+												Edit
+											</button>
+									</a></td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="pagination1 mb-md-5 ">
+			<div class="text-center ">
+				<div sd:pagination-summary="">info</div>
+
+				<ul class="pagination" sd:pagination="full">
+					<!-- Pagination created by SpringDataDialect, this content is just for mockup -->
+					<li class="disabled"><a href="#" aria-label="Previous"><span
+							aria-hidden="true">&laquo;</span></a></li>
+					<li class="active"><a href="#">1 <span class="sr-only">(current)</span></a></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

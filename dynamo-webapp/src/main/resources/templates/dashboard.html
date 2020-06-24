@@ -1,0 +1,244 @@
+<!doctype html>
+<html class="no-js" lang="" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+<meta charset="utf-8">
+
+<meta name="description" content="">
+
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+
+<meta charset="utf-8">
+<meta name="description" content="">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Dashboard</title>
+
+
+  <link rel="shortcut icon"  href="../../static/images/favicon.png" 
+   th:href="@{/images/favicon.png}" />
+
+<link rel="stylesheet" href="../static/css/fontawesome-all.css"
+	th:href="@{/css/fontawesome-all.css}">
+<!-- build:css css/style.css -->
+<link rel="stylesheet" href="../static/css/dynamo-style.css"
+	th:href="@{/css/dynamo-style.css}">
+<!-- endbuild -->
+
+</head>
+<body>
+	<nav class="navbar navbar-expand-md navbar-dark fixed-top  bg-dark">
+		<a class="dynamo-logo mr-2 pl-3" th:href="@{/dashboard}"> <img
+			th:src="@{/images/app-logo-white.svg}">
+		</a>
+		<button class="navbar-toggler" type="button" data-toggle="collapse"
+			data-target="#navbarCollapse" aria-controls="navbarCollapse"
+			aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+		<div class="collapse navbar-collapse" id="navbarCollapse">
+			<!--  Mobile menu Start -->
+			<ul class="navbar-nav mr-auto">
+				<li
+					th:class="${activeNav == 'dashboard'}? 'nav-item active p-0 ' :'nav-item p-0 '"><a
+					class="nav-link" th:href="@{/dashboard}"><i class="fas fa-home"
+						aria-hidden="true"></i>Dashboard<span class="sr-only">(current)</span></a></li>
+
+				<li class="nav-item dropdown hidenav brl bg-dark"><a
+					class="nav-link dropdown-toggle" href="#" id="dropdown01"
+					data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i
+						class="fa fa-th  pt-1" aria-hidden="true"></i>Other Apps</a>
+					<div class="dropdown-menu dropdown-menu-right drop-app">
+						<div class="app-cont p-0 "
+							sec:authorize="hasAnyAuthority('ROLE_SYSTEM_ADMIN', 'ORGANIZATION_ADMIN')">
+							<a class="dropdown-item in-block"
+								th:href="@{/organization/orgUsers}" href="#"> <img
+								th:src="@{/images/User-Management.svg}">
+								<div class="app-title">User Management</div>
+							</a>
+						</div>
+
+						<div class="app-cont p-0"
+							sec:authorize="hasAnyAuthority('ROLE_SYSTEM_ADMIN', 'ORGANIZATION_ADMIN')">
+							<a class="dropdown-item in-block" th:href="@{/audit/orgLogs}"
+								href="#"> <img th:src="@{/images/Audit.svg}">
+								<div class="app-title">Audit</div>
+							</a>
+						</div>
+
+						<!-- 	<div class="app-cont p-0"
+							sec:authorize="hasAnyAuthority('ROLE_SYSTEM_ADMIN', 'ORGANIZATION_ADMIN')">
+							<a class="dropdown-item in-block" th:href="@{/admin/configManagement/listConfigs}"
+								href="#"> <img th:src="@{/images/config-Icon.svg}">
+								<div class="app-title">Config</div>
+							</a>
+						</div> -->
+
+					</div></li>
+
+				<li class="nav-item hidenav pl-6"><img class="logout"
+					th:src="@{/images/user-icon.svg}"><a class="nav-link padall"
+					th:text="${session.currentUser.fullName}" href="#"></a></li>
+				<li class="nav-item hidenav pb-2"><a class="nav-link "
+					th:href="@{/logout}"><i class="fas fa-sign-out-alt"></i>Logout</a></li>
+
+			</ul>
+			<!--  mobile menu end -->
+			<!--  Desktop  menu Start -->
+			<ul class="nav navbar-nav navbar2 flex-row ml-auto hidedesk">
+				<!-- <li th:class="nav-item"><a
+					th:text="${session.currentUser.fullName}" class="nav-links"></a>
+					</li>
+ -->
+				<li class="nav-item dropdown"><a class="nav-links " href="#"
+					id="dropdown01" data-toggle="dropdown" aria-haspopup="true"
+					aria-expanded="false"><i class="fa fa-th fa-2x pt-1"
+						aria-hidden="true"></i></a>
+					<div class="dropdown-menu dropdown-menu-right drop-app box-s-top0">
+
+						<div
+							sec:authorize="hasAnyAuthority('ROLE_SYSTEM_ADMIN', 'ORGANIZATION_ADMIN')"
+							class="app-cont">
+							<a th:href="@{/organization/orgUsers}"><img
+								th:src="@{/images/User-Management.svg}">
+								<div class="app-title">User Management</div> </a>
+						</div>
+
+
+
+						<div class="app-cont"
+							sec:authorize="hasAnyAuthority('ROLE_SYSTEM_ADMIN', 'ORGANIZATION_ADMIN')">
+							<a th:href="@{/audit/orgLogs}"> <img
+								th:src="@{/images/Audit.svg}">
+								<div class="app-title">Audit</div>
+							</a>
+						</div>
+
+						<!-- 	<div
+							sec:authorize="hasAnyAuthority('ROLE_SYSTEM_ADMIN', 'ORGANIZATION_ADMIN')"
+							class="app-cont mb-2">
+							<a th:href="@{/admin/configManagement/listConfigs}"><img
+								th:src="@{/images/config-Icon.svg}">
+								<div class="app-title">Config</div> </a>
+						</div> -->
+
+					</div></li>
+				<li class="nav-item dropdown"><a class="nav-links " href="#"
+					id="dropdown01" data-toggle="dropdown" aria-haspopup="true"
+					aria-expanded="false"><img class="logout"
+						th:src="@{/images/user-icon.svg}"></a>
+					<form class="dropdown-menu dropdown-menu-right box-s-top0"
+						aria-labelledby="dropdown01">
+						<a th:text="${session.currentUser.fullName}"
+							class="dropdown-item bb" href="#"></a> <a class="dropdown-item"
+							th:href="@{/logout}">Logout</a>
+					</form></li>
+			</ul>
+			<!--  Desktop  menu end -->
+
+		</div>
+	</nav>
+	<div class="container-fluid mt-5">
+
+
+		<div class="container-fluid mt-8">
+
+			<div class="alert alert-success"
+				th:if="${callSource != null && callSource == 'openid' }">
+
+				<div th:if="${newUser != null && newUser == 'true' }">
+					<p>A Tower Security Group user account has been created for
+						you. Please follow the link in the email sent to your email
+						address to complete the registration process.</p>
+				</div>
+
+				<p>Please contact TSG administrator to setup additional roles
+					for your user account.</p>
+			</div>
+
+			<div class="borrad row headback">
+
+				<h5 class="head2 mb-4">
+					<span
+						th:text="${@environment.getProperty('dynamo.applicationName')}">App
+						Name</span> Modules
+				</h5>
+
+
+				<div
+					sec:authorize="hasAnyAuthority('ROLE_SYSTEM_ADMIN', 'ORGANIZATION_ADMIN')"
+					class="col-md-2  col-sm-3 col-5  box2">
+					<div class="backclr">
+						<div class="imgbox">
+							<a th:href="@{/organization/orgUsers}"><img
+								th:src="@{/images/User-Management.svg}"></a>
+						</div>
+					</div>
+					<div class="boxcontent">
+						<p>
+							<a th:href="@{/organization/orgUsers}">User Management</a>
+						</p>
+					</div>
+				</div>
+
+				<div
+					sec:authorize="hasAnyAuthority('ROLE_SYSTEM_ADMIN', 'ORGANIZATION_ADMIN')"
+					class="col-md-2 col-sm-3 col-5 box2">
+					<div class="backclr">
+						<div class="imgbox">
+							<a th:href="@{/audit/orgLogs}"> <img
+								th:src="@{/images/Audit.svg}"></a>
+						</div>
+					</div>
+					<div class="boxcontent">
+						<p>
+							<a th:href="@{/audit/orgLogs}">Audit</a>
+						</p>
+					</div>
+				</div>
+
+				<!-- 	
+				<div
+					sec:authorize="hasAnyAuthority('ROLE_SYSTEM_ADMIN', 'ORGANIZATION_ADMIN')"
+					class="col-md-2 col-sm-3 col-5 box2">
+					<div class="backclr">
+						<div class="imgbox">
+							<a th:href="@{/admin/configManagement/listConfigs}"> <img
+								th:src="@{/images/config-Icon.svg}"></a>
+						</div>
+					</div>
+					<div class="boxcontent">
+						<p>
+							<a th:href="@{/admin/configManagement/listConfigs}">Config</a>
+						</p>
+					</div>
+				</div> -->
+
+
+			</div>
+		</div>
+	</div>
+
+	<footer class="footer mt-4">
+		<div>
+			<p class="mb-0">
+				© <span
+					th:text="${@environment.getProperty('dynamo.applicationCopyrightYear')}">Year</span>.
+				<span
+					th:text="${@environment.getProperty('dynamo.applicationOwner')}"></span>
+				<a th:href="@{/releasenotes}" target="_blank">--- Release Notes
+					---</a>
+			</p>
+		</div>
+	</footer>
+
+	<div th:fragment="common-scripts">
+		<script src="../static/scripts/jquery.min.js"
+			th:src="@{/scripts/jquery.min.js}"></script>
+		<script src="../static/scripts/bootstrap.min.js"
+			th:src="@{/scripts/bootstrap.min.js}"></script>
+	</div>
+</body>
+
+</html>

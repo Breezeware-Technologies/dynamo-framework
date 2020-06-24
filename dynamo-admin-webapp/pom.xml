@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>net.breezeware.dynamo</groupId>
+		<artifactId>dynamo-framework</artifactId>
+		<version>1.6.1</version>
+	</parent>
+	<artifactId>dynamo-admin-webapp</artifactId>
+	<packaging>war</packaging>
+	<name>Dynamo Admin Webapp</name>
+	<description>Dynamo Admin Web Application</description>
+
+	<!-- ******************** REPOSITORIES ******************** -->
+
+	<repositories>
+		<repository>
+			<id>nexus-leapforge-dynamo</id>
+			<name>Nexus Leapforge Dynamo Release Repository</name>
+			<url>http://nexus.leapforge.net/repository/dynamo/</url>
+		</repository>
+	</repositories>
+
+	<!-- ******************** PROPERTIES ******************** -->
+	<properties>
+		<dynamo-framework.version>${project.version}</dynamo-framework.version>
+	</properties>
+
+	<!-- #################### DEPENDENCY MANAGEMENT #################### -->
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>net.breezeware.dynamo</groupId>
+				<artifactId>dynamo-dependencies</artifactId>
+				<version>${project.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
+	<!-- ******************** DEPENDENCIES ******************** -->
+
+	<dependencies>
+		<!-- ******************** Dynamo Util Module ******************** -->
+		<dependency>
+			<groupId>net.breezeware.dynamo</groupId>
+			<artifactId>dynamo-util</artifactId>
+			<version>${dynamo-framework.version}</version>
+		</dependency>
+
+		<!-- ******************** Dynamo Config Module ******************** -->
+		<dependency>
+			<groupId>net.breezeware.dynamo</groupId>
+			<artifactId>dynamo-config-lib</artifactId>
+			<version>${dynamo-framework.version}</version>
+
+			<exclusions>
+				<exclusion>
+					<groupId>org.springframework.cloud</groupId>
+					<artifactId>spring-cloud-config-server</artifactId>
+				</exclusion>
+			</exclusions>
+
+		</dependency>
+
+		<!-- ******************** Dynamo Audit Module ******************** -->
+		<dependency>
+			<groupId>net.breezeware.dynamo</groupId>
+			<artifactId>dynamo-audit-lib</artifactId>
+			<version>${dynamo-framework.version}</version>
+		</dependency>
+
+		<!-- ******************** Dynamo Apps Module ******************** -->
+		<dependency>
+			<groupId>net.breezeware.dynamo</groupId>
+			<artifactId>dynamo-apps-lib</artifactId>
+			<version>${dynamo-framework.version}</version>
+		</dependency>
+
+		<!-- ******************** Dynamo Organization Module ******************** -->
+		<dependency>
+			<groupId>net.breezeware.dynamo</groupId>
+			<artifactId>dynamo-organization-lib</artifactId>
+			<version>${dynamo-framework.version}</version>
+		</dependency>
+
+		<!-- ******************** Dynamo Auth Module ******************** -->
+		<dependency>
+			<groupId>net.breezeware.dynamo</groupId>
+			<artifactId>dynamo-auth-lib</artifactId>
+			<version>${dynamo-framework.version}</version>
+		</dependency>
+
+		<!-- ******************** Thymeleaf support for Spring Security ******************** -->
+		<dependency>
+			<groupId>org.thymeleaf.extras</groupId>
+			<artifactId>thymeleaf-extras-springsecurity4</artifactId>
+			<version>3.0.2.RELEASE</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.slf4j</groupId>
+					<artifactId>slf4j-api</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
+		<!-- ******************** Spring data dialect support ******************** -->
+		<dependency>
+			<groupId>io.github.jpenren</groupId>
+			<artifactId>thymeleaf-spring-data-dialect</artifactId>
+			<exclusions>
+				<exclusion>
+					<groupId>org.thymeleaf</groupId>
+					<artifactId>thymeleaf</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.springframework.data</groupId>
+					<artifactId>spring-data-commons</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
+		<!-- ******************** Spring layout dialect support ******************** -->
+		<dependency>
+			<groupId>nz.net.ultraq.thymeleaf</groupId>
+			<artifactId>thymeleaf-layout-dialect</artifactId>
+			<exclusions>
+				<exclusion>
+					<groupId>org.thymeleaf</groupId>
+					<artifactId>thymeleaf</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-tomcat</artifactId>
+		</dependency>
+
+	</dependencies>
+
+	<!-- ******************** BUILD CONFIGURATIONS ******************** -->
+
+	<build>
+		<finalName>${project.artifactId}</finalName>
+		<plugins>
+
+			<!-- Skip installation of WAR file in the local repository -->
+			<plugin>
+				<artifactId>maven-install-plugin</artifactId>
+				<configuration>
+					<skip>true</skip>
+				</configuration>
+			</plugin>
+
+			<!-- Skip deployment of WAR file in the remote repository -->
+			<plugin>
+				<artifactId>maven-deploy-plugin</artifactId>
+				<configuration>
+					<skip>true</skip>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<configuration>
+					<failOnMissingWebXml>false</failOnMissingWebXml>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+</project>

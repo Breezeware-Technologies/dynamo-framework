@@ -1,0 +1,45 @@
+package net.breezeware.dynamo.drools.kjar;
+
+
+import net.breezeware.dynamo.drools.kjar.entity.Person;
+import net.breezeware.dynamo.drools.kjar.entity.MedicalAdvice;
+
+rule "Male Advice & Age"
+when
+    $p : Person( sex.equalsIgnoreCase(Person.MALE) && age > 55)
+then
+    MedicalAdvice $ma = new MedicalAdvice();
+    $ma.setMessage( "Person is male. A master health checkup is recommended." );
+    insertLogical($ma);
+    System.out.println("Person is male.  A master health checkup is recommended.");
+end
+
+rule "Male Advice"
+when
+    $p : Person( sex.equalsIgnoreCase(Person.MALE) )
+then
+    MedicalAdvice $ma = new MedicalAdvice();
+    $ma.setMessage( "Person is male." );
+    insertLogical($ma);
+    System.out.println("Person is male.");
+end
+
+rule "Female Advice"
+    when
+        $p : Person( sex.equalsIgnoreCase(Person.FEMALE) )
+    then
+        MedicalAdvice $ma = new MedicalAdvice();
+        $ma.setMessage( "Person is female." );
+        insertLogical($ma);
+        System.out.println("Person is female.");
+end
+
+rule "Other Advice"
+    when
+        $p : Person( !sex.equalsIgnoreCase(Person.FEMALE) && !sex.equalsIgnoreCase(Person.MALE) )
+    then
+        MedicalAdvice $ma = new MedicalAdvice();
+        $ma.setMessage( "Person is Other." );
+        insertLogical($ma);
+        System.out.println("Person is other.");
+end

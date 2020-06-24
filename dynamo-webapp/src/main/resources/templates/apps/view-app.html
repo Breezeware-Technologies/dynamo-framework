@@ -1,0 +1,113 @@
+<!doctype html>
+<html class="no-js" lang="" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sd="http://www.thymeleaf.org/spring-data"
+	layout:decorator="apps/layout">
+<head>
+<meta charset="utf-8">
+</meta>
+<meta name="description" content="">
+</meta>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+</meta>
+<title>AppView</title>
+</head>
+<body>
+	<div layout:fragment="content">
+		<div class="container-fluid mt-5">
+			<div class="mt-8">
+				<div class="container-fluid">
+					<div class="row headtb mt-2">
+
+						<div class="col-6 p-0 ">
+							<h6 class="tbhead">View App</h6>
+						</div>
+						<div class="col-6 mat-5">
+							<a class="white" th:href="@{'/admin/appManagement/editApp?id=' + ${app.id}}"><button
+									type="submit"
+									class="btn btn-success tbheadbt float-right btn-p">
+									Edit App</button></a>
+						</div>
+					</div>
+				</div>
+				<div class="container-fluid">
+					<div class="row bg ">
+						<div class="col-md-12 ">
+							<div class="ml-40 viewapp">
+
+								<p class="content-width  pt-2">
+									<b>App Id<span class="float-right">:</span></b> <span
+										class="pl-2" th:text="${app.id}"></span>
+								</p>
+								<p class="content-width">
+									<b>App Name<span class="float-right">:</span></b> <span
+										class="pl-2" th:text="${app.name}"></span>
+								</p>
+								<p class="content-width">
+									<b>App Description<span class="float-right">:</span></b> <span
+										class="pl-2" th:text="${app.description}"></span>
+								</p>
+								<p class="content-width">
+									<b>App Status<span class="float-right">:</span></b> <span
+										class="pl-2" th:text="${app.status}"></span>
+								</p>
+								<p class="content-width">
+									<b>Created Date<span class="float-right">:</span></b> <span
+										class="pl-2"
+										th:text="${#dates.format(app.createdDate,'dd-MM-yyyy') }"></span>
+								</p>
+								<p class="content-width">
+									<b>Modified Date<span class="float-right">:</span></b> <span
+										class="pl-2"
+										th:text="${#dates.format(app.modifiedDate,'dd-MM-yyyy') }"></span>
+								</p>
+							</div>
+						</div>
+						<div class="col-md-6 m-auto ">
+							<div class="container-fluid">
+								<div class="row headtb mt-2">
+
+									<div class="col-6 p-0 ">
+										<h6 class="tbhead">Features</h6>
+									</div>
+
+								</div>
+							</div>
+
+							<div class="tb mb-5 ">
+								<table
+									class="table table-striped tb-inline table-sm table-responsive-lg table-responsive-sm">
+									<thead>
+										<tr>
+											<th style="width: 20%" scope="col">Name</th>
+											<th style="width: 40%" scope="col">Description</th>
+											<th style="width: 20%" scope="col">Created Date</th>
+											<th style="width: 20%" scope="col">Modified Date</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr th:each="feature, stat : ${app.appFeatures}">
+											<td th:text="${feature.name}"></td>
+											<td th:text="${feature.description}" />
+											<td
+												th:text="${#dates.format(feature.createdDate,'dd-MM-yyyy') }">
+											</td>
+											<td
+												th:text="${#dates.format(feature.modifiedDate,'dd-MM-yyyy') }">
+											</td>
+										</tr>
+
+									</tbody>
+
+								</table>
+
+
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+</body>
+</html>

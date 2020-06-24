@@ -1,0 +1,75 @@
+<!doctype html>
+<html class="no-js" lang="" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sd="http://www.thymeleaf.org/spring-data"
+	layout:decorator="dynamo-organization/usermanagement/layout">
+
+<head>
+<title>Create-group</title>
+</head>
+<body>
+	<div layout:fragment="content">
+		<div class="container-fluid mt-8">
+			<div class="bg box-s borrad">
+				<div class="container-fluid">
+					<div class="row bb mt-2">
+						<div class="col-md-6 col-sm-12 p-0  ">
+							<h5 class="tbhead bold mb-0 ">Creat Group</h5>
+						</div>
+
+					</div>
+					<form th:action="@{/organization/createGroup}" th:object="${group}"
+						method="post">
+						<input type="hidden" th:field="*{id}"> <input
+							type="hidden" th:field="*{createdDate}">
+
+						<div th:if="${#fields.hasErrors()}"
+							class="has-error alert alert-dismissible alert-danger">
+							<ul>
+								<li th:each="e : ${#fields.detailedErrors()}"
+									th:class="${e.global}? globalerr : fielderr"><span
+									th:text="${e.message}">The error message</span></li>
+							</ul>
+						</div>
+						<div class="row  m-3">
+							<div class="col-md-5 offset-md-4 col-sm-12">
+								<!-- <h5 class="bb">
+									<b>Information 1</b>
+								</h5> -->
+
+								<div class="form-group">
+									<label for="groupname">Group Name*</label> <input type="text"
+										name="groupname" class="form-control w-75 notsplcha" th:field="*{name}">
+								</div>
+
+								<div class="form-group">
+									<label for="description">Description</label>
+									<textarea class="form-control w-75" th:field="*{description}"
+										name="description" rows="5"></textarea>
+								</div>
+
+							</div>
+
+							<div class="col-md-12 text-center mt-4">
+								<div class="form-group  mr-form">
+									<button type="submit"
+										class="btn btn-outline-success btn-pm mr-sm-3 mr-3">
+										<i class="far fa-check-circle  d-none d-sm-none d-md-inline-block"
+											aria-hidden="true"></i> Submit
+									</button>
+									<button type="reset"
+										class="btn btn-outline-info btn-pm mr-sm-3 mr-3">
+										<i
+											class="fas fa-minus-circle d-none d-sm-none d-md-inline-block"></i>
+										Reset
+									</button>
+								</div>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+
+		</div>
+	</div>
+</body>
+</html>

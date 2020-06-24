@@ -1,0 +1,89 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>net.breezeware.dynamo</groupId>
+		<artifactId>dynamo-framework</artifactId>
+		<version>1.6.1</version>
+	</parent>
+	<artifactId>dynamo-framework-bom</artifactId>
+	<packaging>pom</packaging>
+	<name>Dynamo Framework BOM</name>
+	<description>This project defines the versions of all the artifacts that will be created in the library. 
+	Other projects that wish to use the library should import this pom into the dependencyManagement section 
+	of their pom.</description>
+
+	<dependencyManagement>
+		<dependencies>
+			<!-- Dynamo Apps Lib -->
+			<dependency>
+				<groupId>net.breezeware.dynamo</groupId>
+				<artifactId>dynamo-apps-lib</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+
+			<!-- Dynamo Audit Lib -->
+			<dependency>
+				<groupId>net.breezeware.dynamo</groupId>
+				<artifactId>dynamo-audit-lib</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+
+			<!-- Dynamo Auth Lib -->
+			<dependency>
+				<groupId>net.breezeware.dynamo</groupId>
+				<artifactId>dynamo-auth-lib</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+
+			<!-- Dynamo Communication Lib -->
+			<dependency>
+				<groupId>net.breezeware.dynamo</groupId>
+				<artifactId>dynamo-communication-lib</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+
+			<!-- Dynamo Config Lib -->
+			<dependency>
+				<groupId>net.breezeware.dynamo</groupId>
+				<artifactId>dynamo-config-lib</artifactId>
+				<version>${project.version}</version>
+				<exclusions>
+					<exclusion>
+						<groupId>org.springframework.cloud</groupId>
+						<artifactId>spring-cloud-config-server</artifactId>
+					</exclusion>
+				</exclusions>
+			</dependency>
+
+			<!-- Dynamo LDAP Lib -->
+			<dependency>
+				<groupId>net.breezeware.dynamo</groupId>
+				<artifactId>dynamo-ldap-lib</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+
+			<!-- Dynamo Organization Lib -->
+			<dependency>
+				<groupId>net.breezeware.dynamo</groupId>
+				<artifactId>dynamo-organization-lib</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+
+			<!-- Dynamo Util -->
+			<dependency>
+				<groupId>net.breezeware.dynamo</groupId>
+				<artifactId>dynamo-util</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+
+			<!-- Dynamo Workflow -->
+			<dependency>
+				<groupId>net.breezeware.dynamo</groupId>
+				<artifactId>dynamo-workflow-lib</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+</project>

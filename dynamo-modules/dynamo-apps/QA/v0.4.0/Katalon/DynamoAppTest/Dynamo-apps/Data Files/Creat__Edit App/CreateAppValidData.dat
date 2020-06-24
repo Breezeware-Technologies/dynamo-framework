@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DataFileEntity>
+   <description></description>
+   <name>CreateAppValidData</name>
+   <tag></tag>
+   <containsHeaders>false</containsHeaders>
+   <csvSeperator></csvSeperator>
+   <dataFileGUID>8bb34fad-f9f1-486f-89ee-5ed1dcddd2b1</dataFileGUID>
+   <dataSourceUrl>/Users/Siva/Work/code/dynamo-framework/dynamo-framework-modules/dynamo-apps/QA/v0.4.0/Katalon/DynamoAppTest/Dynamo-apps/Data Files/Excel/CreateAppValidData.xlsx</dataSourceUrl>
+   <driver>ExcelFile</driver>
+   <isInternalPath>false</isInternalPath>
+   <query></query>
+   <secureUserAccount>false</secureUserAccount>
+   <sheetName>Sheet 1</sheetName>
+   <usingGlobalDBSetting>false</usingGlobalDBSetting>
+</DataFileEntity>

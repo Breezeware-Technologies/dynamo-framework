@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html class="no-js" lang="" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<th:block th:replace="release-notes/header :: header"></th:block>
+</head>
+
+<body>
+	<div th:replace="release-notes/navigation :: main-nav"></div>
+	<div layout:fragment="content"></div>
+	<div th:replace="release-notes/footer :: footer"></div>
+</body>
+
+</html>

@@ -1,0 +1,69 @@
+#################### MANDATORY PROPERTIES ####################
+
+#******************** Application specific properties ********************#
+server.servlet.session.cookie.name = tsg-admin-webapp-cookie
+
+#******************** Custom Application Properties ********************#
+application.name=TSG Admin Webapp
+application.owner=Tower Security Group
+application.copyrightYear=2018-2019
+
+#******************** PostgreSQL Data Source ******************** #
+spring.datasource.driver-class-name=org.postgresql.Driver
+spring.datasource.url=jdbc:postgresql://192.168.99.100:5432/tsg
+spring.datasource.username=tsg_usr
+spring.datasource.password=tsg123
+
+#******************** Spring JPA ********************#
+spring.jpa.database = POSTGRESQL
+spring.jpa.show-sql = true
+spring.data.jpa.repositories.enabled=true
+
+#******************** Java Mail ********************#
+spring.mail.host=smtp.elasticemail.com
+spring.mail.port=2525
+spring.mail.username=karthik@breezeware.net
+spring.mail.password=***REMOVED***
+spring.mail.properties.mail.smtp.auth=true
+spring.mail.properties.mail.smtp.starttls.enable=true
+
+###******************** HTTPS & SSL Keystore  ********************#
+security.require-ssl=true
+server.ssl.key-store-type=PKCS12
+server.ssl.key-store=classpath:keystore/tsgdevkeystore.p12
+server.ssl.key-store-password=breeze123
+server.ssl.key-alias=tsgdevkeystore
+server.port=8443
+
+###******************** Config Server properties  ********************#
+applicationServerAddress=https://localhost:8443
+
+#################### OPTIONAL PROPERTIES ####################
+
+#******************** Hibernate ********************#
+spring.jpa.hibernate.ddl-auto=update
+
+#******************** JTA ********************#
+spring.jta.enabled=false
+
+#******************** Spring Security ********************#
+# disable spring security to prevent default login popup.
+security.basic.enable= false
+spring.security.enabled=false 
+security.ignored=/**
+management.security.enabled=false
+
+#******************** Logging ********************#
+logging.config=classpath:log4j2.yml
+
+#******************** UPLOAD Directory ********************# 
+storage.location = /tmp/upload-directory
+
+#******************** Active Profiles (supported options: LDAPAuthentication, DBAuthentication) ********************#
+spring.profiles.active=DBAuthentication,jdbc
+
+#******************** User Authentication Properties (supported options: PlainText, SHA) ********************#
+dynamo.auth.password.encoding=PlainText
+
+#******************** Cloud Server Config  ********************#
+management.endpoints.web.exposure.include=*

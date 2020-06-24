@@ -1,0 +1,77 @@
+<!doctype html>
+<html class="no-js" lang="" xmlns:th="http://www.thymeleaf.org"
+	style="background-color: #fff;">
+<head>
+<meta charset="utf-8">
+<meta name="description" content="">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Release Notes</title>
+
+<link rel="apple-touch-icon" href="../static/apple-touch-icon.png"
+	th:href="@{/apple-touch-icon.png}">
+<!-- Place favicon.ico in the root directory -->
+
+
+</head>
+<body style="background-color: #fff;">
+	<!--[if lt IE 10]>
+      <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+    <![endif]-->
+
+	<div class="container">
+		<div>
+			<div>
+				<h2>TSG Webapp - Release Notes</h2>
+
+				<div>
+					<h4>v1.1.0</h4>
+					<ul class="pl-5">
+						<li>Updated to Dynamo Framework version 1.0.0.</li>
+					</ul>
+
+					<h4>v1.3.0</h4>
+					<ul class="pl-5">
+						<li>Updated email templates to use TSG application specific
+							labels.</li>
+						<li>Removed password constraints while setting user password.</li>
+						<li>Fixed 500 server error while setting user password from
+							the email link.</li>
+					</ul>
+
+					<h4>v1.2.0</h4>
+					<ul class="pl-5">
+						<li>Added support to display audit log data as per client's
+							time zone (zone ID) information.</li>
+					</ul>
+
+					<h4>v1.1.0</h4>
+					<ul>
+						<li>Updated security configuration to allow application
+							access to users with 'ROLE_SYSTEM_ADMIN' role only.</li>
+						<li>Updated audit log to retrieve entries across all
+							organizations.</li>
+						<li>Removed support to create groups, roles and users in the
+							application. Going forward, these activities will be done in user
+							application only.</li>
+					</ul>
+
+					<h4>v0.2.0</h4>
+					<ul>
+						<li>Added support for OpenID login using Realfactor,
+							Onelogin, Okta and Google Authentication.</li>
+					</ul>
+
+					<h4>v0.1.0</h4>
+					<ul>
+						<li>First version of TSG webapp with basic login
+							functionality.</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- <div class="container m-t-sm">
+      <p class="col-md-4 col-md-offset-4 text-center white">© 2016. Breezeware</p>
+    </div> -->
+</body>
+</html>

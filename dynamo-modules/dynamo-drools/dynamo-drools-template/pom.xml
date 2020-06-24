@@ -1,0 +1,33 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>net.breezeware.dynamo</groupId>
+		<artifactId>dynamo-drools</artifactId>
+		<version>1.6.1</version>
+	</parent>
+	<artifactId>dynamo-drools-template</artifactId>
+	<packaging>pom</packaging>
+	<name>Dynamo Drools Template</name>
+	<description>Project template for developing a Drools application using Dynamo. 
+	This template will have separate modules to create KJARs and WAR artifacts that uses these KJARs.</description>
+
+
+	<modules>
+		<module>dynamo-drools-kjar</module>
+		<module>dynamo-drools-webapp</module>
+	</modules>
+
+	<!-- #################### DEPENDENCY MANAGEMENT #################### -->
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>net.breezeware.dynamo</groupId>
+				<artifactId>dynamo-drools-deps</artifactId>
+				<version>1.6.1</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+</project>

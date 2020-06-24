@@ -1,0 +1,157 @@
+{
+	"variables": [],
+	"info": {
+		"name": "Dynamo Auth - OAuth2",
+		"_postman_id": "d837848a-569b-b955-db16-2c5ab489ff84",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Dynamo Auth - OAuth2 Access Token",
+			"request": {
+				"url": "https://www.dynamodemo.com:443/oauth/token",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"description": "",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "grant_type",
+							"value": "password",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "username",
+							"value": "gowtham@breezeware.net",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "password",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "client_id",
+							"value": "dynamo-oauth2-client",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "client_secret",
+							"value": "karthik",
+							"description": "",
+							"type": "text"
+						}
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Dynamo Auth - OAuth2 Refresh Token",
+			"request": {
+				"url": "https://www.dynamodemo.com:443/oauth/token",
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "client_id",
+							"value": "dynamo-oauth2-client",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "client_secret",
+							"value": "karthik",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "username",
+							"value": "karthik",
+							"description": "",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "password",
+							"value": "password",
+							"description": "",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "grant_type",
+							"value": "refresh_token",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "refresh_token",
+							"value": "5490c7a1-5f2b-4571-b9e8-e425968e63e0",
+							"description": "",
+							"type": "text"
+						}
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Get User Info",
+			"request": {
+				"url": {
+					"raw": "https://www.dynamodemo.com:443/api/admin/organizationManagement/users?email=karthik@breezeware.net",
+					"protocol": "https",
+					"host": [
+						"www",
+						"dynamodemo",
+						"com"
+					],
+					"port": "443",
+					"path": [
+						"api",
+						"admin",
+						"organizationManagement",
+						"users"
+					],
+					"query": [
+						{
+							"key": "email",
+							"value": "karthik@breezeware.net",
+							"equals": true,
+							"description": ""
+						}
+					],
+					"variable": []
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer e9c005a7-1ba9-4689-bc20-fc7187d53fb2",
+						"description": ""
+					}
+				],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}

@@ -1,0 +1,64 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html class="no-js" lang="" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+</meta>
+<meta name="description" content="">
+</meta>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+</meta>
+<title>Forgot Password</title>
+<link rel="stylesheet" href="../static/css/style.css"
+	th:href="@{css/style.css}">
+</head>
+<body>
+	<!--[if lt IE 10]>
+      <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+    <![endif]-->
+	<div class="container ">
+		<div class="row mt-8">
+			<div class="col-md-4 m-auto">
+				<div class="card login-card">
+					<div class="card-block text-center">
+						<img src="../static/images/cjlogomain.svg"
+							th:src="@{images/cjlogomain.svg}" alt="">
+					</div>
+					<div class="card-block bg-panel">
+						<div>Carejoy</div>
+					</div>
+					<div class="card-block">
+
+						<div class="row">
+							<form th:object="${forgotPassword}"
+								th:action="@{/forgotPassword}" method="post"
+								class="col-10 mx-auto">
+								<div th:if="${param.error}" class="alert alert-error">Invalid
+									username and password.</div>
+								<div th:if="${param.logout}" class="alert alert-success">You
+									have been logged out.</div>
+
+								<div th:if="${flag}"
+									class="alert alert-dismissible alert-danger text-center">No
+									User Found!</div>
+								<div class="form-group">
+									<label for="l-user">Username*</label><input type="text"
+										th:field="*{username}" autofocus="autofocus" name="username"
+										class="form-control" placeholder="Username" />
+								</div>
+								<button type="submit" class="btn btn-success btn-block m-t-md">Request
+									Email Link</button>
+								<div class="form-group"></div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="text-center">
+		<p class="t-copy">&copy; 2017. Carejoy</p>
+	</div>
+
+</body>
+</html>

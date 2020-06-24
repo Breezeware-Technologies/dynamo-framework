@@ -1,0 +1,39 @@
+<!doctype html>
+<html class="no-js" lang="" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<meta charset="utf-8">
+<meta name="description" content="">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Dynamo-Org</title>
+
+<!-- <link rel="apple-touch-icon" href="../static/apple-touch-icon.png"
+	th:href="@{admin/apple-touch-icon.png}"> -->
+
+<link rel="stylesheet" href="../../static/css/fontawesome-all.css"
+	th:href="@{/css/fontawesome-all.css}">
+<!-- build:css css/style.css -->
+<link rel="stylesheet" href="../../static/css/dynamo-style.css"
+	th:href="@{/css/dynamo-style.css}">
+
+
+
+</head>
+
+<body>
+
+
+	<div th:replace="dynamo-organization/usermanagement/navigation :: navigation"></div>
+
+	<div layout:fragment="content"></div>
+
+	<div th:replace="dynamo-organization/usermanagement/footer :: footer"></div>
+	
+	
+	<div th:replace="dynamo-organization/usermanagement/scripts :: common-scripts"></div>
+
+
+</body>
+
+</html>

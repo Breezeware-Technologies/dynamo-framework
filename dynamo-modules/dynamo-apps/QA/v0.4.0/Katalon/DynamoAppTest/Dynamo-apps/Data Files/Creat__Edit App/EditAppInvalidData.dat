@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DataFileEntity>
+   <description></description>
+   <name>EditAppInvalidData</name>
+   <tag></tag>
+   <containsHeaders>false</containsHeaders>
+   <csvSeperator></csvSeperator>
+   <dataFileGUID>2fa4dfcf-c56f-46c3-adb6-57e15af5c75f</dataFileGUID>
+   <dataSourceUrl>/Users/Siva/Work/code/dynamo-framework/dynamo-framework-modules/dynamo-apps/QA/v0.4.0/Katalon/DynamoAppTest/Dynamo-apps/Data Files/Excel/EditAppInvalidData.xlsx</dataSourceUrl>
+   <driver>ExcelFile</driver>
+   <isInternalPath>false</isInternalPath>
+   <query></query>
+   <secureUserAccount>false</secureUserAccount>
+   <sheetName>Sheet 1</sheetName>
+   <usingGlobalDBSetting>false</usingGlobalDBSetting>
+</DataFileEntity>

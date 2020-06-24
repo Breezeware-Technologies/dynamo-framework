@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebElementEntity>
+   <description></description>
+   <name>div_NewFeature</name>
+   <tag></tag>
+   <elementGuidId>428a3c19-8a8d-41f2-9500-eeccd9a5069a</elementGuidId>
+   <selectorMethod>BASIC</selectorMethod>
+   <useRalativeImagePath>false</useRalativeImagePath>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>tag</name>
+      <type>Main</type>
+      <value>div</value>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>class</name>
+      <type>Main</type>
+      <value>add-more</value>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>text</name>
+      <type>Main</type>
+      <value>
+											 New
+													Feature
+										</value>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath</name>
+      <type>Main</type>
+      <value>/html[@class=&quot;no-js&quot;]/body[1]/div[2]/div[@class=&quot;container-fluid mt-8&quot;]/div[@class=&quot;bg&quot;]/div[@class=&quot;container-fluid&quot;]/div[@class=&quot;container&quot;]/form[1]/div[@class=&quot;row&quot;]/div[@class=&quot;col-md-12 col-sm-12 mt-md-5&quot;]/div[@class=&quot;new-feature-div input-group-btn col-md-8 float-md-right pl-0&quot;]/div[@class=&quot;add-more&quot;]</value>
+   </webElementProperties>
+</WebElementEntity>

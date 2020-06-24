@@ -1,0 +1,31 @@
+		==========================================================
+		***** Dynamo Framework - Update Source Code Version *****
+		==========================================================
+
+- Dynamo Framework project is managed by Maven build system. 
+- The Top level pom.xml file contains the latest version number.
+- All the sub-modules in the Dynamo Framework project will have the same version number as the top-level POM.
+- To update the version number of the project, we use the Maven Release 
+	Plugin - http://maven.apache.org/maven-release/maven-release-plugin/index.html
+
+Steps: (For example, to change version from 1.0 to 2.0-SNAPSHOT)
+-----------------------------------------------------------------
+
+1. Change the version number of top-level pom.xml to 2.0-SNAPSHOT
+
+2. In shell prompt, issue the command 'mvn release:update-versions' (without quotes)
+
+<The plugin will enter an interactive mode prompting for the version to set>
+
+4. At the first prompt, enter '2.0-SNAPSHOT' as the value (without quotes).
+
+5. Repeat the same (i.e, enter 2.0-SNAPSHOT) for all prompts to update the version numbers for all sub modules in the project.
+
+6. Issue the command 'mvn clean' (without quotes) to remove the target folders in all the sub-modules.
+
+7. To ensure that version numbers for all sub-modules are updated, use an editor like STS and search for the text '1.0' 
+	(without quotes) in all the pom.xml files' version attribute. If there are any, just manually change them to 2.0-SNAPSHOT. This step is 
+	required only if the sub modules are not properly categorized as a child of the parent project module.
+
+8. Build the project using command 'mvn clean package' (without quotes) to generate the artifacts with the updated version.
+  

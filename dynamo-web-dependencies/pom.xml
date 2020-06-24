@@ -1,0 +1,84 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>net.breezeware.dynamo</groupId>
+		<artifactId>dynamo-framework</artifactId>
+		<version>1.6.1</version>
+	</parent>
+	<artifactId>dynamo-web-dependencies</artifactId>
+	<packaging>pom</packaging>
+	<name>Dynamo Web Dependencies</name>
+	<description>All dependencies related to a web application</description>
+
+	<!-- #################### DEPENDENCY MANAGEMENT #################### -->
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>net.breezeware.dynamo</groupId>
+				<artifactId>dynamo-dependencies</artifactId>
+				<version>${project.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
+	<!-- #################### DEPENDENCIES #################### -->
+
+	<dependencies>
+		<!-- ******************** Thymeleaf support for Spring Security ******************** -->
+		<dependency>
+			<groupId>org.thymeleaf.extras</groupId>
+			<artifactId>thymeleaf-extras-springsecurity4</artifactId>
+			<exclusions>
+				<exclusion>
+					<groupId>org.slf4j</groupId>
+					<artifactId>slf4j-api</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
+		<!-- ******************** Spring data dialect support ******************** -->
+		<dependency>
+			<groupId>io.github.jpenren</groupId>
+			<artifactId>thymeleaf-spring-data-dialect</artifactId>
+			<exclusions>
+				<exclusion>
+					<groupId>org.thymeleaf</groupId>
+					<artifactId>thymeleaf</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.springframework.data</groupId>
+					<artifactId>spring-data-commons</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
+		<!-- ******************** Spring layout dialect support ******************** -->
+		<dependency>
+			<groupId>nz.net.ultraq.thymeleaf</groupId>
+			<artifactId>thymeleaf-layout-dialect</artifactId>
+			<exclusions>
+				<exclusion>
+					<groupId>org.thymeleaf</groupId>
+					<artifactId>thymeleaf</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
+		<!-- ******************** Spring Boot Starter - Tomcat ******************** -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-tomcat</artifactId>
+		</dependency>
+
+		<!-- ******************** Servlet ******************** -->
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+			<scope>provided</scope>
+		</dependency>
+	</dependencies>
+</project>

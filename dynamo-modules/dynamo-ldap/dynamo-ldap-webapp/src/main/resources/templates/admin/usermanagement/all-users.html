@@ -1,0 +1,44 @@
+<!doctype html>
+<html class="no-js" lang="" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sd="http://www.thymeleaf.org/spring-data"
+	layout:decorator="admin/usermanagement/layout">
+<head>
+<meta charset="utf-8">
+</meta>
+<meta name="description" content="">
+</meta>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+</meta>
+<title>Users</title>
+</head>
+
+<body>
+	<div layout:fragment="content">
+		<div class="col-md-12 title-panel">
+			<h3>Users</h3>
+		</div>
+		<div class="col-md-12 content-panel">
+			<div class="content-table">
+				<table class="table table-striped table-condensed table-hover">
+					<thead>
+						<tr>
+							<th>Username</th>
+							<th>Name</th>
+							<th>Distinguished Name</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="user : ${users}">
+							<td> <a
+								th:href="@{'/admin/usermanagement/viewUser?uid=' + ${user.uid}}"
+								th:text="${user.uid}"></a> </td>
+							<td th:text="${user.fullName}" />
+							<td th:text="${user.dn}" />
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

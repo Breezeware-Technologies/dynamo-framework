@@ -1,0 +1,36 @@
+<!doctype html>
+<html class="no-js" lang="" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+</meta>
+<meta name="description" content="">
+</meta>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+</meta>
+<title>Dynamo Framework - LDAP</title>
+</head>
+
+<body>
+	<div class="col-md-4" style="background-color: #FFF"
+		th:fragment="navigation">
+
+		<img class="center-block p-t-md" th:src="@{/images/Dynamo-Logo.png}" src="images/Dynamo-Logo.png"
+			alt="Dynamo"> </img>
+		<div class="row m-t-xs">
+			<h5 class="text-center text-c-01 bg-c-01 p-t-sm p-b-sm">Dynamo LDAP</h5>
+			<ul class="nav nav-pills nav-stacked">
+				<li th:class="${activeNav == 'groups' }? 'active' : ''"><a
+					th:href="@{/admin/usermanagement/groups}" href="#">Groups<i></i></a></li>
+				<li th:class="${activeNav == 'users' }? 'active' : ''"><a
+					th:href="@{/admin/usermanagement/users}">Users</a></li>		
+			</ul>
+		</div>
+
+		<div>
+			<form th:action="@{/logout}" method="post">
+				<button type="submit" class="btn btn-success btn-block m-t-md">Logout</button>
+			</form>
+		</div>
+	</div>
+</body>
+</html>

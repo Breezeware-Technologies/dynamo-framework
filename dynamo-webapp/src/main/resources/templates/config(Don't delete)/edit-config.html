@@ -1,0 +1,120 @@
+<!doctype html>
+<html class="no-js" lang="" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sd="http://www.thymeleaf.org/spring-data"
+	layout:decorator="config/layout">
+
+<head>
+<meta charset="utf-8">
+</meta>
+<meta name="description" content="">
+</meta>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+</meta>
+<title>Edit-config</title>
+</head>
+<body>
+	<div layout:fragment="content">
+		<div class="container-fluid mt-8">
+			<div class="container-fluid">
+				<div class="card  box-s-top0 px-3">
+					<div class="card-body">
+
+						<div class="row bb">
+							<h5 class="tbhead col-12 mb-0 bold">View Audit</h5>
+						</div>
+
+						<div class="row pt-2">
+							<form th:action="@{/admin/configManagement/editConfig}"
+								th:object="${config}" method="post">
+								<div th:if="${#fields.hasErrors()}"
+									class="has-error alert alert-dismissible alert-danger">
+									<ul>
+										<li th:each="e : ${#fields.detailedErrors()}"
+											th:class="${e.global}? globalerr : fielderr"><span
+											th:text="${e.message}">The error message</span></li>
+									</ul>
+								</div>
+
+								<input type="hidden" th:field="*{id}" />
+								<div class="row pt-2">
+									<div class="col-md-5 col-sm-2 text-md-right text-sm-left">
+										<h6 class="lh-2">
+											<b>No : </b>
+										</h6>
+									</div>
+									<div class="col-md-7 col-sm-10 pl-md-0 pl-sm-1">
+										<p th:text="${config.id}"></p>
+										<input type="hidden" th:field="*{id}" />
+									</div>
+
+									<div class="col-md-5 col-sm-2 text-md-right text-sm-left">
+										<h6 class="lh-2">
+											<b>Application : </b>
+										</h6>
+									</div>
+									<div class="col-md-7 col-sm-10 pl-md-0 pl-sm-1">
+										<p th:text="${config.application}"></p>
+										<input type="hidden" th:field="*{application}" />
+									</div>
+
+									<div class="col-md-5 col-sm-2 text-md-right text-sm-left">
+										<h6 class="lh-2">
+											<b>Profile : </b>
+										</h6>
+									</div>
+									<div class="col-md-7 col-sm-10 pl-md-0 pl-sm-1">
+										<p th:text="${config.profile}"></p>
+										<input type="hidden" th:field="*{profile}" />
+									</div>
+
+									<div class="col-md-5 col-sm-2 text-md-right text-sm-left">
+										<h6 class="lh-2">
+											<b>Label : </b>
+										</h6>
+									</div>
+									<div class="col-md-7 col-sm-10 pl-md-0 pl-sm-1">
+										<p th:text="${config.label}"></p>
+										<input type="hidden" th:field="*{label}" />
+									</div>
+
+									<div class="col-md-5 col-sm-2 text-md-right text-sm-left">
+										<h6 class="lh-2">
+											<b>Key : </b>
+										</h6>
+									</div>
+									<div class="col-md-7 col-sm-10 pl-md-0 pl-sm-1">
+										<p th:text="${config.key}"></p>
+										<input type="hidden" th:field="*{key}" />
+									</div>
+
+									<div class="col-md-5 col-sm-2 text-md-right text-sm-left">
+										<h6 class="lh-2">
+											<b>Value : </b>
+										</h6>
+									</div>
+									<div class="col-md-7 col-sm-10 pl-md-0 pl-sm-1">
+										<input type="text" class="form-control w-25" name="key"
+											id="value" th:field="*{value}">
+									</div>
+
+
+									<div class="col-md-12 text-center mt-4">
+										<div class="form-group  mr-form">
+											<button type="submit" class="btn btn-outline-success mr-3">Update</button>
+											<button type="reset" class="btn btn-outline-info">Reset</button>
+										</div>
+									</div>
+								</div>
+							</form>
+						</div>
+					</div>
+
+
+				</div>
+			</div>
+
+
+		</div>
+	</div>
+</body>
+</html>

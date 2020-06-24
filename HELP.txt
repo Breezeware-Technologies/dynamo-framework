@@ -1,0 +1,7 @@
+1) Javadocs for Dynamo Framework
+- All Javadocs related configurations exist in parent pom.xml
+- To generate Javadocs: $ mvn clean package javadoc:aggregate-jar 
+
+
+2) JARs for use in Auto complete, Auto suggest features within STS IDE
+- To generate Source Jars and install them in local repo: $ mvn clean package source:jar-no-fork install

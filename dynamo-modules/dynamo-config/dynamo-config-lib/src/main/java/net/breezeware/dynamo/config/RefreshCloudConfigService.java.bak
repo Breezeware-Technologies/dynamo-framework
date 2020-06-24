@@ -1,0 +1,37 @@
+package net.breezeware.dynamo.config;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.context.refresh.ContextRefresher;
+import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Component;
+
+/**
+ * Service to refresh the cloud configuration settings in a Spring Cloud Config
+ * client. This will be used in dynamo modules that would act as clients that
+ * receive their configuration from the Spring Cloud Config server provided by
+ * the Dynamo Config module.
+ */
+@Component
+public class RefreshCloudConfigService {
+    private static final Logger logger = LoggerFactory.getLogger(RefreshCloudConfigService.class);
+
+    private static final SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
+
+    @Autowired
+    private ContextRefresher refresher;
+
+    @Scheduled(fixedRate = 20000)
+    public void refreshCloudConfig() throws Exception {
+        logger.info("Entering refreshCloudConfig() in Admin module. Refreshing context. Current time is {}",
+                dateFormat.format(new Date()));
+
+        refresher.refresh();
+
+        logger.info("Leaving refreshCloudConfig() in Admin module. Refreshed context.");
+    }
+}

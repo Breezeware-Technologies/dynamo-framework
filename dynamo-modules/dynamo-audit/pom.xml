@@ -1,0 +1,36 @@
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>net.breezeware.dynamo</groupId>
+		<artifactId>dynamo-modules</artifactId>
+		<version>1.6.1</version>
+	</parent>
+	<artifactId>dynamo-audit</artifactId>
+	<version>1.6.1</version>
+	<name>Dynamo Audit Module</name>
+	<description>Module provides support for Audit managment and audit logging. Build using AspectJ.</description>
+
+	<!-- #################### DEPENDENCIES #################### -->
+
+	<dependencies>
+		<!-- ******************** Spring Boot AOP starter ******************** -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-aop</artifactId>
+		</dependency>
+
+		<!-- ******************** Dynamo Util Module ******************** -->
+		<dependency>
+			<groupId>net.breezeware.dynamo</groupId>
+			<artifactId>dynamo-util</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+	</dependencies>
+
+	<packaging>pom</packaging>
+	<modules>
+		<module>dynamo-audit-lib</module>
+		<module>dynamo-audit-web</module>
+	</modules>
+</project>

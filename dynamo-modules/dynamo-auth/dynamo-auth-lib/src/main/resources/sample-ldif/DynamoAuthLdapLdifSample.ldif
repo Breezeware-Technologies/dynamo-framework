@@ -1,0 +1,156 @@
+version: 1
+
+dn: cn=developers,ou=groups,dc=example,dc=com
+objectclass: groupOfUniqueNames
+objectclass: top
+cn: developers
+uniqueMember: uid=ben,ou=people,dc=example,dc=com
+uniqueMember: uid=bob,ou=people,dc=example,dc=com
+uniqueMember: uid=karthik,ou=people,dc=example,dc=com
+ou: developer
+
+dn: uid=bob,ou=people,dc=example,dc=com
+objectclass: inetOrgPerson
+objectclass: organizationalPerson
+objectclass: person
+objectclass: top
+cn: Bob Hamilton
+sn: Hamilton
+uid: bob
+userPassword:: e1NTSEF9bHl5Zzh2KzlkZUFSNTJKQ2c1UmNWcWp0dWtra2t6UzhaejVRTVE9P
+ Q==
+
+dn: ou=otherpeople,dc=example,dc=com
+objectclass: organizationalUnit
+objectclass: top
+ou: otherpeople
+
+dn: cn=slash/guy,ou=people,dc=example,dc=com
+objectclass: inetOrgPerson
+objectclass: organizationalPerson
+objectclass: person
+objectclass: top
+cn: slash/guy
+sn: Slash
+uid: slashguy
+userPassword:: e1NTSEF9OXhFSUpKU1JQMnJtVDlZY3lzUWU3R1FtQSt5UGg3OGV3YUl5TlE9P
+ Q==
+
+dn: ou=subgroups,ou=groups,dc=example,dc=com
+objectclass: organizationalUnit
+objectclass: top
+ou: subgroups
+
+dn: cn=quote\"guy,ou=\"quoted people\",dc=example,dc=com
+objectclass: inetOrgPerson
+objectclass: organizationalPerson
+objectclass: person
+objectclass: top
+cn: quote\"guy
+sn: Quote
+uid: quoteguy
+userPassword:: e1NTSEF9S1VSenlWY1RYWXhqUURmR1dtTlVWb01Hd3ZZUG5Lamw0ckd1WFE9P
+ Q==
+
+dn: cn=submanagers,ou=subgroups,ou=groups,dc=example,dc=com
+objectclass: groupOfUniqueNames
+objectclass: top
+cn: submanagers
+uniqueMember: uid=ben,ou=people,dc=example,dc=com
+ou: submanager
+
+dn: cn=admin,ou=groups,dc=example,dc=com
+objectclass: groupOfUniqueNames
+objectclass: top
+cn: admin
+uniqueMember: uid=karthik,ou=people,dc=example,dc=com
+ou: admin
+
+dn: cn=managers,ou=groups,dc=example,dc=com
+objectclass: groupOfUniqueNames
+objectclass: top
+cn: managers
+uniqueMember: uid=ben,ou=people,dc=example,dc=com
+uniqueMember: cn=mouse\, jerry,ou=people,dc=example,dc=com
+ou: manager
+
+dn: uid=ben,ou=people,dc=example,dc=com
+objectclass: inetOrgPerson
+objectclass: organizationalPerson
+objectclass: person
+objectclass: top
+cn: Ben Alex
+sn: Alex
+uid: ben
+userPassword:: e1NIQX1uRkNlYldqeGZhTGJISEcxUWs1VVU0dHJidlE9
+
+dn: uid=space cadet,ou=space cadets,dc=example,dc=com
+objectclass: inetOrgPerson
+objectclass: organizationalPerson
+objectclass: person
+objectclass: top
+cn: Space Cadet
+sn: Cadet
+uid: space cadet
+userPassword:: e1NTSEF9aVkvQTIvMmVBNE1YRXFwcDcrOERzYlVkcWIyUThuaktITWl6Q3c9P
+ Q==
+
+dn: dc=example,dc=com
+objectclass: extensibleObject
+objectclass: domain
+objectclass: top
+dc: example
+
+dn: ou=groups,dc=example,dc=com
+objectclass: organizationalUnit
+objectclass: top
+ou: groups
+
+dn: cn=mouse\, jerry,ou=people,dc=example,dc=com
+objectclass: inetOrgPerson
+objectclass: organizationalPerson
+objectclass: person
+objectclass: top
+cn: Mouse, Jerry
+sn: Mouse
+uid: jerry
+userPassword:: e1NTSEF9WXZsZ0hCZFdzemRWellZMERRcmtrSWpvR21ReGFTMzR0U1FoQWc9P
+ Q==
+
+dn: ou=\"quoted people\",dc=example,dc=com
+objectclass: organizationalUnit
+objectclass: top
+ou: "quoted people"
+ou: \"quoted people\"
+
+dn: ou=space cadets,dc=example,dc=com
+objectclass: organizationalUnit
+objectclass: top
+ou: space cadets
+
+dn: ou=people,dc=example,dc=com
+objectclass: organizationalUnit
+objectclass: top
+ou: people
+
+dn: uid=karthik,ou=people,dc=example,dc=com
+objectClass: organizationalPerson
+objectClass: person
+objectClass: inetOrgPerson
+objectClass: top
+cn: karthik
+sn: muthukumaraswamy
+uid: karthik
+userPassword:: e1NIQX15MHErMXNCOGVlTGU2MzFZbGQzSVZZbEt0QU09
+
+dn: uid=joe,ou=otherpeople,dc=example,dc=com
+objectclass: inetOrgPerson
+objectclass: organizationalPerson
+objectclass: person
+objectclass: top
+cn: Joe Smeth
+sn: Smeth
+uid: joe
+userPassword:: e1NTSEF9aUJ6WDN5cGNmYXVydzAxWVlXdmhuQjVibDVGb2tZV1hta3dOM2c9P
+ Q==
+

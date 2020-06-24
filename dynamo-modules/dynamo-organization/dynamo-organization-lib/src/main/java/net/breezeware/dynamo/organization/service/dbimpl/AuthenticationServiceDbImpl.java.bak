@@ -1,0 +1,36 @@
+package net.breezeware.dynamo.auth.identity.service.dbimpl;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Profile;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import net.breezeware.dynamo.auth.AuthenticationService;
+import net.breezeware.dynamo.auth.CurrentUserDto;
+import net.breezeware.dynamo.auth.identity.entity.User;
+import net.breezeware.dynamo.auth.identity.service.api.IdentityService;
+
+@Service
+@Profile("DBAuthentication")
+public class AuthenticationServiceDbImpl implements AuthenticationService {
+
+    Logger logger = LoggerFactory.getLogger(AuthenticationServiceDbImpl.class);
+
+    @Autowired
+    IdentityService identityService;
+
+    @Transactional
+    public CurrentUserDto getCurrentUserDto(String username) {
+        logger.info("Entering getCurrentUserDto(). username = {}.", username);
+        User user = identityService.findByUsernameIgnoreCase(username);
+
+        CurrentUserDto userDto = new CurrentUserDto(user.getOrganization().getId(), user.getUsername(),
+                user.getFirstName() + " " + user.getLastName(), user.getUserRolesCsv());
+
+        logger.info("Entering getCurrentUserDto(). CurrentUserDto = {}.", userDto);
+        return userDto;
+    }
+
+}

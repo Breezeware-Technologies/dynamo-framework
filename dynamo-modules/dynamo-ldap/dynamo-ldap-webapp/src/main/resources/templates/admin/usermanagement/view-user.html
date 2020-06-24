@@ -1,0 +1,45 @@
+<!doctype html>
+<html class="no-js" lang="" xmlns:th="http://www.thymeleaf.org"
+	layout:decorator="admin/usermanagement/layout">
+<head>
+<meta charset="utf-8">
+<meta name="description" content="">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>View User</title>
+</head>
+
+<body>
+	<div layout:fragment="content">
+		<div class="col-md-12 title-panel">
+			<h3>View User</h3>
+		</div>
+		<div class="col-md-12 content-panel">
+			<div style="text-align: right; margin-bottom: 10px;"></div>
+			<div class="content-table">
+				<div class="form-group">
+					<label for="uid">UID:</label> <span th:text="${user.uid}"></span>
+				</div>
+				<div class="form-group">
+					<label for="uid">Distinguished Name:</label> <span
+						th:text="${user.dn}"></span>
+				</div>
+				<div class="form-group">
+					<label for="uid">Full Name:</label> <span
+						th:text="${user.fullName}"></span>
+				</div>
+			</div>
+		</div>
+
+		<div class="col-md-12 content-panel">
+			<div style="text-align: right; margin-bottom: 10px;"></div>
+			<h3>User Groups:</h3>
+			<div class="content-table">
+				<ul>
+					<li th:each="group : ${userGroups}"><span th:text="${group.cn}">Common Name</span>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

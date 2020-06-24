@@ -1,0 +1,111 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>net.breezeware.dynamo</groupId>
+		<artifactId>dynamo-auth</artifactId>
+		<version>1.6.1</version>
+	</parent>
+	<artifactId>dynamo-auth-lib</artifactId>
+	<name>Dynamo Authentication and Authorization Library</name>
+	<description>Project providing authentication and authorization support to applications. Uses Spring Security.</description>
+
+	<!-- #################### DEPENDENCIES #################### -->
+	<dependencies>
+
+		<!-- ******************** Lombok ******************** -->
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+		</dependency>
+
+		<!-- ******************** Spring Boot Starter - Security ******************** -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-security</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.security.oauth</groupId>
+			<artifactId>spring-security-oauth2</artifactId>
+			<exclusions>
+				<exclusion>
+					<groupId>org.springframework</groupId>
+					<artifactId>spring-beans</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.springframework</groupId>
+					<artifactId>spring-context</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.springframework</groupId>
+					<artifactId>spring-core</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.springframework</groupId>
+					<artifactId>spring-webmvc</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.springframework.security</groupId>
+					<artifactId>spring-security-core</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.springframework.security</groupId>
+					<artifactId>spring-security-config</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.springframework.security</groupId>
+					<artifactId>spring-security-web</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
+		<!-- ******************** Dynamo Util Module ******************** -->
+		<dependency>
+			<groupId>net.breezeware.dynamo</groupId>
+			<artifactId>dynamo-util</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+
+		<!-- ******************** Dynamo Apps Module ******************** -->
+		<dependency>
+			<groupId>net.breezeware.dynamo</groupId>
+			<artifactId>dynamo-apps-lib</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+
+		<!-- ******************** Dynamo Organization Module ******************** -->
+		<dependency>
+			<groupId>net.breezeware.dynamo</groupId>
+			<artifactId>dynamo-organization-lib</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+
+		<!-- ******************** Dynamo LDAP Module ******************** -->
+		<!-- <dependency> <groupId>net.breezeware.dynamo</groupId> <artifactId>dynamo-ldap-lib</artifactId> 
+			<version>${project.version}</version> </dependency> -->
+
+		<!-- ******************** Libraries for Built-in OAuth2 implementation 
+			*********************** -->
+		<dependency>
+			<groupId>org.springframework.security.oauth.boot</groupId>
+			<artifactId>spring-security-oauth2-autoconfigure</artifactId>
+			<exclusions>
+				<exclusion>
+					<groupId>org.springframework.security.oauth</groupId>
+					<artifactId>spring-security-oauth2</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-oauth2-client</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-oauth2-jose</artifactId>
+		</dependency>
+
+	</dependencies>
+</project>

@@ -1,0 +1,641 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="EditApp" time="176" tests="5" failures="4" errors="0">
+   <testsuite name="EditApp" tests="5" failures="4" errors="0" time="176" timestamp="2018-06-18 17:48:38" hostname="Siva - 192.168.99.1" id="Test Suites/EditApp">
+      <properties>
+         <property name="deviceName" value=""/>
+         <property name="devicePlatform" value=""/>
+         <property name="logFolder" value="/Users/Siva/Work/code/dynamo-framework/dynamo-framework-modules/dynamo-apps/QA/v0.4.0/Katalon/DynamoAppTest/Dynamo-apps/Reports/EditApp/20180618_174836"/>
+         <property name="logFiles" value="/Users/Siva/Work/code/dynamo-framework/dynamo-framework-modules/dynamo-apps/QA/v0.4.0/Katalon/DynamoAppTest/Dynamo-apps/Reports/EditApp/20180618_174836/execution0.log"/>
+         <property name="attachments" value="/Users/Siva/Work/code/dynamo-framework/dynamo-framework-modules/dynamo-apps/QA/v0.4.0/Katalon/DynamoAppTest/Dynamo-apps/Reports/EditApp/20180618_174836/1529324365080.png, /Users/Siva/Work/code/dynamo-framework/dynamo-framework-modules/dynamo-apps/QA/v0.4.0/Katalon/DynamoAppTest/Dynamo-apps/Reports/EditApp/20180618_174836/1529324365366.png, /Users/Siva/Work/code/dynamo-framework/dynamo-framework-modules/dynamo-apps/QA/v0.4.0/Katalon/DynamoAppTest/Dynamo-apps/Reports/EditApp/20180618_174836/1529324402271.png, /Users/Siva/Work/code/dynamo-framework/dynamo-framework-modules/dynamo-apps/QA/v0.4.0/Katalon/DynamoAppTest/Dynamo-apps/Reports/EditApp/20180618_174836/1529324402566.png, /Users/Siva/Work/code/dynamo-framework/dynamo-framework-modules/dynamo-apps/QA/v0.4.0/Katalon/DynamoAppTest/Dynamo-apps/Reports/EditApp/20180618_174836/1529324438917.png, /Users/Siva/Work/code/dynamo-framework/dynamo-framework-modules/dynamo-apps/QA/v0.4.0/Katalon/DynamoAppTest/Dynamo-apps/Reports/EditApp/20180618_174836/1529324439353.png, /Users/Siva/Work/code/dynamo-framework/dynamo-framework-modules/dynamo-apps/QA/v0.4.0/Katalon/DynamoAppTest/Dynamo-apps/Reports/EditApp/20180618_174836/1529324474772.png, /Users/Siva/Work/code/dynamo-framework/dynamo-framework-modules/dynamo-apps/QA/v0.4.0/Katalon/DynamoAppTest/Dynamo-apps/Reports/EditApp/20180618_174836/1529324475198.png"/>
+         <property name="hostName" value="Siva - 192.168.99.1"/>
+         <property name="os" value="Mac OS X 64bit"/>
+         <property name="katalonVersion" value="5.4.2.1"/>
+         <property name="browser" value="Chrome 62.0.3202.94"/>
+         <property name="hostAddress" value="192.168.99.1"/>
+         <property name="sessionId" value="098a7ea68fc7b7f2b4e91e043b805e53"/>
+         <property name="seleniumVersion" value="3.7.1"/>
+         <property name="proxyInformation" value="ProxyInformation{proxyOption=NO_PROXY, proxyServerType=HTTP, password=, proxyServerAddress=, proxyServerPort=0}"/>
+         <property name="platform" value="Mac OS X"/>
+      </properties>
+      <testcase name="Test Cases/EditApp/EditAppNodata" classname="Test Cases/EditApp/EditAppNodata" status="PASSED">
+         <system-out><![CDATA[2018-06-18 17:48:39 - [TEST_CASE][PASSED] - Test Cases/EditApp/EditAppNodata: Test Cases/EditApp/EditAppNodata
+
+2018-06-18 17:48:40 - [TEST_STEP][PASSED] - appmanage.startTest.openbrowser: appmanage.startTest.openbrowser is PASSED
+
+2018-06-18 17:48:44 - [MESSAGE][PASSED] - Browser is opened with url: 'http://localhost:8080/'
+
+2018-06-18 17:48:45 - [MESSAGE][PASSED] - Keys 'user' sent to object: 'Object Repository/Page_Login Page/input_username'
+
+2018-06-18 17:48:45 - [MESSAGE][PASSED] - Keys '152feaf3-2269-48b0-b9d0-08ac4fd21f03' sent to object: 'Object Repository/Page_Login Page/input_password'
+
+2018-06-18 17:48:45 - [MESSAGE][PASSED] - Object: 'Object Repository/Page_Login Page/input_Submit' is clicked on
+
+2018-06-18 17:48:46 - [MESSAGE][PASSED] - Object: 'Object Repository/Page_dynamo apps/a_ManageApps Artifacts' is clicked on
+
+2018-06-18 17:48:46 - [MESSAGE][PASSED] - appmanage.startTest.openbrowser is PASSED
+
+2018-06-18 17:48:46 - [TEST_STEP][PASSED] - click: Object: 'Object Repository/Page_Dynamo/button_dropdownMenuButton' is clicked on
+
+2018-06-18 17:48:46 - [MESSAGE][PASSED] - Object: 'Object Repository/Page_Dynamo/button_dropdownMenuButton' is clicked on
+
+2018-06-18 17:48:46 - [TEST_STEP][PASSED] - click: Object: 'Object Repository/Page_Dynamo/a_Edit' is clicked on
+
+2018-06-18 17:48:47 - [MESSAGE][PASSED] - Object: 'Object Repository/Page_Dynamo/a_Edit' is clicked on
+
+2018-06-18 17:48:47 - [TEST_STEP][PASSED] - clearText: Text of object 'Object Repository/Page_Edit-App/input_name' is cleared
+
+2018-06-18 17:48:47 - [MESSAGE][PASSED] - Text of object 'Object Repository/Page_Edit-App/input_name' is cleared
+
+2018-06-18 17:48:47 - [TEST_STEP][PASSED] - clearText: Text of object 'Object Repository/Page_Edit-App/textarea_g' is cleared
+
+2018-06-18 17:48:47 - [MESSAGE][PASSED] - Text of object 'Object Repository/Page_Edit-App/textarea_g' is cleared
+
+2018-06-18 17:48:47 - [TEST_STEP][PASSED] - selectOptionByIndex: All options with index in [1] are selected on object 'Object Repository/Page_Edit-App/select_ActiveInActive'
+
+2018-06-18 17:48:47 - [MESSAGE][PASSED] - All options with index in [1] are selected on object 'Object Repository/Page_Edit-App/select_ActiveInActive'
+
+2018-06-18 17:48:47 - [TEST_STEP][PASSED] - clearText: Text of object 'Object Repository/Page_Edit-App/input_appFeatures0.name' is cleared
+
+2018-06-18 17:48:47 - [MESSAGE][PASSED] - Text of object 'Object Repository/Page_Edit-App/input_appFeatures0.name' is cleared
+
+2018-06-18 17:48:47 - [TEST_STEP][PASSED] - clearText: Text of object 'Object Repository/Page_Edit-App/input_appFeatures0.description' is cleared
+
+2018-06-18 17:48:47 - [MESSAGE][PASSED] - Text of object 'Object Repository/Page_Edit-App/input_appFeatures0.description' is cleared
+
+2018-06-18 17:48:47 - [TEST_STEP][PASSED] - click: Object: 'Object Repository/Page_Edit-App/button_Submit' is clicked on
+
+2018-06-18 17:48:48 - [MESSAGE][PASSED] - Object: 'Object Repository/Page_Edit-App/button_Submit' is clicked on
+
+2018-06-18 17:48:48 - [TEST_STEP][PASSED] - verifyElementPresent: Object 'Object Repository/Page_Create-App/empty_object' is present
+
+2018-06-18 17:48:48 - [MESSAGE][WARNING] - Timeout '0' is invalid. Using default page load timeout: '30'
+
+2018-06-18 17:48:48 - [MESSAGE][PASSED] - Object 'Object Repository/Page_Create-App/empty_object' is present
+
+2018-06-18 17:48:48 - [TEST_STEP][PASSED] - appmanage.startTest.closebrowser: appmanage.startTest.closebrowser is PASSED
+
+2018-06-18 17:48:48 - [MESSAGE][PASSED] - Browser is closed
+
+2018-06-18 17:48:48 - [MESSAGE][PASSED] - appmanage.startTest.closebrowser is PASSED]]></system-out>
+         <system-err><![CDATA[]]></system-err>
+      </testcase>
+      <testcase name="Test Cases/EditApp/EditAppInvalid" classname="Test Cases/EditApp/EditAppInvalid" status="FAILED">
+         <failure type="FAILED" message="Unable to verify object 'Object Repository/Page_Create-App/empty_object' is present (Root cause: com.kms.katalon.core.webui.exception.WebElementNotFoundException: Web element with id: 'Object Repository/Page_Create-App/empty_object' located by 'By.xpath: /html/body/div[2]/div[1]/div/div/div[2]/form/div[1]' not found)"/>
+         <system-out><![CDATA[2018-06-18 17:48:48 - [TEST_CASE][FAILED] - Test Cases/EditApp/EditAppInvalid: Test Cases/EditApp/EditAppInvalid FAILED because (of) Unable to verify object 'Object Repository/Page_Create-App/empty_object' is present (Root cause: com.kms.katalon.core.webui.exception.WebElementNotFoundException: Web element with id: 'Object Repository/Page_Create-App/empty_object' located by 'By.xpath: /html/body/div[2]/div[1]/div/div/div[2]/form/div[1]' not found)
+
+2018-06-18 17:48:48 - [TEST_STEP][PASSED] - appmanage.startTest.openbrowser: appmanage.startTest.openbrowser is PASSED
+
+2018-06-18 17:48:51 - [MESSAGE][PASSED] - Browser is opened with url: 'http://localhost:8080/'
+
+2018-06-18 17:48:51 - [MESSAGE][PASSED] - Keys 'user' sent to object: 'Object Repository/Page_Login Page/input_username'
+
+2018-06-18 17:48:51 - [MESSAGE][PASSED] - Keys '152feaf3-2269-48b0-b9d0-08ac4fd21f03' sent to object: 'Object Repository/Page_Login Page/input_password'
+
+2018-06-18 17:48:51 - [MESSAGE][PASSED] - Object: 'Object Repository/Page_Login Page/input_Submit' is clicked on
+
+2018-06-18 17:48:52 - [MESSAGE][PASSED] - Object: 'Object Repository/Page_dynamo apps/a_ManageApps Artifacts' is clicked on
+
+2018-06-18 17:48:52 - [MESSAGE][PASSED] - appmanage.startTest.openbrowser is PASSED
+
+2018-06-18 17:48:52 - [TEST_STEP][PASSED] - click: Object: 'Object Repository/Page_Dynamo/button_dropdownMenuButton' is clicked on
+
+2018-06-18 17:48:52 - [MESSAGE][PASSED] - Object: 'Object Repository/Page_Dynamo/button_dropdownMenuButton' is clicked on
+
+2018-06-18 17:48:52 - [TEST_STEP][PASSED] - click: Object: 'Object Repository/Page_Dynamo/a_Edit' is clicked on
+
+2018-06-18 17:48:52 - [MESSAGE][PASSED] - Object: 'Object Repository/Page_Dynamo/a_Edit' is clicked on
+
+2018-06-18 17:48:52 - [TEST_STEP][PASSED] - clearText: Text of object 'Object Repository/Page_Edit-App/input_name' is cleared
+
+2018-06-18 17:48:52 - [MESSAGE][PASSED] - Text of object 'Object Repository/Page_Edit-App/input_name' is cleared
+
+2018-06-18 17:48:52 - [TEST_STEP][PASSED] - sendKeys: Keys 'D@3445' sent to object: 'Object Repository/Page_Edit-App/input_name'
+
+2018-06-18 17:48:52 - [MESSAGE][PASSED] - Keys 'D@3445' sent to object: 'Object Repository/Page_Edit-App/input_name'
+
+2018-06-18 17:48:52 - [TEST_STEP][PASSED] - clearText: Text of object 'Object Repository/Page_Edit-App/textarea_g' is cleared
+
+2018-06-18 17:48:52 - [MESSAGE][PASSED] - Text of object 'Object Repository/Page_Edit-App/textarea_g' is cleared
+
+2018-06-18 17:48:52 - [TEST_STEP][PASSED] - sendKeys: Keys '#45f Details' sent to object: 'Object Repository/Page_Edit-App/textarea_g'
+
+2018-06-18 17:48:53 - [MESSAGE][PASSED] - Keys '#45f Details' sent to object: 'Object Repository/Page_Edit-App/textarea_g'
+
+2018-06-18 17:48:53 - [TEST_STEP][PASSED] - selectOptionByIndex: All options with index in [1] are selected on object 'Object Repository/Page_Edit-App/select_ActiveInActive'
+
+2018-06-18 17:48:53 - [MESSAGE][PASSED] - All options with index in [1] are selected on object 'Object Repository/Page_Edit-App/select_ActiveInActive'
+
+2018-06-18 17:48:53 - [TEST_STEP][PASSED] - clearText: Text of object 'Object Repository/Page_Edit-App/input_appFeatures0.name' is cleared
+
+2018-06-18 17:48:53 - [MESSAGE][PASSED] - Text of object 'Object Repository/Page_Edit-App/input_appFeatures0.name' is cleared
+
+2018-06-18 17:48:53 - [TEST_STEP][PASSED] - sendKeys: Keys 'Si#' sent to object: 'Object Repository/Page_Edit-App/input_appFeatures0.name'
+
+2018-06-18 17:48:53 - [MESSAGE][PASSED] - Keys 'Si#' sent to object: 'Object Repository/Page_Edit-App/input_appFeatures0.name'
+
+2018-06-18 17:48:53 - [TEST_STEP][PASSED] - clearText: Text of object 'Object Repository/Page_Edit-App/input_appFeatures0.description' is cleared
+
+2018-06-18 17:48:53 - [MESSAGE][PASSED] - Text of object 'Object Repository/Page_Edit-App/input_appFeatures0.description' is cleared
+
+2018-06-18 17:48:53 - [TEST_STEP][PASSED] - sendKeys: Keys '—5' sent to object: 'Object Repository/Page_Edit-App/input_appFeatures0.description'
+
+2018-06-18 17:48:53 - [MESSAGE][PASSED] - Keys '—5' sent to object: 'Object Repository/Page_Edit-App/input_appFeatures0.description'
+
+2018-06-18 17:48:53 - [TEST_STEP][PASSED] - click: Object: 'Object Repository/Page_Edit-App/button_Submit' is clicked on
+
+2018-06-18 17:48:54 - [MESSAGE][PASSED] - Object: 'Object Repository/Page_Edit-App/button_Submit' is clicked on
+
+2018-06-18 17:48:54 - [TEST_STEP][FAILED] - verifyElementPresent: Unable to verify object 'Object Repository/Page_Create-App/empty_object' is present (Root cause: com.kms.katalon.core.webui.exception.WebElementNotFoundException: Web element with id: 'Object Repository/Page_Create-App/empty_object' located by 'By.xpath: /html/body/div[2]/div[1]/div/div/div[2]/form/div[1]' not found)
+
+2018-06-18 17:48:54 - [MESSAGE][WARNING] - Timeout '0' is invalid. Using default page load timeout: '30'
+
+2018-06-18 17:49:25 - [MESSAGE][FAILED] - com.kms.katalon.core.webui.exception.WebElementNotFoundException: Web element with id: 'Object Repository/Page_Create-App/empty_object' located by 'By.xpath: /html/body/div[2]/div[1]/div/div/div[2]/form/div[1]' not found
+[[ATTACHMENT|/Users/Siva/Work/code/dynamo-framework/dynamo-framework-modules/dynamo-apps/QA/v0.4.0/Katalon/DynamoAppTest/Dynamo-apps/Reports/EditApp/20180618_174836/1529324365080.png]]
+
+2018-06-18 17:49:25 - [MESSAGE][FAILED] - Unable to verify object 'Object Repository/Page_Create-App/empty_object' is present (Root cause: com.kms.katalon.core.webui.exception.WebElementNotFoundException: Web element with id: 'Object Repository/Page_Create-App/empty_object' located by 'By.xpath: /html/body/div[2]/div[1]/div/div/div[2]/form/div[1]' not found)
+[[ATTACHMENT|/Users/Siva/Work/code/dynamo-framework/dynamo-framework-modules/dynamo-apps/QA/v0.4.0/Katalon/DynamoAppTest/Dynamo-apps/Reports/EditApp/20180618_174836/1529324365366.png]]]]></system-out>
+         <system-err><![CDATA[2018-06-18 17:48:48 - [TEST_CASE][FAILED] - Test Cases/EditApp/EditAppInvalid: Test Cases/EditApp/EditAppInvalid FAILED because (of) Unable to verify object 'Object Repository/Page_Create-App/empty_object' is present (Root cause: com.kms.katalon.core.webui.exception.WebElementNotFoundException: Web element with id: 'Object Repository/Page_Create-App/empty_object' located by 'By.xpath: /html/body/div[2]/div[1]/div/div/div[2]/form/div[1]' not found)]]></system-err>
+      </testcase>
+      <testcase name="Test Cases/EditApp/EditAppInvalid" classname="Test Cases/EditApp/EditAppInvalid" status="FAILED">
+         <failure type="FAILED" message="Unable to verify object 'Object Repository/Page_Create-App/empty_object' is present (Root cause: com.kms.katalon.core.webui.exception.WebElementNotFoundException: Web element with id: 'Object Repository/Page_Create-App/empty_object' located by 'By.xpath: /html/body/div[2]/div[1]/div/div/div[2]/form/div[1]' not found)"/>
+         <system-out><![CDATA[2018-06-18 17:49:25 - [TEST_CASE][FAILED] - Test Cases/EditApp/EditAppInvalid: Test Cases/EditApp/EditAppInvalid FAILED because (of) Unable to verify object 'Object Repository/Page_Create-App/empty_object' is present (Root cause: com.kms.katalon.core.webui.exception.WebElementNotFoundException: Web element with id: 'Object Repository/Page_Create-App/empty_object' located by 'By.xpath: /html/body/div[2]/div[1]/div/div/div[2]/form/div[1]' not found)
+
+2018-06-18 17:49:25 - [TEST_STEP][PASSED] - appmanage.startTest.openbrowser: appmanage.startTest.openbrowser is PASSED
+
+2018-06-18 17:49:25 - [MESSAGE][WARNING] - A browser is already opened. Closing browser and opening a new one
+
+2018-06-18 17:49:28 - [MESSAGE][PASSED] - Browser is opened with url: 'http://localhost:8080/'
+
+2018-06-18 17:49:28 - [MESSAGE][PASSED] - Keys 'user' sent to object: 'Object Repository/Page_Login Page/input_username'
+
+2018-06-18 17:49:28 - [MESSAGE][PASSED] - Keys '152feaf3-2269-48b0-b9d0-08ac4fd21f03' sent to object: 'Object Repository/Page_Login Page/input_password'
+
+2018-06-18 17:49:29 - [MESSAGE][PASSED] - Object: 'Object Repository/Page_Login Page/input_Submit' is clicked on
+
+2018-06-18 17:49:29 - [MESSAGE][PASSED] - Object: 'Object Repository/Page_dynamo apps/a_ManageApps Artifacts' is clicked on
+
+2018-06-18 17:49:29 - [MESSAGE][PASSED] - appmanage.startTest.openbrowser is PASSED
+
+2018-06-18 17:49:29 - [TEST_STEP][PASSED] - click: Object: 'Object Repository/Page_Dynamo/button_dropdownMenuButton' is clicked on
+
+2018-06-18 17:49:29 - [MESSAGE][PASSED] - Object: 'Object Repository/Page_Dynamo/button_dropdownMenuButton' is clicked on
+
+2018-06-18 17:49:29 - [TEST_STEP][PASSED] - click: Object: 'Object Repository/Page_Dynamo/a_Edit' is clicked on
+
+2018-06-18 17:49:30 - [MESSAGE][PASSED] - Object: 'Object Repository/Page_Dynamo/a_Edit' is clicked on
+
+2018-06-18 17:49:30 - [TEST_STEP][PASSED] - clearText: Text of object 'Object Repository/Page_Edit-App/input_name' is cleared
+
+2018-06-18 17:49:30 - [MESSAGE][PASSED] - Text of object 'Object Repository/Page_Edit-App/input_name' is cleared
+
+2018-06-18 17:49:30 - [TEST_STEP][PASSED] - sendKeys: Keys 'D46in' sent to object: 'Object Repository/Page_Edit-App/input_name'
+
+2018-06-18 17:49:30 - [MESSAGE][PASSED] - Keys 'D46in' sent to object: 'Object Repository/Page_Edit-App/input_name'
+
+2018-06-18 17:49:30 - [TEST_STEP][PASSED] - clearText: Text of object 'Object Repository/Page_Edit-App/textarea_g' is cleared
+
+2018-06-18 17:49:30 - [MESSAGE][PASSED] - Text of object 'Object Repository/Page_Edit-App/textarea_g' is cleared
+
+2018-06-18 17:49:30 - [TEST_STEP][PASSED] - sendKeys: Keys '^&* DEs' sent to object: 'Object Repository/Page_Edit-App/textarea_g'
+
+2018-06-18 17:49:30 - [MESSAGE][PASSED] - Keys '^&* DEs' sent to object: 'Object Repository/Page_Edit-App/textarea_g'
+
+2018-06-18 17:49:30 - [TEST_STEP][PASSED] - selectOptionByIndex: All options with index in [1] are selected on object 'Object Repository/Page_Edit-App/select_ActiveInActive'
+
+2018-06-18 17:49:30 - [MESSAGE][PASSED] - All options with index in [1] are selected on object 'Object Repository/Page_Edit-App/select_ActiveInActive'
+
+2018-06-18 17:49:30 - [TEST_STEP][PASSED] - clearText: Text of object 'Object Repository/Page_Edit-App/input_appFeatures0.name' is cleared
+
+2018-06-18 17:49:30 - [MESSAGE][PASSED] - Text of object 'Object Repository/Page_Edit-App/input_appFeatures0.name' is cleared
+
+2018-06-18 17:49:30 - [TEST_STEP][PASSED] - sendKeys: Keys 'Admin _+e4' sent to object: 'Object Repository/Page_Edit-App/input_appFeatures0.name'
+
+2018-06-18 17:49:30 - [MESSAGE][PASSED] - Keys 'Admin _+e4' sent to object: 'Object Repository/Page_Edit-App/input_appFeatures0.name'
+
+2018-06-18 17:49:30 - [TEST_STEP][PASSED] - clearText: Text of object 'Object Repository/Page_Edit-App/input_appFeatures0.description' is cleared
+
+2018-06-18 17:49:30 - [MESSAGE][PASSED] - Text of object 'Object Repository/Page_Edit-App/input_appFeatures0.description' is cleared
+
+2018-06-18 17:49:30 - [TEST_STEP][PASSED] - sendKeys: Keys '“gtt6# _))s' sent to object: 'Object Repository/Page_Edit-App/input_appFeatures0.description'
+
+2018-06-18 17:49:31 - [MESSAGE][PASSED] - Keys '“gtt6# _))s' sent to object: 'Object Repository/Page_Edit-App/input_appFeatures0.description'
+
+2018-06-18 17:49:31 - [TEST_STEP][PASSED] - click: Object: 'Object Repository/Page_Edit-App/button_Submit' is clicked on
+
+2018-06-18 17:49:31 - [MESSAGE][PASSED] - Object: 'Object Repository/Page_Edit-App/button_Submit' is clicked on
+
+2018-06-18 17:49:31 - [TEST_STEP][FAILED] - verifyElementPresent: Unable to verify object 'Object Repository/Page_Create-App/empty_object' is present (Root cause: com.kms.katalon.core.webui.exception.WebElementNotFoundException: Web element with id: 'Object Repository/Page_Create-App/empty_object' located by 'By.xpath: /html/body/div[2]/div[1]/div/div/div[2]/form/div[1]' not found)
+
+2018-06-18 17:49:31 - [MESSAGE][WARNING] - Timeout '0' is invalid. Using default page load timeout: '30'
+
+2018-06-18 17:50:02 - [MESSAGE][FAILED] - com.kms.katalon.core.webui.exception.WebElementNotFoundException: Web element with id: 'Object Repository/Page_Create-App/empty_object' located by 'By.xpath: /html/body/div[2]/div[1]/div/div/div[2]/form/div[1]' not found
+[[ATTACHMENT|/Users/Siva/Work/code/dynamo-framework/dynamo-framework-modules/dynamo-apps/QA/v0.4.0/Katalon/DynamoAppTest/Dynamo-apps/Reports/EditApp/20180618_174836/1529324402271.png]]
+
+2018-06-18 17:50:02 - [MESSAGE][FAILED] - Unable to verify object 'Object Repository/Page_Create-App/empty_object' is present (Root cause: com.kms.katalon.core.webui.exception.WebElementNotFoundException: Web element with id: 'Object Repository/Page_Create-App/empty_object' located by 'By.xpath: /html/body/div[2]/div[1]/div/div/div[2]/form/div[1]' not found)
+[[ATTACHMENT|/Users/Siva/Work/code/dynamo-framework/dynamo-framework-modules/dynamo-apps/QA/v0.4.0/Katalon/DynamoAppTest/Dynamo-apps/Reports/EditApp/20180618_174836/1529324402566.png]]]]></system-out>
+         <system-err><![CDATA[2018-06-18 17:49:25 - [TEST_CASE][FAILED] - Test Cases/EditApp/EditAppInvalid: Test Cases/EditApp/EditAppInvalid FAILED because (of) Unable to verify object 'Object Repository/Page_Create-App/empty_object' is present (Root cause: com.kms.katalon.core.webui.exception.WebElementNotFoundException: Web element with id: 'Object Repository/Page_Create-App/empty_object' located by 'By.xpath: /html/body/div[2]/div[1]/div/div/div[2]/form/div[1]' not found)]]></system-err>
+      </testcase>
+      <testcase name="Test Cases/EditApp/EditAppInvalid" classname="Test Cases/EditApp/EditAppInvalid" status="FAILED">
+         <failure type="FAILED" message="Unable to verify object 'Object Repository/Page_Create-App/empty_object' is present (Root cause: com.kms.katalon.core.webui.exception.WebElementNotFoundException: Web element with id: 'Object Repository/Page_Create-App/empty_object' located by 'By.xpath: /html/body/div[2]/div[1]/div/div/div[2]/form/div[1]' not found)"/>
+         <system-out><![CDATA[2018-06-18 17:50:02 - [TEST_CASE][FAILED] - Test Cases/EditApp/EditAppInvalid: Test Cases/EditApp/EditAppInvalid FAILED because (of) Unable to verify object 'Object Repository/Page_Create-App/empty_object' is present (Root cause: com.kms.katalon.core.webui.exception.WebElementNotFoundException: Web element with id: 'Object Repository/Page_Create-App/empty_object' located by 'By.xpath: /html/body/div[2]/div[1]/div/div/div[2]/form/div[1]' not found)
+
+2018-06-18 17:50:02 - [TEST_STEP][PASSED] - appmanage.startTest.openbrowser: appmanage.startTest.openbrowser is PASSED
+
+2018-06-18 17:50:02 - [MESSAGE][WARNING] - A browser is already opened. Closing browser and opening a new one
+
+2018-06-18 17:50:05 - [MESSAGE][PASSED] - Browser is opened with url: 'http://localhost:8080/'
+
+2018-06-18 17:50:05 - [MESSAGE][PASSED] - Keys 'user' sent to object: 'Object Repository/Page_Login Page/input_username'
+
+2018-06-18 17:50:05 - [MESSAGE][PASSED] - Keys '152feaf3-2269-48b0-b9d0-08ac4fd21f03' sent to object: 'Object Repository/Page_Login Page/input_password'
+
+2018-06-18 17:50:06 - [MESSAGE][PASSED] - Object: 'Object Repository/Page_Login Page/input_Submit' is clicked on
+
+2018-06-18 17:50:06 - [MESSAGE][PASSED] - Object: 'Object Repository/Page_dynamo apps/a_ManageApps Artifacts' is clicked on
+
+2018-06-18 17:50:06 - [MESSAGE][PASSED] - appmanage.startTest.openbrowser is PASSED
+
+2018-06-18 17:50:06 - [TEST_STEP][PASSED] - click: Object: 'Object Repository/Page_Dynamo/button_dropdownMenuButton' is clicked on
+
+2018-06-18 17:50:06 - [MESSAGE][PASSED] - Object: 'Object Repository/Page_Dynamo/button_dropdownMenuButton' is clicked on
+
+2018-06-18 17:50:06 - [TEST_STEP][PASSED] - click: Object: 'Object Repository/Page_Dynamo/a_Edit' is clicked on
+
+2018-06-18 17:50:06 - [MESSAGE][PASSED] - Object: 'Object Repository/Page_Dynamo/a_Edit' is clicked on
+
+2018-06-18 17:50:06 - [TEST_STEP][PASSED] - clearText: Text of object 'Object Repository/Page_Edit-App/input_name' is cleared
+
+2018-06-18 17:50:06 - [MESSAGE][PASSED] - Text of object 'Object Repository/Page_Edit-App/input_name' is cleared
+
+2018-06-18 17:50:06 - [TEST_STEP][PASSED] - sendKeys: Keys '#4yghg' sent to object: 'Object Repository/Page_Edit-App/input_name'
+
+2018-06-18 17:50:07 - [MESSAGE][PASSED] - Keys '#4yghg' sent to object: 'Object Repository/Page_Edit-App/input_name'
+
+2018-06-18 17:50:07 - [TEST_STEP][PASSED] - clearText: Text of object 'Object Repository/Page_Edit-App/textarea_g' is cleared
+
+2018-06-18 17:50:07 - [MESSAGE][PASSED] - Text of object 'Object Repository/Page_Edit-App/textarea_g' is cleared
+
+2018-06-18 17:50:07 - [TEST_STEP][PASSED] - sendKeys: Keys 'View 6562!#' sent to object: 'Object Repository/Page_Edit-App/textarea_g'
+
+2018-06-18 17:50:07 - [MESSAGE][PASSED] - Keys 'View 6562!#' sent to object: 'Object Repository/Page_Edit-App/textarea_g'
+
+2018-06-18 17:50:07 - [TEST_STEP][PASSED] - selectOptionByIndex: All options with index in [1] are selected on object 'Object Repository/Page_Edit-App/select_ActiveInActive'
+
+2018-06-18 17:50:07 - [MESSAGE][PASSED] - All options with index in [1] are selected on object 'Object Repository/Page_Edit-App/select_ActiveInActive'
+
+2018-06-18 17:50:07 - [TEST_STEP][PASSED] - clearText: Text of object 'Object Repository/Page_Edit-App/input_appFeatures0.name' is cleared
+
+2018-06-18 17:50:07 - [MESSAGE][PASSED] - Text of object 'Object Repository/Page_Edit-App/input_appFeatures0.name' is cleared
+
+2018-06-18 17:50:07 - [TEST_STEP][PASSED] - sendKeys: Keys '^9 Feature' sent to object: 'Object Repository/Page_Edit-App/input_appFeatures0.name'
+
+2018-06-18 17:50:07 - [MESSAGE][PASSED] - Keys '^9 Feature' sent to object: 'Object Repository/Page_Edit-App/input_appFeatures0.name'
+
+2018-06-18 17:50:07 - [TEST_STEP][PASSED] - clearText: Text of object 'Object Repository/Page_Edit-App/input_appFeatures0.description' is cleared
+
+2018-06-18 17:50:07 - [MESSAGE][PASSED] - Text of object 'Object Repository/Page_Edit-App/input_appFeatures0.description' is cleared
+
+2018-06-18 17:50:07 - [TEST_STEP][PASSED] - sendKeys: Keys 'View >?:' sent to object: 'Object Repository/Page_Edit-App/input_appFeatures0.description'
+
+2018-06-18 17:50:07 - [MESSAGE][PASSED] - Keys 'View >?:' sent to object: 'Object Repository/Page_Edit-App/input_appFeatures0.description'
+
+2018-06-18 17:50:07 - [TEST_STEP][PASSED] - click: Object: 'Object Repository/Page_Edit-App/button_Submit' is clicked on
+
+2018-06-18 17:50:08 - [MESSAGE][PASSED] - Object: 'Object Repository/Page_Edit-App/button_Submit' is clicked on
+
+2018-06-18 17:50:08 - [TEST_STEP][FAILED] - verifyElementPresent: Unable to verify object 'Object Repository/Page_Create-App/empty_object' is present (Root cause: com.kms.katalon.core.webui.exception.WebElementNotFoundException: Web element with id: 'Object Repository/Page_Create-App/empty_object' located by 'By.xpath: /html/body/div[2]/div[1]/div/div/div[2]/form/div[1]' not found)
+
+2018-06-18 17:50:08 - [MESSAGE][WARNING] - Timeout '0' is invalid. Using default page load timeout: '30'
+
+2018-06-18 17:50:39 - [MESSAGE][FAILED] - com.kms.katalon.core.webui.exception.WebElementNotFoundException: Web element with id: 'Object Repository/Page_Create-App/empty_object' located by 'By.xpath: /html/body/div[2]/div[1]/div/div/div[2]/form/div[1]' not found
+[[ATTACHMENT|/Users/Siva/Work/code/dynamo-framework/dynamo-framework-modules/dynamo-apps/QA/v0.4.0/Katalon/DynamoAppTest/Dynamo-apps/Reports/EditApp/20180618_174836/1529324438917.png]]
+
+2018-06-18 17:50:39 - [MESSAGE][FAILED] - Unable to verify object 'Object Repository/Page_Create-App/empty_object' is present (Root cause: com.kms.katalon.core.webui.exception.WebElementNotFoundException: Web element with id: 'Object Repository/Page_Create-App/empty_object' located by 'By.xpath: /html/body/div[2]/div[1]/div/div/div[2]/form/div[1]' not found)
+[[ATTACHMENT|/Users/Siva/Work/code/dynamo-framework/dynamo-framework-modules/dynamo-apps/QA/v0.4.0/Katalon/DynamoAppTest/Dynamo-apps/Reports/EditApp/20180618_174836/1529324439353.png]]]]></system-out>
+         <system-err><![CDATA[2018-06-18 17:50:02 - [TEST_CASE][FAILED] - Test Cases/EditApp/EditAppInvalid: Test Cases/EditApp/EditAppInvalid FAILED because (of) Unable to verify object 'Object Repository/Page_Create-App/empty_object' is present (Root cause: com.kms.katalon.core.webui.exception.WebElementNotFoundException: Web element with id: 'Object Repository/Page_Create-App/empty_object' located by 'By.xpath: /html/body/div[2]/div[1]/div/div/div[2]/form/div[1]' not found)]]></system-err>
+      </testcase>
+      <testcase name="Test Cases/EditApp/EditAppInvalid" classname="Test Cases/EditApp/EditAppInvalid" status="FAILED">
+         <failure type="FAILED" message="Unable to verify object 'Object Repository/Page_Create-App/empty_object' is present (Root cause: com.kms.katalon.core.webui.exception.WebElementNotFoundException: Web element with id: 'Object Repository/Page_Create-App/empty_object' located by 'By.xpath: /html/body/div[2]/div[1]/div/div/div[2]/form/div[1]' not found)"/>
+         <system-out><![CDATA[2018-06-18 17:50:39 - [TEST_CASE][FAILED] - Test Cases/EditApp/EditAppInvalid: Test Cases/EditApp/EditAppInvalid FAILED because (of) Unable to verify object 'Object Repository/Page_Create-App/empty_object' is present (Root cause: com.kms.katalon.core.webui.exception.WebElementNotFoundException: Web element with id: 'Object Repository/Page_Create-App/empty_object' located by 'By.xpath: /html/body/div[2]/div[1]/div/div/div[2]/form/div[1]' not found)
+
+2018-06-18 17:50:39 - [TEST_STEP][PASSED] - appmanage.startTest.openbrowser: appmanage.startTest.openbrowser is PASSED
+
+2018-06-18 17:50:39 - [MESSAGE][WARNING] - A browser is already opened. Closing browser and opening a new one
+
+2018-06-18 17:50:41 - [MESSAGE][PASSED] - Browser is opened with url: 'http://localhost:8080/'
+
+2018-06-18 17:50:41 - [MESSAGE][PASSED] - Keys 'user' sent to object: 'Object Repository/Page_Login Page/input_username'
+
+2018-06-18 17:50:41 - [MESSAGE][PASSED] - Keys '152feaf3-2269-48b0-b9d0-08ac4fd21f03' sent to object: 'Object Repository/Page_Login Page/input_password'
+
+2018-06-18 17:50:41 - [MESSAGE][PASSED] - Object: 'Object Repository/Page_Login Page/input_Submit' is clicked on
+
+2018-06-18 17:50:42 - [MESSAGE][PASSED] - Object: 'Object Repository/Page_dynamo apps/a_ManageApps Artifacts' is clicked on
+
+2018-06-18 17:50:42 - [MESSAGE][PASSED] - appmanage.startTest.openbrowser is PASSED
+
+2018-06-18 17:50:42 - [TEST_STEP][PASSED] - click: Object: 'Object Repository/Page_Dynamo/button_dropdownMenuButton' is clicked on
+
+2018-06-18 17:50:42 - [MESSAGE][PASSED] - Object: 'Object Repository/Page_Dynamo/button_dropdownMenuButton' is clicked on
+
+2018-06-18 17:50:42 - [TEST_STEP][PASSED] - click: Object: 'Object Repository/Page_Dynamo/a_Edit' is clicked on
+
+2018-06-18 17:50:42 - [MESSAGE][PASSED] - Object: 'Object Repository/Page_Dynamo/a_Edit' is clicked on
+
+2018-06-18 17:50:42 - [TEST_STEP][PASSED] - clearText: Text of object 'Object Repository/Page_Edit-App/input_name' is cleared
+
+2018-06-18 17:50:42 - [MESSAGE][PASSED] - Text of object 'Object Repository/Page_Edit-App/input_name' is cleared
+
+2018-06-18 17:50:42 - [TEST_STEP][PASSED] - sendKeys: Keys '%gh' sent to object: 'Object Repository/Page_Edit-App/input_name'
+
+2018-06-18 17:50:42 - [MESSAGE][PASSED] - Keys '%gh' sent to object: 'Object Repository/Page_Edit-App/input_name'
+
+2018-06-18 17:50:42 - [TEST_STEP][PASSED] - clearText: Text of object 'Object Repository/Page_Edit-App/textarea_g' is cleared
+
+2018-06-18 17:50:43 - [MESSAGE][PASSED] - Text of object 'Object Repository/Page_Edit-App/textarea_g' is cleared
+
+2018-06-18 17:50:43 - [TEST_STEP][PASSED] - sendKeys: Keys 'Media $_+' sent to object: 'Object Repository/Page_Edit-App/textarea_g'
+
+2018-06-18 17:50:43 - [MESSAGE][PASSED] - Keys 'Media $_+' sent to object: 'Object Repository/Page_Edit-App/textarea_g'
+
+2018-06-18 17:50:43 - [TEST_STEP][PASSED] - selectOptionByIndex: All options with index in [1] are selected on object 'Object Repository/Page_Edit-App/select_ActiveInActive'
+
+2018-06-18 17:50:43 - [MESSAGE][PASSED] - All options with index in [1] are selected on object 'Object Repository/Page_Edit-App/select_ActiveInActive'
+
+2018-06-18 17:50:43 - [TEST_STEP][PASSED] - clearText: Text of object 'Object Repository/Page_Edit-App/input_appFeatures0.name' is cleared
+
+2018-06-18 17:50:43 - [MESSAGE][PASSED] - Text of object 'Object Repository/Page_Edit-App/input_appFeatures0.name' is cleared
+
+2018-06-18 17:50:43 - [TEST_STEP][PASSED] - sendKeys: Keys 'Shape $^&*' sent to object: 'Object Repository/Page_Edit-App/input_appFeatures0.name'
+
+2018-06-18 17:50:43 - [MESSAGE][PASSED] - Keys 'Shape $^&*' sent to object: 'Object Repository/Page_Edit-App/input_appFeatures0.name'
+
+2018-06-18 17:50:43 - [TEST_STEP][PASSED] - clearText: Text of object 'Object Repository/Page_Edit-App/input_appFeatures0.description' is cleared
+
+2018-06-18 17:50:43 - [MESSAGE][PASSED] - Text of object 'Object Repository/Page_Edit-App/input_appFeatures0.description' is cleared
+
+2018-06-18 17:50:43 - [TEST_STEP][PASSED] - sendKeys: Keys 'Shap %^*J' sent to object: 'Object Repository/Page_Edit-App/input_appFeatures0.description'
+
+2018-06-18 17:50:43 - [MESSAGE][PASSED] - Keys 'Shap %^*J' sent to object: 'Object Repository/Page_Edit-App/input_appFeatures0.description'
+
+2018-06-18 17:50:43 - [TEST_STEP][PASSED] - click: Object: 'Object Repository/Page_Edit-App/button_Submit' is clicked on
+
+2018-06-18 17:50:44 - [MESSAGE][PASSED] - Object: 'Object Repository/Page_Edit-App/button_Submit' is clicked on
+
+2018-06-18 17:50:44 - [TEST_STEP][FAILED] - verifyElementPresent: Unable to verify object 'Object Repository/Page_Create-App/empty_object' is present (Root cause: com.kms.katalon.core.webui.exception.WebElementNotFoundException: Web element with id: 'Object Repository/Page_Create-App/empty_object' located by 'By.xpath: /html/body/div[2]/div[1]/div/div/div[2]/form/div[1]' not found)
+
+2018-06-18 17:50:44 - [MESSAGE][WARNING] - Timeout '0' is invalid. Using default page load timeout: '30'
+
+2018-06-18 17:51:15 - [MESSAGE][FAILED] - com.kms.katalon.core.webui.exception.WebElementNotFoundException: Web element with id: 'Object Repository/Page_Create-App/empty_object' located by 'By.xpath: /html/body/div[2]/div[1]/div/div/div[2]/form/div[1]' not found
+[[ATTACHMENT|/Users/Siva/Work/code/dynamo-framework/dynamo-framework-modules/dynamo-apps/QA/v0.4.0/Katalon/DynamoAppTest/Dynamo-apps/Reports/EditApp/20180618_174836/1529324474772.png]]
+
+2018-06-18 17:51:15 - [MESSAGE][FAILED] - Unable to verify object 'Object Repository/Page_Create-App/empty_object' is present (Root cause: com.kms.katalon.core.webui.exception.WebElementNotFoundException: Web element with id: 'Object Repository/Page_Create-App/empty_object' located by 'By.xpath: /html/body/div[2]/div[1]/div/div/div[2]/form/div[1]' not found)
+[[ATTACHMENT|/Users/Siva/Work/code/dynamo-framework/dynamo-framework-modules/dynamo-apps/QA/v0.4.0/Katalon/DynamoAppTest/Dynamo-apps/Reports/EditApp/20180618_174836/1529324475198.png]]]]></system-out>
+         <system-err><![CDATA[2018-06-18 17:50:39 - [TEST_CASE][FAILED] - Test Cases/EditApp/EditAppInvalid: Test Cases/EditApp/EditAppInvalid FAILED because (of) Unable to verify object 'Object Repository/Page_Create-App/empty_object' is present (Root cause: com.kms.katalon.core.webui.exception.WebElementNotFoundException: Web element with id: 'Object Repository/Page_Create-App/empty_object' located by 'By.xpath: /html/body/div[2]/div[1]/div/div/div[2]/form/div[1]' not found)]]></system-err>
+      </testcase>
+      <testcase name="Test Cases/EditApp/EditAppValid" classname="Test Cases/EditApp/EditAppValid" status="PASSED">
+         <system-out><![CDATA[2018-06-18 17:51:15 - [TEST_CASE][PASSED] - Test Cases/EditApp/EditAppValid: Test Cases/EditApp/EditAppValid
+
+2018-06-18 17:51:15 - [TEST_STEP][PASSED] - appmanage.startTest.openbrowser: appmanage.startTest.openbrowser is PASSED
+
+2018-06-18 17:51:15 - [MESSAGE][WARNING] - A browser is already opened. Closing browser and opening a new one
+
+2018-06-18 17:51:17 - [MESSAGE][PASSED] - Browser is opened with url: 'http://localhost:8080/'
+
+2018-06-18 17:51:18 - [MESSAGE][PASSED] - Keys 'user' sent to object: 'Object Repository/Page_Login Page/input_username'
+
+2018-06-18 17:51:18 - [MESSAGE][PASSED] - Keys '152feaf3-2269-48b0-b9d0-08ac4fd21f03' sent to object: 'Object Repository/Page_Login Page/input_password'
+
+2018-06-18 17:51:18 - [MESSAGE][PASSED] - Object: 'Object Repository/Page_Login Page/input_Submit' is clicked on
+
+2018-06-18 17:51:19 - [MESSAGE][PASSED] - Object: 'Object Repository/Page_dynamo apps/a_ManageApps Artifacts' is clicked on
+
+2018-06-18 17:51:19 - [MESSAGE][PASSED] - appmanage.startTest.openbrowser is PASSED
+
+2018-06-18 17:51:19 - [TEST_STEP][PASSED] - click: Object: 'Object Repository/Page_Dynamo/button_dropdownMenuButton' is clicked on
+
+2018-06-18 17:51:19 - [MESSAGE][PASSED] - Object: 'Object Repository/Page_Dynamo/button_dropdownMenuButton' is clicked on
+
+2018-06-18 17:51:19 - [TEST_STEP][PASSED] - click: Object: 'Object Repository/Page_Dynamo/a_Edit' is clicked on
+
+2018-06-18 17:51:19 - [MESSAGE][PASSED] - Object: 'Object Repository/Page_Dynamo/a_Edit' is clicked on
+
+2018-06-18 17:51:19 - [TEST_STEP][PASSED] - sendKeys: Keys 'Doctor' sent to object: 'Object Repository/Page_Edit-App/input_name'
+
+2018-06-18 17:51:19 - [MESSAGE][PASSED] - Keys 'Doctor' sent to object: 'Object Repository/Page_Edit-App/input_name'
+
+2018-06-18 17:51:19 - [TEST_STEP][PASSED] - sendKeys: Keys ' App Details' sent to object: 'Object Repository/Page_Edit-App/textarea_g'
+
+2018-06-18 17:51:19 - [MESSAGE][PASSED] - Keys ' App Details' sent to object: 'Object Repository/Page_Edit-App/textarea_g'
+
+2018-06-18 17:51:19 - [TEST_STEP][PASSED] - selectOptionByIndex: All options with index in [1] are selected on object 'Object Repository/Page_Edit-App/select_ActiveInActive'
+
+2018-06-18 17:51:20 - [MESSAGE][PASSED] - All options with index in [1] are selected on object 'Object Repository/Page_Edit-App/select_ActiveInActive'
+
+2018-06-18 17:51:20 - [TEST_STEP][PASSED] - sendKeys: Keys 'Sivaram' sent to object: 'Object Repository/Page_Edit-App/input_appFeatures0.name'
+
+2018-06-18 17:51:20 - [MESSAGE][PASSED] - Keys 'Sivaram' sent to object: 'Object Repository/Page_Edit-App/input_appFeatures0.name'
+
+2018-06-18 17:51:20 - [TEST_STEP][PASSED] - sendKeys: Keys 'Sivaram Details' sent to object: 'Object Repository/Page_Edit-App/input_appFeatures0.description'
+
+2018-06-18 17:51:20 - [MESSAGE][PASSED] - Keys 'Sivaram Details' sent to object: 'Object Repository/Page_Edit-App/input_appFeatures0.description'
+
+2018-06-18 17:51:20 - [TEST_STEP][PASSED] - click: Object: 'Object Repository/Page_Edit-App/button_Submit' is clicked on
+
+2018-06-18 17:51:20 - [MESSAGE][PASSED] - Object: 'Object Repository/Page_Edit-App/button_Submit' is clicked on
+
+2018-06-18 17:51:20 - [TEST_STEP][PASSED] - verifyTextPresent: Text 'Doctor' is present on page 
+
+2018-06-18 17:51:20 - [MESSAGE][PASSED] - Text 'Doctor' is present on page 
+
+2018-06-18 17:51:20 - [TEST_STEP][PASSED] - appmanage.startTest.closebrowser: appmanage.startTest.closebrowser is PASSED
+
+2018-06-18 17:51:21 - [MESSAGE][PASSED] - Browser is closed
+
+2018-06-18 17:51:21 - [MESSAGE][PASSED] - appmanage.startTest.closebrowser is PASSED]]></system-out>
+         <system-err><![CDATA[]]></system-err>
+      </testcase>
+      <testcase name="Test Cases/EditApp/EditAppValid" classname="Test Cases/EditApp/EditAppValid" status="PASSED">
+         <system-out><![CDATA[2018-06-18 17:51:21 - [TEST_CASE][PASSED] - Test Cases/EditApp/EditAppValid: Test Cases/EditApp/EditAppValid
+
+2018-06-18 17:51:21 - [TEST_STEP][PASSED] - appmanage.startTest.openbrowser: appmanage.startTest.openbrowser is PASSED
+
+2018-06-18 17:51:22 - [MESSAGE][PASSED] - Browser is opened with url: 'http://localhost:8080/'
+
+2018-06-18 17:51:22 - [MESSAGE][PASSED] - Keys 'user' sent to object: 'Object Repository/Page_Login Page/input_username'
+
+2018-06-18 17:51:22 - [MESSAGE][PASSED] - Keys '152feaf3-2269-48b0-b9d0-08ac4fd21f03' sent to object: 'Object Repository/Page_Login Page/input_password'
+
+2018-06-18 17:51:23 - [MESSAGE][PASSED] - Object: 'Object Repository/Page_Login Page/input_Submit' is clicked on
+
+2018-06-18 17:51:23 - [MESSAGE][PASSED] - Object: 'Object Repository/Page_dynamo apps/a_ManageApps Artifacts' is clicked on
+
+2018-06-18 17:51:23 - [MESSAGE][PASSED] - appmanage.startTest.openbrowser is PASSED
+
+2018-06-18 17:51:23 - [TEST_STEP][PASSED] - click: Object: 'Object Repository/Page_Dynamo/button_dropdownMenuButton' is clicked on
+
+2018-06-18 17:51:23 - [MESSAGE][PASSED] - Object: 'Object Repository/Page_Dynamo/button_dropdownMenuButton' is clicked on
+
+2018-06-18 17:51:23 - [TEST_STEP][PASSED] - click: Object: 'Object Repository/Page_Dynamo/a_Edit' is clicked on
+
+2018-06-18 17:51:23 - [MESSAGE][PASSED] - Object: 'Object Repository/Page_Dynamo/a_Edit' is clicked on
+
+2018-06-18 17:51:23 - [TEST_STEP][PASSED] - sendKeys: Keys 'Admin' sent to object: 'Object Repository/Page_Edit-App/input_name'
+
+2018-06-18 17:51:24 - [MESSAGE][PASSED] - Keys 'Admin' sent to object: 'Object Repository/Page_Edit-App/input_name'
+
+2018-06-18 17:51:24 - [TEST_STEP][PASSED] - sendKeys: Keys 'Admin Description' sent to object: 'Object Repository/Page_Edit-App/textarea_g'
+
+2018-06-18 17:51:24 - [MESSAGE][PASSED] - Keys 'Admin Description' sent to object: 'Object Repository/Page_Edit-App/textarea_g'
+
+2018-06-18 17:51:24 - [TEST_STEP][PASSED] - selectOptionByIndex: All options with index in [1] are selected on object 'Object Repository/Page_Edit-App/select_ActiveInActive'
+
+2018-06-18 17:51:24 - [MESSAGE][PASSED] - All options with index in [1] are selected on object 'Object Repository/Page_Edit-App/select_ActiveInActive'
+
+2018-06-18 17:51:24 - [TEST_STEP][PASSED] - sendKeys: Keys 'Admin Feat' sent to object: 'Object Repository/Page_Edit-App/input_appFeatures0.name'
+
+2018-06-18 17:51:24 - [MESSAGE][PASSED] - Keys 'Admin Feat' sent to object: 'Object Repository/Page_Edit-App/input_appFeatures0.name'
+
+2018-06-18 17:51:24 - [TEST_STEP][PASSED] - sendKeys: Keys 'Admin Des' sent to object: 'Object Repository/Page_Edit-App/input_appFeatures0.description'
+
+2018-06-18 17:51:24 - [MESSAGE][PASSED] - Keys 'Admin Des' sent to object: 'Object Repository/Page_Edit-App/input_appFeatures0.description'
+
+2018-06-18 17:51:24 - [TEST_STEP][PASSED] - click: Object: 'Object Repository/Page_Edit-App/button_Submit' is clicked on
+
+2018-06-18 17:51:25 - [MESSAGE][PASSED] - Object: 'Object Repository/Page_Edit-App/button_Submit' is clicked on
+
+2018-06-18 17:51:25 - [TEST_STEP][PASSED] - verifyTextPresent: Text 'Admin' is present on page 
+
+2018-06-18 17:51:25 - [MESSAGE][PASSED] - Text 'Admin' is present on page 
+
+2018-06-18 17:51:25 - [TEST_STEP][PASSED] - appmanage.startTest.closebrowser: appmanage.startTest.closebrowser is PASSED
+
+2018-06-18 17:51:25 - [MESSAGE][PASSED] - Browser is closed
+
+2018-06-18 17:51:25 - [MESSAGE][PASSED] - appmanage.startTest.closebrowser is PASSED]]></system-out>
+         <system-err><![CDATA[]]></system-err>
+      </testcase>
+      <testcase name="Test Cases/EditApp/EditAppValid" classname="Test Cases/EditApp/EditAppValid" status="PASSED">
+         <system-out><![CDATA[2018-06-18 17:51:25 - [TEST_CASE][PASSED] - Test Cases/EditApp/EditAppValid: Test Cases/EditApp/EditAppValid
+
+2018-06-18 17:51:25 - [TEST_STEP][PASSED] - appmanage.startTest.openbrowser: appmanage.startTest.openbrowser is PASSED
+
+2018-06-18 17:51:27 - [MESSAGE][PASSED] - Browser is opened with url: 'http://localhost:8080/'
+
+2018-06-18 17:51:27 - [MESSAGE][PASSED] - Keys 'user' sent to object: 'Object Repository/Page_Login Page/input_username'
+
+2018-06-18 17:51:27 - [MESSAGE][PASSED] - Keys '152feaf3-2269-48b0-b9d0-08ac4fd21f03' sent to object: 'Object Repository/Page_Login Page/input_password'
+
+2018-06-18 17:51:28 - [MESSAGE][PASSED] - Object: 'Object Repository/Page_Login Page/input_Submit' is clicked on
+
+2018-06-18 17:51:28 - [MESSAGE][PASSED] - Object: 'Object Repository/Page_dynamo apps/a_ManageApps Artifacts' is clicked on
+
+2018-06-18 17:51:28 - [MESSAGE][PASSED] - appmanage.startTest.openbrowser is PASSED
+
+2018-06-18 17:51:28 - [TEST_STEP][PASSED] - click: Object: 'Object Repository/Page_Dynamo/button_dropdownMenuButton' is clicked on
+
+2018-06-18 17:51:28 - [MESSAGE][PASSED] - Object: 'Object Repository/Page_Dynamo/button_dropdownMenuButton' is clicked on
+
+2018-06-18 17:51:28 - [TEST_STEP][PASSED] - click: Object: 'Object Repository/Page_Dynamo/a_Edit' is clicked on
+
+2018-06-18 17:51:29 - [MESSAGE][PASSED] - Object: 'Object Repository/Page_Dynamo/a_Edit' is clicked on
+
+2018-06-18 17:51:29 - [TEST_STEP][PASSED] - sendKeys: Keys 'View App' sent to object: 'Object Repository/Page_Edit-App/input_name'
+
+2018-06-18 17:51:29 - [MESSAGE][PASSED] - Keys 'View App' sent to object: 'Object Repository/Page_Edit-App/input_name'
+
+2018-06-18 17:51:29 - [TEST_STEP][PASSED] - sendKeys: Keys 'View Descr' sent to object: 'Object Repository/Page_Edit-App/textarea_g'
+
+2018-06-18 17:51:29 - [MESSAGE][PASSED] - Keys 'View Descr' sent to object: 'Object Repository/Page_Edit-App/textarea_g'
+
+2018-06-18 17:51:29 - [TEST_STEP][PASSED] - selectOptionByIndex: All options with index in [1] are selected on object 'Object Repository/Page_Edit-App/select_ActiveInActive'
+
+2018-06-18 17:51:29 - [MESSAGE][PASSED] - All options with index in [1] are selected on object 'Object Repository/Page_Edit-App/select_ActiveInActive'
+
+2018-06-18 17:51:29 - [TEST_STEP][PASSED] - sendKeys: Keys 'View Feature' sent to object: 'Object Repository/Page_Edit-App/input_appFeatures0.name'
+
+2018-06-18 17:51:29 - [MESSAGE][PASSED] - Keys 'View Feature' sent to object: 'Object Repository/Page_Edit-App/input_appFeatures0.name'
+
+2018-06-18 17:51:29 - [TEST_STEP][PASSED] - sendKeys: Keys 'View App Desc' sent to object: 'Object Repository/Page_Edit-App/input_appFeatures0.description'
+
+2018-06-18 17:51:30 - [MESSAGE][PASSED] - Keys 'View App Desc' sent to object: 'Object Repository/Page_Edit-App/input_appFeatures0.description'
+
+2018-06-18 17:51:30 - [TEST_STEP][PASSED] - click: Object: 'Object Repository/Page_Edit-App/button_Submit' is clicked on
+
+2018-06-18 17:51:30 - [MESSAGE][PASSED] - Object: 'Object Repository/Page_Edit-App/button_Submit' is clicked on
+
+2018-06-18 17:51:30 - [TEST_STEP][PASSED] - verifyTextPresent: Text 'View App' is present on page 
+
+2018-06-18 17:51:30 - [MESSAGE][PASSED] - Text 'View App' is present on page 
+
+2018-06-18 17:51:30 - [TEST_STEP][PASSED] - appmanage.startTest.closebrowser: appmanage.startTest.closebrowser is PASSED
+
+2018-06-18 17:51:30 - [MESSAGE][PASSED] - Browser is closed
+
+2018-06-18 17:51:30 - [MESSAGE][PASSED] - appmanage.startTest.closebrowser is PASSED]]></system-out>
+         <system-err><![CDATA[]]></system-err>
+      </testcase>
+      <testcase name="Test Cases/EditApp/EditAppValid" classname="Test Cases/EditApp/EditAppValid" status="PASSED">
+         <system-out><![CDATA[2018-06-18 17:51:30 - [TEST_CASE][PASSED] - Test Cases/EditApp/EditAppValid: Test Cases/EditApp/EditAppValid
+
+2018-06-18 17:51:30 - [TEST_STEP][PASSED] - appmanage.startTest.openbrowser: appmanage.startTest.openbrowser is PASSED
+
+2018-06-18 17:51:32 - [MESSAGE][PASSED] - Browser is opened with url: 'http://localhost:8080/'
+
+2018-06-18 17:51:32 - [MESSAGE][PASSED] - Keys 'user' sent to object: 'Object Repository/Page_Login Page/input_username'
+
+2018-06-18 17:51:32 - [MESSAGE][PASSED] - Keys '152feaf3-2269-48b0-b9d0-08ac4fd21f03' sent to object: 'Object Repository/Page_Login Page/input_password'
+
+2018-06-18 17:51:32 - [MESSAGE][PASSED] - Object: 'Object Repository/Page_Login Page/input_Submit' is clicked on
+
+2018-06-18 17:51:33 - [MESSAGE][PASSED] - Object: 'Object Repository/Page_dynamo apps/a_ManageApps Artifacts' is clicked on
+
+2018-06-18 17:51:33 - [MESSAGE][PASSED] - appmanage.startTest.openbrowser is PASSED
+
+2018-06-18 17:51:33 - [TEST_STEP][PASSED] - click: Object: 'Object Repository/Page_Dynamo/button_dropdownMenuButton' is clicked on
+
+2018-06-18 17:51:33 - [MESSAGE][PASSED] - Object: 'Object Repository/Page_Dynamo/button_dropdownMenuButton' is clicked on
+
+2018-06-18 17:51:33 - [TEST_STEP][PASSED] - click: Object: 'Object Repository/Page_Dynamo/a_Edit' is clicked on
+
+2018-06-18 17:51:33 - [MESSAGE][PASSED] - Object: 'Object Repository/Page_Dynamo/a_Edit' is clicked on
+
+2018-06-18 17:51:33 - [TEST_STEP][PASSED] - sendKeys: Keys 'Media' sent to object: 'Object Repository/Page_Edit-App/input_name'
+
+2018-06-18 17:51:33 - [MESSAGE][PASSED] - Keys 'Media' sent to object: 'Object Repository/Page_Edit-App/input_name'
+
+2018-06-18 17:51:33 - [TEST_STEP][PASSED] - sendKeys: Keys 'Media Desc' sent to object: 'Object Repository/Page_Edit-App/textarea_g'
+
+2018-06-18 17:51:33 - [MESSAGE][PASSED] - Keys 'Media Desc' sent to object: 'Object Repository/Page_Edit-App/textarea_g'
+
+2018-06-18 17:51:33 - [TEST_STEP][PASSED] - selectOptionByIndex: All options with index in [1] are selected on object 'Object Repository/Page_Edit-App/select_ActiveInActive'
+
+2018-06-18 17:51:33 - [MESSAGE][PASSED] - All options with index in [1] are selected on object 'Object Repository/Page_Edit-App/select_ActiveInActive'
+
+2018-06-18 17:51:33 - [TEST_STEP][PASSED] - sendKeys: Keys 'Shape' sent to object: 'Object Repository/Page_Edit-App/input_appFeatures0.name'
+
+2018-06-18 17:51:34 - [MESSAGE][PASSED] - Keys 'Shape' sent to object: 'Object Repository/Page_Edit-App/input_appFeatures0.name'
+
+2018-06-18 17:51:34 - [TEST_STEP][PASSED] - sendKeys: Keys 'Shap DEsc' sent to object: 'Object Repository/Page_Edit-App/input_appFeatures0.description'
+
+2018-06-18 17:51:34 - [MESSAGE][PASSED] - Keys 'Shap DEsc' sent to object: 'Object Repository/Page_Edit-App/input_appFeatures0.description'
+
+2018-06-18 17:51:34 - [TEST_STEP][PASSED] - click: Object: 'Object Repository/Page_Edit-App/button_Submit' is clicked on
+
+2018-06-18 17:51:34 - [MESSAGE][PASSED] - Object: 'Object Repository/Page_Edit-App/button_Submit' is clicked on
+
+2018-06-18 17:51:34 - [TEST_STEP][PASSED] - verifyTextPresent: Text 'Media' is present on page 
+
+2018-06-18 17:51:34 - [MESSAGE][PASSED] - Text 'Media' is present on page 
+
+2018-06-18 17:51:34 - [TEST_STEP][PASSED] - appmanage.startTest.closebrowser: appmanage.startTest.closebrowser is PASSED
+
+2018-06-18 17:51:34 - [MESSAGE][PASSED] - Browser is closed
+
+2018-06-18 17:51:34 - [MESSAGE][PASSED] - appmanage.startTest.closebrowser is PASSED]]></system-out>
+         <system-err><![CDATA[]]></system-err>
+      </testcase>
+      <system-out><![CDATA[2018-06-18 17:48:38 - [TEST_SUITE][FAILED] - EditApp: Test Cases/EditApp/EditAppInvalid FAILED because (of) Unable to verify object 'Object Repository/Page_Create-App/empty_object' is present (Root cause: com.kms.katalon.core.webui.exception.WebElementNotFoundException: Web element with id: 'Object Repository/Page_Create-App/empty_object' located by 'By.xpath: /html/body/div[2]/div[1]/div/div/div[2]/form/div[1]' not found)]]></system-out>
+      <system-err><![CDATA[2018-06-18 17:48:38 - [TEST_SUITE][FAILED] - EditApp: Test Cases/EditApp/EditAppInvalid FAILED because (of) Unable to verify object 'Object Repository/Page_Create-App/empty_object' is present (Root cause: com.kms.katalon.core.webui.exception.WebElementNotFoundException: Web element with id: 'Object Repository/Page_Create-App/empty_object' located by 'By.xpath: /html/body/div[2]/div[1]/div/div/div[2]/form/div[1]' not found)]]></system-err>
+   </testsuite>
+</testsuites>

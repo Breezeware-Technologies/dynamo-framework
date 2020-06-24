@@ -1,0 +1,9 @@
+# Added YAML config statements for building this project using Gitlab CI Runner
+before_script:
+  - echo $JAVA_HOME
+  - echo $M2_HOME
+
+job1:
+  script:
+  - $M2_HOME/bin/mvn validate
+  - $M2_HOME/bin/mvn clean package -U -Dmaven.test.skip=true

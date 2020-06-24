@@ -1,0 +1,19 @@
+======================================
+***** Setting Up SSL Certificate *****
+======================================
+
+- TSG Web Application is configured to use HTTPS for all connections.
+- When deployed in Tomcat, SSL settings can be enabled in <tomcat_home>/conf/server.xml
+
+Example entry in conf/server.xml:
+---------------------------------
+
+- tsgdevkeystore.p12 is a locally generated key that is used for testing purposes.
+
+<Connector port="443" protocol="org.apache.coyote.http11.Http11NioProtocol"
+               maxThreads="150" SSLEnabled="true">
+	<SSLHostConfig>
+		<Certificate certificateKeystoreFile="conf/tsgdevkeystore.p12" certificateKeystorePassword="breeze123"
+                         type="RSA" />
+	</SSLHostConfig>
+</Connector>

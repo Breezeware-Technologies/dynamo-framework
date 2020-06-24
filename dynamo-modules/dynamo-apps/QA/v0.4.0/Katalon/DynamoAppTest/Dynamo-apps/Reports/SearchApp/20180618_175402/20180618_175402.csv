@@ -1,0 +1,16 @@
+Suite/Test/Step Name,Browser,Description,Start time,End time,Duration,Status
+SearchApp,Chrome 62.0.3202.94,,2018-06-18 17:54:04,2018-06-18 17:54:15,10.810s,PASSED
+,,,,,,
+Test Cases/SearchApp/SearchAppInvalidData,Chrome 62.0.3202.94,,2018-06-18 17:54:05,2018-06-18 17:54:11,6.370s,PASSED
+appmanage.startTest.openbrowser,Chrome 62.0.3202.94,,2018-06-18 17:54:05,2018-06-18 17:54:10,5.022s,PASSED
+sendKeys,Chrome 62.0.3202.94,,2018-06-18 17:54:10,2018-06-18 17:54:11,0.176s,PASSED
+click,Chrome 62.0.3202.94,,2018-06-18 17:54:11,2018-06-18 17:54:11,0.340s,PASSED
+verifyTextNotPresent,Chrome 62.0.3202.94,,2018-06-18 17:54:11,2018-06-18 17:54:11,0.126s,PASSED
+appmanage.startTest.closebrowser,Chrome 62.0.3202.94,,2018-06-18 17:54:11,2018-06-18 17:54:11,0.262s,PASSED
+,,,,,,
+Test Cases/SearchApp/SearchAppValidData,Chrome 62.0.3202.94,,2018-06-18 17:54:11,2018-06-18 17:54:15,3.824s,PASSED
+appmanage.startTest.openbrowser,Chrome 62.0.3202.94,,2018-06-18 17:54:12,2018-06-18 17:54:14,2.808s,PASSED
+sendKeys,Chrome 62.0.3202.94,,2018-06-18 17:54:14,2018-06-18 17:54:15,0.180s,PASSED
+click,Chrome 62.0.3202.94,,2018-06-18 17:54:15,2018-06-18 17:54:15,0.296s,PASSED
+verifyTextPresent,Chrome 62.0.3202.94,,2018-06-18 17:54:15,2018-06-18 17:54:15,0.155s,PASSED
+appmanage.startTest.closebrowser,Chrome 62.0.3202.94,,2018-06-18 17:54:15,2018-06-18 17:54:15,0.216s,PASSED

@@ -1,0 +1,179 @@
+<!doctype html>
+<html class="no-js" lang="" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sd="http://www.thymeleaf.org/spring-data"
+	layout:decorator="release-notes/layout">
+
+<body style="background-color: #fff;">
+
+	<div layout:fragment="content">
+		<div class="container-fluid mt-5">
+			<div class="mt-8">
+				<div class="col-md-12">
+					<div class="search mt-2">
+						<div class="col-md-12 pt-2 pl-5 pb-3">
+							<h4>v1.2.0</h4>
+							<ul class="ml-10">
+								<li>Added dynamo-admin-webapp module inside Dynamo
+									Framework project.</li>
+							</ul>
+
+							<h4>v1.1.0</h4>
+							<ul class="ml-10">
+								<li>Removed Maven dependencies module and brought in all
+									dependencies into Parent POM</li>
+								<li>Added dynamo-webapp module inside Dynamo Framework
+									project</li>
+								<li>Renamed organization and audit module HTML directories
+									to have 'dynamo-' prefix and updated controllers accordingly.</li>
+							</ul>
+
+							<h4>v1.0.0</h4>
+							<ul class="ml-10">
+								<li>Removed dynamo-sample-apps module. Sample applications
+									will be managed from a separate project.</li>
+							</ul>
+
+							<h4>v0.16.0</h4>
+							<ul class="ml-10">
+								<li>Added dynamo-communication module with SMS support
+									using AWS, SINCH and Textlocal services.</li>
+								<li>Added general and module specific (Auth, Audit,
+									Communication) spring configuration classes to manage
+									properties.</li>
+								<li>Removed logic to check password strength.</li>
+								<li>Added support to programmatically set properties in
+									email templates sent to users. Currently, Forgot password and
+									Complete sign-up functions are covered.</li>
+							</ul>
+
+							<h4>v0.15.0</h4>
+							<ul class="ml-10">
+								<li>Added support to set time zone for a user.</li>
+								<li>Added support to store audit log date with time zone
+									information.</li>
+								<li>Added support to display audit log data as per user's
+									time zone (zone ID) information.</li>
+								<li>Added logic to check password strength.</li>
+							</ul>
+
+							<h4>v0.14.0</h4>
+							<ul class="ml-10">
+								<li>Added support to track audit log by organization.</li>
+								<li>Added Spring security annotations to restrict Dynamo
+									modules & APIs to appropriate roles.</li>
+								<li>Extended Spring security UserDetails to include
+									organization ID.</li>
+								<li>Renamed SYSTEM_ADMIN user to ROLE_SYSTEM_ADMIN to be
+									used in WebSecurity config support.</li>
+								<li>Renamed URL endpoints for audit and organziation
+									modules. Removed the 'admin' prefix previously used.</li>
+							</ul>
+
+
+							<h4>v0.13.0</h4>
+							<ul class="ml-10">
+								<li>Added REST API to retrieve user by email.</li>
+								<li>Updated password encoding logic.</li>
+							</ul>
+
+							<h4>v0.12.0</h4>
+							<ul class="ml-10">
+								<li>Refactored organization module such that each
+									organization can have its own set of roles and groups.</li>
+								<li>Updated authentication workflow such that email is now
+									used for application login. Previously used username field is
+									removed and no longer used in the authentication flow.</li>
+								<li>Updated application's look and feel to provide more
+									whitespace and rounder corners for screen elements.</li>
+							</ul>
+
+							<h4>v0.11.0</h4>
+							<ul class="ml-10">
+								<li>Added support for OAuth2.0 based authentication. DB
+									tables and support classed are manged in dynamo-oauth module.</li>
+							</ul>
+
+
+							<h4>v0.7.0</h4>
+							<ul class="ml-10">
+								<li>Added file system storage service to manage file
+									uploads.</li>
+							</ul>
+
+							<h4>v0.5.0</h4>
+							<ul class="ml-10">
+								<li>Revamped Dynamo Organization module UI with new styles.
+								</li>
+							</ul>
+
+							<h4>v0.4.1</h4>
+							<ul class="ml-10">
+								<li>Added schema references to table and sequence names in
+									all Dynamo entities.</li>
+							</ul>
+
+							<h4>v0.4.0</h4>
+							<ul class="ml-10">
+								<li>Refactored Auth module to include support for
+									Authentication and Authorization.</li>
+								<li>Created LDAP module to authenticate users with LDAP
+									directory like Apache Directory.</li>
+								<li>Created Audit module to support audit logging. Service
+									methods can be annotated with audit classes to support all
+									auditable events.</li>
+								<li>Created Admin module to add application configuration
+									support with the help of Spring Cloud Config Server. Dynamo
+									App, Dynamo Org and Dynamo Auth modules are configured to act
+									as Spring Cloud Config clients.</li>
+							</ul>
+
+
+							<h4>v0.3.2</h4>
+							<ul class="ml-10">
+								<li>Updated POM to include Javadocs and Source plugin to
+									generate Javadocs for the framework.</li>
+							</ul>
+
+
+							<h4>v0.3.0</h4>
+							<ul class="ml-10">
+								<li>Updated Dynamo Auth module to include support for
+									managing (create, update) users, groups and roles.</li>
+								<li>Added 'Forgot Password' support to Auth module where
+									users can reset their password using a system generated link
+									sent to their email.</li>
+								<li>Refactored Dynamo Auth's library module to include
+									Spring MVC logic (controllers). They were previously managed in
+									Auth's Webapp module.</li>
+							</ul>
+
+							<h4>v0.2.0</h4>
+							<ul class="ml-10">
+								<li>Updated Spring boot version from 1.5.2.RELEASE to
+									1.5.3.RELEASE. Spring version is 4.3.8.RELEASE.</li>
+								<li>Added support for Camunda Embedded form in workflow
+									module. Users can specify 'FormKey' attribute in BPMN models to
+									associate HTML/Thymeleaf forms for user tasks.</li>
+								<li>Added Java Doc style comments for Workflow APIs.</li>
+							</ul>
+
+							<h4>v0.1.0</h4>
+							<ul class="ml-10">
+								<li>Added Auth module based on Spring Security.</li>
+								<li>Added Audit module based on AspectJ for adding audit
+									functionality for user logins and method access.</li>
+								<li>Added Drools module for reference implementation of
+									rules project.</li>
+								<li>Added Workflow module based on Camunda BPMN.</li>
+							</ul>
+
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</div>
+
+</body>
+</html>

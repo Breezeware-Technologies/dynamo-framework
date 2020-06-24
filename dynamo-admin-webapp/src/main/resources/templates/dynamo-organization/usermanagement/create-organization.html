@@ -1,0 +1,125 @@
+<!doctype html>
+<html class="no-js" lang="" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sd="http://www.thymeleaf.org/spring-data"
+	layout:decorator="dynamo-organization/usermanagement/layout">
+
+<head>
+<meta charset="utf-8">
+</meta>
+<meta name="description" content="">
+</meta>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+</meta>
+<title>Create-Organization</title>
+</head>
+<body>
+	<div layout:fragment="content">
+		<div class="container-fluid mt-8">
+			<div class="bg box-s borrad">
+				<div class="container-fluid">
+					<div class="row bb mt-2">
+						<div class="col-md-6 col-sm-12 p-0  ">
+							<h5 class="tbhead bold mb-0 ">Create Organization</h5>
+						</div>
+
+					</div>
+
+
+
+					<form th:action="@{/organization/createOrganization}"
+						th:object="${createOrganizationDto}" method="post"
+						class="col-md-12  mt-1">
+
+						<div th:if="${#fields.hasErrors()}"
+							class="has-error alert alert-dismissible alert-danger">
+							<ul>
+								<li th:each="e : ${#fields.detailedErrors()}"
+									th:class="${e.global}? globalerr : fielderr"><span
+									th:text="${e.message}">The error message</span></li>
+							</ul>
+						</div>
+
+						<div class="row  m-3">
+							<div class="col-md-5 offset-md-4 col-sm-12">
+								<!-- <h5 class="bb">
+									<b>Information 1</b>
+								</h5> -->
+
+								<div class="form-group">
+									<label for="organizationname">Organization Name*</label> <input
+										type="text" name="organizationname"
+										class="form-control w-75 notsplcha"
+										th:field="*{organizationName}">
+								</div>
+
+								<div class="form-group">
+									<label for="organizationdescription">Description</label>
+									<textarea class="form-control w-75"
+										th:field="*{organizationDescription}"
+										name="organizationdescription" rows="5"></textarea>
+								</div>
+
+								<div class="col-md-8 m-auto pt-4 ">
+									<h6 class="border-bot ml-4rem font-weight-bold">Default
+										User (Organization_Admin)</h6>
+								</div>
+
+								<div class="form-group">
+									<label for="useremail">Email Address*</label> <input
+										type="text" name="useremail"
+										class="form-control w-75 "
+										th:field="*{defaultUserEmail}">
+								</div>
+
+								<div class="form-group">
+									<label for="firstname">First Name*</label> <input type="text"
+										name="firstname" class="form-control w-75 notsplcha"
+										th:field="*{defaultUserFirstName}">
+								</div>
+
+								<div class="form-group">
+									<label for="middleinitial">Middle Initial</label> <input
+										type="text" name="middleinitial"
+										class="form-control w-75 notsplcha"
+										th:field="*{defaultUserMiddleInitial}">
+								</div>
+
+
+								<div class="form-group">
+									<label for="lastname">Last Name *</label> <input type="text"
+										name="lastname" class="form-control w-75 notsplcha"
+										th:field="*{defaultUserLastName}">
+								</div>
+
+
+							</div>
+
+							<div class="col-md-12 text-center mt-4">
+								<div class="form-group  mr-form">
+									<button type="submit"
+										class="btn btn-outline-success btn-pm mr-sm-3 mr-3">
+										<i
+											class="far fa-check-circle  d-none d-sm-none d-md-inline-block"
+											aria-hidden="true"></i> Submit
+									</button>
+									<button type="reset"
+										class="btn btn-outline-info btn-pm mr-sm-3 mr-3">
+										<i
+											class="fas fa-minus-circle d-none d-sm-none d-md-inline-block"></i>
+										Reset
+									</button>
+								</div>
+							</div>
+						</div>
+
+
+
+					</form>
+
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
+

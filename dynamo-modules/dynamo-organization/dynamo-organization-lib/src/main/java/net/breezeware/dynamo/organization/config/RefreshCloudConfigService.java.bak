@@ -1,0 +1,71 @@
+package net.breezeware.dynamo.organization.config;
+
+import java.io.BufferedReader;
+
+import java.io.DataOutputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Component;
+
+/**
+ * Dynamically retrieves the App Property in periodic intervals.
+ * 
+ * @author gowtham
+ *
+ */
+@Component
+public class RefreshCloudConfigService {
+    private static final Logger logger = LoggerFactory.getLogger(RefreshCloudConfigService.class);
+
+    private static final SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
+
+    @Scheduled(fixedRate = 20000)
+    public void refreshCloudConfig() throws Exception {
+        logger.info("Entering refreshCloudConfig() in Admin module. Current time is {}", dateFormat.format(new Date()));
+
+        String USER_AGENT = "Mozilla/5.0";
+
+        String url = "http://localhost:8090/refresh";
+        URL obj = new URL(url);
+        HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+
+        // add reuqest header
+        con.setRequestMethod("POST");
+        con.setRequestProperty("User-Agent", USER_AGENT);
+        con.setRequestProperty("Accept-Language", "en-US,en;q=0.5");
+
+        // Send post request
+        con.setDoOutput(true);
+
+        DataOutputStream wr = new DataOutputStream(con.getOutputStream());
+        wr.writeBytes("");
+        wr.flush();
+        wr.close();
+
+        int responseCode = con.getResponseCode();
+        logger.info("\nSending 'POST' request to URL : " + url);
+        logger.info("Post parameters :");
+        logger.info("Response Code : " + responseCode);
+
+        BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
+        String inputLine;
+        StringBuffer response = new StringBuffer();
+
+        while ((inputLine = in.readLine()) != null) {
+            response.append(inputLine);
+        }
+        in.close();
+
+        // print result
+        System.out.println(response.toString());
+
+        logger.info("Leaving refreshCloudConfig() in Admin module.");
+    }
+}

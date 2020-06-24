@@ -1,0 +1,95 @@
+<!doctype html>
+<html class="no-js" lang="" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<meta name="description" content="">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>App - Login</title>
+
+  <link rel="shortcut icon"  href="../../static/images/favicon.png" 
+   th:href="@{/images/favicon.png}" />
+
+
+<link rel="stylesheet" href="../static/css/dynamo-style.css"
+	th:href="@{css/dynamo-style.css}">
+
+</head>
+<body>
+	<div class="container">
+		<div class="row mt-8">
+			<div class="col-md-5 m-auto ">
+				<div class="card">
+					<div class="card-block text-center p-0">
+						<img th:src="@{/images/app-logo-black.svg}" alt="">
+					</div>
+					<div class="card-block text-center mb-1">
+						<div class="border-b">
+							<span th:text="${@environment.getProperty('dynamo.applicationName')}">App
+								Name</span>
+						</div>
+					</div>
+
+					<div class="card-block">
+
+						<div class="row">
+							<form action="/login" method="post" class="col-10 m-auto">
+								<div class="form-control border-0 mb-2">
+									<div th:if="${param.error}"
+										class="alert alert-dismissible alert-danger text-center">Invalid
+										username and password.</div>
+									<div th:if="${mailSent}"
+										class="alert alert-success text-center">Mail has been
+										sent. Continue with login</div>
+									<div th:if="${param.logout}" class="alert alert-success">You
+										have been logged out.</div>
+									<div th:if="${successMessage != null}"
+										th:text="${successMessage}" class="alert alert-success">You
+										have been logged out.</div>
+								</div>
+
+								<div class="form-group mt-1">
+									<label for="l-user">Username (Email)</label><input type="text"
+										autofocus="autofocus" name="username" class="form-control"
+										placeholder="Username">
+								</div>
+								<div class="form-group mb-4">
+									<label for="l-pass">Password</label> <input type="password"
+										name="password" class="form-control"
+										placeholder="Password">
+
+								</div>
+
+								<div class="card-block text-center">
+									<div class="form-control border-0">
+										<button class="btn btn-outline-success px-3 py-1">Submit</button>
+									</div>
+								</div>
+							</form>
+						</div>
+					</div>
+
+					<div class="card-block text-center mt-2">
+						<div class="form-control border-0">
+							<a href="/forgotPassword" class="btn btn-link ml-3" role="button">Forgot
+								Password?</a>
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</div>
+	<footer class="footer mt-4">
+			<div>
+				<p class="mb-0">
+					© <span
+						th:text="${@environment.getProperty('dynamo.applicationCopyrightYear')}">Year</span>.
+					<span th:text="${@environment.getProperty('dynamo.applicationOwner')}"></span>
+					
+				</p>
+			</div>
+		</footer>
+
+</body>
+</html>

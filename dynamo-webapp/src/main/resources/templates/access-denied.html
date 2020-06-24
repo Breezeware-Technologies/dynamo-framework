@@ -1,0 +1,52 @@
+<!doctype html>
+<html class="no-js" lang="" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<meta name="description" content="">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Access</title>
+
+  <link rel="shortcut icon"  href="../../static/images/favicon.png" 
+   th:href="@{/images/favicon.png}" />
+
+<link rel="stylesheet" href="../static/css/style.css"
+	th:href="@{css/style.css}">
+
+</head>
+<body>
+
+	<div class="container">
+		<div class="row mt-8">
+			<div class="col-md-4 m-auto">
+				<div class="card login-card">
+					<div class="card-block text-center p-0">
+						<img th:src="@{/images/TSG-Logo1.svg}" alt="">
+					</div>
+					<div class="card-block bg-panel">
+						<div class="font-16">
+							<span th:text="${@environment.getProperty('application.name')}">App
+								Name</span>
+						</div>
+					</div>
+					<div class="card-block">
+
+						<div class="row">Access denied to this resource !!!</div>
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</div>
+	<footer class="footer mt-4 bg-dark">
+		<div class="text-center">
+			<p class="white mb-0 ">
+				© <span
+					th:text="${@environment.getProperty('application.copyrightYear')}">Year</span>.
+				<span th:text="${@environment.getProperty('application.name')}">App
+					Name</span> <a class="white " th:href="@{/releasenotes}" target="_blank">---
+					Release Notes ---</a>
+			</p>
+		</div>
+	</footer>
+</body>

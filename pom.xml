@@ -1,0 +1,80 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>net.breezeware.dynamo</groupId>
+	<artifactId>dynamo-framework</artifactId>
+	<version>1.6.1</version>
+	<packaging>pom</packaging>
+	<name>Dynamo Framework</name>
+	<description>
+		Dynamo Framework - Maven project containing functional modules and sample applications 
+			utilizing the modules.
+	</description>
+
+	<!-- #################### PROPERTIES #################### -->
+
+	<properties>
+		<java.version>13</java.version>
+
+		<maven.compiler.source>13</maven.compiler.source>
+		<maven.compiler.target>13</maven.compiler.target>
+	</properties>
+
+	<!-- #################### DISTRIBUTION MANAGEMENT #################### -->
+
+	<distributionManagement>
+		<repository>
+			<id>nexus-leapforge-dynamo</id>
+			<name>Nexus Leapforge Dynamo Release Repository</name>
+			<url>http://nexus.leapforge.net/repository/dynamo/</url>
+		</repository>
+		<snapshotRepository>
+			<id>nexus-leapforge-dynamo-snapshots</id>
+			<url>http://nexus.leapforge.net/repository/dynamo-snapshots/</url>
+		</snapshotRepository>
+	</distributionManagement>
+
+	<!-- #################### SCM information for Maven release plugin. #################### -->
+	<scm>
+		<developerConnection>scm:git:http://gitlab.leapforge.net/dynamo/dynamo-framework.git</developerConnection>
+	</scm>
+
+	<!-- #################### MODULES #################### -->
+
+	<modules>
+		<module>dynamo-modules</module>
+		<module>dynamo-webapp</module>
+		<module>dynamo-admin-webapp</module>
+		<module>dynamo-web-dependencies</module>
+		<module>dynamo-persistence-dependencies</module>
+		<module>dynamo-framework-bom</module>
+		<module>dynamo-dependencies</module>
+	</modules>
+
+	<!-- #################### REPORTING #################### -->
+
+	<reporting>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-checkstyle-plugin</artifactId>
+				<reportSets>
+					<reportSet>
+						<reports>
+							<report>checkstyle</report>
+						</reports>
+					</reportSet>
+				</reportSets>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-source-plugin</artifactId>
+				<configuration>
+					<attach>false</attach>
+				</configuration>
+			</plugin>
+		</plugins>
+	</reporting>
+</project>

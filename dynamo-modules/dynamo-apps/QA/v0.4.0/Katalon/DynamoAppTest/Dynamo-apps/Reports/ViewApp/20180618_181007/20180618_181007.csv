@@ -1,0 +1,9 @@
+Suite/Test/Step Name,Browser,Description,Start time,End time,Duration,Status
+ViewApp,Chrome 62.0.3202.94,,2018-06-18 18:10:09,2018-06-18 18:10:16,7.159s,PASSED
+,,,,,,
+Test Cases/ViewApp/Viewapp,Chrome 62.0.3202.94,,2018-06-18 18:10:10,2018-06-18 18:10:16,6.592s,PASSED
+appmanage.startTest.openbrowser,Chrome 62.0.3202.94,,2018-06-18 18:10:10,2018-06-18 18:10:15,5.282s,PASSED
+click,Chrome 62.0.3202.94,,2018-06-18 18:10:15,2018-06-18 18:10:15,0.173s,PASSED
+click,Chrome 62.0.3202.94,,2018-06-18 18:10:15,2018-06-18 18:10:16,0.333s,PASSED
+verifyTextPresent,Chrome 62.0.3202.94,,2018-06-18 18:10:16,2018-06-18 18:10:16,0.105s,PASSED
+appmanage.startTest.closebrowser,Chrome 62.0.3202.94,,2018-06-18 18:10:16,2018-06-18 18:10:16,0.282s,PASSED

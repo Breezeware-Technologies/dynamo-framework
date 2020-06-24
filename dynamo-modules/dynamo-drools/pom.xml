@@ -1,0 +1,46 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>net.breezeware.dynamo</groupId>
+		<artifactId>dynamo-modules</artifactId>
+		<version>1.6.1</version>
+	</parent>
+	<artifactId>dynamo-drools</artifactId>
+	<version>1.6.1</version>
+	<packaging>pom</packaging>
+	<name>Dynamo Drools Module</name>
+	<description>Project for providing Drools Rule Engine support to applications.</description>
+
+
+
+	<!-- #################### MODULES #################### -->
+
+	<modules>
+		<module>dynamo-drools-deps</module>
+		<module>dynamo-drools-lib</module>
+		<module>dynamo-drools-template</module>
+	</modules>
+
+	<!-- #################### DEPENDENCY MANAGEMENT #################### -->
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>net.breezeware.dynamo</groupId>
+				<artifactId>dynamo-dependencies</artifactId>
+				<version>1.6.1</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
+	<!-- #################### DEPENDENCIES #################### -->
+	<dependencies>
+		<!-- ******************** Servlet API ******************** -->
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+			<version>3.1.0</version>
+		</dependency>
+	</dependencies>
+</project>

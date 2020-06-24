@@ -1,0 +1,40 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>net.breezeware.dynamo</groupId>
+		<artifactId>dynamo-modules</artifactId>
+		<version>1.6.1</version>
+	</parent>
+	<artifactId>dynamo-communication-lib</artifactId>
+  <version>1.6.1</version>
+	<name>Dynamo Communication Lib</name>
+	<description>Dynamo Communication Module contains support for SMS, Email communications.</description>
+
+	<dependencies>
+		<!-- Amazon AWS SDK -->
+		<!-- https://mvnrepository.com/artifact/com.amazonaws/aws-java-sdk-sns -->
+		<dependency>
+			<groupId>com.amazonaws</groupId>
+			<artifactId>aws-java-sdk-sns</artifactId>
+			<version>1.11.490</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.httpcomponents</groupId>
+			<artifactId>httpclient</artifactId>
+		</dependency>
+
+		<!-- Sinch Messaging SDK -->
+		<dependency>
+			<groupId>com.clxcommunications</groupId>
+			<artifactId>sdk-xms</artifactId>
+			<version>1.0.2</version>
+		</dependency>
+
+		<!-- ******************** Spring Cloud Config Client ******************** -->
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-config-client</artifactId>
+		</dependency>
+	</dependencies>
+</project>

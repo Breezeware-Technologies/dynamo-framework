@@ -1,0 +1,54 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<!-- <parent> <groupId>net.breezeware.dynamo</groupId> <artifactId>dynamo-drools-template</artifactId> 
+		<version>0.0.1-SNAPSHOT</version> </parent> -->
+	<groupId>net.breezeware.dynamo</groupId>
+	<version>1.6.1</version>
+	<artifactId>dynamo-drools-kjar</artifactId>
+	<name>Dynamo Drools KJar</name>
+	<description>Sample Drools knowledge module built using Dynamo</description>
+	<packaging>kjar</packaging>
+
+	<distributionManagement>
+		<snapshotRepository>
+			<id>nexus-leapforge-dynamo</id>
+			<url>http://nexus.leapforge.net/repository/dynamo-snapshots/</url>
+		</snapshotRepository>
+	</distributionManagement>
+
+	<properties>
+		<maven.compiler.source>13</maven.compiler.source>
+		<maven.compiler.target>13</maven.compiler.target>
+	</properties>
+
+	<!-- #################### BUILD CONFIGURATIONS #################### -->
+
+	<build>
+		<plugins>
+
+			<!-- ******************** For building KJars' with pre-compiled and validated 
+				resources ******************** -->
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+			</plugin>
+
+			<plugin>
+				<groupId>org.kie</groupId>
+				<artifactId>kie-maven-plugin</artifactId>
+				<extensions>true</extensions>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-deploy-plugin</artifactId>
+				<configuration>
+					<skip>true</skip>
+				</configuration>
+			</plugin>
+		</plugins>
+
+	</build>
+
+</project>

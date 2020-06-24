@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html class="no-js" lang="" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<th:block th:replace="apps/header :: header"></th:block>
+</head>
+
+<body>
+	<div th:replace="apps/navigation :: main-nav"></div>
+	<div layout:fragment="content"></div>
+	<div th:replace="apps/footer :: footer"></div>
+	<div th:replace="apps/scripts :: common-scripts"></div>
+</body>
+
+</html>

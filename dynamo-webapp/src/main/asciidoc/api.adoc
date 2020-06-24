@@ -1,0 +1,27 @@
+= TSG REST API Specification
+{project-version}
+:doctype: book
+
+== Hello World
+
+A `GET` request to welcome users
+
+operation::hello-world[snippets='http-request,request-fields,http-response']
+
+== Sample FAC (Field Access Controller) DTO
+
+A `GET` request to retrieve a sample FAC DTO. The JSON format representing the DTO will be used to submit POST requests to generate and validate the OTP
+
+operation::get-sample-fac-dto[snippets='http-request,request-fields,http-response']
+
+== UUID and FACId
+
+A `POST` request to generate an OTP for the TSG mobile application user. The OTP is sent to the user via SMS to the mobile phone registered with the user.
+
+operation::generate-otp[snippets='http-request,request-fields,http-response']
+
+== OTP
+
+A `POST` request to validate the OTP received from the FAC.
+
+operation::validate-otp[snippets='http-request,request-fields,http-response']

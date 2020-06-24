@@ -1,0 +1,28 @@
+<!doctype html>
+<html class="no-js" lang="" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sd="http://www.thymeleaf.org/spring-data"
+	layout:decorator="apps/layout">
+<head>
+<meta charset="utf-8">
+</meta>
+<meta name="description" content="">
+</meta>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+</meta>
+<title>Dynamo-App</title>
+</head>
+<body>
+	<div th:fragment="common-scripts">
+		<script src="../../static/scripts/jquery.min.js"
+			th:src="@{/scripts/jquery.min.js}"></script>
+		<script src="../../static/scripts/bootstrap.min.js"
+			th:src="@{/scripts/bootstrap.min.js}"></script>
+		<script src="../../static/scripts/add-remove.js"
+			th:src="@{/scripts/add-remove.js}"></script>
+		<script src="../../static/scripts/notsplcha.js"
+			th:src="@{/scripts/notsplcha.js}"></script>
+
+
+	</div>
+</body>
+</html>

@@ -1,0 +1,61 @@
+package net.breezeware.dynamo.ldap.service.impl;
+
+import java.util.List;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Profile;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import net.breezeware.dynamo.auth.AuthenticationService;
+import net.breezeware.dynamo.auth.CurrentUserDto;
+import net.breezeware.dynamo.ldap.service.api.LdapService;
+
+@Service
+@Profile("LDAPAuthentication")
+public class AuthenticationServiceLdapImpl implements AuthenticationService {
+
+    Logger logger = LoggerFactory.getLogger(AuthenticationServiceLdapImpl.class);
+
+    @Autowired
+    LdapService ldapService;
+
+    @Value("${spring.ldap.base}")
+    private String springLdapBase;
+
+    @Transactional
+    public CurrentUserDto getCurrentUserDto(String username) {
+        User user = ldapService.getUserByUid(username);
+
+        // NOTE:
+        // If the base DN attribute is specified in the properties file and is set in
+        // the LDAP context (in Spring Application class), then the userDn retrieved
+        // above will not have the base class included in it. Therefore we are appending
+        // it manually before looking for use groups using the User's DN value.
+        String userDn = user.getDn().toString();
+        String updatedUserDn = userDn;
+        if (springLdapBase != null && springLdapBase.trim().length() > 0) {
+            updatedUserDn = userDn.toLowerCase() + "," + springLdapBase;
+        }
+
+        // create list of groups CSV string
+        List<Group> groupsList = ldapService.getUserGroups(updatedUserDn);
+        StringBuilder groupsListCsv = new StringBuilder();
+        int groupsCount = groupsList.size();
+        int index = 0;
+        for (Group group : groupsList) {
+            groupsListCsv.append(group.getCn());
+            index++;
+            if (index < groupsCount) {
+                groupsListCsv.append(",");
+            }
+        }
+
+        CurrentUserDto userDto = new CurrentUserDto(-1, user.getUid(), user.getFullName(), groupsListCsv.toString());
+        return userDto;
+    }
+
+}

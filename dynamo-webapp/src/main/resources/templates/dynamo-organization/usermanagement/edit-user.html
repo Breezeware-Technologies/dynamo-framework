@@ -1,0 +1,145 @@
+<!doctype html>
+<html class="no-js" lang="" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sd="http://www.thymeleaf.org/spring-data"
+	layout:decorator="dynamo-organization/usermanagement/layout">
+<head>
+<title>Edit-user</title>
+</head>
+<body>
+	<div layout:fragment="content">
+		<div class="container-fluid mt-5">
+
+			<div class="bg box-s borrad">
+				<div class="container-fluid">
+					<div class="row bb mt-2">
+						<div class="col-md-6 col-sm-12 p-0  ">
+							<h5 class="tbhead bold mb-0 ">Edit User</h5>
+						</div>
+
+					</div>
+					<form th:action="@{/organization/editUser}" th:object="${user}"
+						method="post">
+						<div th:if="${#fields.hasErrors()}"
+							class="has-error alert alert-dismissible alert-danger">
+							<ul>
+								<li th:each="e : ${#fields.detailedErrors()}"
+									th:class="${e.global}? globalerr : fielderr"><span
+									th:text="${e.message}">The error message</span></li>
+							</ul>
+						</div>
+						<input type="hidden" th:field="*{organization}"> <input
+							type="hidden" th:field="*{createdDate}"> <input
+							type="hidden" th:field="*{id}"> <input type="hidden"
+							th:field="*{userUniqueId}"> <input type="hidden"
+							th:field="*{userGroupMap}"> <input type="hidden"
+							th:field="*{userRoleMap}">
+						<div class="row justify-content-center m-3">
+							<div class="col-md-4 col-sm-12">
+								<!--       <h5 class="bb"><b>Information 1</b></h5> -->
+
+								<div class="form-group">
+									<label for="userUniqueId">User ID</label> <input type="text"
+										 th:value="${user.userUniqueId}" readonly="readonly"
+										 class="form-control w-80">
+								</div>
+
+								<div class="form-group">
+									<label for="emailaddress">Email Address</label> <input
+										type="email" id="emailAddress" th:field="*{email}"
+										name="emailAddress" class="form-control  w-80">
+								</div>
+
+								<div class="form-group">
+									<label for="phoneNumber">Phone Number</label> <input
+										type="text" id="phoneNumber" th:field="*{phoneNumber}"
+										name="phoneNumber" class="form-control textNumbers w-80">
+								</div>
+
+								<div class="form-group">
+									<label for="firstname">First Name</label> <input type="text"
+										id="firstName" th:field="*{firstName}" name="firstname"
+										class="form-control w-80 notsplcha">
+								</div>
+
+								<!-- 	<div class="form-group">
+									<label for="middleinitial">Middle Initial</label> <input
+										type="text" id="middleInitial" th:field="*{middleInitial}"
+										name="middleinitial" class="form-control w-80 notsplcha">
+								</div>
+ -->
+
+								<div class="form-group">
+									<label for="lastName">Last Name</label><input type="text"
+										name="lastname" id="lastName" th:field="*{lastName}"
+										class="form-control w-80 notsplcha">
+								</div>
+
+								<div class="form-group">
+									<label for="status">Status</label><select th:field="*{status}"
+										name="true" class="form-control w-80">
+										<option id="active" th:value="ACTIVE">Active</option>
+										<option id="inactive" th:value="INACTIVE">Inactive</option>
+									</select>
+								</div>
+
+								<div class="form-group">
+									<label for="userTimeZoneId">Time Zone</label><select
+										th:field="*{userTimeZoneId}" name="true"
+										class="form-control w-80">
+										<option th:each="tz : ${userTimeZoneOptions}" th:value="${tz}"
+											th:text="${tz}"></option>
+									</select>
+								</div>
+							</div>
+							<div class="col-md-4 col-sm-12">
+								<div class="form-groups mb-5">
+									<label>Groups (Minimum 1 group should be selected.)</label>
+									<ul class="ml-4">
+										<li th:each="group : ${groups}"><label
+											class="form-check-lable pr-3"> <input type="checkbox"
+												th:field="*{UserGroupId}" th:value="${group.id}"
+												th:text="${group.name}" class="form-check-input mr-1">
+
+										</label></li>
+
+									</ul>
+								</div>
+								<div class="clearfix"></div>
+								<div class="form-groups mt-5">
+									<label>Roles (Minimum 1 role should be selected.)</label>
+									<ul class="ml-4">
+										<li th:each="role : ${roles}"><label
+											class="form-check-lable pr-3"> <input type="checkbox"
+												th:field="*{UserRoleId}" th:value="${role.Id}"
+												th:text="${role.name}" class="form-check-input mr-1">
+										</label></li>
+									</ul>
+								</div>
+								<div class="clearfix"></div>
+							</div>
+							<div class="col-md-12 text-center mt-4">
+								<div class="form-group  mr-form">
+									<button type="submit" class="btn btn-outline-success mr-3">
+										<i
+											class="far fa-check-circle d-none d-sm-none d-md-inline-block"></i>
+										Update
+									</button>
+									<button type="reset" class="btn btn-outline-info mr-3">
+										<i
+											class="fas fa-minus-circle d-none d-sm-none d-md-inline-block"></i>
+										Reset
+									</button>
+								</div>
+							</div>
+						</div>
+					</form>
+
+				</div>
+			</div>
+
+
+		</div>
+	</div>
+</body>
+
+</html>

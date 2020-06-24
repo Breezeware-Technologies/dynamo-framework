@@ -1,0 +1,75 @@
+version: 1
+
+dn: ou=Users,dc=example,dc=com
+objectClass: organizationalUnit
+objectClass: top
+ou: Users
+
+dn: ou=Groups,dc=example,dc=com
+objectClass: organizationalUnit
+objectClass: top
+ou: Groups
+
+dn: ou=roles,dc=example,dc=com
+objectClass: organizationalUnit
+objectClass: top
+ou: roles
+
+dn: cn=sivaram,ou=Users,dc=example,dc=com
+objectClass: organizationalPerson
+objectClass: person
+objectClass: inetOrgPerson
+objectClass: top
+cn: sivaram
+sn: m
+uid: siva
+userPassword:: e1NIQX1uVTRlSTcxYmNuQkdxZU8wdDl0WHZZMXU1b1E9
+
+dn: cn=software engineer,ou=roles,dc=example,dc=com
+objectClass: groupOfNames
+objectClass: top
+cn: software engineer
+member: cn=karthik,ou=Users,dc=example,dc=com
+member: cn=gowtham,ou=Users,dc=example,dc=com
+
+dn: cn=president,ou=Groups,dc=example,dc=com
+objectClass: groupOfNames
+objectClass: top
+cn: president
+member: cn=sivaram,ou=Users,dc=example,dc=com
+
+dn: cn=karthik,ou=Users,dc=example,dc=com
+objectClass: organizationalPerson
+objectClass: person
+objectClass: inetOrgPerson
+objectClass: top
+cn: karthik
+sn: cm
+uid: kar
+userPassword:: e1NIQX1uVTRlSTcxYmNuQkdxZU8wdDl0WHZZMXU1b1E9
+
+dn: cn=business analyst,ou=roles,dc=example,dc=com
+objectClass: groupOfNames
+objectClass: top
+cn: business analyst
+member: cn=sivaram,ou=Users,dc=example,dc=com
+
+dn: cn=gowtham,ou=Users,dc=example,dc=com
+objectClass: organizationalPerson
+objectClass: person
+objectClass: inetOrgPerson
+objectClass: top
+cn: gowtham
+sn: jayaraman
+uid: gow
+userPassword:: e1NIQX1uVTRlSTcxYmNuQkdxZU8wdDl0WHZZMXU1b1E9
+
+
+dn: cn=project lead,ou=Groups,dc=example,dc=com
+objectClass: groupOfNames
+objectClass: top
+cn: project lead
+member: cn=karthik,ou=Users,dc=example,dc=com
+
+
+

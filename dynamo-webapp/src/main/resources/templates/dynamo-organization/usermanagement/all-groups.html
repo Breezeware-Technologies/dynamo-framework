@@ -1,0 +1,135 @@
+<!doctype html>
+<html class="no-js" lang="" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sd="http://www.thymeleaf.org/spring-data"
+	layout:decorator="dynamo-organization/usermanagement/layout">
+<head>
+<title>Groups</title>
+</head>
+<body>
+	<div layout:fragment="content">
+		<div class="container-fluid">
+			<div class=" mt-8">
+				<div class="box-s borrad">
+					<div class="container-fluid">
+						<div class="row headtb mt-2 borrad-top">
+							<div class="col-md-6 col-sm-6 col-4 p-0">
+								<h6 class="tbhead bold text-md-left">Groups</h6>
+							</div>
+							<div class="col-md-6 col-sm-6 col-8 p-0">
+								<div class="row  pt-1rem">
+									<div class=" col-12  pr-0">
+										<div class="navbar float-md-right text-sm-center float-right">
+											<a class="float-md-right float-sm-center float-left"
+												th:href="@{/organization/createGroup}">
+												<button type="submit"
+													class="btn btn-outline-secondary tbheadbt">
+													<i class="fa fa-plus d-none d-sm-none d-md-inline-block"
+														aria-hidden="true"></i> New Group
+												</button>
+											</a>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="col-md-12 search pt-1 pb-1">
+							<div class="form formbg">
+								<form class="pl-3 text-container" id="myform"
+									th:action="@{/organization/groups}">
+									<div class=" row col-md-12">
+										<div class=" row more-text2 col-md-4 mt-1">
+											<div class="row">
+												<div class="form-group m-0 col-4  text-right p-0 pr-3">
+													<label for="name" class="control-label">Group Name</label>
+												</div>
+												<div class="form-group m-0 col-8  p-0 pr-3">
+													<input id="name" name="name"
+														th:value="${#httpServletRequest.getParameter('name')}"
+														type="text" class="form-control notsplcha"
+														autofocus="autofocus" />
+												</div>
+											</div>
+										</div>
+										<div class=" hide col-md-4 mt-md-1 mt-sm-2 mt-3">
+											<div class="row ml-md-0 ml-sm-2  ml-sm-19">
+												<div
+													class=" form-group m-0 col-12 mt-1 text-md-left text-right p-0">
+													<button type="submit"
+														class="btn btn-outline-success btn-pm mr-sm-3 mr-3 float-left">
+														<i class="fa fa-search d-none d-sm-none d-md-inline-block"
+															aria-hidden="true"></i> Search
+													</button>
+													<button type="button"
+														class="btn reset btn-outline-info btn-pm mr-sm-3 mr-3 float-left">
+														<i
+															class="fas fa-minus-circle d-none d-sm-none d-md-inline-block"></i>
+														Clear
+													</button>
+												</div>
+											</div>
+										</div>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+
+					<div class="tb">
+						<table class="table vertical-table">
+							<thead>
+								<tr>
+									<th style="width: 20% !important;"><a
+										class="sorted sortable black" sd:pagination-sort="name">
+											Group Name</a></th>
+									<th style="width: 55% !important;" >Description</th>
+									<th style="width: 15% !important;"><a
+										class="sorted sortable black" sd:pagination-sort="createdDate">Created
+											Date</a></th>
+									<th style="width: 10% !important;" >Actions</th>
+
+								</tr>
+							</thead>
+							<tbody>
+								<tr th:each="group : ${pagedGroups}">
+
+									<td data-label="Group Name" th:text="${group.name}" />
+									<td data-label="Description" th:text="${group.description}" />
+									<td data-label="Created
+											Date"
+										th:text="${#dates.format(group.createdDate, 'dd-MM-yyyy')}" />
+									<td data-label="Actions"><a
+										th:href="@{'/organization/editGroup?id=' + ${group.id}}">
+											<button type="submit"
+												class="table-button btn-outline-secondary tbheadbt ">
+												<i class="fa fa-edit d-none d-sm-none d-md-inline-block "></i>
+												Edit
+											</button>
+									</a></td>
+								</tr>
+
+							</tbody>
+
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="pagination1 mb-md-5 ">
+			<div class="text-center ">
+				<div sd:pagination-summary="">info</div>
+
+				<ul class="pagination" sd:pagination="full">
+					<!-- Pagination created by SpringDataDialect, this content is just for mockup -->
+					<li class="disabled"><a href="#" aria-label="Previous"><span
+							aria-hidden="true">&laquo;</span></a></li>
+					<li class="active"><a href="#">1 <span class="sr-only">(current)</span></a></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+
+</body>
+</html>

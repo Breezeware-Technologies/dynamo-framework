@@ -1,0 +1,117 @@
+<!doctype html>
+<html class="no-js" lang="" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sd="http://www.thymeleaf.org/spring-data"
+	layout:decorator="audit/layout">
+<head>
+<meta charset="utf-8">
+</meta>
+<meta name="description" content="">
+</meta>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+</meta>
+<title>Audit</title>
+</head>
+<body>
+	<div layout:fragment="content">
+		<div class="container-fluid mt-5">
+			<div class="mt-8">
+				<div class="container-fluid">
+					<div class="card  box-s-top0 px-3">
+						<div class="card-body pt-1">
+
+							<div class="row bb">
+								<h5 class="tbhead col-12 mb-0 bold">View Audit</h5>
+							</div>
+
+							<div class="row pt-2">
+
+								<div class="col-md-3 col-sm-2 text-md-right text-sm-left">
+									<h6 class="lh-2">
+										<b>Audit Event : </b>
+									</h6>
+								</div>
+								<div class="col-md-9 col-sm-10 pl-md-0 pl-sm-1">
+									<p th:text="${auditItem.auditEvent}"></p>
+								</div>
+
+								<div class="col-md-3 col-sm-2 text-md-right text-sm-left">
+									<h6 class="lh-2">
+										<b>Audit Date : </b>
+									</h6>
+								</div>
+								<div class="col-md-9 col-sm-10 pl-md-0 pl-sm-1">
+									<p
+										th:text="${#dates.format(auditItem.createdDate,'dd-MM-yyyy') }"></p>
+								</div>
+
+								<div class="col-md-3 col-sm-2 text-md-right text-sm-left">
+									<h6 class="lh-2">
+										<b>Item ID : </b>
+									</h6>
+								</div>
+								<div class="col-md-9 col-sm-10 pl-md-0 pl-sm-1">
+									<p th:text="${auditItem.auditItemId}"></p>
+								</div>
+
+								<div class="col-md-3 col-sm-2 text-md-right text-sm-left">
+									<h6 class="lh-2">
+										<b>Item Type : </b>
+									</h6>
+								</div>
+								<div class="col-md-9 col-sm-10 pl-md-0 pl-sm-1">
+									<p th:text="${auditItem.auditItemType}"></p>
+								</div>
+
+								<div class="col-md-3 col-sm-2 text-md-right text-sm-left">
+									<h6 class="lh-2">
+										<b>Input Data : </b>
+									</h6>
+								</div>
+								<div class="col-md-9 col-sm-10 pl-md-0 pl-sm-1">
+									<p th:text="${auditItem.auditItemInputData}"></p>
+								</div>
+
+								<div class="col-md-3 col-sm-2 text-md-right text-sm-left">
+									<h6 class="lh-2">
+										<b>Output Data : </b>
+									</h6>
+								</div>
+								<div class="col-md-9 col-sm-10 pl-md-0 pl-sm-1">
+									<p th:text="${auditItem.auditItemOutputData}"></p>
+								</div>
+
+								<div class="col-md-3 col-sm-2 text-md-right text-sm-left">
+									<h6 class="lh-2">
+										<b>User : </b>
+									</h6>
+								</div>
+								<div class="col-md-9 col-sm-10 pl-md-0 pl-sm-1">
+									<p th:text="${auditItem.auditUserEmail}"></p>
+								</div>
+
+								<div class="col-md-3 col-sm-2 text-md-right text-sm-left">
+									<h6 class="lh-2">
+										<b>IP Address: </b>
+									</h6>
+								</div>
+								<div class="col-md-9 col-sm-10 pl-md-0 pl-sm-1">
+									<p th:text="${auditItem.ipAddress}"></p>
+								</div>
+
+								<div class="col-md-3 col-sm-2 text-md-right text-sm-left">
+									<h6 class="lh-2">
+										<b>Browser : </b>
+									</h6>
+								</div>
+								<div class="col-md-9 col-sm-10 pl-md-0 pl-sm-1">
+									<p th:text="${auditItem.protocol}"></p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

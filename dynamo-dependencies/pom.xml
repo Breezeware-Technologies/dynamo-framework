@@ -1,0 +1,745 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>net.breezeware.dynamo</groupId>
+		<artifactId>dynamo-framework</artifactId>
+		<version>1.6.1</version>
+	</parent>
+	<artifactId>dynamo-dependencies</artifactId>
+	<packaging>pom</packaging>
+	<name>Dynamo Dependencies</name>
+	<description>Project containing all dependencies used in the Dynamo Framework.</description>
+
+	<!-- #################### REPOSITORIES #################### -->
+
+	<repositories>
+		<repository>
+			<id>mavenrepositorydotcom</id>
+			<url>https://mvnrepository.com</url>
+		</repository>
+	</repositories>
+
+	<!-- #################### PROPERTIES #################### -->
+
+	<properties>
+		<java.servlet.version>4.0.0</java.servlet.version>
+
+		<spring.boot.starter.version>2.2.0.RELEASE</spring.boot.starter.version>
+		<spring.integration.core.version>5.2.0.RELEASE</spring.integration.core.version>
+		<spring.security.oauth2.client.version>5.2.0.RELEASE</spring.security.oauth2.client.version>
+		<spring.security.oauth2.jose.version>5.2.0.RELEASE</spring.security.oauth2.jose.version>
+		<spring.security.oauth2.test.version>5.2.0.RELEASE</spring.security.oauth2.test.version>
+		<spring.security.ldap.version>5.2.0.RELEASE</spring.security.ldap.version>
+		<spring.security.oauth2.version>2.4.0.RELEASE</spring.security.oauth2.version>
+
+		<testng.version>6.9.10</testng.version>
+		<querydsl.version>4.2.1</querydsl.version>
+		<google.gson.version>2.8.6</google.gson.version>
+		<commons.beanutils.version>1.9.3</commons.beanutils.version>
+		<hibernate.validator.version>6.1.0.Final</hibernate.validator.version>
+		<shrinkwrap.api.version>1.2.0</shrinkwrap.api.version>
+		<hamcrest.version>1.3</hamcrest.version>
+		<jayway.restassured.version>2.3.0</jayway.restassured.version>
+		<codehaus.groovy-all.version>2.2.1</codehaus.groovy-all.version>
+		<org.apache.httpcomponents.version>4.5.2</org.apache.httpcomponents.version>
+		<com.google.guava.version>21.0</com.google.guava.version>
+		<org.projectlombok.version>1.16.16</org.projectlombok.version>
+		<org.glassfish.jersey.ext.jersey-spring3.version>2.24</org.glassfish.jersey.ext.jersey-spring3.version>
+		<thymeleaf.layout.dialect.version>2.3.0</thymeleaf.layout.dialect.version>
+		<thymeleaf.data.dialect.version>3.2.2</thymeleaf.data.dialect.version>
+		<sourceforge.nekohtml.version>1.9.21</sourceforge.nekohtml.version>
+		<io.zonky.test.embedded-db.text.version>1.2.0</io.zonky.test.embedded-db.text.version>
+		<!-- <oracle.ojdbc.version>11.2.0.3</oracle.ojdbc.version> -->
+		<mysql.connector.java.version>5.1.33</mysql.connector.java.version>
+		<postgresql.connector.version>9.4.1211</postgresql.connector.version>
+		<slf4j.version>1.7.28</slf4j.version>
+		<jackson.version>2.9.2</jackson.version>
+		<lombok.version>1.18.10</lombok.version>
+
+		<maven.install.plugin>3.0.0-M1</maven.install.plugin>
+		<spring.boot.maven.plugin>1.4.0.RELEASE</spring.boot.maven.plugin>
+		<maven.release.plugin>2.5.3</maven.release.plugin>
+		<maven.deploy.plugin>2.8.2</maven.deploy.plugin>
+		<maven.compiler.plugin>3.3</maven.compiler.plugin>
+		<maven.javadoc.plugin>2.10.4</maven.javadoc.plugin>
+		<maven.war.plugin>2.6</maven.war.plugin>
+		<apt.maven.plugin>1.1.3</apt.maven.plugin>
+		<asciidoctor.maven.plugin>1.5.3</asciidoctor.maven.plugin>
+		<spring.restdocs.asciidoctor>2.0.3.RELEASE</spring.restdocs.asciidoctor>
+		<kie.maven.plugin>7.31.0.Final</kie.maven.plugin>
+		<maven.checkstyle.plugin>2.17</maven.checkstyle.plugin>
+		<maven.source.plugin>3.0.1</maven.source.plugin>
+	</properties>
+
+	<!-- #################### DEPENDENCY MANAGEMENT #################### -->
+
+	<dependencyManagement>
+		<dependencies>
+
+			<!-- ******************** Java Servlet ******************** -->
+
+			<dependency>
+				<groupId>javax.servlet</groupId>
+				<artifactId>javax.servlet-api</artifactId>
+				<version>${java.servlet.version}</version>
+				<scope>provided</scope>
+			</dependency>
+
+			<!-- ******************** Spring Boot Starters ******************** -->
+			<dependency>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-starter</artifactId>
+				<exclusions>
+					<exclusion>
+						<groupId>org.springframework.boot</groupId>
+						<artifactId>spring-boot-starter-logging</artifactId>
+					</exclusion>
+				</exclusions>
+				<version>${spring.boot.starter.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-starter-data-jpa</artifactId>
+				<version>${spring.boot.starter.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-starter-test</artifactId>
+				<version>${spring.boot.starter.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-starter-web</artifactId>
+				<version>${spring.boot.starter.version}</version>
+				<exclusions>
+					<exclusion>
+						<groupId>org.springframework.boot</groupId>
+						<artifactId>spring-boot-starter-tomcat</artifactId>
+					</exclusion>
+				</exclusions>
+			</dependency>
+
+			<dependency>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-starter-thymeleaf</artifactId>
+				<version>${spring.boot.starter.version}</version>
+				<exclusions>
+					<exclusion>
+						<groupId>org.thymeleaf</groupId>
+						<artifactId>thymeleaf-spring4</artifactId>
+					</exclusion>
+					<exclusion>
+						<groupId>nz.net.ultraq.thymeleaf</groupId>
+						<artifactId>thymeleaf-layout-dialect</artifactId>
+					</exclusion>
+				</exclusions>
+			</dependency>
+
+			<dependency>
+				<groupId>nz.net.ultraq.thymeleaf</groupId>
+				<artifactId>thymeleaf-layout-dialect</artifactId>
+				<version>${thymeleaf.layout.dialect.version}</version>
+				<exclusions>
+					<exclusion>
+						<groupId>org.thymeleaf</groupId>
+						<artifactId>thymeleaf</artifactId>
+					</exclusion>
+				</exclusions>
+			</dependency>
+
+			<!-- Used to provide sorting and pagination support in Thymeleaf & Spring -->
+			<dependency>
+				<groupId>io.github.jpenren</groupId>
+				<artifactId>thymeleaf-spring-data-dialect</artifactId>
+				<version>${thymeleaf.data.dialect.version}</version>
+				<exclusions>
+					<exclusion>
+						<groupId>org.thymeleaf</groupId>
+						<artifactId>thymeleaf</artifactId>
+					</exclusion>
+					<exclusion>
+						<groupId>org.springframework.data</groupId>
+						<artifactId>spring-data-commons</artifactId>
+					</exclusion>
+				</exclusions>
+			</dependency>
+
+			<dependency>
+				<groupId>org.thymeleaf.extras</groupId>
+				<artifactId>thymeleaf-extras-springsecurity4</artifactId>
+				<version>3.0.2.RELEASE</version>
+				<exclusions>
+					<exclusion>
+						<groupId>org.slf4j</groupId>
+						<artifactId>slf4j-api</artifactId>
+					</exclusion>
+				</exclusions>
+			</dependency>
+
+			<!-- Added to address Thymeleaf handling of self-closed tags. -->
+			<dependency>
+				<groupId>net.sourceforge.nekohtml</groupId>
+				<artifactId>nekohtml</artifactId>
+				<version>${sourceforge.nekohtml.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-starter-aop</artifactId>
+				<version>${spring.boot.starter.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-starter-jersey</artifactId>
+				<exclusions>
+					<exclusion>
+						<groupId>org.glassfish.jersey.ext</groupId>
+						<artifactId>jersey-spring3</artifactId>
+					</exclusion>
+					<exclusion>
+						<groupId>org.springframework.boot</groupId>
+						<artifactId>spring-boot-starter-tomcat</artifactId>
+					</exclusion>
+					<exclusion>
+						<groupId>org.springframework.boot</groupId>
+						<artifactId>spring-boot-starter-validation</artifactId>
+					</exclusion>
+				</exclusions>
+				<version>${spring.boot.starter.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-starter-actuator</artifactId>
+				<version>${spring.boot.starter.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-starter-security</artifactId>
+				<version>${spring.boot.starter.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-starter-activemq</artifactId>
+				<version>${spring.boot.starter.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-starter-mail</artifactId>
+				<version>${spring.boot.starter.version}</version>
+				<exclusions>
+					<exclusion>
+						<groupId>org.springframework.boot</groupId>
+						<artifactId>spring-boot-starter-logging</artifactId>
+					</exclusion>
+				</exclusions>
+			</dependency>
+
+			<!-- 22Apr2019 - Added to provide OAuth server functionality and client 
+				support -->
+			<!-- Libraries for Built-in OAuth2 implementation -->
+			<dependency>
+				<groupId>org.springframework.security.oauth.boot</groupId>
+				<artifactId>spring-security-oauth2-autoconfigure</artifactId>
+				<version>${spring.boot.starter.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.springframework.security</groupId>
+				<artifactId>spring-security-oauth2-client</artifactId>
+				<version>${spring.security.oauth2.client.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.springframework.security</groupId>
+				<artifactId>spring-security-oauth2-jose</artifactId>
+				<version>${spring.security.oauth2.jose.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.springframework.security</groupId>
+				<artifactId>spring-security-test</artifactId>
+				<version>${spring.security.oauth2.test.version}</version>
+				<scope>test</scope>
+			</dependency>
+
+			<dependency>
+				<groupId>org.springframework.security.oauth</groupId>
+				<artifactId>spring-security-oauth2</artifactId>
+				<version>${spring.security.oauth2.version}</version>
+			</dependency>
+
+			<!-- ******************** Spring Config Server ******************** -->
+
+			<dependency>
+				<groupId>org.springframework.cloud</groupId>
+				<artifactId>spring-cloud-config-server</artifactId>
+				<version>${spring.boot.starter.version}</version>
+			</dependency>
+
+			<!-- ******************** Spring Config Client ******************** -->
+
+			<dependency>
+				<groupId>org.springframework.cloud</groupId>
+				<artifactId>spring-cloud-config-client</artifactId>
+				<version>${spring.boot.starter.version}</version>
+			</dependency>
+
+			<!-- ******************** Spring LDAP ******************** -->
+
+			<!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-data-ldap -->
+			<dependency>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-starter-data-ldap</artifactId>
+				<version>${spring.boot.starter.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.springframework.security</groupId>
+				<artifactId>spring-security-ldap</artifactId>
+				<version>${spring.security.ldap.version}</version>
+			</dependency>
+
+			<!-- ******************** Spring Integration ******************** -->
+
+			<dependency>
+				<groupId>org.springframework.integration</groupId>
+				<artifactId>spring-integration-core</artifactId>
+				<version>${spring.integration.core.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-devtools</artifactId>
+				<version>${spring.boot.starter.version}</version>
+				<optional>true</optional>
+			</dependency>
+
+			<!-- ******************** Spring Boot Starter - Tomcat ******************** -->
+			<dependency>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-starter-tomcat</artifactId>
+				<version>${spring.boot.starter.version}</version>
+			</dependency>
+
+			<!-- ******************** Jersey ******************** -->
+
+			<!-- Note: 'jersey-spring3' is required to enable DI in Jersey for using 
+				Spring beans. Meanwhile, 'hk2' libraries cause problems while Spring servlet 
+				initialization and therefore are excluded. -->
+			<dependency>
+				<groupId>org.glassfish.jersey.ext</groupId>
+				<artifactId>jersey-spring3</artifactId>
+				<version>${org.glassfish.jersey.ext.jersey-spring3.version}</version>
+			</dependency>
+
+			<!-- ******************** Jackson ******************** -->
+
+			<dependency>
+				<groupId>com.fasterxml.jackson.core</groupId>
+				<artifactId>jackson-databind</artifactId>
+				<version>${jackson.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.fasterxml.jackson.core</groupId>
+				<artifactId>jackson-core</artifactId>
+				<version>${jackson.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.fasterxml.jackson.core</groupId>
+				<artifactId>jackson-annotations</artifactId>
+				<version>${jackson.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.fasterxml.jackson.dataformat</groupId>
+				<artifactId>jackson-dataformat-yaml</artifactId>
+				<version>${jackson.version}</version>
+			</dependency>
+
+			<!-- ******************** Logging ******************** -->
+			<dependency>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-starter-log4j2</artifactId>
+				<version>${spring.boot.starter.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.slf4j</groupId>
+				<artifactId>slf4j-api</artifactId>
+				<version>${slf4j.version}</version>
+			</dependency>
+
+			<!-- ******************** GSON JSON Parser ******************** -->
+
+			<dependency>
+				<groupId>com.google.code.gson</groupId>
+				<artifactId>gson</artifactId>
+				<version>${google.gson.version}</version>
+			</dependency>
+
+			<!-- ******************** Apache Bean Utils ******************** -->
+
+			<dependency>
+				<groupId>commons-beanutils</groupId>
+				<artifactId>commons-beanutils</artifactId>
+				<version>${commons.beanutils.version}</version>
+			</dependency>
+
+			<!-- ******************** Hibernate Validator ******************** -->
+			<dependency>
+				<groupId>org.hibernate</groupId>
+				<artifactId>hibernate-validator</artifactId>
+				<version>${hibernate.validator.version}</version>
+			</dependency>
+
+			<!-- ******************** TEST NG ******************** -->
+
+			<dependency>
+				<groupId>org.testng</groupId>
+				<artifactId>testng</artifactId>
+				<version>${testng.version}</version>
+			</dependency>
+
+			<!-- ******************** Embedded DB Spring Test ******************** -->
+			<dependency>
+				<groupId>io.zonky.test</groupId>
+				<artifactId>embedded-database-spring-test</artifactId>
+				<version>${io.zonky.test.embedded-db.text.version}</version>
+				<scope>test</scope>
+				<exclusions>
+					<exclusion>
+						<groupId>org.springframework</groupId>
+						<artifactId>spring-context</artifactId>
+					</exclusion>
+					<exclusion>
+						<groupId>org.springframework</groupId>
+						<artifactId>spring-test</artifactId>
+					</exclusion>
+				</exclusions>
+			</dependency>
+
+			<!-- ******************** Hamcrest ******************** -->
+
+			<dependency>
+				<groupId>org.hamcrest</groupId>
+				<artifactId>hamcrest-all</artifactId>
+				<version>${hamcrest.version}</version>
+			</dependency>
+
+			<!-- ******************** Shrink Wrap ******************** -->
+
+			<dependency>
+				<groupId>org.jboss.shrinkwrap</groupId>
+				<artifactId>shrinkwrap-api</artifactId>
+				<version>${shrinkwrap.api.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.jboss.shrinkwrap</groupId>
+				<artifactId>shrinkwrap-impl-base</artifactId>
+				<version>${shrinkwrap.api.version}</version>
+			</dependency>
+
+			<!-- ******************** REST Assured ******************** -->
+
+			<dependency>
+				<groupId>com.jayway.restassured</groupId>
+				<artifactId>rest-assured</artifactId>
+				<version>${jayway.restassured.version}</version>
+				<exclusions>
+					<!-- Exclude Groovy because of classpath issue -->
+					<exclusion>
+						<groupId>org.codehaus.groovy</groupId>
+						<artifactId>groovy</artifactId>
+					</exclusion>
+				</exclusions>
+
+			</dependency>
+
+			<dependency>
+				<groupId>org.codehaus.groovy</groupId>
+				<artifactId>groovy-all</artifactId>
+				<!-- Needs to be the same version that REST Assured depends on -->
+				<version>${codehaus.groovy-all.version}</version>
+
+			</dependency>
+
+			<!-- ******************** Oracle DB ******************** -->
+
+			<!-- <dependency> <groupId>com.oracle</groupId> <artifactId>ojdbc6</artifactId> 
+				<version>${oracle.ojdbc.version}</version> </dependency> -->
+
+			<!-- ******************** MySQL DB ******************** -->
+
+			<dependency>
+				<groupId>mysql</groupId>
+				<artifactId>mysql-connector-java</artifactId>
+				<version>${mysql.connector.java.version}</version>
+			</dependency>
+
+			<!-- ******************** PostgreSQL DB ******************** -->
+
+			<dependency>
+				<groupId>org.postgresql</groupId>
+				<artifactId>postgresql</artifactId>
+				<version>${postgresql.connector.version}</version>
+			</dependency>
+
+			<!-- ******************** HTTP Client ******************** -->
+
+			<dependency>
+				<groupId>org.apache.httpcomponents</groupId>
+				<artifactId>httpclient</artifactId>
+				<version>${org.apache.httpcomponents.version}</version>
+			</dependency>
+
+			<!-- ******************** Google Guava library******************** -->
+			<dependency>
+				<groupId>com.google.guava</groupId>
+				<artifactId>guava</artifactId>
+				<version>${com.google.guava.version}</version>
+			</dependency>
+
+
+			<!-- ******************** Query DSL predicate ******************** -->
+			<dependency>
+				<groupId>com.querydsl</groupId>
+				<artifactId>querydsl-core</artifactId>
+				<version>${querydsl.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.querydsl</groupId>
+				<artifactId>querydsl-apt</artifactId>
+				<version>${querydsl.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.querydsl</groupId>
+				<artifactId>querydsl-jpa</artifactId>
+				<version>${querydsl.version}</version>
+			</dependency>
+
+			<!-- ******************** Lombok ******************** -->
+
+			<dependency>
+				<groupId>org.projectlombok</groupId>
+				<artifactId>lombok</artifactId>
+				<version>${lombok.version}</version>
+				<scope>provided</scope>
+			</dependency>
+
+			<!-- ******************** Swagger Documentation ******************** -->
+
+			<dependency>
+				<groupId>org.webjars</groupId>
+				<artifactId>swagger-ui</artifactId>
+				<version>2.1.8-M1</version>
+			</dependency>
+
+			<dependency>
+				<groupId>io.swagger</groupId>
+				<artifactId>swagger-core</artifactId>
+				<scope>compile</scope>
+				<version>1.5.3</version>
+				<exclusions>
+					<exclusion>
+						<groupId>javax.ws.rs</groupId>
+						<artifactId>jsr311-api</artifactId>
+					</exclusion>
+				</exclusions>
+			</dependency>
+
+			<dependency>
+				<groupId>com.wordnik</groupId>
+				<artifactId>swagger-annotations</artifactId>
+				<version>1.5.3-M1</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.springframework.restdocs</groupId>
+				<artifactId>spring-restdocs-asciidoctor</artifactId>
+				<version>${spring.restdocs.asciidoctor}</version>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
+	<build>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-install-plugin</artifactId>
+					<version>${maven.install.plugin}</version>
+				</plugin>
+
+				<plugin>
+					<groupId>org.kie</groupId>
+					<artifactId>kie-maven-plugin</artifactId>
+					<version>${kie.maven.plugin}</version>
+					<extensions>true</extensions>
+				</plugin>
+
+				<plugin>
+					<groupId>org.springframework.boot</groupId>
+					<artifactId>spring-boot-maven-plugin</artifactId>
+					<version>${spring.boot.maven.plugin}</version>
+				</plugin>
+
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-release-plugin</artifactId>
+					<version>${maven.release.plugin}</version>
+				</plugin>
+
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-deploy-plugin</artifactId>
+					<version>${maven.deploy.plugin}</version>
+				</plugin>
+
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-war-plugin</artifactId>
+					<version>${maven.war.plugin}</version>
+					<configuration>
+						<failOnMissingWebXml>false</failOnMissingWebXml>
+					</configuration>
+				</plugin>
+
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-compiler-plugin</artifactId>
+					<version>${maven.compiler.plugin}</version>
+				</plugin>
+
+				<!-- QueryDSL -->
+				<plugin>
+					<groupId>com.mysema.maven</groupId>
+					<artifactId>apt-maven-plugin</artifactId>
+					<version>${apt.maven.plugin}</version>
+					<executions>
+						<execution>
+							<phase>generate-sources</phase>
+							<goals>
+								<goal>process</goal>
+							</goals>
+							<configuration>
+								<!-- Specifies the directory in which the query types are generated -->
+								<outputDirectory>target/generated-sources</outputDirectory>
+								<!-- States that the APT code generator should look for JPA annotations -->
+								<processor>com.querydsl.apt.jpa.JPAAnnotationProcessor</processor>
+							</configuration>
+						</execution>
+					</executions>
+				</plugin>
+
+				<!-- Spring REST docs -->
+				<plugin>
+					<groupId>org.asciidoctor</groupId>
+					<artifactId>asciidoctor-maven-plugin</artifactId>
+					<version>${asciidoctor.maven.plugin}</version>
+					<executions>
+						<execution>
+							<id>generate-docs</id>
+							<phase>prepare-package</phase>
+							<goals>
+								<goal>process-asciidoc</goal>
+							</goals>
+
+							<configuration>
+								<sourceDirectory>src/main/asciidoc</sourceDirectory>
+								<outputDirectory>target/generated-docs</outputDirectory>
+								<backend>html</backend>
+								<doctype>book</doctype>
+								<attributes>
+									<project-version>${project.version}</project-version>
+								</attributes>
+							</configuration>
+						</execution>
+					</executions>
+				</plugin>
+
+				
+				<!-- <plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-javadoc-plugin</artifactId>
+					<version>${maven.javadoc.plugin}</version>
+
+					<configuration>
+						<encoding>UTF-8</encoding>
+
+						<show>private</show>
+
+						<detectLinks>true</detectLinks>
+
+						<noqualifier>all</noqualifier>
+
+						<additionalparam>-Xdoclint:none</additionalparam>
+
+						<links>
+							<link>http://www.querydsl.com/static/querydsl/4.0.4/apidocs</link>
+							<link>http://docs.spring.io/spring-boot/docs/current/api/</link>
+							<link>https://google.github.io/gson/apidocs</link>
+							<link>https://www.javadoc.io/doc/org.aspectj/aspectjweaver</link>
+							<link>https://www.slf4j.org/api/</link>
+							<link>https://docs.spring.io/spring/docs/4.3.8.RELEASE/javadoc-api/</link>
+							<link>http://docs.spring.io/spring-data/data-commons/docs/1.13.3.RELEASE/api/</link>
+							<link>http://docs.spring.io/spring-data/jpa/docs/1.11.6.RELEASE/api/</link>
+							<link>https://eclipse.org/aspectj/doc/released/runtime-api</link>
+							<link>http://docs.spring.io/spring-security/site/docs/4.2.2.RELEASE/apidocs/</link>
+							<link>https://tomcat.apache.org/tomcat-8.0-doc/servletapi/</link>
+							<link>http://docs.spring.io/spring-security/oauth/apidocs/</link>
+							<link>http://www.thymeleaf.org/apidocs/thymeleaf/3.0.3.RELEASE/</link>
+							<link>https://jersey.github.io/apidocs/2.25.1/jersey/</link>
+							<link>https://docs.oracle.com/javaee/7/api/</link>
+							<link>https://docs.jboss.org/drools/release/6.5.0.Final/kie-api-javadoc/</link>
+							<link>https://docs.camunda.org/javadoc/camunda-bpm-platform/7.6/</link>
+							<link>http://docs.jboss.org/hibernate/beanvalidation/spec/1.1/api/</link>
+						</links>
+
+						<failOnError>false</failOnError>
+					</configuration>
+
+					<executions>
+						<execution>
+							<id>aggregate</id>
+							<phase>site</phase>
+							<goals>
+								<goal>aggregate</goal>
+							</goals>
+						</execution>
+					</executions>
+				</plugin> -->
+
+				<!-- Checkstyle Plugin -->
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-checkstyle-plugin</artifactId>
+					<version>${maven.checkstyle.plugin}</version>
+				</plugin>
+
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-source-plugin</artifactId>
+					<version>${maven.source.plugin}</version>
+					<configuration>
+						<attach>false</attach>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+	</build>
+
+</project>

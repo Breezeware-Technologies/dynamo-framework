@@ -1,0 +1,295 @@
+{
+	"info": {
+		"_postman_id": "f4b2f414-ab11-4453-9e6f-de6bfd3eb929",
+		"name": "Dynamo - Auth - OAuth2",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Request Access Token",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "grant_type",
+							"value": "password",
+							"type": "text"
+						},
+						{
+							"key": "username",
+							"value": "karthik",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "karthik",
+							"type": "text"
+						},
+						{
+							"key": "client_id",
+							"value": "dynamo-oauth2-client",
+							"type": "text"
+						},
+						{
+							"key": "client_secret",
+							"value": "karthik",
+							"sessionValue": "karthik",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8080/oauth/token",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"oauth",
+						"token"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Request Organization API without access token",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "grant_type",
+							"value": "password",
+							"type": "text"
+						},
+						{
+							"key": "username",
+							"value": "karthik",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "karthik",
+							"type": "text"
+						},
+						{
+							"key": "client_id",
+							"value": "dynamo-oauth2-client",
+							"type": "text"
+						},
+						{
+							"key": "client_secret",
+							"value": "karthik",
+							"sessionValue": "karthik",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/admin/organizationManagement/groups",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"admin",
+						"organizationManagement",
+						"groups"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Request Organization API with access token",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "680c4c9f-aa25-41c8-a661-73683e7cfcae",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "grant_type",
+							"value": "password",
+							"type": "text"
+						},
+						{
+							"key": "username",
+							"value": "karthik",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "karthik",
+							"type": "text"
+						},
+						{
+							"key": "client_id",
+							"value": "dynamo-oauth2-client",
+							"type": "text"
+						},
+						{
+							"key": "client_secret",
+							"value": "karthik",
+							"sessionValue": "karthik",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/admin/organizationManagement/groups",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"admin",
+						"organizationManagement",
+						"groups"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Refresh Access Token using refresh token",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "grant_type",
+							"value": "refresh_token",
+							"type": "text"
+						},
+						{
+							"key": "client_id",
+							"value": "dynamo-oauth2-client",
+							"type": "text"
+						},
+						{
+							"key": "client_secret",
+							"value": "karthik",
+							"sessionValue": "karthik",
+							"type": "text"
+						},
+						{
+							"key": "refresh_token",
+							"value": "cb26fb4b-848a-4e45-b8fa-23fff8f058e2",
+							"sessionValue": "cb26fb4b-848a-4e45-b8fa-23fff8f058e2",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8080/oauth/token",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"oauth",
+						"token"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Request Organization API with renewed access token Copy",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "ddc4ec7f-d3ac-439c-8dff-5506af0d560d",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "grant_type",
+							"value": "password",
+							"type": "text"
+						},
+						{
+							"key": "username",
+							"value": "karthik",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "karthik",
+							"type": "text"
+						},
+						{
+							"key": "client_id",
+							"value": "dynamo-oauth2-client",
+							"type": "text"
+						},
+						{
+							"key": "client_secret",
+							"value": "karthik",
+							"sessionValue": "karthik",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/admin/organizationManagement/groups",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"admin",
+						"organizationManagement",
+						"groups"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

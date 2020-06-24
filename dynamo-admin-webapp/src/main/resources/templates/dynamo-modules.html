@@ -1,0 +1,74 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html class="no-js" lang="" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+</meta>
+<meta name="description" content="">
+</meta>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+</meta>
+<title>Apps</title>
+<!-- 
+<link rel="apple-touch-icon" href="apple-touch-icon.png"> -->
+</link>
+<link rel="stylesheet" href="../static/css/fontawesome-all.css"
+	th:href="@{/css/fontawesome-all.css}">
+<link rel="stylesheet" href="../static/css/dynamo-style.css"
+	th:href="@{/css/dynamo-style.css}">
+
+</head>
+<body style="background-color: #E8F0F6;">
+
+
+	<div class="container">
+		<div class="row mt-md-5">
+			<div class="login">
+				<div class="col-md-12">
+					<img class="logopart text-center"
+						th:src="@{/images/app-logo-black.svg}" alt="Dynamo">
+				</div>
+				<div class="row mt-md-3">
+					<div class="text">
+						<h5 class="text-center text-c-01">
+							<span th:text="${@environment.getProperty('application.name')}">App
+								Name</span>
+						</h5>
+					</div>
+				</div>
+				<div class="row mt-md-3">
+					<div class="textlink">
+						<h4 class="textlink__log">
+							<a class="textlink__log__color" th:href="@{/apps}">Apps
+								Module</a>
+						</h4>
+					</div>
+				</div>
+
+				<div class="row mt-md-3">
+					<div class="textlink">
+						<h4 class="textlink__log">
+							<a class="textlink__log__color"
+								th:href="@{/admin/usermanagement/groups}">Organization
+								Module</a>
+						</h4>
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</div>
+	<footer class="footer mt-4 bg-dark">
+		<div class="text-center">
+			<p class="white mb-0 ">
+				© <span
+					th:text="${@environment.getProperty('dynamo.applicationCopyrightYear')}">Year</span>.
+				<span
+					th:text="${@environment.getProperty('dynamo.applicationOwner')}"></span>
+				<a class="white " th:href="@{/releasenotes}" target="_blank">---
+					Release Notes ---</a>
+			</p>
+		</div>
+	</footer>
+</body>
+</html>

@@ -1,0 +1,116 @@
+<!doctype html>
+<html class="no-js" lang="" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sd="http://www.thymeleaf.org/spring-data"
+	layout:decorator="dynamo-audit/layout">
+
+<body>
+	<div th:fragment="main-nav">
+		<nav class="navbar navbar-expand-md navbar-dark fixed-top  bg-dark">
+			<a class="dynamo-logo" th:href="@{/dashboard}"><img
+				th:src="@{/images/app-logo-white.svg}"></a>
+			<button class="navbar-toggler" type="button" data-toggle="collapse"
+				data-target="#navbarCollapse" aria-controls="navbarCollapse"
+				aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarCollapse">
+				<!--  Mobile menu Start -->
+				<ul class="navbar-nav mr-auto">
+					<li th:class="${activeNav == 'audit'}? 'nav-item active' :''"><a
+						class="nav-link" th:href="@{/audit/orgLogs}"><i
+							class="far fa-list-alt" aria-hidden="true"></i>Audit<span
+							class="sr-only">(current)</span></a></li>
+
+					<li class="nav-item dropdown hidenav brl bg-dark"><a
+						class="nav-link dropdown-toggle" href="#" id="dropdown01"
+						data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i
+							class="fa fa-th  pt-1" aria-hidden="true"></i>Other Apps</a>
+						<div class="dropdown-menu dropdown-menu-right drop-app">
+							<div class="app-cont p-0 "
+								sec:authorize="hasAnyAuthority('ROLE_SYSTEM_ADMIN', 'ORGANIZATION_ADMIN')">
+								<a class="dropdown-item in-block"
+									th:href="@{/organization/orgUsers}" href="#"> <img
+									th:src="@{/images/User-Management.svg}">
+									<div class="app-title">User Management</div>
+								</a>
+							</div>
+
+							<div class="app-cont p-0"
+								sec:authorize="hasAnyAuthority('ROLE_SYSTEM_ADMIN', 'ORGANIZATION_ADMIN')">
+								<a class="dropdown-item in-block" th:href="@{/audit/orgLogs}"
+									href="#"> <img th:src="@{/images/Audit.svg}">
+									<div class="app-title">Audit</div>
+								</a>
+							</div>
+
+							<!-- <div class="app-cont p-0"
+								sec:authorize="hasAnyAuthority('ROLE_SYSTEM_ADMIN', 'ORGANIZATION_ADMIN')">
+								<a class="dropdown-item in-block"
+									th:href="@{/admin/configManagement/listConfigs}" href="#">
+									<img th:src="@{/images/config-Icon.svg}">
+									<div class="app-title">Config</div>
+								</a>
+							</div> -->
+
+						</div></li>
+
+					<li class="nav-item hidenav pl-6"><img class="logout"
+						th:src="@{/images/user-icon.svg}"><a class="nav-link padall"
+						th:text="${session.currentUser.fullName}" href="#"></a></li>
+					<li class="nav-item hidenav pb-2"><a class="nav-link "
+						th:href="@{/logout}"><i class="fas fa-sign-out-alt"></i>Logout</a></li>
+
+				</ul>
+				<!--  mobile menu end -->
+				<!--  Desktop  menu Start -->
+				<ul class="nav navbar-nav navbar2 flex-row ml-auto hidedesk">
+					<li class="nav-item dropdown"><a class="nav-links " href="#"
+						id="dropdown01" data-toggle="dropdown" aria-haspopup="true"
+						aria-expanded="false"><i class="fa fa-th fa-2x pt-1"
+							aria-hidden="true"></i></a>
+						<div class="dropdown-menu dropdown-menu-right drop-app box-s-top0">
+
+							<div
+								sec:authorize="hasAnyAuthority('ROLE_SYSTEM_ADMIN', 'ORGANIZATION_ADMIN')"
+								class="app-cont">
+								<a th:href="@{/organization/orgUsers}"><img
+									th:src="@{/images/User-Management.svg}">
+									<div class="app-title">User Management</div> </a>
+							</div>
+
+
+
+							<div class="app-cont"
+								sec:authorize="hasAnyAuthority('ROLE_SYSTEM_ADMIN', 'ORGANIZATION_ADMIN')">
+								<a th:href="@{/audit/orgLogs}"> <img
+									th:src="@{/images/Audit.svg}">
+									<div class="app-title">Audit</div>
+								</a>
+							</div>
+
+							<!-- <div
+								sec:authorize="hasAnyAuthority('ROLE_SYSTEM_ADMIN', 'ORGANIZATION_ADMIN')"
+								class="app-cont mb-2">
+								<a th:href="@{/admin/configManagement/listConfigs}"><img
+									th:src="@{/images/config-Icon.svg}">
+									<div class="app-title">Config</div> </a>
+							</div> -->
+
+						</div></li>
+					<li class="nav-item dropdown"><a class="nav-links " href="#"
+						id="dropdown01" data-toggle="dropdown" aria-haspopup="true"
+						aria-expanded="false"><img class="logout"
+							th:src="@{/images/user-icon.svg}"></a>
+						<form class="dropdown-menu dropdown-menu-right box-s-top0"
+							aria-labelledby="dropdown01">
+							<a th:text="${session.currentUser.fullName}"
+								class="dropdown-item bb" href="#"></a> <a class="dropdown-item"
+								th:href="@{/logout}">Logout</a>
+						</form></li>
+				</ul>
+
+			</div>
+		</nav>
+	</div>
+</body>
+</html>

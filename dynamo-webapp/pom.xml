@@ -1,0 +1,285 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>net.breezeware.dynamo</groupId>
+		<artifactId>dynamo-framework</artifactId>
+		<version>1.6.1</version>
+	</parent>
+	<artifactId>dynamo-webapp</artifactId>
+	<packaging>war</packaging>
+	<name>Dynamo Webapp</name>
+	<description>Dynamo Webapp to showcase Dynamo Framework functionalities</description>
+
+
+	<!-- #################### PROPERTIES #################### -->
+	<properties>
+		<dynamo-framework.version>${project.version}</dynamo-framework.version>
+	</properties>
+
+	<!-- #################### DEPENDENCY MANAGEMENT #################### -->
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>net.breezeware.dynamo</groupId>
+				<artifactId>dynamo-dependencies</artifactId>
+				<version>${project.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
+
+	<!-- #################### DEPENDENCIES #################### -->
+
+	<dependencies>
+		<!-- ******************** Dynamo Util Module ******************** -->
+		<dependency>
+			<groupId>net.breezeware.dynamo</groupId>
+			<artifactId>dynamo-util</artifactId>
+			<version>${dynamo-framework.version}</version>
+		</dependency>
+
+		<!-- ******************** Dynamo Config Module ******************** -->
+		<dependency>
+			<groupId>net.breezeware.dynamo</groupId>
+			<artifactId>dynamo-config-lib</artifactId>
+			<version>${dynamo-framework.version}</version>
+
+			<exclusions>
+				<exclusion>
+					<groupId>org.springframework.cloud</groupId>
+					<artifactId>spring-cloud-config-server</artifactId>
+				</exclusion>
+			</exclusions>
+
+		</dependency>
+
+		<!-- ******************** Dynamo Audit Module ******************** -->
+		<dependency>
+			<groupId>net.breezeware.dynamo</groupId>
+			<artifactId>dynamo-audit-lib</artifactId>
+			<version>${dynamo-framework.version}</version>
+		</dependency>
+
+		<!-- ******************** Dynamo Apps Module ******************** -->
+		<dependency>
+			<groupId>net.breezeware.dynamo</groupId>
+			<artifactId>dynamo-apps-lib</artifactId>
+			<version>${dynamo-framework.version}</version>
+		</dependency>
+
+		<!-- ******************** Dynamo Organization Module ******************** -->
+		<dependency>
+			<groupId>net.breezeware.dynamo</groupId>
+			<artifactId>dynamo-organization-lib</artifactId>
+			<version>${dynamo-framework.version}</version>
+		</dependency>
+
+		<!-- ******************** Dynamo Auth Module ******************** -->
+		<dependency>
+			<groupId>net.breezeware.dynamo</groupId>
+			<artifactId>dynamo-auth-lib</artifactId>
+			<version>${dynamo-framework.version}</version>
+		</dependency>
+
+		<!-- ******************** Dynamo Communication Module ******************** -->
+		<dependency>
+			<groupId>net.breezeware.dynamo</groupId>
+			<artifactId>dynamo-communication-lib</artifactId>
+			<version>${dynamo-framework.version}</version>
+		</dependency>
+
+		<!-- ******************** Thymeleaf support for Spring Security ******************** -->
+		<dependency>
+			<groupId>org.thymeleaf.extras</groupId>
+			<artifactId>thymeleaf-extras-springsecurity4</artifactId>
+			<exclusions>
+				<exclusion>
+					<groupId>org.slf4j</groupId>
+					<artifactId>slf4j-api</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
+		<!-- ******************** Spring data dialect support ******************** -->
+		<dependency>
+			<groupId>io.github.jpenren</groupId>
+			<artifactId>thymeleaf-spring-data-dialect</artifactId>
+			<exclusions>
+				<exclusion>
+					<groupId>org.thymeleaf</groupId>
+					<artifactId>thymeleaf</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.springframework.data</groupId>
+					<artifactId>spring-data-commons</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
+		<!-- ******************** Spring layout dialect support ******************** -->
+		<dependency>
+			<groupId>nz.net.ultraq.thymeleaf</groupId>
+			<artifactId>thymeleaf-layout-dialect</artifactId>
+			<exclusions>
+				<exclusion>
+					<groupId>org.thymeleaf</groupId>
+					<artifactId>thymeleaf</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
+		<!-- ******************** Libraries for Built-in OAuth2 implementation 
+			*********************** -->
+		<dependency>
+			<groupId>org.springframework.security.oauth.boot</groupId>
+			<artifactId>spring-security-oauth2-autoconfigure</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-oauth2-client</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-oauth2-jose</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+
+
+		<!-- https://mvnrepository.com/artifact/org.springframework/spring-web -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-web</artifactId>
+			<version>5.1.1.RELEASE</version>
+		</dependency>
+
+		<!-- REST API Docs -->
+
+		<dependency>
+			<groupId>org.springframework.restdocs</groupId>
+			<artifactId>spring-restdocs-mockmvc</artifactId>
+			<version>2.0.3.RELEASE</version>
+			<scope>test</scope>
+		</dependency>
+
+		<!-- Spring Boot Starter - Tomcat -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-tomcat</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.restdocs</groupId>
+			<artifactId>spring-restdocs-asciidoctor</artifactId>
+		</dependency>
+	</dependencies>
+
+	<!-- ******************** BUILD CONFIGURATIONS ******************** -->
+
+	<build>
+		<finalName>${project.artifactId}</finalName>
+		<outputDirectory>${project.build.directory}/classes</outputDirectory>
+		<plugins>
+			<!-- Skip installation of WAR file in the local repository -->
+			<plugin>
+				<artifactId>maven-install-plugin</artifactId>
+				<configuration>
+					<skip>true</skip>
+				</configuration>
+			</plugin>
+
+			<!-- Skip deployment of WAR file in the remote repository -->
+			<plugin>
+				<artifactId>maven-deploy-plugin</artifactId>
+				<configuration>
+					<skip>true</skip>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<configuration>
+					<failOnMissingWebXml>false</failOnMissingWebXml>
+				</configuration>
+			</plugin>
+
+			<!-- Spring REST docs -->
+			<plugin>
+				<groupId>org.asciidoctor</groupId>
+				<artifactId>asciidoctor-maven-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>generate-docs</id>
+						<phase>prepare-package</phase>
+						<goals>
+							<goal>process-asciidoc</goal>
+						</goals>
+
+						<configuration>
+							<sourceDirectory>src/main/asciidoc</sourceDirectory>
+							<outputDirectory>target/generated-docs</outputDirectory>
+							<backend>html</backend>
+							<doctype>book</doctype>
+							<attributes>
+								<project-version>${project.version}</project-version>
+							</attributes>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+			<plugin>
+				<artifactId>maven-resources-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>copy-resources</id>
+						<phase>prepare-package</phase>
+						<goals>
+							<goal>copy-resources</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>${project.build.outputDirectory}/static/api-docs</outputDirectory>
+							<resources>
+								<resource>
+									<directory>${project.build.directory}/generated-docs</directory>
+								</resource>
+							</resources>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+			<!-- QueryDSL -->
+			<plugin>
+				<groupId>com.mysema.maven</groupId>
+				<artifactId>apt-maven-plugin</artifactId>
+				<executions>
+					<execution>
+						<phase>generate-sources</phase>
+						<goals>
+							<goal>process</goal>
+						</goals>
+						<configuration>
+							<!-- Specifies the directory in which the query types are generated -->
+							<outputDirectory>target/generated-sources</outputDirectory>
+							<!-- States that the APT code generator should look for JPA annotations -->
+							<processor>com.querydsl.apt.jpa.JPAAnnotationProcessor</processor>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+		</plugins>
+	</build>
+</project>

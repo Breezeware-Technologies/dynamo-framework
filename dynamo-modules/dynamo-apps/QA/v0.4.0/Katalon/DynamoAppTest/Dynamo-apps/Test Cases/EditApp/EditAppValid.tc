@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TestCaseEntity>
+   <description></description>
+   <name>EditAppValid</name>
+   <tag></tag>
+   <comment></comment>
+   <testCaseGuid>acb04995-9c87-4b27-9edf-a2d7c6240536</testCaseGuid>
+   <variable>
+      <defaultValue>''</defaultValue>
+      <description></description>
+      <id>8cb1398f-41b9-4f99-9e3c-0dec7bd12b73</id>
+      <masked>false</masked>
+      <name>app_name</name>
+   </variable>
+   <variable>
+      <defaultValue>''</defaultValue>
+      <description></description>
+      <id>3666419d-605a-4486-9e89-bacb6c0d0717</id>
+      <masked>false</masked>
+      <name>app_desc</name>
+   </variable>
+   <variable>
+      <defaultValue>''</defaultValue>
+      <description></description>
+      <id>ba0d8fca-e5b8-4519-808d-8f38edc2e20c</id>
+      <masked>false</masked>
+      <name>feat_name1</name>
+   </variable>
+   <variable>
+      <defaultValue>''</defaultValue>
+      <description></description>
+      <id>96663b0b-3542-455d-8e99-e01ec9b23ed2</id>
+      <masked>false</masked>
+      <name>feat_desc1</name>
+   </variable>
+</TestCaseEntity>

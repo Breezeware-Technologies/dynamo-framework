@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="ViewApp" time="7" tests="1" failures="0" errors="0">
+   <testsuite name="ViewApp" tests="1" failures="0" errors="0" time="7" timestamp="2018-06-18 18:10:09" hostname="Siva - 192.168.99.1" id="Test Suites/ViewApp">
+      <properties>
+         <property name="deviceName" value=""/>
+         <property name="devicePlatform" value=""/>
+         <property name="logFolder" value="/Users/Siva/Work/code/dynamo-framework/dynamo-framework-modules/dynamo-apps/QA/v0.4.0/Katalon/DynamoAppTest/Dynamo-apps/Reports/ViewApp/20180618_181007"/>
+         <property name="logFiles" value="/Users/Siva/Work/code/dynamo-framework/dynamo-framework-modules/dynamo-apps/QA/v0.4.0/Katalon/DynamoAppTest/Dynamo-apps/Reports/ViewApp/20180618_181007/execution0.log"/>
+         <property name="attachments" value=""/>
+         <property name="hostName" value="Siva - 192.168.99.1"/>
+         <property name="os" value="Mac OS X 64bit"/>
+         <property name="katalonVersion" value="5.4.2.1"/>
+         <property name="browser" value="Chrome 62.0.3202.94"/>
+         <property name="hostAddress" value="192.168.99.1"/>
+         <property name="sessionId" value="0a4f5b80beb216f52f94e22d81d20fbc"/>
+         <property name="seleniumVersion" value="3.7.1"/>
+         <property name="proxyInformation" value="ProxyInformation{proxyOption=NO_PROXY, proxyServerType=HTTP, password=, proxyServerAddress=, proxyServerPort=0}"/>
+         <property name="platform" value="Mac OS X"/>
+      </properties>
+      <testcase name="Test Cases/ViewApp/Viewapp" classname="Test Cases/ViewApp/Viewapp" status="PASSED">
+         <system-out><![CDATA[2018-06-18 18:10:10 - [TEST_CASE][PASSED] - Test Cases/ViewApp/Viewapp: Test Cases/ViewApp/Viewapp
+
+2018-06-18 18:10:10 - [TEST_STEP][PASSED] - appmanage.startTest.openbrowser: appmanage.startTest.openbrowser is PASSED
+
+2018-06-18 18:10:14 - [MESSAGE][PASSED] - Browser is opened with url: 'http://localhost:8080/'
+
+2018-06-18 18:10:14 - [MESSAGE][PASSED] - Keys 'user' sent to object: 'Object Repository/Page_Login Page/input_username'
+
+2018-06-18 18:10:14 - [MESSAGE][PASSED] - Keys '152feaf3-2269-48b0-b9d0-08ac4fd21f03' sent to object: 'Object Repository/Page_Login Page/input_password'
+
+2018-06-18 18:10:15 - [MESSAGE][PASSED] - Object: 'Object Repository/Page_Login Page/input_Submit' is clicked on
+
+2018-06-18 18:10:15 - [MESSAGE][PASSED] - Object: 'Object Repository/Page_dynamo apps/a_ManageApps Artifacts' is clicked on
+
+2018-06-18 18:10:15 - [MESSAGE][PASSED] - appmanage.startTest.openbrowser is PASSED
+
+2018-06-18 18:10:15 - [TEST_STEP][PASSED] - click: Object: 'Object Repository/Page_Dynamo/button_dropdownMenuButton' is clicked on
+
+2018-06-18 18:10:15 - [MESSAGE][PASSED] - Object: 'Object Repository/Page_Dynamo/button_dropdownMenuButton' is clicked on
+
+2018-06-18 18:10:15 - [TEST_STEP][PASSED] - click: Object: 'Object Repository/Page_Dynamo/a_View' is clicked on
+
+2018-06-18 18:10:16 - [MESSAGE][PASSED] - Object: 'Object Repository/Page_Dynamo/a_View' is clicked on
+
+2018-06-18 18:10:16 - [TEST_STEP][PASSED] - verifyTextPresent: Text 'CCM' is present on page 
+
+2018-06-18 18:10:16 - [MESSAGE][PASSED] - Text 'CCM' is present on page 
+
+2018-06-18 18:10:16 - [TEST_STEP][PASSED] - appmanage.startTest.closebrowser: appmanage.startTest.closebrowser is PASSED
+
+2018-06-18 18:10:16 - [MESSAGE][PASSED] - Browser is closed
+
+2018-06-18 18:10:16 - [MESSAGE][PASSED] - appmanage.startTest.closebrowser is PASSED]]></system-out>
+         <system-err><![CDATA[]]></system-err>
+      </testcase>
+      <system-out><![CDATA[2018-06-18 18:10:09 - [TEST_SUITE][PASSED] - ViewApp: Test Cases/ViewApp/Viewapp]]></system-out>
+      <system-err><![CDATA[]]></system-err>
+   </testsuite>
+</testsuites>

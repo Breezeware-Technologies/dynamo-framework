@@ -1,0 +1,95 @@
+<!doctype html>
+<html class="no-js" lang="" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<meta name="description" content="">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>User Registration</title>
+ 
+
+   <link rel="shortcut icon"  href="../../static/images/favicon.png" 
+   th:href="@{/images/favicon.png}" />
+
+	<link rel="stylesheet" href="../../static/css/fontawesome-all.css"
+		th:href="@{/css/fontawesome-all.css}">
+
+	<link rel="stylesheet" href="../../static/css/dynamo-style.css"
+		th:href="@{/css/dynamo-style.css}">
+
+</head>
+<body>
+
+
+	<div class="container">
+		<div class="row mt-8">
+			<div class="col-md-5 m-auto">
+				<div class="card ">
+					<div class="card-block text-center p-0">
+						<img th:src="@{/images/app-logo-black.svg}" alt="">
+					</div>
+					<div class="card-block text-center mb-1">
+						<div class="border-b">
+							<span
+								th:text="${@environment.getProperty('dynamo.applicationName')}">App
+								Name</span>
+						</div>
+					</div>
+					<div class="card-block">
+
+						<div class="row">
+
+							<form th:action="@{/registerUser}"
+								th:object="${userRegistrationDto}" method="post"
+								class="col-10 m-auto">
+								<input type="hidden" th:field="*{registrationToken}">
+								<div th:if="${#fields.hasErrors()}"
+									class="has-error alert alert-dismissible alert-danger">
+									<ul>
+										<li th:each="e : ${#fields.detailedErrors()}"
+											th:class="${e.global}? globalerr : fielderr"><span
+											th:text="${e.message}">The error message</span></li>
+									</ul>
+								</div>
+								
+								<div class="form-group mt-2">
+									<label for="password">Password <span>*</span></label> <input
+										type="password" name="password" id="password"
+										placeholder="Enter Password" class="form-control"
+										th:field="*{password}" />
+								</div>
+								<div class="form-group mb-4">
+									<label for="confirmPassword">Confirm Password <span>*</span></label>
+									<input type="password" name="confirmPassword"
+										id="confirmPassword" placeholder="Confirm Password"
+										class="form-control" th:field="*{confirmPassword}" />
+								</div>
+								<div class="card-block text-center">
+									<div class="form-control border-0">
+										<button class="btn btn-outline-success px-3 py-1">
+											<i
+												class="far fa-check-circle  d-none d-sm-none d-md-inline-block"></i>Submit
+										</button>
+									</div>
+								</div>
+								<div class="form-group"></div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<footer class="footer mt-4">
+			<div>
+				<p class="mb-0">
+					© <span
+						th:text="${@environment.getProperty('dynamo.applicationCopyrightYear')}">Year</span>.
+					<span th:text="${@environment.getProperty('dynamo.applicationOwner')}"></span>
+					
+				</p>
+			</div>
+		</footer>
+
+</body>
+</html>

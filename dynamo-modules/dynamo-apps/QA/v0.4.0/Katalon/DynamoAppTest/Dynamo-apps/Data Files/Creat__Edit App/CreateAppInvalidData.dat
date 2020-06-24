@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DataFileEntity>
+   <description></description>
+   <name>CreateAppInvalidData</name>
+   <tag></tag>
+   <containsHeaders>false</containsHeaders>
+   <csvSeperator></csvSeperator>
+   <dataFileGUID>006b950a-feb8-4701-b7dd-96f0fcbe2fa7</dataFileGUID>
+   <dataSourceUrl>/Users/Siva/Work/code/dynamo-framework/dynamo-framework-modules/dynamo-apps/QA/v0.4.0/Katalon/DynamoAppTest/Dynamo-apps/Data Files/Excel/CreateAppInvalidData.xlsx</dataSourceUrl>
+   <driver>ExcelFile</driver>
+   <isInternalPath>false</isInternalPath>
+   <query></query>
+   <secureUserAccount>false</secureUserAccount>
+   <sheetName>Sheet 1</sheetName>
+   <usingGlobalDBSetting>false</usingGlobalDBSetting>
+</DataFileEntity>

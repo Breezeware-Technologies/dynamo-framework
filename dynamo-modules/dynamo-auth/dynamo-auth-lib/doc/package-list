@@ -1,0 +1,13 @@
+net.breezeware.dynamo.auth
+net.breezeware.dynamo.auth.audit.aspectj
+net.breezeware.dynamo.auth.audit.dao
+net.breezeware.dynamo.auth.audit.entity
+net.breezeware.dynamo.auth.audit.service.api
+net.breezeware.dynamo.auth.audit.service.impl
+net.breezeware.dynamo.auth.identity.controller
+net.breezeware.dynamo.auth.identity.dao
+net.breezeware.dynamo.auth.identity.dto
+net.breezeware.dynamo.auth.identity.entity
+net.breezeware.dynamo.auth.identity.service.api
+net.breezeware.dynamo.auth.identity.service.dbimpl
+net.breezeware.dynamo.auth.springsecurity

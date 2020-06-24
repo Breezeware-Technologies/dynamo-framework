@@ -1,0 +1,10 @@
+package net.breezeware.dynamo.util.db;
+
+import org.hibernate.dialect.MySQLDialect;
+
+public class MySqlTinyIntBooleanDialect extends MySQLDialect {
+    public MySqlTinyIntBooleanDialect() {
+        super();
+        registerColumnType(java.sql.Types.BOOLEAN, "bit");
+    }
+}

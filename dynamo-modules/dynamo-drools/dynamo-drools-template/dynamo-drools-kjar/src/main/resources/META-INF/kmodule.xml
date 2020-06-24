@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kmodule xmlns="http://jboss.org/kie/6.0.0/kmodule">
+    <kbase name="dynamo-drools-kjar-kbase" packages="rules">
+        <ksession name="dynamo-drools-kjar-ksession"/>
+    </kbase>
+</kmodule>

@@ -1,0 +1,30 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>net.breezeware.dynamo</groupId>
+		<artifactId>dynamo-modules</artifactId>
+		<version>1.6.1</version>
+	</parent>
+	<artifactId>dynamo-config</artifactId>
+	<version>1.6.1</version>
+	<packaging>pom</packaging>
+	<name>Dynamo Config</name>
+	<description>Dynamo Config Module</description>
+
+
+	<modules>
+		<module>dynamo-config-lib</module>
+	</modules>
+
+	<!-- #################### DEPENDENCIES #################### -->
+
+	<dependencies>
+		<!-- ******************** Dynamo Util Module ******************** -->
+		<dependency>
+			<groupId>net.breezeware.dynamo</groupId>
+			<artifactId>dynamo-util</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+	</dependencies>
+
+</project>
