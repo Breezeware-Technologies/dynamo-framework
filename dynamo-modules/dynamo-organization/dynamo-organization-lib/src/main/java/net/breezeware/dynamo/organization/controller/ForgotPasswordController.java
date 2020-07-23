@@ -253,7 +253,7 @@ public class ForgotPasswordController {
                     user.setPassword(passwordDto.getPassword());
                     try {
                         organizationService.saveUser(user, encodePassword);
-                        if (source != null && source.equals(SOURCE_OF_DATA_FROM)) {            	
+                        if (source != null && source.equals(SOURCE_OF_DATA_FROM_MOBILE)) {            	
                         	logger.info("Enter with the source param");
                         	return new ModelAndView("reset-password-feedback");
                         }
