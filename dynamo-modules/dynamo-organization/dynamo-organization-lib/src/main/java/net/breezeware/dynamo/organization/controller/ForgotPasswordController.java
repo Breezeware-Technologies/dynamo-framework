@@ -43,6 +43,9 @@ public class ForgotPasswordController {
     @Autowired
     EmailService emailService;
 
+    
+    public static final String SOURCE_OF_DATA_FROM_MOBILE = "mobile";
+
 //	@Autowired
 //	DynamoConfigProperties dynamoConfigProperties;
 
@@ -73,9 +76,11 @@ public class ForgotPasswordController {
      * @return returns a string that maps to the 'forgot-password' template.
      */
     @RequestMapping(value = "/forgotPassword", method = RequestMethod.GET)
-    public String forgotPassword(Model model) {
+    public String forgotPassword(Model model , @RequestParam(required = false) String source) {
         ForgotPasswordDto forgotPassword = new ForgotPasswordDto();
         model.addAttribute("forgotPassword", forgotPassword);
+        model.addAttribute("email", forgotPassword.getEmail());
+        model.addAttribute("source", source);
         return "forgot-password";
     }
 
@@ -91,9 +96,9 @@ public class ForgotPasswordController {
      * @return returns to a template/controller mapping.
      */
     @RequestMapping(value = "/forgotPassword", method = RequestMethod.POST)
-    public ModelAndView forgotPassword(@Valid @ModelAttribute("forgotPassword") ForgotPasswordDto forgotPassword,
+    public ModelAndView forgotPassword(@Valid @ModelAttribute("forgotPassword") ForgotPasswordDto forgotPassword,@RequestParam(required = false) String source,@RequestParam(required = false) String email,
             Model model, HttpServletRequest request, BindingResult bindingResult) {
-        logger.info("Entering forgotPassword Controller");
+        logger.info("Entering forgotPassword Controller email={}",email);
 
         boolean hasErrors = false;
         boolean mailSent = false;
@@ -113,6 +118,7 @@ public class ForgotPasswordController {
         if (hasErrors == true) {
             logger.info("There are binding errors. Returning to forgot-password screen.");
             model.addAttribute("forgotPassword", forgotPassword);
+            model.addAttribute("source", source);
             return new ModelAndView("forgot-password");
         } else {
             PasswordResetToken passwordResetToken = organizationService.createPasswordResetToken(user);
@@ -134,7 +140,7 @@ public class ForgotPasswordController {
 
             String serverAddress = applicationServerUrl;
 
-            keyVals.put("resetPasswordLink", serverAddress + "/resetPassword?token=" + passwordResetToken.getToken());
+            keyVals.put("resetPasswordLink", serverAddress + "/resetPassword?token=" + passwordResetToken.getToken() + "&source=" + source );
             String templateName = "reset-password-email-template";
             logger.info("Sending email with template name = {}", templateName);
 
@@ -143,10 +149,19 @@ public class ForgotPasswordController {
 
             logger.info("Sent email!");
             mailSent = true;
-            model.addAttribute("mailSent", mailSent);
-            return new ModelAndView("/login");
+
+            if (source != null && source.equals(SOURCE_OF_DATA_FROM_MOBILE)) {            	
+            	logger.info("Enter with the source param");
+            	model.addAttribute("email", email);
+            	return new ModelAndView("forgot-password-feedback");
+            }
+            	else {
+                    model.addAttribute("mailSent", mailSent);
+                    return new ModelAndView("/login");
+            }
+ 
+            }
         }
-    }
 
     /**
      * 
@@ -159,9 +174,9 @@ public class ForgotPasswordController {
      * @return returns the string to the reset-password template.
      */
     @RequestMapping(value = "/resetPassword", method = RequestMethod.GET)
-    public String resetPassword(Model model, HttpSession session, @RequestParam("token") String token) {
+    public String resetPassword(Model model, HttpSession session, @RequestParam("token") String token,@RequestParam(required = false) String source) {
 
-        logger.info("Entering resetPassword Controller : GET");
+        logger.info("Entering resetPassword Controller : GET,source={}",source);
         if (token != null && token.length() > 0) {
 
             // retrieve token based on token value param
@@ -172,6 +187,7 @@ public class ForgotPasswordController {
                 ForgotPasswordDto dto = new ForgotPasswordDto();
                 dto.setToken(token);
                 model.addAttribute("passwordDto", dto);
+                model.addAttribute("source", source);
             } else {
                 logger.error("Token for value {} does not exist in DB.", token);
             }
@@ -196,10 +212,10 @@ public class ForgotPasswordController {
      * @throws DynamoDataAccessException
      */
     @RequestMapping(value = "/resetPassword", method = RequestMethod.POST)
-    public ModelAndView resetPassword(@ModelAttribute("passwordDto") ForgotPasswordDto passwordDto,
+    public ModelAndView resetPassword(@ModelAttribute("passwordDto") ForgotPasswordDto passwordDto,@RequestParam(required = false) String source,
             BindingResult bindingResult, Model model, HttpSession session, RedirectAttributes redir)
             throws DynamoDataAccessException {
-        logger.info("Entering resetPassword Controller : POST. passwordDto = {}", passwordDto);
+        logger.info("Entering resetPassword Controller : POST. passwordDto = {} source = {}", passwordDto ,source);
 
         boolean hasErrors = false;
 
@@ -223,6 +239,7 @@ public class ForgotPasswordController {
 
         if (hasErrors == true) {
             model.addAttribute("passwordDto", passwordDto);
+            model.addAttribute("source", source);
             return new ModelAndView("reset-password");
         } else {
             String token = passwordDto.getToken();
@@ -236,6 +253,10 @@ public class ForgotPasswordController {
                     user.setPassword(passwordDto.getPassword());
                     try {
                         organizationService.saveUser(user, encodePassword);
+                        if (source != null && source.equals(SOURCE_OF_DATA_FROM)) {            	
+                        	logger.info("Enter with the source param");
+                        	return new ModelAndView("reset-password-feedback");
+                        }
                         redir.addFlashAttribute("successMessage",
                                 "You have successfully reset your password.  You may now login.");
                     } catch (DynamoDataAccessException e) {
