@@ -6,7 +6,6 @@
 		<version>1.7.0-SNAPSHOT</version>
 	</parent>
 	<artifactId>dynamo-organization</artifactId>
-	<version>1.7.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<name>Dynamo Organization Module</name>
 	<description>Dynamo module for managing organization artifacts like Organizations, Users, Roles, Groups etc…</description>
