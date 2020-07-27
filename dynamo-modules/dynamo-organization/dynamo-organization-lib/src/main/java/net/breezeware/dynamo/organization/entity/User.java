@@ -26,8 +26,6 @@ import org.hibernate.annotations.FetchMode;
 //import org.hibernate.envers.Audited;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import com.google.gson.annotations.Expose;
-
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -53,7 +51,7 @@ public class User implements Serializable {
     /**
      * Unique key to identify a user, auto-generate value.
      */
-    @Expose
+
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_gen")
@@ -65,7 +63,7 @@ public class User implements Serializable {
     /**
      * Unique ID assigned to a user by the application.
      */
-    @Expose
+
     @Size(min = 1, max = 90, message = "{Size.user.userUniqueId}")
     @Getter
     @Setter
@@ -83,14 +81,13 @@ public class User implements Serializable {
     /**
      * Defines the type of user organization.
      */
-    @Expose
+
     @OneToOne
     @JoinColumn(name = "organization_id", referencedColumnName = "id")
     @Getter
     @Setter
     private Organization organization;
 
-    @Expose
     @Size(min = 6, max = 45, message = "{Size.user.email}")
     @Pattern(regexp = ".+@.+\\..+", message = "{Pattern.user.email}")
     @Getter
@@ -98,7 +95,6 @@ public class User implements Serializable {
     @Column(name = "email", length = 90)
     private String email;
 
-    @Expose
     @Column(name = "phone_number", length = 30)
     @Getter
     @Setter
@@ -107,7 +103,7 @@ public class User implements Serializable {
     /**
      * Password protection for the user organization.
      */
-    @Expose
+
     @Size(min = 1, max = 90, message = "{Size.user.password}")
     @Column(name = "password", length = 90)
     @Getter
@@ -115,9 +111,9 @@ public class User implements Serializable {
     private String password;
 
     /**
-     * Password protection for the user organization.
+     * Status of the user entity.
      */
-    @Expose
+
     @Column(name = "status", length = 45)
     @Getter
     @Setter
@@ -126,28 +122,25 @@ public class User implements Serializable {
     /**
      * User Time Zone ID (eg., America/New_York, Asia/Kolkata)
      */
-    @Expose
+
     @Size(min = 1, max = 90, message = "{Size.user.userTimeZoneId}")
     @Column(name = "user_time_zone_id", length = 90)
     @Getter
     @Setter
     private String userTimeZoneId;
 
-    @Expose
     @Size(min = 1, max = 45, message = "{Size.user.firstName}")
     @Column(name = "first_name", length = 45)
     @Getter
     @Setter
     private String firstName;
 
-    @Expose
     @Size(min = 1, max = 45, message = "{Size.user.lastName}")
     @Column(name = "last_name", length = 45)
     @Getter
     @Setter
     private String lastName;
 
-    @Expose
     @Size(min = 0, max = 1, message = "{Size.user.middleInitial}")
     @Column(name = "middle_initial", length = 1)
     @Getter
@@ -157,7 +150,7 @@ public class User implements Serializable {
     /**
      * User's date of creation.
      */
-    @Expose
+
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
     @Column(name = "created_date")
     @Getter
@@ -167,7 +160,7 @@ public class User implements Serializable {
     /**
      * Last modified date.
      */
-    @Expose
+
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
     @Column(name = "modified_date")
     @Getter
@@ -179,7 +172,7 @@ public class User implements Serializable {
      * 
      * One-to-many relationship.
      */
-    @Expose
+
     @OneToMany(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
     @Fetch(value = FetchMode.SUBSELECT)
@@ -190,7 +183,7 @@ public class User implements Serializable {
     /**
      * Used for capturing the list of User-Group mapping ID.
      */
-    @Expose
+
     @Transient
     @Getter
     @Setter
@@ -201,7 +194,7 @@ public class User implements Serializable {
      * 
      * One-to-many relationship.
      */
-    @Expose
+
     @OneToMany(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
     @Fetch(value = FetchMode.SUBSELECT)
@@ -212,7 +205,7 @@ public class User implements Serializable {
     /**
      * Used for capturing the list of User-Role mapping ID.
      */
-    @Expose
+
     @Transient
     @Getter
     @Setter
@@ -222,7 +215,7 @@ public class User implements Serializable {
      * Comma Separated Value (CSV) string of all roles assigned to the user.
      * Primarily used for display purposes and is not stored in the DB.
      */
-    @Expose
+
     @Transient
     @Getter
     @Setter
@@ -232,7 +225,7 @@ public class User implements Serializable {
      * Comma Separated Value (CSV) string of all groups assigned to the user.
      * Primarily used for display purposes and is not stored in the DB.
      */
-    @Expose
+
     @Transient
     @Getter
     @Setter
