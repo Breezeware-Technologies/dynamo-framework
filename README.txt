@@ -1,5 +1,10 @@
 Dynamo Framework - Spring based framework for developing web & mobile applications.
 
+
+1.7.0:
+------
+●   Updated controller to support password reset requests from mobile applications.
+
 1.6.1:
 ------
 ●   Fixed Type Adapter Not registered error while creating user
