@@ -43,7 +43,6 @@ public class ForgotPasswordController {
     @Autowired
     EmailService emailService;
 
-    
     public static final String SOURCE_OF_DATA_FROM_MOBILE = "mobile";
 
 //	@Autowired
@@ -76,7 +75,7 @@ public class ForgotPasswordController {
      * @return returns a string that maps to the 'forgot-password' template.
      */
     @RequestMapping(value = "/forgotPassword", method = RequestMethod.GET)
-    public String forgotPassword(Model model , @RequestParam(required = false) String source) {
+    public String forgotPassword(Model model, @RequestParam(required = false) String source) {
         ForgotPasswordDto forgotPassword = new ForgotPasswordDto();
         model.addAttribute("forgotPassword", forgotPassword);
         model.addAttribute("email", forgotPassword.getEmail());
@@ -96,9 +95,10 @@ public class ForgotPasswordController {
      * @return returns to a template/controller mapping.
      */
     @RequestMapping(value = "/forgotPassword", method = RequestMethod.POST)
-    public ModelAndView forgotPassword(@Valid @ModelAttribute("forgotPassword") ForgotPasswordDto forgotPassword,@RequestParam(required = false) String source,@RequestParam(required = false) String email,
-            Model model, HttpServletRequest request, BindingResult bindingResult) {
-        logger.info("Entering forgotPassword Controller email={}",email);
+    public ModelAndView forgotPassword(@Valid @ModelAttribute("forgotPassword") ForgotPasswordDto forgotPassword,
+            @RequestParam(required = false) String source, @RequestParam(required = false) String email, Model model,
+            HttpServletRequest request, BindingResult bindingResult) {
+        logger.info("Entering forgotPassword Controller email={}", email);
 
         boolean hasErrors = false;
         boolean mailSent = false;
@@ -140,7 +140,8 @@ public class ForgotPasswordController {
 
             String serverAddress = applicationServerUrl;
 
-            keyVals.put("resetPasswordLink", serverAddress + "/resetPassword?token=" + passwordResetToken.getToken() + "&source=" + source );
+            keyVals.put("resetPasswordLink",
+                    serverAddress + "/resetPassword?token=" + passwordResetToken.getToken() + "&source=" + source);
             String templateName = "reset-password-email-template";
             logger.info("Sending email with template name = {}", templateName);
 
@@ -150,18 +151,17 @@ public class ForgotPasswordController {
             logger.info("Sent email!");
             mailSent = true;
 
-            if (source != null && source.equals(SOURCE_OF_DATA_FROM_MOBILE)) {            	
-            	logger.info("Enter with the source param");
-            	model.addAttribute("email", email);
-            	return new ModelAndView("forgot-password-feedback");
+            if (source != null && source.equals(SOURCE_OF_DATA_FROM_MOBILE)) {
+                logger.info("Enter with the source param");
+                model.addAttribute("email", email);
+                return new ModelAndView("forgot-password-feedback");
+            } else {
+                model.addAttribute("mailSent", mailSent);
+                return new ModelAndView("/login");
             }
-            	else {
-                    model.addAttribute("mailSent", mailSent);
-                    return new ModelAndView("/login");
-            }
- 
-            }
+
         }
+    }
 
     /**
      * 
@@ -174,9 +174,10 @@ public class ForgotPasswordController {
      * @return returns the string to the reset-password template.
      */
     @RequestMapping(value = "/resetPassword", method = RequestMethod.GET)
-    public String resetPassword(Model model, HttpSession session, @RequestParam("token") String token,@RequestParam(required = false) String source) {
+    public String resetPassword(Model model, HttpSession session, @RequestParam("token") String token,
+            @RequestParam(required = false) String source) {
 
-        logger.info("Entering resetPassword Controller : GET,source={}",source);
+        logger.info("Entering resetPassword Controller : GET,source={}", source);
         if (token != null && token.length() > 0) {
 
             // retrieve token based on token value param
@@ -212,10 +213,10 @@ public class ForgotPasswordController {
      * @throws DynamoDataAccessException
      */
     @RequestMapping(value = "/resetPassword", method = RequestMethod.POST)
-    public ModelAndView resetPassword(@ModelAttribute("passwordDto") ForgotPasswordDto passwordDto,@RequestParam(required = false) String source,
-            BindingResult bindingResult, Model model, HttpSession session, RedirectAttributes redir)
-            throws DynamoDataAccessException {
-        logger.info("Entering resetPassword Controller : POST. passwordDto = {} source = {}", passwordDto ,source);
+    public ModelAndView resetPassword(@ModelAttribute("passwordDto") ForgotPasswordDto passwordDto,
+            @RequestParam(required = false) String source, BindingResult bindingResult, Model model,
+            HttpSession session, RedirectAttributes redir) throws DynamoDataAccessException {
+        logger.info("Entering resetPassword Controller : POST. passwordDto = {} source = {}", passwordDto, source);
 
         boolean hasErrors = false;
 
@@ -253,9 +254,9 @@ public class ForgotPasswordController {
                     user.setPassword(passwordDto.getPassword());
                     try {
                         organizationService.saveUser(user, encodePassword);
-                        if (source != null && source.equals(SOURCE_OF_DATA_FROM_MOBILE)) {            	
-                        	logger.info("Enter with the source param");
-                        	return new ModelAndView("reset-password-feedback");
+                        if (source != null && source.equals(SOURCE_OF_DATA_FROM_MOBILE)) {
+                            logger.info("Enter with the source param");
+                            return new ModelAndView("reset-password-feedback");
                         }
                         redir.addFlashAttribute("successMessage",
                                 "You have successfully reset your password.  You may now login.");

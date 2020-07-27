@@ -36,6 +36,8 @@ public class UserRegistrationController {
     @Autowired
     OrganizationService organizationService;
 
+    public static final String USER_REGISTRATION_TYPE_RPM_PATIENT_ENROLLMENT = "rpmPatientEnrollment";
+
     @Value("${dynamo.encodePassword}")
     private boolean encodePassword;
 
@@ -48,7 +50,8 @@ public class UserRegistrationController {
      * @return returns the string to user-registration template.
      */
     @RequestMapping(value = "/registerUser", method = RequestMethod.GET)
-    public String registerUser(Model model, HttpSession session, @RequestParam("token") String token) {
+    public String registerUser(Model model, HttpSession session, @RequestParam("token") String token,
+            @RequestParam(required = false) String registrationType) {
         logger.info("Entering registerUser Controller : GET. Token = {}", token);
 
         if (token != null && token.length() > 0) {
@@ -61,6 +64,7 @@ public class UserRegistrationController {
                 UserRegistrationDto dto = new UserRegistrationDto();
                 dto.setRegistrationToken(token);
                 model.addAttribute("userRegistrationDto", dto);
+                model.addAttribute("registrationType", registrationType);
             } else {
                 logger.error("Token for value {} does not exist in DB.", token);
             }
@@ -85,9 +89,10 @@ public class UserRegistrationController {
 
     @RequestMapping(value = "/registerUser", method = RequestMethod.POST)
     public ModelAndView registerUser(@ModelAttribute("userRegistrationDto") UserRegistrationDto userRegistrationDto,
-            BindingResult bindingResult, Model model, HttpSession session) {
+            BindingResult bindingResult, Model model, HttpSession session,
+            @RequestParam(required = false) String registrationType) {
 
-        logger.info("Entering registerUser Controller : POST.");
+        logger.info("Entering registerUser Controller : POST. ,registrationType {}", registrationType);
 
         boolean hasErrors = false;
 
@@ -103,6 +108,7 @@ public class UserRegistrationController {
 
         if (hasErrors == true) {
             model.addAttribute("userRegistrationDto", userRegistrationDto);
+            model.addAttribute("registrationType", registrationType);
             return new ModelAndView("user-registration");
         } else {
             String token = userRegistrationDto.getRegistrationToken();
@@ -124,9 +130,16 @@ public class UserRegistrationController {
                 logger.error("User registration token is Null.");
             }
         }
+        if (registrationType != null && registrationType.length() > 0
+                && registrationType.equalsIgnoreCase(USER_REGISTRATION_TYPE_RPM_PATIENT_ENROLLMENT)) {
+            logger.info("Inside RPM Patient enrollment, registrationType {}", registrationType);
+//            model.addAttribute("registrationType", registrationType);
+            return new ModelAndView("patient-enrollment-complete-feedback");
+        } else {
+            logger.info("Exiting registerUser Controller : POST");
+            // NOTE: return to application context root
+            return new ModelAndView("redirect:/");
+        }
 
-        logger.info("Exiting registerUser Controller : POST");
-        // NOTE: return to application context root
-        return new ModelAndView("redirect:/");
     }
 }
