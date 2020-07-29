@@ -1,4 +1,10 @@
--- used in tests that use HSQL
+
+-- Dynamo User
+ALTER TABLE dynamo.dynamo_user ALTER user_unique_id TYPE character varying(90);
+
+
+-- OAuth tables
+
 DROP TABLE IF EXISTS  oauth_client_details CASCADE;
 create table oauth_client_details (
   client_id VARCHAR(256) PRIMARY KEY,

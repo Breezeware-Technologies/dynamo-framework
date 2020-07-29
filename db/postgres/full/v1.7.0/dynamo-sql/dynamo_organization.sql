@@ -95,7 +95,7 @@ DROP TABLE IF EXISTS dynamo.dynamo_org_user;
 CREATE TABLE dynamo.dynamo_org_user
 (
   id bigint NOT NULL DEFAULT nextval('dynamo.dynamo_org_user_seq'::regclass),
-  user_unique_id character varying(20) NOT NULL,
+  user_unique_id character varying(90) NOT NULL,
   organization_id bigint,
   created_date timestamp with time zone,
   email character varying(90) NOT NULL,
