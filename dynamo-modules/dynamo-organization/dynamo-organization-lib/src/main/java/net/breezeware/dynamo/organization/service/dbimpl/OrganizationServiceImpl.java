@@ -750,9 +750,10 @@ public class OrganizationServiceImpl implements OrganizationService {
         token.setTokenExpiryDate(expDate);
         token.setToken(tokenString);
         token.setUser(user);
+        token = userRegistrationTokenRepository.save(token);
 
-        logger.info("Leaving createToken()");
-        return userRegistrationTokenRepository.save(token);
+        logger.info("Leaving createToken(), token value = {}", token);
+        return token;
     }
 
     @Transactional
