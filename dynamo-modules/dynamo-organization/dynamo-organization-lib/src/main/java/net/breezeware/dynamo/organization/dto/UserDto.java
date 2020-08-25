@@ -155,7 +155,6 @@ public class UserDto implements java.io.Serializable {
 
     /**
      * Create a DTO object from User entity.
-     * 
      * @param user
      * @return
      */

@@ -23,7 +23,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
-//import org.hibernate.envers.Audited;
+// import org.hibernate.envers.Audited;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import lombok.Getter;
@@ -39,7 +39,6 @@ import net.breezeware.dynamo.util.string.RandomString;
 public class User implements Serializable {
     /**
      * A Class for users.
-     *
      * @author gowtham
      */
     private static final long serialVersionUID = 1L;
@@ -168,9 +167,7 @@ public class User implements Serializable {
     private Calendar modifiedDate;
 
     /**
-     * User is mapped to one to more roles.
-     * 
-     * One-to-many relationship.
+     * User is mapped to one to more roles. One-to-many relationship.
      */
 
     @OneToMany(fetch = FetchType.EAGER)
@@ -190,9 +187,7 @@ public class User implements Serializable {
     private List<Long> userGroupId;
 
     /**
-     * User is mapped to one or more groups.
-     * 
-     * One-to-many relationship.
+     * User is mapped to one or more groups. One-to-many relationship.
      */
 
     @OneToMany(fetch = FetchType.EAGER)

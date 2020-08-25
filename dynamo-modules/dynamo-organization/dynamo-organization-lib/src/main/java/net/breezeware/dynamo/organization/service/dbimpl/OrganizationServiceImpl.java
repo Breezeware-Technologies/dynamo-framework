@@ -8,7 +8,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 
-//import javax.servlet.http.HttpServletRequest;
+// import javax.servlet.http.HttpServletRequest;
 
 import org.hibernate.exception.ConstraintViolationException;
 import org.slf4j.Logger;
@@ -22,8 +22,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-//import org.springframework.web.context.request.RequestContextHolder;
-//import org.springframework.web.context.request.ServletRequestAttributes;
+// import org.springframework.web.context.request.RequestContextHolder;
+// import org.springframework.web.context.request.ServletRequestAttributes;
 
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Predicate;
@@ -60,8 +60,8 @@ public class OrganizationServiceImpl implements OrganizationService {
 
     Logger logger = LoggerFactory.getLogger(OrganizationServiceImpl.class);
 
-//	@Autowired
-//	DynamoAppBootstrapBean dynamoAppBootstrapBean;
+    // @Autowired
+    // DynamoAppBootstrapBean dynamoAppBootstrapBean;
 
     @Autowired
     OrganizationRepository organizationRepository;
@@ -237,27 +237,27 @@ public class OrganizationServiceImpl implements OrganizationService {
         return password;
     }
 
-//	@Transactional
-//	@Auditable(event = "Retrieve All Roles", argNames = "")
-//	public List<Role> findAllRoles() {
-//
-//		List<String> currentUserRoles = dynamoAppBootstrapBean.getCurrentUserRoles();
-//
-//		List<Role> allRoles = roleRepository.findAll();
-//		List<Role> filteredRoles = new ArrayList<Role>();
-//
-//		if (currentUserRoles.contains(Role.USER_ROLE_SYSTEM_ADMIN)) {
-//			filteredRoles = allRoles;
-//		} else {
-//			for (Role role : allRoles) {
-//				if (!role.getName().equalsIgnoreCase(Role.USER_ROLE_SYSTEM_ADMIN)) {
-//					filteredRoles.add(role);
-//				}
-//			}
-//		}
-//
-//		return filteredRoles;
-//	}
+    // @Transactional
+    // @Auditable(event = "Retrieve All Roles", argNames = "")
+    // public List<Role> findAllRoles() {
+    //
+    // List<String> currentUserRoles = dynamoAppBootstrapBean.getCurrentUserRoles();
+    //
+    // List<Role> allRoles = roleRepository.findAll();
+    // List<Role> filteredRoles = new ArrayList<Role>();
+    //
+    // if (currentUserRoles.contains(Role.USER_ROLE_SYSTEM_ADMIN)) {
+    // filteredRoles = allRoles;
+    // } else {
+    // for (Role role : allRoles) {
+    // if (!role.getName().equalsIgnoreCase(Role.USER_ROLE_SYSTEM_ADMIN)) {
+    // filteredRoles.add(role);
+    // }
+    // }
+    // }
+    //
+    // return filteredRoles;
+    // }
 
     @Transactional
     @Auditable(event = "Retrieve Roles in Organization", argNames = "")
@@ -422,16 +422,16 @@ public class OrganizationServiceImpl implements OrganizationService {
         return roleRepository.findAll(bb, pageable);
     }
 
-//    @Transactional
-//    @Auditable(event = "Retrieve Roles", argNames = "userId")
-//    public List<Role> findUserRoles(String userId) {
-//        logger.info("Entering findUserRoles(). User ID = {}", userId);
-//
-//        List<Role> roles = new ArrayList<Role>();
-//
-//        logger.info("Leaving findUserRoles(). # of roles for user = {}");
-//        return roles;
-//    }
+    // @Transactional
+    // @Auditable(event = "Retrieve Roles", argNames = "userId")
+    // public List<Role> findUserRoles(String userId) {
+    // logger.info("Entering findUserRoles(). User ID = {}", userId);
+    //
+    // List<Role> roles = new ArrayList<Role>();
+    //
+    // logger.info("Leaving findUserRoles(). # of roles for user = {}");
+    // return roles;
+    // }
 
     @Transactional
     @Auditable(event = "getUsers", argNames = "predicate, pageable")

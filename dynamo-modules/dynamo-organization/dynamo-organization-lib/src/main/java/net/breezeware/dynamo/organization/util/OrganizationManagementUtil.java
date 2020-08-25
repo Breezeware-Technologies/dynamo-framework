@@ -11,7 +11,6 @@ public class OrganizationManagementUtil {
     /**
      * Retrieve the organization ID of the currently logged-in user from HTTP
      * session.
-     * 
      * @param session
      * @return
      */
