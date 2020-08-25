@@ -15,17 +15,17 @@ import net.breezeware.dynamo.organization.entity.Role;
 
 @Repository
 public interface RoleRepository
-		extends JpaRepository<Role, Long>, QuerydslPredicateExecutor<Role>, QuerydslBinderCustomizer<QRole> {
-	List<Role> findByNameIgnoreCaseAndOrganizationId(String name, long organizationId);
+        extends JpaRepository<Role, Long>, QuerydslPredicateExecutor<Role>, QuerydslBinderCustomizer<QRole> {
+    List<Role> findByNameIgnoreCaseAndOrganizationId(String name, long organizationId);
 
-	List<Role> findByIdIn(List<Long> ids);
+    List<Role> findByIdIn(List<Long> ids);
 
-	List<Role> findByOrganizationId(long organizationId);
+    List<Role> findByOrganizationId(long organizationId);
 
-	Role findById(long roleId);
+    Role findById(long roleId);
 
-	default public void customize(QuerydslBindings bindings, QRole Role) {
+    default public void customize(QuerydslBindings bindings, QRole Role) {
 
-		bindings.bind(String.class).first((StringPath path, String value) -> path.containsIgnoreCase(value));
-	}
+        bindings.bind(String.class).first((StringPath path, String value) -> path.containsIgnoreCase(value));
+    }
 }

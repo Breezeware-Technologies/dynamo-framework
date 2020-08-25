@@ -14,7 +14,7 @@ import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
-//import org.hibernate.envers.Audited;
+// import org.hibernate.envers.Audited;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import com.google.gson.Gson;
@@ -22,7 +22,6 @@ import com.google.gson.annotations.Expose;
 
 /**
  * A Class to identify roles of users.
- * 
  * @author gowtham
  */
 @XmlRootElement

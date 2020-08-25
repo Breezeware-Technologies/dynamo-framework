@@ -15,7 +15,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
-//import org.hibernate.envers.Audited;
+// import org.hibernate.envers.Audited;
 
 import com.google.gson.Gson;
 import com.google.gson.annotations.Expose;

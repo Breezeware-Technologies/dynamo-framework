@@ -17,9 +17,9 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @ComponentScan(basePackages = { "net.breezeware.dynamo.organization", "net.breezeware.dynamo.util" })
 @EntityScan(basePackages = { "net.breezeware.dynamo.organization" })
 public class TestApplication extends SpringBootServletInitializer {
-	Logger logger = LoggerFactory.getLogger(TestApplication.class);
+    Logger logger = LoggerFactory.getLogger(TestApplication.class);
 
-	public static void main(String[] args) {
-		new TestApplication().configure(new SpringApplicationBuilder(TestApplication.class)).run(args);
-	}
+    public static void main(String[] args) {
+        new TestApplication().configure(new SpringApplicationBuilder(TestApplication.class)).run(args);
+    }
 }

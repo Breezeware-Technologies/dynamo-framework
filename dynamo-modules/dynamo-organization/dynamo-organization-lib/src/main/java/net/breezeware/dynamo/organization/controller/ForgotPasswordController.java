@@ -30,7 +30,6 @@ import net.breezeware.dynamo.util.exeption.DynamoDataAccessException;
 import net.breezeware.dynamo.util.mail.api.EmailService;
 
 /**
- * 
  * Controller methods for forgot password case.
  */
 @Controller
@@ -45,8 +44,8 @@ public class ForgotPasswordController {
 
     public static final String SOURCE_OF_DATA_FROM_MOBILE = "mobile";
 
-//	@Autowired
-//	DynamoConfigProperties dynamoConfigProperties;
+    // @Autowired
+    // DynamoConfigProperties dynamoConfigProperties;
 
     @Value("${dynamo.encodePassword}")
     private boolean encodePassword;
@@ -67,11 +66,8 @@ public class ForgotPasswordController {
     private String applicationAdminEmail;
 
     /**
-     * 
      * Maps to the forgot-password page.
-     * 
      * @param model
-     * 
      * @return returns a string that maps to the 'forgot-password' template.
      */
     @RequestMapping(value = "/forgotPassword", method = RequestMethod.GET)
@@ -84,11 +80,9 @@ public class ForgotPasswordController {
     }
 
     /**
-     * 
      * Gets the username and checks in database whether it exits.If so sends a email
      * containing a reset-password link(associated with a token),else redirects to
      * the 'reset-password-email-template' page.
-     * 
      * @param forgotPassword populated DTO.
      * @param model
      * @param request
@@ -164,10 +158,8 @@ public class ForgotPasswordController {
     }
 
     /**
-     * 
      * Gets the token from the email link and redirects to the 'reset-password'
      * page.
-     * 
      * @param model
      * @param session
      * @param token   password-reset token.
@@ -201,10 +193,8 @@ public class ForgotPasswordController {
     }
 
     /**
-     * 
      * Gets the password and persists the changed password associated with the user
      * in the database.
-     * 
      * @param passwordDto   populated DTO.
      * @param bindingResult
      * @param model
@@ -227,11 +217,12 @@ public class ForgotPasswordController {
             bindingResult.addError(new ObjectError("passwordDto", "Passsword fields should not be empty"));
         }
 
-//		else if (!checkPasswordStrength(passwordDto.getPassword())) {
-//			hasErrors = true;
-//			bindingResult.addError(new ObjectError("passwordDto",
-//					"Please enter a strong password. Minumum 8 characters with a numeric, a upper case alphabet and a special character"));
-//		} 
+        // else if (!checkPasswordStrength(passwordDto.getPassword())) {
+        // hasErrors = true;
+        // bindingResult.addError(new ObjectError("passwordDto",
+        // "Please enter a strong password. Minumum 8 characters with a numeric, a upper
+        // case alphabet and a special character"));
+        // }
 
         else if (!passwordDto.getPassword().equals(passwordDto.getConfirmPassword())) {
             hasErrors = true;

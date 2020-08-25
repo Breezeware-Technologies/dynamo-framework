@@ -8,7 +8,6 @@ import com.google.gson.annotations.Expose;
 /**
  * Class is used during the user registration process. New users can set their
  * initial passwords to gain access to the application.
- * 
  */
 @XmlRootElement
 public class UserRegistrationDto implements java.io.Serializable {

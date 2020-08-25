@@ -53,7 +53,6 @@ import net.breezeware.dynamo.util.mail.api.EmailService;
 
 /**
  * Controller methods for roles, users and group services.
- *
  */
 // @Profile("DBAuthentication")
 @Controller
@@ -106,7 +105,6 @@ public class OrganizationManagementController {
 
     /**
      * Redirects to the all-groups page displaying the list of groups.
-     * 
      * @param model
      * @param predicate
      * @param pageable
@@ -229,7 +227,6 @@ public class OrganizationManagementController {
     /**
      * Gets the group instance from create-group page,if any errors redirects to the
      * create-group page else forwards to the all-groups page.
-     * 
      * @param group         Gets the populated group instance from the create-group
      *                      page.
      * @param bindingResult Captures errors present in the form.
@@ -290,7 +287,6 @@ public class OrganizationManagementController {
     /**
      * Gets the role instance from create-role page and forwards to the all-roles
      * page.
-     * 
      * @param role
      * @param bindingResult
      * @param model
@@ -357,7 +353,6 @@ public class OrganizationManagementController {
     /**
      * Gets the group instance from edit-group page,if any errors redirects to the
      * edit-group page else forwards to the all-groups page.
-     * 
      * @param group         Gets the populated group instance from the edit-group
      *                      page.
      * @param bindingResult Captures errors present in the form.
@@ -416,7 +411,6 @@ public class OrganizationManagementController {
     /**
      * Gets the role instance from edit-role page,if any errors redirects to the
      * edit-role page else forwards to the all-roles page.
-     * 
      * @param role          Gets the populated role instance from the edit-role
      *                      page.
      * @param bindingResult Captures errors present in the form.
@@ -462,7 +456,6 @@ public class OrganizationManagementController {
     public String createUser(Model model, HttpSession session) {
 
         logger.info("Entering createUser Controller : GET");
-        User user = new User();
 
         // get organization ID of user who is currently logged-in
         long organizationId = organizationManagementUtil.getOrganizationIdFromSession(session);
@@ -474,7 +467,8 @@ public class OrganizationManagementController {
         logger.info("Session User : " + session.getAttribute("currentUser"));
         logger.info("List of Groups : " + groups);
         logger.info("List of Roles : " + roles);
-        model.addAttribute("user", user);
+
+        model.addAttribute("user", new User());
         model.addAttribute("groups", groups);
         model.addAttribute("roles", roles);
         model.addAttribute("userTimeZoneOptions", User.userTimeZoneOptions());
@@ -486,7 +480,6 @@ public class OrganizationManagementController {
     /**
      * Gets the user instance from create-user page,if any errors redirects to the
      * create-user page else forwards to the all-users page.
-     * 
      * @param user
      * @param bindingResult
      * @param session
@@ -638,8 +631,8 @@ public class OrganizationManagementController {
             model.addAttribute("activeNav", " users");
             logger.info("Exiting Create User :POST");
 
-            redirectAttributes.addFlashAttribute("successMessage",
-                    "New user registration initiated successfully. User will receive an email with an activation link.");
+            redirectAttributes.addFlashAttribute("successMessage", "New user registration initiated successfully."
+                    + " User will receive an email with an activation link.");
 
             Map<String, Object> mavAttributes = new HashMap<String, Object>();
             mavAttributes.put("userFromDynamo", user);
@@ -651,7 +644,6 @@ public class OrganizationManagementController {
 
     /**
      * Gets the user by user ID and re-directs to the edit-user page.
-     * 
      * @param userId
      * @param model
      * @return returns a string to the edit-user template.
@@ -695,10 +687,8 @@ public class OrganizationManagementController {
     }
 
     /**
-     * 
      * Gets the populated user.If there exist errors then redirects to the edit-user
      * page,else redirects to the all-users page.
-     * 
      * @param user          Populated entity.
      * @param bindingResult
      * @param model
@@ -849,7 +839,6 @@ public class OrganizationManagementController {
 
     /**
      * Creates a new organization with a default user.
-     * 
      * @param createOrganizationDto
      * @param bindingResult
      * @param session

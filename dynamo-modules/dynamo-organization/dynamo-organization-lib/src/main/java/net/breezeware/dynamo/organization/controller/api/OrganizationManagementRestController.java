@@ -36,7 +36,6 @@ import net.breezeware.dynamo.util.usermgmt.CurrentUserDto;
 
 /**
  * REST API Controller methods for roles, users and group services.
- *
  */
 
 @RestController
@@ -44,90 +43,87 @@ import net.breezeware.dynamo.util.usermgmt.CurrentUserDto;
 @Profile("!service-layer-test")
 public class OrganizationManagementRestController {
 
-	Logger logger = LoggerFactory.getLogger(OrganizationManagementController.class);
+    Logger logger = LoggerFactory.getLogger(OrganizationManagementController.class);
 
-	@Autowired
-	OrganizationService organizationService;
+    @Autowired
+    OrganizationService organizationService;
 
-	@Autowired
-	EmailService emailService;
+    @Autowired
+    EmailService emailService;
 
-	// @Autowired
-	// ServletRequest servletRequest;
+    // @Autowired
+    // ServletRequest servletRequest;
 
-	@Autowired
-	DynamoAppBootstrapBean dynamoAppBootstrapBean;
+    @Autowired
+    DynamoAppBootstrapBean dynamoAppBootstrapBean;
 
-	/**
-	 * Redirects to the all-groups page displaying the list of groups.
-	 * 
-	 * @param model
-	 * @param predicate
-	 * @param pageable
-	 * @param parameters
-	 * @return
-	 */
-	@RequestMapping(value = "/groups", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	@ResponseStatus(value = HttpStatus.OK)
-	public @ResponseBody Page<Group> listGroups(Model model, @QuerydslPredicate(root = Group.class) Predicate predicate,
-			@PageableDefault(sort = { "name" }, page = 0, size = 12) Pageable pageable,
-			@RequestParam MultiValueMap<String, String> parameters, HttpSession session) {
+    /**
+     * Redirects to the all-groups page displaying the list of groups.
+     * @param model
+     * @param predicate
+     * @param pageable
+     * @param parameters
+     * @return
+     */
+    @RequestMapping(value = "/groups", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(value = HttpStatus.OK)
+    public @ResponseBody Page<Group> listGroups(Model model, @QuerydslPredicate(root = Group.class) Predicate predicate,
+            @PageableDefault(sort = { "name" }, page = 0, size = 12) Pageable pageable,
+            @RequestParam MultiValueMap<String, String> parameters, HttpSession session) {
 
-		logger.info("# of params = " + parameters.size());
+        logger.info("# of params = " + parameters.size());
 
-		CurrentUserDto currentUser = (CurrentUserDto) session.getAttribute("currentUser");
-		long organizationId = -1;
+        CurrentUserDto currentUser = (CurrentUserDto) session.getAttribute("currentUser");
+        long organizationId = -1;
 
-		// NOTE:
-		// if currentUser in session is null, use the 'defaultOrganization' in DB (i.e,
-		// organizationId = 1)
-		if (currentUser == null) {
-			organizationId = 1;
-		} else {
-			organizationId = Long.valueOf(currentUser.getOrganizationId());
-		}
+        // NOTE:
+        // if currentUser in session is null, use the 'defaultOrganization' in DB (i.e,
+        // organizationId = 1)
+        if (currentUser == null) {
+            organizationId = 1;
+        } else {
+            organizationId = Long.valueOf(currentUser.getOrganizationId());
+        }
 
-		Page<Group> pagedGroups = organizationService.getGroups(organizationId, predicate, pageable);
-		logger.info("# of groups fetched = {}", pagedGroups.getNumberOfElements());
+        Page<Group> pagedGroups = organizationService.getGroups(organizationId, predicate, pageable);
+        logger.info("# of groups fetched = {}", pagedGroups.getNumberOfElements());
 
-		return pagedGroups;
-	}
+        return pagedGroups;
+    }
 
-	/**
-	 * Retrieves a single user by email
-	 * 
-	 * @param model
-	 * @param email
-	 * @param session
-	 * @return
-	 */
-	@RequestMapping(value = "/users", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	public @ResponseBody User getUserByEmail(Model model, @RequestParam("email") String email, HttpSession session) {
-		logger.info("Entering getUserByEmail(). Email = " + email);
+    /**
+     * Retrieves a single user by email
+     * @param model
+     * @param email
+     * @param session
+     * @return
+     */
+    @RequestMapping(value = "/users", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public @ResponseBody User getUserByEmail(Model model, @RequestParam("email") String email, HttpSession session) {
+        logger.info("Entering getUserByEmail(). Email = " + email);
 
-		User user = organizationService.getUserByEmail(email);
-		logger.info("Leaving getUserByEmail(). user = {}", user);
+        User user = organizationService.getUserByEmail(email);
+        logger.info("Leaving getUserByEmail(). user = {}", user);
 
-		return user;
-	}
+        return user;
+    }
 
-	/**
-	 * Retrieves a user DTO entity by email
-	 * 
-	 * @param model
-	 * @param email
-	 * @param session
-	 * @return
-	 */
-	@RequestMapping(value = "/mobileUser", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-	public @ResponseBody UserDto getUserByEmail(@Valid @RequestBody String email) {
-		logger.info("Entering getUserByEmail(). Email = " + email);
+    /**
+     * Retrieves a user DTO entity by email
+     * @param model
+     * @param email
+     * @param session
+     * @return
+     */
+    @RequestMapping(value = "/mobileUser", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    public @ResponseBody UserDto getUserByEmail(@Valid @RequestBody String email) {
+        logger.info("Entering getUserByEmail(). Email = " + email);
 
-		User user = organizationService.getUserByEmail(email);
-		UserDto userDto = UserDto.createDto(user);
+        User user = organizationService.getUserByEmail(email);
+        UserDto userDto = UserDto.createDto(user);
 
-		logger.info("Leaving getUserByEmail(). userDto = {}", userDto);
+        logger.info("Leaving getUserByEmail(). userDto = {}", userDto);
 
-		return userDto;
-	}
+        return userDto;
+    }
 }

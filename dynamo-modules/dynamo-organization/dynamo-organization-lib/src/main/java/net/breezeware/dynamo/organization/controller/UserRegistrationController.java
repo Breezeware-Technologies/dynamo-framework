@@ -23,11 +23,8 @@ import net.breezeware.dynamo.organization.service.api.OrganizationService;
 import net.breezeware.dynamo.util.exeption.DynamoDataAccessException;
 
 /**
- * 
  * Controller methods for handling setting password after user-registration.
- * 
  * @author gowtham
- *
  */
 @Controller
 public class UserRegistrationController {
@@ -43,7 +40,6 @@ public class UserRegistrationController {
 
     /**
      * Displays a page for the user to set his initial password.
-     * 
      * @param model
      * @param session
      * @param token   user-registration token.
@@ -79,7 +75,6 @@ public class UserRegistrationController {
     /**
      * Completes user creation by setting the initial password for the user. User
      * will be automatically logged into the system after this step.
-     *
      * @param userRegistrationDto DTO.
      * @param bindingResult
      * @param model
@@ -133,7 +128,7 @@ public class UserRegistrationController {
         if (registrationType != null && registrationType.length() > 0
                 && registrationType.equalsIgnoreCase(USER_REGISTRATION_TYPE_RPM_PATIENT_ENROLLMENT)) {
             logger.info("Inside RPM Patient enrollment, registrationType {}", registrationType);
-//            model.addAttribute("registrationType", registrationType);
+            // model.addAttribute("registrationType", registrationType);
             return new ModelAndView("patient-enrollment-complete-feedback");
         } else {
             logger.info("Exiting registerUser Controller : POST");
