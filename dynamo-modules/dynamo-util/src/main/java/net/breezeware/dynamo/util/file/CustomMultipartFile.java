@@ -14,8 +14,6 @@ public class CustomMultipartFile implements MultipartFile {
 
     private String fileName;
 
-    private String contentType;
-
     private File file;
 
     private String destPath = System.getProperty("java.io.tmpdir");

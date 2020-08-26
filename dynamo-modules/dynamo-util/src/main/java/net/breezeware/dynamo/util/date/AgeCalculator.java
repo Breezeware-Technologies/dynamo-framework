@@ -8,7 +8,7 @@ import java.util.Calendar;
 public class AgeCalculator {
 
     public static int calculateAge(LocalDate birthDate, LocalDate currentDate) {
-        if ((birthDate != null) && (currentDate != null)) {
+        if (birthDate != null && currentDate != null) {
             return Period.between(birthDate, currentDate).getYears();
         } else {
             return 0;
@@ -16,13 +16,12 @@ public class AgeCalculator {
     }
 
     public static int calculateAge(Calendar birthDateInCalendar) {
-
         if (birthDateInCalendar != null) {
             LocalDate birthDate = birthDateInCalendar.getTime().toInstant().atZone(ZoneId.systemDefault())
                     .toLocalDate();
             LocalDate currentDate = LocalDate.now();
 
-            if ((birthDate != null) && (currentDate != null)) {
+            if (birthDate != null && currentDate != null) {
                 return Period.between(birthDate, currentDate).getYears();
             } else {
                 return 0;

@@ -558,3 +558,563 @@
  (StringUtilsTest.java, line 19)
 14.11.2019 00:03:14 *INFO * StringUtilsTest: Value after removeNewLine() call. = <?xml version="1.0"?> <ClinicalDocument xmlns="urn:hl7-org:v3" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:sdtc="urn:hl7-org:sdtc">   <realmCode code="US"/>   <typeId root="2.16.840.1.113883.1.3" extension="POCD_HD000040"/>   <templateId root="2.16.840.1.113883.10.20.22.1.1"/>   <templateId root="2.16.840.1.113883.10.20.22.1.2"/>   <id root="4249ea17-2019-ef2f-fd3c-001A64958C30"/>   <code code="34133-9" codeSystem="2.16.840.1.113883.6.1" displayName="Summarization of Episode Note"/>   <title>Data Portability</title>   <effectiveTime value="20191112140311-0500"/>   <confidentialityCode code="N" codeSystem="2.16.840.1.113883.5.25"/>   <languageCode code="en-US"/>   <recordTarget>     <patientRole>       <id root="2.16.840.1.113883.3.564.195900" extension="35615"/>       <addr use="HP">         <streetAddressLine>1755 Pinewood Dr</streetAddressLine>         <streetAddressLine nullFlavor="NI"/>         <city>Piscataway</city>         <state>NJ</state>         <postalCode>08854-2048</postalCode>         <country>US</country>       </addr>       <telecom nullFlavor="NI"/>       <patient>         <name>           <given>Glecy</given>           <family>Abaquita</family>         </name>         <administrativeGenderCode code="" codeSystem="2.16.840.1.113883.5.1"/>         <birthTime value="19681022"/>         <maritalStatusCode nullFlavor="NI"/>         <raceCode nullFlavor="NI"/>         <ethnicGroupCode nullFlavor="NI"/>         <languageCommunication>           <languageCode nullFlavor="NA"/>         </languageCommunication>       </patient>     </patientRole>   </recordTarget>   <author>     <time value="20191112140311-0500"/>     <assignedAuthor>       <id root="2.16.840.1.113883.3.564"/>       <addr use="WP">         <streetAddressLine>311 Arsenal St</streetAddressLine>         <streetAddressLine nullFlavor="NI"/>         <city>Watertown</city>         <state>MA</state>         <postalCode>02472</postalCode>         <country>US</country>       </addr>       <telecom use="WP" value="tel:+1-617-4021000"/>       <assignedAuthoringDevice>         <manufacturerModelName>athenahealth</manufacturerModelName>         <softwareName>athenahealth</softwareName>       </assignedAuthoringDevice>     </assignedAuthor>   </author>   <custodian>     <assignedCustodian>       <representedCustodianOrganization>         <id root="2.16.840.1.113883.3.564"/>         <name>athenahealth</name>         <telecom use="WP" value="tel:+1-617-4021000"/>         <addr use="WP">           <streetAddressLine>311 Arsenal St</streetAddressLine>           <streetAddressLine nullFlavor="NI"/>           <city>Watertown</city>           <state>MA</state>           <postalCode>02472</postalCode>           <country>US</country>         </addr>       </representedCustodianOrganization>     </assignedCustodian>   </custodian>   <documentationOf>     <serviceEvent classCode="PCPR">       <effectiveTime>         <low value="20191112"/>         <high nullFlavor="NI"/>       </effectiveTime>     </serviceEvent>   </documentationOf>   <component>     <structuredBody>       <component>         <section>           <templateId root="2.16.840.1.113883.10.20.22.2.6.1"/>           <id root="4249ea17-2019-a9bd-fd3c-001A64958C30"/>           <code code="48765-2" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC"/>           <title>Allergies</title>           <text> 			<paragraph> 				<content ID="allergy1">None recorded.</content> 			</paragraph> 		</text>           <entry>             <act classCode="ACT" moodCode="EVN">               <templateId root="2.16.840.1.113883.10.20.22.4.30"/>               <id root="4249ea17-2019-1ba0-fd3c-001A64958C30"/>               <code code="48765-2" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC" displayName="Allergies, adverse reactions, alerts"/>               <statusCode code="completed"/>               <effectiveTime>                 <high value="20191112"/>               </effectiveTime>               <entryRelationship typeCode="SUBJ">                 <observation classCode="OBS" moodCode="EVN">                   <templateId root="2.16.840.1.113883.10.20.22.4.7"/>                   <id root="4249ea17-2019-1278-fd3c-001A64958C30"/>                   <code code="ASSERTION" codeSystem="2.16.840.1.113883.5.4"/>                   <statusCode code="completed"/>                   <effectiveTime>                     <low nullFlavor="NI"/>                     <high value="20191112"/>                   </effectiveTime>                   <value xsi:type="CD" code="419199007" codeSystem="2.16.840.1.113883.6.96" displayName="Allergy to substance"/>                   <participant typeCode="CSM">                     <participantRole classCode="MANU">                       <playingEntity classCode="MMAT">                         <code nullFlavor="NI">                           <translation nullFlavor="NI"/>                         </code>                       </playingEntity>                     </participantRole>                   </participant>                   <entryRelationship typeCode="MFST" inversionInd="true">                     <observation classCode="OBS" moodCode="EVN">                       <templateId root="2.16.840.1.113883.10.20.22.4.9"/>                       <id root="4249ea17-2019-42b6-fd3c-001A64958C30"/>                       <code nullFlavor="NI"/>                       <statusCode code="completed"/>                       <value nullFlavor="NI" xsi:type="CD"/>                     </observation>                   </entryRelationship>                   <entryRelationship typeCode="SUBJ" inversionInd="true">                     <observation moodCode="EVN" classCode="OBS">                       <templateId root="2.16.840.1.113883.10.20.22.4.8"/>                       <code code="SEV" codeSystem="2.16.840.1.113883.5.4" codeSystemName="HL7ActCode" displayName="Severity Observation"/>                       <statusCode code="completed"/>                       <value xsi:type="CD" nullFlavor="NI"/>                     </observation>                   </entryRelationship>                 </observation>               </entryRelationship>             </act>           </entry>         </section>       </component>       <component>         <section>           <templateId root="2.16.840.1.113883.10.20.22.2.1.1"/>           <id root="4249ea17-2019-df47-fd3c-001A64958C30"/>           <code code="10160-0" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC" displayName="History of Medication Use"/>           <title>Medications</title>           <text> 			<paragraph> 				<content ID="Med1">None recorded.</content> 			</paragraph> 		</text>           <entry>             <substanceAdministration moodCode="INT" classCode="SBADM">               <templateId root="2.16.840.1.113883.10.20.22.4.16"/>               <id root="4249ea17-2019-86cd-fd3c-001A64958C30"/>               <text>                 <reference value="#Med1"/>               </text>               <statusCode code="completed"/>               <effectiveTime xsi:type="IVL_TS">                 <low nullFlavor="NI"/>                 <high nullFlavor="NI"/>               </effectiveTime>               <consumable>                 <manufacturedProduct classCode="MANU">                   <templateId root="2.16.840.1.113883.10.20.22.4.23"/>                   <manufacturedMaterial>                     <code nullFlavor="NI">                       <originalText>                         <reference value="#Med1"/>                       </originalText>                     </code>                     <name/>                   </manufacturedMaterial>                 </manufacturedProduct>               </consumable>               <entryRelationship typeCode="SUBJ" inversionInd="true">                 <act moodCode="INT" classCode="ACT">                   <templateId root="2.16.840.1.113883.10.20.22.4.20"/>                   <code code="311401005" codeSystem="2.16.840.1.113883.6.96" codeSystemName="SNOMED CT" displayName="Patient Education"/>                   <text/>                   <statusCode code="completed"/>                 </act>               </entryRelationship>             </substanceAdministration>           </entry>         </section>       </component>       <component>         <section>           <templateId root="2.16.840.1.113883.10.20.22.2.5.1"/>           <id root="4249ea17-2019-fbd6-fd3c-001A64958C30"/>           <code code="11450-4" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC"/>           <title>Problems</title>           <text> 			<paragraph>None recorded.</paragraph> 		</text>           <entry>             <act moodCode="EVN" classCode="ACT">               <templateId root="2.16.840.1.113883.10.20.22.4.3"/>               <id root="4249ea17-2019-5002-fd3c-001A64958C30"/>               <code code="CONC" codeSystem="2.16.840.1.113883.5.6"/>               <statusCode code="active"/>               <effectiveTime>                 <low nullFlavor="NI"/>               </effectiveTime>               <entryRelationship typeCode="SUBJ" inversionInd="false">                 <observation moodCode="EVN" classCode="OBS">                   <templateId root="2.16.840.1.113883.10.20.22.4.4"/>                   <id root="4249ea17-2019-cabf-fd3c-001A64958C30"/>                   <code code="55607006" codeSystem="2.16.840.1.113883.6.96" codeSystemName="SNOMED CT" displayName="Problem"/>                   <statusCode code="completed"/>                   <effectiveTime>                     <low nullFlavor="NI"/>                   </effectiveTime>                   <value xsi:type="CD" nullFlavor="NI"/>                 </observation>               </entryRelationship>             </act>           </entry>         </section>       </component>       <component>         <section>           <templateId root="2.16.840.1.113883.10.20.22.2.7.1"/>           <id root="4249ea17-2019-08bc-fd3c-001A64958C30"/>           <code code="47519-4" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC"/>           <title>Procedures</title>           <text> 			<paragraph> 				<content ID="Proc1">None recorded.</content> 			</paragraph> 		</text>           <entry>             <procedure moodCode="INT" classCode="PROC">               <templateId root="2.16.840.1.113883.10.20.22.4.14"/>               <id root="4249ea17-2019-a3d6-fd3c-001A64958C30"/>               <code nullFlavor="NI"/>               <text>                 <reference value="#Proc1"/>               </text>               <statusCode code="active"/>               <effectiveTime nullFlavor="NI"/>             </procedure>           </entry>         </section>       </component>       <component>         <section>           <templateId root="2.16.840.1.113883.10.20.22.2.3.1"/>           <id root="4249ea17-2019-e158-fd3c-001A64958C30"/>           <code code="30954-2" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC"/>           <title>Results</title>           <text>                 	<table><thead><tr><th>Lab Results</th></tr></thead><tbody><tr><td/></tr></tbody></table>                 <paragraph><content ID="result1">None recorded.</content></paragraph></text>           <entry>             <organizer moodCode="EVN" classCode="BATTERY">               <templateId root="2.16.840.1.113883.10.20.22.4.1"/>               <id root="4249ea17-2019-4016-fd3c-001A64958C30"/>               <code xsi:type="CE" nullFlavor="NI">                 <translation displayName="None recorded." codeSystemName="Lab Result Description"/>               </code>               <statusCode code="completed"/>               <effectiveTime nullFlavor="NI"/>               <component>                 <observation moodCode="EVN" classCode="OBS">                   <templateId root="2.16.840.1.113883.10.20.22.4.2"/>                   <id root="4249ea17-2019-a5f3-fd3c-001A64958C30"/>                   <code nullFlavor="NI"/>                   <text>                     <reference value="#result1"/>                   </text>                   <statusCode code="completed"/>                   <effectiveTime nullFlavor="NI"/>                   <value nullFlavor="NI" xsi:type="CD"/>                   <interpretationCode nullFlavor="NI"/>                   <referenceRange>                     <observationRange>                       <text nullFlavor="NI"/>                       <value xsi:type="ST" nullFlavor="NI"/>                     </observationRange>                   </referenceRange>                 </observation>               </component>             </organizer>           </entry>         </section>       </component>       <component>         <section>           <templateId root="2.16.840.1.113883.10.20.22.2.22"/>           <id root="4249ea17-2019-6417-fd3c-001A64958C30"/>           <code code="46240-8" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC" displayName="History of hospitalizations+History of outpatient visits"/>           <title>Past Encounters</title>           <text>             <paragraph>None recorded.</paragraph>           </text>         </section>       </component>       <component>         <section>           <templateId root="2.16.840.1.113883.10.20.22.2.17"/>           <id root="4249ea17-2019-de48-fd3c-001A64958C30"/>           <code code="29762-2" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC"/>           <title>Social History</title>           <text> 			<paragraph>None recorded.</paragraph> 		</text>           <entry>             <observation moodCode="EVN" classCode="OBS">               <templateId root="2.16.840.1.113883.10.20.22.4.78"/>               <id root="4249ea17-2019-da9e-fd3c-001A64958C30"/>               <code code="ASSERTION" codeSystem="2.16.840.1.113883.5.4"/>               <statusCode code="completed"/>               <effectiveTime>                 <low nullFlavor="NI"/>               </effectiveTime>               <value code="266927001" codeSystem="2.16.840.1.113883.6.96" displayName="Unknown If Ever Smoked" xsi:type="CD"/>             </observation>           </entry>         </section>       </component>       <component>         <section>           <templateId root="2.16.840.1.113883.10.20.22.2.14"/>           <id root="4249ea17-2019-a737-fd3c-001A64958C30"/>           <code code="47420-5" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC"/>           <title>Functional Status</title>           <text>             <paragraph>Unknown.</paragraph>           </text>         </section>       </component>       <component>         <section>           <templateId root="2.16.840.1.113883.10.20.22.2.2.1"/>           <id root="4249ea17-2019-8bd2-fd3c-001A64958C30"/>           <code code="11369-6" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC"/>           <title>Vaccine List</title>           <text> 			<paragraph> 				<content ID="immun1">None recorded.</content> 			</paragraph> 		</text>           <entry>             <substanceAdministration moodCode="INT" classCode="SBADM" negationInd="false">               <templateId root="2.16.840.1.113883.10.20.22.4.52"/>               <id root="4249ea17-2019-f21b-fd3c-001A64958C30"/>               <text>                 <reference value="#immun1"/>               </text>               <statusCode code="active"/>               <effectiveTime nullFlavor="NI"/>               <doseQuantity nullFlavor="NI"/>               <consumable>                 <manufacturedProduct classCode="MANU">                   <templateId root="2.16.840.1.113883.10.20.22.4.54"/>                   <manufacturedMaterial>                     <code codeSystem="2.16.840.1.113883.12.292" codeSystemName="CVX" nullFlavor="NI"/>                   </manufacturedMaterial>                 </manufacturedProduct>               </consumable>             </substanceAdministration>           </entry>         </section>       </component>       <component>         <section>           <templateId root="2.16.840.1.113883.10.20.22.2.10"/>           <id root="4249ea17-2019-f9e6-fd3c-001A64958C30"/>           <code code="18776-5" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC"/>           <title>Plan of Care</title>           <text>             <table>               <thead>                 <tr>                   <th>Reminders</th>                   <th/>                   <th/>                   <th>Provider</th>                 </tr>               </thead>               <tbody> 			<tr> 				<td styleCode="Botrule"> 					<content styleCode="Bold">Appointments</content> 				</td> 				<td styleCode="Botrule"> 					 					None recorded. 				</td> 				<td styleCode="Botrule"> 					&#xA0; 				</td> 				<td styleCode="Botrule"> 					&#xA0; 				</td> 				 			</tr> 		 			<tr> 				<td styleCode="Botrule"> 					<content styleCode="Bold">Lab</content> 				</td> 				<td styleCode="Botrule"> 					 					None recorded. 				</td> 				<td styleCode="Botrule"> 					&#xA0; 				</td> 				<td styleCode="Botrule"> 					&#xA0; 				</td> 				 			</tr> 		 			<tr> 				<td styleCode="Botrule"> 					<content styleCode="Bold">Referral</content> 				</td> 				<td styleCode="Botrule"> 					 					None recorded. 				</td> 				<td styleCode="Botrule"> 					&#xA0; 				</td> 				<td styleCode="Botrule"> 					&#xA0; 				</td> 				 			</tr> 		 			<tr> 				<td styleCode="Botrule"> 					<content styleCode="Bold">Procedures</content> 				</td> 				<td styleCode="Botrule"> 					 					None recorded. 				</td> 				<td styleCode="Botrule"> 					&#xA0; 				</td> 				<td styleCode="Botrule"> 					&#xA0; 				</td> 				 			</tr> 		 			<tr> 				<td styleCode="Botrule"> 					<content styleCode="Bold">Surgeries</content> 				</td> 				<td styleCode="Botrule"> 					 					None recorded. 				</td> 				<td styleCode="Botrule"> 					&#xA0; 				</td> 				<td styleCode="Botrule"> 					&#xA0; 				</td> 				 			</tr> 		 			<tr> 				<td> 					<content styleCode="Bold">Imaging</content> 				</td> 				<td> 					 					None recorded. 				</td> 				<td> 					&#xA0; 				</td> 				<td> 					&#xA0; 				</td> 				 			</tr> 		</tbody>             </table>           </text>         </section>       </component>       <component>         <section>           <templateId root="2.16.840.1.113883.10.20.22.2.4.1"/>           <id root="4249ea17-2019-4311-fd3c-001A64958C30"/>           <code code="8716-3" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC" displayName="VITAL SIGNS"/>           <title>Vitals</title>           <text> 				<paragraph> 					<content ID="vit1">None recorded.</content> 				</paragraph> 			</text>           <entry typeCode="DRIV">             <organizer moodCode="EVN" classCode="CLUSTER">               <templateId root="2.16.840.1.113883.10.20.22.4.26"/>               <id root="4249ea17-2019-9c00-fd3c-001A64958C30"/>               <code code="46680005" codeSystem="2.16.840.1.113883.6.96" codeSystemName="SNOMED CT" displayName="Vital signs"/>               <statusCode code="completed"/>               <effectiveTime nullFlavor="NI"/>               <component>                 <observation moodCode="EVN" classCode="OBS">                   <templateId root="2.16.840.1.113883.10.20.22.4.27"/>                   <id root="4249ea17-2019-f5dd-fd3c-001A64958C30"/>                   <code nullFlavor="NI"/>                   <text>                     <reference value="#vit1"/>                   </text>                   <statusCode code="completed"/>                   <effectiveTime nullFlavor="NI"/>                   <value nullFlavor="NI" xsi:type="PQ"/>                 </observation>               </component>             </organizer>           </entry>         </section>       </component>       <component>         <section>           <templateId root="1.3.6.1.4.1.19376.1.5.3.1.3.1"/>           <id root="4249ea17-2019-5b06-fd3c-001A64958C30"/>           <code code="42349-1" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC"/>           <title>Reason for Referral</title>           <text> 		<table> 			<tbody> 	 					<tr> 						<td>Data Portability</td> 					</tr> 				 			</tbody> 		</table> 	</text>         </section>       </component>     </structuredBody>   </component> </ClinicalDocument>  (StringUtilsTest.java, line 22)
 14.11.2019 00:03:14 *INFO * StringUtilsTest: Leaving removeNewLineTest() (StringUtilsTest.java, line 24)
+25.08.2020 16:28:18 *INFO * StringUtilsTest: Entering removeNewLineTest() (StringUtilsTest.java, line 16)
+25.08.2020 16:28:18 *INFO * StringUtilsTest: Value before removeNewLine() call. = <?xml version="1.0"?>
+<ClinicalDocument xmlns="urn:hl7-org:v3" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:sdtc="urn:hl7-org:sdtc">
+  <realmCode code="US"/>
+  <typeId root="2.16.840.1.113883.1.3" extension="POCD_HD000040"/>
+  <templateId root="2.16.840.1.113883.10.20.22.1.1"/>
+  <templateId root="2.16.840.1.113883.10.20.22.1.2"/>
+  <id root="4249ea17-2019-ef2f-fd3c-001A64958C30"/>
+  <code code="34133-9" codeSystem="2.16.840.1.113883.6.1" displayName="Summarization of Episode Note"/>
+  <title>Data Portability</title>
+  <effectiveTime value="20191112140311-0500"/>
+  <confidentialityCode code="N" codeSystem="2.16.840.1.113883.5.25"/>
+  <languageCode code="en-US"/>
+  <recordTarget>
+    <patientRole>
+      <id root="2.16.840.1.113883.3.564.195900" extension="35615"/>
+      <addr use="HP">
+        <streetAddressLine>1755 Pinewood Dr</streetAddressLine>
+        <streetAddressLine nullFlavor="NI"/>
+        <city>Piscataway</city>
+        <state>NJ</state>
+        <postalCode>08854-2048</postalCode>
+        <country>US</country>
+      </addr>
+      <telecom nullFlavor="NI"/>
+      <patient>
+        <name>
+          <given>Glecy</given>
+          <family>Abaquita</family>
+        </name>
+        <administrativeGenderCode code="" codeSystem="2.16.840.1.113883.5.1"/>
+        <birthTime value="19681022"/>
+        <maritalStatusCode nullFlavor="NI"/>
+        <raceCode nullFlavor="NI"/>
+        <ethnicGroupCode nullFlavor="NI"/>
+        <languageCommunication>
+          <languageCode nullFlavor="NA"/>
+        </languageCommunication>
+      </patient>
+    </patientRole>
+  </recordTarget>
+  <author>
+    <time value="20191112140311-0500"/>
+    <assignedAuthor>
+      <id root="2.16.840.1.113883.3.564"/>
+      <addr use="WP">
+        <streetAddressLine>311 Arsenal St</streetAddressLine>
+        <streetAddressLine nullFlavor="NI"/>
+        <city>Watertown</city>
+        <state>MA</state>
+        <postalCode>02472</postalCode>
+        <country>US</country>
+      </addr>
+      <telecom use="WP" value="tel:+1-617-4021000"/>
+      <assignedAuthoringDevice>
+        <manufacturerModelName>athenahealth</manufacturerModelName>
+        <softwareName>athenahealth</softwareName>
+      </assignedAuthoringDevice>
+    </assignedAuthor>
+  </author>
+  <custodian>
+    <assignedCustodian>
+      <representedCustodianOrganization>
+        <id root="2.16.840.1.113883.3.564"/>
+        <name>athenahealth</name>
+        <telecom use="WP" value="tel:+1-617-4021000"/>
+        <addr use="WP">
+          <streetAddressLine>311 Arsenal St</streetAddressLine>
+          <streetAddressLine nullFlavor="NI"/>
+          <city>Watertown</city>
+          <state>MA</state>
+          <postalCode>02472</postalCode>
+          <country>US</country>
+        </addr>
+      </representedCustodianOrganization>
+    </assignedCustodian>
+  </custodian>
+  <documentationOf>
+    <serviceEvent classCode="PCPR">
+      <effectiveTime>
+        <low value="20191112"/>
+        <high nullFlavor="NI"/>
+      </effectiveTime>
+    </serviceEvent>
+  </documentationOf>
+  <component>
+    <structuredBody>
+      <component>
+        <section>
+          <templateId root="2.16.840.1.113883.10.20.22.2.6.1"/>
+          <id root="4249ea17-2019-a9bd-fd3c-001A64958C30"/>
+          <code code="48765-2" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC"/>
+          <title>Allergies</title>
+          <text>
+			<paragraph>
+				<content ID="allergy1">None recorded.</content>
+			</paragraph>
+		</text>
+          <entry>
+            <act classCode="ACT" moodCode="EVN">
+              <templateId root="2.16.840.1.113883.10.20.22.4.30"/>
+              <id root="4249ea17-2019-1ba0-fd3c-001A64958C30"/>
+              <code code="48765-2" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC" displayName="Allergies, adverse reactions, alerts"/>
+              <statusCode code="completed"/>
+              <effectiveTime>
+                <high value="20191112"/>
+              </effectiveTime>
+              <entryRelationship typeCode="SUBJ">
+                <observation classCode="OBS" moodCode="EVN">
+                  <templateId root="2.16.840.1.113883.10.20.22.4.7"/>
+                  <id root="4249ea17-2019-1278-fd3c-001A64958C30"/>
+                  <code code="ASSERTION" codeSystem="2.16.840.1.113883.5.4"/>
+                  <statusCode code="completed"/>
+                  <effectiveTime>
+                    <low nullFlavor="NI"/>
+                    <high value="20191112"/>
+                  </effectiveTime>
+                  <value xsi:type="CD" code="419199007" codeSystem="2.16.840.1.113883.6.96" displayName="Allergy to substance"/>
+                  <participant typeCode="CSM">
+                    <participantRole classCode="MANU">
+                      <playingEntity classCode="MMAT">
+                        <code nullFlavor="NI">
+                          <translation nullFlavor="NI"/>
+                        </code>
+                      </playingEntity>
+                    </participantRole>
+                  </participant>
+                  <entryRelationship typeCode="MFST" inversionInd="true">
+                    <observation classCode="OBS" moodCode="EVN">
+                      <templateId root="2.16.840.1.113883.10.20.22.4.9"/>
+                      <id root="4249ea17-2019-42b6-fd3c-001A64958C30"/>
+                      <code nullFlavor="NI"/>
+                      <statusCode code="completed"/>
+                      <value nullFlavor="NI" xsi:type="CD"/>
+                    </observation>
+                  </entryRelationship>
+                  <entryRelationship typeCode="SUBJ" inversionInd="true">
+                    <observation moodCode="EVN" classCode="OBS">
+                      <templateId root="2.16.840.1.113883.10.20.22.4.8"/>
+                      <code code="SEV" codeSystem="2.16.840.1.113883.5.4" codeSystemName="HL7ActCode" displayName="Severity Observation"/>
+                      <statusCode code="completed"/>
+                      <value xsi:type="CD" nullFlavor="NI"/>
+                    </observation>
+                  </entryRelationship>
+                </observation>
+              </entryRelationship>
+            </act>
+          </entry>
+        </section>
+      </component>
+      <component>
+        <section>
+          <templateId root="2.16.840.1.113883.10.20.22.2.1.1"/>
+          <id root="4249ea17-2019-df47-fd3c-001A64958C30"/>
+          <code code="10160-0" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC" displayName="History of Medication Use"/>
+          <title>Medications</title>
+          <text>
+			<paragraph>
+				<content ID="Med1">None recorded.</content>
+			</paragraph>
+		</text>
+          <entry>
+            <substanceAdministration moodCode="INT" classCode="SBADM">
+              <templateId root="2.16.840.1.113883.10.20.22.4.16"/>
+              <id root="4249ea17-2019-86cd-fd3c-001A64958C30"/>
+              <text>
+                <reference value="#Med1"/>
+              </text>
+              <statusCode code="completed"/>
+              <effectiveTime xsi:type="IVL_TS">
+                <low nullFlavor="NI"/>
+                <high nullFlavor="NI"/>
+              </effectiveTime>
+              <consumable>
+                <manufacturedProduct classCode="MANU">
+                  <templateId root="2.16.840.1.113883.10.20.22.4.23"/>
+                  <manufacturedMaterial>
+                    <code nullFlavor="NI">
+                      <originalText>
+                        <reference value="#Med1"/>
+                      </originalText>
+                    </code>
+                    <name/>
+                  </manufacturedMaterial>
+                </manufacturedProduct>
+              </consumable>
+              <entryRelationship typeCode="SUBJ" inversionInd="true">
+                <act moodCode="INT" classCode="ACT">
+                  <templateId root="2.16.840.1.113883.10.20.22.4.20"/>
+                  <code code="311401005" codeSystem="2.16.840.1.113883.6.96" codeSystemName="SNOMED CT" displayName="Patient Education"/>
+                  <text/>
+                  <statusCode code="completed"/>
+                </act>
+              </entryRelationship>
+            </substanceAdministration>
+          </entry>
+        </section>
+      </component>
+      <component>
+        <section>
+          <templateId root="2.16.840.1.113883.10.20.22.2.5.1"/>
+          <id root="4249ea17-2019-fbd6-fd3c-001A64958C30"/>
+          <code code="11450-4" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC"/>
+          <title>Problems</title>
+          <text>
+			<paragraph>None recorded.</paragraph>
+		</text>
+          <entry>
+            <act moodCode="EVN" classCode="ACT">
+              <templateId root="2.16.840.1.113883.10.20.22.4.3"/>
+              <id root="4249ea17-2019-5002-fd3c-001A64958C30"/>
+              <code code="CONC" codeSystem="2.16.840.1.113883.5.6"/>
+              <statusCode code="active"/>
+              <effectiveTime>
+                <low nullFlavor="NI"/>
+              </effectiveTime>
+              <entryRelationship typeCode="SUBJ" inversionInd="false">
+                <observation moodCode="EVN" classCode="OBS">
+                  <templateId root="2.16.840.1.113883.10.20.22.4.4"/>
+                  <id root="4249ea17-2019-cabf-fd3c-001A64958C30"/>
+                  <code code="55607006" codeSystem="2.16.840.1.113883.6.96" codeSystemName="SNOMED CT" displayName="Problem"/>
+                  <statusCode code="completed"/>
+                  <effectiveTime>
+                    <low nullFlavor="NI"/>
+                  </effectiveTime>
+                  <value xsi:type="CD" nullFlavor="NI"/>
+                </observation>
+              </entryRelationship>
+            </act>
+          </entry>
+        </section>
+      </component>
+      <component>
+        <section>
+          <templateId root="2.16.840.1.113883.10.20.22.2.7.1"/>
+          <id root="4249ea17-2019-08bc-fd3c-001A64958C30"/>
+          <code code="47519-4" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC"/>
+          <title>Procedures</title>
+          <text>
+			<paragraph>
+				<content ID="Proc1">None recorded.</content>
+			</paragraph>
+		</text>
+          <entry>
+            <procedure moodCode="INT" classCode="PROC">
+              <templateId root="2.16.840.1.113883.10.20.22.4.14"/>
+              <id root="4249ea17-2019-a3d6-fd3c-001A64958C30"/>
+              <code nullFlavor="NI"/>
+              <text>
+                <reference value="#Proc1"/>
+              </text>
+              <statusCode code="active"/>
+              <effectiveTime nullFlavor="NI"/>
+            </procedure>
+          </entry>
+        </section>
+      </component>
+      <component>
+        <section>
+          <templateId root="2.16.840.1.113883.10.20.22.2.3.1"/>
+          <id root="4249ea17-2019-e158-fd3c-001A64958C30"/>
+          <code code="30954-2" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC"/>
+          <title>Results</title>
+          <text>
+                	<table><thead><tr><th>Lab Results</th></tr></thead><tbody><tr><td/></tr></tbody></table>
+                <paragraph><content ID="result1">None recorded.</content></paragraph></text>
+          <entry>
+            <organizer moodCode="EVN" classCode="BATTERY">
+              <templateId root="2.16.840.1.113883.10.20.22.4.1"/>
+              <id root="4249ea17-2019-4016-fd3c-001A64958C30"/>
+              <code xsi:type="CE" nullFlavor="NI">
+                <translation displayName="None recorded." codeSystemName="Lab Result Description"/>
+              </code>
+              <statusCode code="completed"/>
+              <effectiveTime nullFlavor="NI"/>
+              <component>
+                <observation moodCode="EVN" classCode="OBS">
+                  <templateId root="2.16.840.1.113883.10.20.22.4.2"/>
+                  <id root="4249ea17-2019-a5f3-fd3c-001A64958C30"/>
+                  <code nullFlavor="NI"/>
+                  <text>
+                    <reference value="#result1"/>
+                  </text>
+                  <statusCode code="completed"/>
+                  <effectiveTime nullFlavor="NI"/>
+                  <value nullFlavor="NI" xsi:type="CD"/>
+                  <interpretationCode nullFlavor="NI"/>
+                  <referenceRange>
+                    <observationRange>
+                      <text nullFlavor="NI"/>
+                      <value xsi:type="ST" nullFlavor="NI"/>
+                    </observationRange>
+                  </referenceRange>
+                </observation>
+              </component>
+            </organizer>
+          </entry>
+        </section>
+      </component>
+      <component>
+        <section>
+          <templateId root="2.16.840.1.113883.10.20.22.2.22"/>
+          <id root="4249ea17-2019-6417-fd3c-001A64958C30"/>
+          <code code="46240-8" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC" displayName="History of hospitalizations+History of outpatient visits"/>
+          <title>Past Encounters</title>
+          <text>
+            <paragraph>None recorded.</paragraph>
+          </text>
+        </section>
+      </component>
+      <component>
+        <section>
+          <templateId root="2.16.840.1.113883.10.20.22.2.17"/>
+          <id root="4249ea17-2019-de48-fd3c-001A64958C30"/>
+          <code code="29762-2" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC"/>
+          <title>Social History</title>
+          <text>
+			<paragraph>None recorded.</paragraph>
+		</text>
+          <entry>
+            <observation moodCode="EVN" classCode="OBS">
+              <templateId root="2.16.840.1.113883.10.20.22.4.78"/>
+              <id root="4249ea17-2019-da9e-fd3c-001A64958C30"/>
+              <code code="ASSERTION" codeSystem="2.16.840.1.113883.5.4"/>
+              <statusCode code="completed"/>
+              <effectiveTime>
+                <low nullFlavor="NI"/>
+              </effectiveTime>
+              <value code="266927001" codeSystem="2.16.840.1.113883.6.96" displayName="Unknown If Ever Smoked" xsi:type="CD"/>
+            </observation>
+          </entry>
+        </section>
+      </component>
+      <component>
+        <section>
+          <templateId root="2.16.840.1.113883.10.20.22.2.14"/>
+          <id root="4249ea17-2019-a737-fd3c-001A64958C30"/>
+          <code code="47420-5" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC"/>
+          <title>Functional Status</title>
+          <text>
+            <paragraph>Unknown.</paragraph>
+          </text>
+        </section>
+      </component>
+      <component>
+        <section>
+          <templateId root="2.16.840.1.113883.10.20.22.2.2.1"/>
+          <id root="4249ea17-2019-8bd2-fd3c-001A64958C30"/>
+          <code code="11369-6" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC"/>
+          <title>Vaccine List</title>
+          <text>
+			<paragraph>
+				<content ID="immun1">None recorded.</content>
+			</paragraph>
+		</text>
+          <entry>
+            <substanceAdministration moodCode="INT" classCode="SBADM" negationInd="false">
+              <templateId root="2.16.840.1.113883.10.20.22.4.52"/>
+              <id root="4249ea17-2019-f21b-fd3c-001A64958C30"/>
+              <text>
+                <reference value="#immun1"/>
+              </text>
+              <statusCode code="active"/>
+              <effectiveTime nullFlavor="NI"/>
+              <doseQuantity nullFlavor="NI"/>
+              <consumable>
+                <manufacturedProduct classCode="MANU">
+                  <templateId root="2.16.840.1.113883.10.20.22.4.54"/>
+                  <manufacturedMaterial>
+                    <code codeSystem="2.16.840.1.113883.12.292" codeSystemName="CVX" nullFlavor="NI"/>
+                  </manufacturedMaterial>
+                </manufacturedProduct>
+              </consumable>
+            </substanceAdministration>
+          </entry>
+        </section>
+      </component>
+      <component>
+        <section>
+          <templateId root="2.16.840.1.113883.10.20.22.2.10"/>
+          <id root="4249ea17-2019-f9e6-fd3c-001A64958C30"/>
+          <code code="18776-5" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC"/>
+          <title>Plan of Care</title>
+          <text>
+            <table>
+              <thead>
+                <tr>
+                  <th>Reminders</th>
+                  <th/>
+                  <th/>
+                  <th>Provider</th>
+                </tr>
+              </thead>
+              <tbody>
+			<tr>
+				<td styleCode="Botrule">
+					<content styleCode="Bold">Appointments</content>
+				</td>
+				<td styleCode="Botrule">
+					
+					None recorded.
+				</td>
+				<td styleCode="Botrule">
+					&#xA0;
+				</td>
+				<td styleCode="Botrule">
+					&#xA0;
+				</td>
+				
+			</tr>
+		
+			<tr>
+				<td styleCode="Botrule">
+					<content styleCode="Bold">Lab</content>
+				</td>
+				<td styleCode="Botrule">
+					
+					None recorded.
+				</td>
+				<td styleCode="Botrule">
+					&#xA0;
+				</td>
+				<td styleCode="Botrule">
+					&#xA0;
+				</td>
+				
+			</tr>
+		
+			<tr>
+				<td styleCode="Botrule">
+					<content styleCode="Bold">Referral</content>
+				</td>
+				<td styleCode="Botrule">
+					
+					None recorded.
+				</td>
+				<td styleCode="Botrule">
+					&#xA0;
+				</td>
+				<td styleCode="Botrule">
+					&#xA0;
+				</td>
+				
+			</tr>
+		
+			<tr>
+				<td styleCode="Botrule">
+					<content styleCode="Bold">Procedures</content>
+				</td>
+				<td styleCode="Botrule">
+					
+					None recorded.
+				</td>
+				<td styleCode="Botrule">
+					&#xA0;
+				</td>
+				<td styleCode="Botrule">
+					&#xA0;
+				</td>
+				
+			</tr>
+		
+			<tr>
+				<td styleCode="Botrule">
+					<content styleCode="Bold">Surgeries</content>
+				</td>
+				<td styleCode="Botrule">
+					
+					None recorded.
+				</td>
+				<td styleCode="Botrule">
+					&#xA0;
+				</td>
+				<td styleCode="Botrule">
+					&#xA0;
+				</td>
+				
+			</tr>
+		
+			<tr>
+				<td>
+					<content styleCode="Bold">Imaging</content>
+				</td>
+				<td>
+					
+					None recorded.
+				</td>
+				<td>
+					&#xA0;
+				</td>
+				<td>
+					&#xA0;
+				</td>
+				
+			</tr>
+		</tbody>
+            </table>
+          </text>
+        </section>
+      </component>
+      <component>
+        <section>
+          <templateId root="2.16.840.1.113883.10.20.22.2.4.1"/>
+          <id root="4249ea17-2019-4311-fd3c-001A64958C30"/>
+          <code code="8716-3" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC" displayName="VITAL SIGNS"/>
+          <title>Vitals</title>
+          <text>
+				<paragraph>
+					<content ID="vit1">None recorded.</content>
+				</paragraph>
+			</text>
+          <entry typeCode="DRIV">
+            <organizer moodCode="EVN" classCode="CLUSTER">
+              <templateId root="2.16.840.1.113883.10.20.22.4.26"/>
+              <id root="4249ea17-2019-9c00-fd3c-001A64958C30"/>
+              <code code="46680005" codeSystem="2.16.840.1.113883.6.96" codeSystemName="SNOMED CT" displayName="Vital signs"/>
+              <statusCode code="completed"/>
+              <effectiveTime nullFlavor="NI"/>
+              <component>
+                <observation moodCode="EVN" classCode="OBS">
+                  <templateId root="2.16.840.1.113883.10.20.22.4.27"/>
+                  <id root="4249ea17-2019-f5dd-fd3c-001A64958C30"/>
+                  <code nullFlavor="NI"/>
+                  <text>
+                    <reference value="#vit1"/>
+                  </text>
+                  <statusCode code="completed"/>
+                  <effectiveTime nullFlavor="NI"/>
+                  <value nullFlavor="NI" xsi:type="PQ"/>
+                </observation>
+              </component>
+            </organizer>
+          </entry>
+        </section>
+      </component>
+      <component>
+        <section>
+          <templateId root="1.3.6.1.4.1.19376.1.5.3.1.3.1"/>
+          <id root="4249ea17-2019-5b06-fd3c-001A64958C30"/>
+          <code code="42349-1" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC"/>
+          <title>Reason for Referral</title>
+          <text>
+		<table>
+			<tbody>
+	
+					<tr>
+						<td>Data Portability</td>
+					</tr>
+				
+			</tbody>
+		</table>
+	</text>
+        </section>
+      </component>
+    </structuredBody>
+  </component>
+</ClinicalDocument>
+ (StringUtilsTest.java, line 19)
+25.08.2020 16:28:18 *INFO * StringUtilsTest: Value after removeNewLine() call. = <?xml version="1.0"?> <ClinicalDocument xmlns="urn:hl7-org:v3" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:sdtc="urn:hl7-org:sdtc">   <realmCode code="US"/>   <typeId root="2.16.840.1.113883.1.3" extension="POCD_HD000040"/>   <templateId root="2.16.840.1.113883.10.20.22.1.1"/>   <templateId root="2.16.840.1.113883.10.20.22.1.2"/>   <id root="4249ea17-2019-ef2f-fd3c-001A64958C30"/>   <code code="34133-9" codeSystem="2.16.840.1.113883.6.1" displayName="Summarization of Episode Note"/>   <title>Data Portability</title>   <effectiveTime value="20191112140311-0500"/>   <confidentialityCode code="N" codeSystem="2.16.840.1.113883.5.25"/>   <languageCode code="en-US"/>   <recordTarget>     <patientRole>       <id root="2.16.840.1.113883.3.564.195900" extension="35615"/>       <addr use="HP">         <streetAddressLine>1755 Pinewood Dr</streetAddressLine>         <streetAddressLine nullFlavor="NI"/>         <city>Piscataway</city>         <state>NJ</state>         <postalCode>08854-2048</postalCode>         <country>US</country>       </addr>       <telecom nullFlavor="NI"/>       <patient>         <name>           <given>Glecy</given>           <family>Abaquita</family>         </name>         <administrativeGenderCode code="" codeSystem="2.16.840.1.113883.5.1"/>         <birthTime value="19681022"/>         <maritalStatusCode nullFlavor="NI"/>         <raceCode nullFlavor="NI"/>         <ethnicGroupCode nullFlavor="NI"/>         <languageCommunication>           <languageCode nullFlavor="NA"/>         </languageCommunication>       </patient>     </patientRole>   </recordTarget>   <author>     <time value="20191112140311-0500"/>     <assignedAuthor>       <id root="2.16.840.1.113883.3.564"/>       <addr use="WP">         <streetAddressLine>311 Arsenal St</streetAddressLine>         <streetAddressLine nullFlavor="NI"/>         <city>Watertown</city>         <state>MA</state>         <postalCode>02472</postalCode>         <country>US</country>       </addr>       <telecom use="WP" value="tel:+1-617-4021000"/>       <assignedAuthoringDevice>         <manufacturerModelName>athenahealth</manufacturerModelName>         <softwareName>athenahealth</softwareName>       </assignedAuthoringDevice>     </assignedAuthor>   </author>   <custodian>     <assignedCustodian>       <representedCustodianOrganization>         <id root="2.16.840.1.113883.3.564"/>         <name>athenahealth</name>         <telecom use="WP" value="tel:+1-617-4021000"/>         <addr use="WP">           <streetAddressLine>311 Arsenal St</streetAddressLine>           <streetAddressLine nullFlavor="NI"/>           <city>Watertown</city>           <state>MA</state>           <postalCode>02472</postalCode>           <country>US</country>         </addr>       </representedCustodianOrganization>     </assignedCustodian>   </custodian>   <documentationOf>     <serviceEvent classCode="PCPR">       <effectiveTime>         <low value="20191112"/>         <high nullFlavor="NI"/>       </effectiveTime>     </serviceEvent>   </documentationOf>   <component>     <structuredBody>       <component>         <section>           <templateId root="2.16.840.1.113883.10.20.22.2.6.1"/>           <id root="4249ea17-2019-a9bd-fd3c-001A64958C30"/>           <code code="48765-2" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC"/>           <title>Allergies</title>           <text> 			<paragraph> 				<content ID="allergy1">None recorded.</content> 			</paragraph> 		</text>           <entry>             <act classCode="ACT" moodCode="EVN">               <templateId root="2.16.840.1.113883.10.20.22.4.30"/>               <id root="4249ea17-2019-1ba0-fd3c-001A64958C30"/>               <code code="48765-2" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC" displayName="Allergies, adverse reactions, alerts"/>               <statusCode code="completed"/>               <effectiveTime>                 <high value="20191112"/>               </effectiveTime>               <entryRelationship typeCode="SUBJ">                 <observation classCode="OBS" moodCode="EVN">                   <templateId root="2.16.840.1.113883.10.20.22.4.7"/>                   <id root="4249ea17-2019-1278-fd3c-001A64958C30"/>                   <code code="ASSERTION" codeSystem="2.16.840.1.113883.5.4"/>                   <statusCode code="completed"/>                   <effectiveTime>                     <low nullFlavor="NI"/>                     <high value="20191112"/>                   </effectiveTime>                   <value xsi:type="CD" code="419199007" codeSystem="2.16.840.1.113883.6.96" displayName="Allergy to substance"/>                   <participant typeCode="CSM">                     <participantRole classCode="MANU">                       <playingEntity classCode="MMAT">                         <code nullFlavor="NI">                           <translation nullFlavor="NI"/>                         </code>                       </playingEntity>                     </participantRole>                   </participant>                   <entryRelationship typeCode="MFST" inversionInd="true">                     <observation classCode="OBS" moodCode="EVN">                       <templateId root="2.16.840.1.113883.10.20.22.4.9"/>                       <id root="4249ea17-2019-42b6-fd3c-001A64958C30"/>                       <code nullFlavor="NI"/>                       <statusCode code="completed"/>                       <value nullFlavor="NI" xsi:type="CD"/>                     </observation>                   </entryRelationship>                   <entryRelationship typeCode="SUBJ" inversionInd="true">                     <observation moodCode="EVN" classCode="OBS">                       <templateId root="2.16.840.1.113883.10.20.22.4.8"/>                       <code code="SEV" codeSystem="2.16.840.1.113883.5.4" codeSystemName="HL7ActCode" displayName="Severity Observation"/>                       <statusCode code="completed"/>                       <value xsi:type="CD" nullFlavor="NI"/>                     </observation>                   </entryRelationship>                 </observation>               </entryRelationship>             </act>           </entry>         </section>       </component>       <component>         <section>           <templateId root="2.16.840.1.113883.10.20.22.2.1.1"/>           <id root="4249ea17-2019-df47-fd3c-001A64958C30"/>           <code code="10160-0" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC" displayName="History of Medication Use"/>           <title>Medications</title>           <text> 			<paragraph> 				<content ID="Med1">None recorded.</content> 			</paragraph> 		</text>           <entry>             <substanceAdministration moodCode="INT" classCode="SBADM">               <templateId root="2.16.840.1.113883.10.20.22.4.16"/>               <id root="4249ea17-2019-86cd-fd3c-001A64958C30"/>               <text>                 <reference value="#Med1"/>               </text>               <statusCode code="completed"/>               <effectiveTime xsi:type="IVL_TS">                 <low nullFlavor="NI"/>                 <high nullFlavor="NI"/>               </effectiveTime>               <consumable>                 <manufacturedProduct classCode="MANU">                   <templateId root="2.16.840.1.113883.10.20.22.4.23"/>                   <manufacturedMaterial>                     <code nullFlavor="NI">                       <originalText>                         <reference value="#Med1"/>                       </originalText>                     </code>                     <name/>                   </manufacturedMaterial>                 </manufacturedProduct>               </consumable>               <entryRelationship typeCode="SUBJ" inversionInd="true">                 <act moodCode="INT" classCode="ACT">                   <templateId root="2.16.840.1.113883.10.20.22.4.20"/>                   <code code="311401005" codeSystem="2.16.840.1.113883.6.96" codeSystemName="SNOMED CT" displayName="Patient Education"/>                   <text/>                   <statusCode code="completed"/>                 </act>               </entryRelationship>             </substanceAdministration>           </entry>         </section>       </component>       <component>         <section>           <templateId root="2.16.840.1.113883.10.20.22.2.5.1"/>           <id root="4249ea17-2019-fbd6-fd3c-001A64958C30"/>           <code code="11450-4" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC"/>           <title>Problems</title>           <text> 			<paragraph>None recorded.</paragraph> 		</text>           <entry>             <act moodCode="EVN" classCode="ACT">               <templateId root="2.16.840.1.113883.10.20.22.4.3"/>               <id root="4249ea17-2019-5002-fd3c-001A64958C30"/>               <code code="CONC" codeSystem="2.16.840.1.113883.5.6"/>               <statusCode code="active"/>               <effectiveTime>                 <low nullFlavor="NI"/>               </effectiveTime>               <entryRelationship typeCode="SUBJ" inversionInd="false">                 <observation moodCode="EVN" classCode="OBS">                   <templateId root="2.16.840.1.113883.10.20.22.4.4"/>                   <id root="4249ea17-2019-cabf-fd3c-001A64958C30"/>                   <code code="55607006" codeSystem="2.16.840.1.113883.6.96" codeSystemName="SNOMED CT" displayName="Problem"/>                   <statusCode code="completed"/>                   <effectiveTime>                     <low nullFlavor="NI"/>                   </effectiveTime>                   <value xsi:type="CD" nullFlavor="NI"/>                 </observation>               </entryRelationship>             </act>           </entry>         </section>       </component>       <component>         <section>           <templateId root="2.16.840.1.113883.10.20.22.2.7.1"/>           <id root="4249ea17-2019-08bc-fd3c-001A64958C30"/>           <code code="47519-4" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC"/>           <title>Procedures</title>           <text> 			<paragraph> 				<content ID="Proc1">None recorded.</content> 			</paragraph> 		</text>           <entry>             <procedure moodCode="INT" classCode="PROC">               <templateId root="2.16.840.1.113883.10.20.22.4.14"/>               <id root="4249ea17-2019-a3d6-fd3c-001A64958C30"/>               <code nullFlavor="NI"/>               <text>                 <reference value="#Proc1"/>               </text>               <statusCode code="active"/>               <effectiveTime nullFlavor="NI"/>             </procedure>           </entry>         </section>       </component>       <component>         <section>           <templateId root="2.16.840.1.113883.10.20.22.2.3.1"/>           <id root="4249ea17-2019-e158-fd3c-001A64958C30"/>           <code code="30954-2" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC"/>           <title>Results</title>           <text>                 	<table><thead><tr><th>Lab Results</th></tr></thead><tbody><tr><td/></tr></tbody></table>                 <paragraph><content ID="result1">None recorded.</content></paragraph></text>           <entry>             <organizer moodCode="EVN" classCode="BATTERY">               <templateId root="2.16.840.1.113883.10.20.22.4.1"/>               <id root="4249ea17-2019-4016-fd3c-001A64958C30"/>               <code xsi:type="CE" nullFlavor="NI">                 <translation displayName="None recorded." codeSystemName="Lab Result Description"/>               </code>               <statusCode code="completed"/>               <effectiveTime nullFlavor="NI"/>               <component>                 <observation moodCode="EVN" classCode="OBS">                   <templateId root="2.16.840.1.113883.10.20.22.4.2"/>                   <id root="4249ea17-2019-a5f3-fd3c-001A64958C30"/>                   <code nullFlavor="NI"/>                   <text>                     <reference value="#result1"/>                   </text>                   <statusCode code="completed"/>                   <effectiveTime nullFlavor="NI"/>                   <value nullFlavor="NI" xsi:type="CD"/>                   <interpretationCode nullFlavor="NI"/>                   <referenceRange>                     <observationRange>                       <text nullFlavor="NI"/>                       <value xsi:type="ST" nullFlavor="NI"/>                     </observationRange>                   </referenceRange>                 </observation>               </component>             </organizer>           </entry>         </section>       </component>       <component>         <section>           <templateId root="2.16.840.1.113883.10.20.22.2.22"/>           <id root="4249ea17-2019-6417-fd3c-001A64958C30"/>           <code code="46240-8" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC" displayName="History of hospitalizations+History of outpatient visits"/>           <title>Past Encounters</title>           <text>             <paragraph>None recorded.</paragraph>           </text>         </section>       </component>       <component>         <section>           <templateId root="2.16.840.1.113883.10.20.22.2.17"/>           <id root="4249ea17-2019-de48-fd3c-001A64958C30"/>           <code code="29762-2" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC"/>           <title>Social History</title>           <text> 			<paragraph>None recorded.</paragraph> 		</text>           <entry>             <observation moodCode="EVN" classCode="OBS">               <templateId root="2.16.840.1.113883.10.20.22.4.78"/>               <id root="4249ea17-2019-da9e-fd3c-001A64958C30"/>               <code code="ASSERTION" codeSystem="2.16.840.1.113883.5.4"/>               <statusCode code="completed"/>               <effectiveTime>                 <low nullFlavor="NI"/>               </effectiveTime>               <value code="266927001" codeSystem="2.16.840.1.113883.6.96" displayName="Unknown If Ever Smoked" xsi:type="CD"/>             </observation>           </entry>         </section>       </component>       <component>         <section>           <templateId root="2.16.840.1.113883.10.20.22.2.14"/>           <id root="4249ea17-2019-a737-fd3c-001A64958C30"/>           <code code="47420-5" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC"/>           <title>Functional Status</title>           <text>             <paragraph>Unknown.</paragraph>           </text>         </section>       </component>       <component>         <section>           <templateId root="2.16.840.1.113883.10.20.22.2.2.1"/>           <id root="4249ea17-2019-8bd2-fd3c-001A64958C30"/>           <code code="11369-6" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC"/>           <title>Vaccine List</title>           <text> 			<paragraph> 				<content ID="immun1">None recorded.</content> 			</paragraph> 		</text>           <entry>             <substanceAdministration moodCode="INT" classCode="SBADM" negationInd="false">               <templateId root="2.16.840.1.113883.10.20.22.4.52"/>               <id root="4249ea17-2019-f21b-fd3c-001A64958C30"/>               <text>                 <reference value="#immun1"/>               </text>               <statusCode code="active"/>               <effectiveTime nullFlavor="NI"/>               <doseQuantity nullFlavor="NI"/>               <consumable>                 <manufacturedProduct classCode="MANU">                   <templateId root="2.16.840.1.113883.10.20.22.4.54"/>                   <manufacturedMaterial>                     <code codeSystem="2.16.840.1.113883.12.292" codeSystemName="CVX" nullFlavor="NI"/>                   </manufacturedMaterial>                 </manufacturedProduct>               </consumable>             </substanceAdministration>           </entry>         </section>       </component>       <component>         <section>           <templateId root="2.16.840.1.113883.10.20.22.2.10"/>           <id root="4249ea17-2019-f9e6-fd3c-001A64958C30"/>           <code code="18776-5" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC"/>           <title>Plan of Care</title>           <text>             <table>               <thead>                 <tr>                   <th>Reminders</th>                   <th/>                   <th/>                   <th>Provider</th>                 </tr>               </thead>               <tbody> 			<tr> 				<td styleCode="Botrule"> 					<content styleCode="Bold">Appointments</content> 				</td> 				<td styleCode="Botrule"> 					 					None recorded. 				</td> 				<td styleCode="Botrule"> 					&#xA0; 				</td> 				<td styleCode="Botrule"> 					&#xA0; 				</td> 				 			</tr> 		 			<tr> 				<td styleCode="Botrule"> 					<content styleCode="Bold">Lab</content> 				</td> 				<td styleCode="Botrule"> 					 					None recorded. 				</td> 				<td styleCode="Botrule"> 					&#xA0; 				</td> 				<td styleCode="Botrule"> 					&#xA0; 				</td> 				 			</tr> 		 			<tr> 				<td styleCode="Botrule"> 					<content styleCode="Bold">Referral</content> 				</td> 				<td styleCode="Botrule"> 					 					None recorded. 				</td> 				<td styleCode="Botrule"> 					&#xA0; 				</td> 				<td styleCode="Botrule"> 					&#xA0; 				</td> 				 			</tr> 		 			<tr> 				<td styleCode="Botrule"> 					<content styleCode="Bold">Procedures</content> 				</td> 				<td styleCode="Botrule"> 					 					None recorded. 				</td> 				<td styleCode="Botrule"> 					&#xA0; 				</td> 				<td styleCode="Botrule"> 					&#xA0; 				</td> 				 			</tr> 		 			<tr> 				<td styleCode="Botrule"> 					<content styleCode="Bold">Surgeries</content> 				</td> 				<td styleCode="Botrule"> 					 					None recorded. 				</td> 				<td styleCode="Botrule"> 					&#xA0; 				</td> 				<td styleCode="Botrule"> 					&#xA0; 				</td> 				 			</tr> 		 			<tr> 				<td> 					<content styleCode="Bold">Imaging</content> 				</td> 				<td> 					 					None recorded. 				</td> 				<td> 					&#xA0; 				</td> 				<td> 					&#xA0; 				</td> 				 			</tr> 		</tbody>             </table>           </text>         </section>       </component>       <component>         <section>           <templateId root="2.16.840.1.113883.10.20.22.2.4.1"/>           <id root="4249ea17-2019-4311-fd3c-001A64958C30"/>           <code code="8716-3" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC" displayName="VITAL SIGNS"/>           <title>Vitals</title>           <text> 				<paragraph> 					<content ID="vit1">None recorded.</content> 				</paragraph> 			</text>           <entry typeCode="DRIV">             <organizer moodCode="EVN" classCode="CLUSTER">               <templateId root="2.16.840.1.113883.10.20.22.4.26"/>               <id root="4249ea17-2019-9c00-fd3c-001A64958C30"/>               <code code="46680005" codeSystem="2.16.840.1.113883.6.96" codeSystemName="SNOMED CT" displayName="Vital signs"/>               <statusCode code="completed"/>               <effectiveTime nullFlavor="NI"/>               <component>                 <observation moodCode="EVN" classCode="OBS">                   <templateId root="2.16.840.1.113883.10.20.22.4.27"/>                   <id root="4249ea17-2019-f5dd-fd3c-001A64958C30"/>                   <code nullFlavor="NI"/>                   <text>                     <reference value="#vit1"/>                   </text>                   <statusCode code="completed"/>                   <effectiveTime nullFlavor="NI"/>                   <value nullFlavor="NI" xsi:type="PQ"/>                 </observation>               </component>             </organizer>           </entry>         </section>       </component>       <component>         <section>           <templateId root="1.3.6.1.4.1.19376.1.5.3.1.3.1"/>           <id root="4249ea17-2019-5b06-fd3c-001A64958C30"/>           <code code="42349-1" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC"/>           <title>Reason for Referral</title>           <text> 		<table> 			<tbody> 	 					<tr> 						<td>Data Portability</td> 					</tr> 				 			</tbody> 		</table> 	</text>         </section>       </component>     </structuredBody>   </component> </ClinicalDocument>  (StringUtilsTest.java, line 22)
+25.08.2020 16:28:18 *INFO * StringUtilsTest: Leaving removeNewLineTest() (StringUtilsTest.java, line 24)
