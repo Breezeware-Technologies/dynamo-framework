@@ -33,7 +33,6 @@ import net.breezeware.dynamo.apps.service.api.AppService;
 
 /**
  * Controller methods for apps and feature services.
- * 
  */
 @Controller
 @ConditionalOnProperty(value = "containermode.enabled", matchIfMissing = true)
@@ -47,9 +46,7 @@ public class AppsManagementController {
     AppService appService;
 
     /**
-     * 
      * Re-directs to the all-apps page displaying the list of apps.
-     * 
      * @param model
      * @param predicate
      * @param pageable
@@ -75,9 +72,7 @@ public class AppsManagementController {
     }
 
     /**
-     * 
      * Gets the id of the app and re-directs to the view-app page.
-     * 
      * @param id
      * @param model
      * @return
@@ -110,11 +105,9 @@ public class AppsManagementController {
     /**
      * Creates a new app. If any errors occur during app creation, user is
      * redirected to the create-app page.
-     * 
-     * @param group
-     *            Gets the populated group instance from the create-group page.
-     * @param bindingResult
-     *            Captures errors present in the form.
+     * @param app           Gets the populated app instance from the create-app
+     *                      page.
+     * @param bindingResult Captures errors present in the form.
      */
     @RequestMapping(value = "/createApp", method = RequestMethod.POST)
     public ModelAndView createApp(@Valid @ModelAttribute("dynamoApp") DynamoApp app, BindingResult bindingResult,
