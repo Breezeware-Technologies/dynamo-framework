@@ -19,6 +19,8 @@
 
 		<maven.compiler.source>13</maven.compiler.source>
 		<maven.compiler.target>13</maven.compiler.target>
+		
+		<maven.javadoc.plugin>3.2.0</maven.javadoc.plugin>
 	</properties>
 
 	<!-- #################### DISTRIBUTION MANAGEMENT #################### -->
@@ -126,6 +128,58 @@
 				<artifactId>maven-site-plugin</artifactId>
 				<!-- <version>3.9.1</version> -->
 			</plugin>
+
+			<!-- Maven Javadoc -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>${maven.javadoc.plugin}</version>
+
+				<configuration>
+					<encoding>UTF-8</encoding>
+
+					<show>private</show>
+
+					<detectLinks>true</detectLinks>
+
+					<noqualifier>all</noqualifier>
+
+					<additionalparam>-Xdoclint:none</additionalparam>
+
+					<links>
+						<link>http://www.querydsl.com/static/querydsl/4.0.4/apidocs</link>
+						<link>http://docs.spring.io/spring-boot/docs/current/api/</link>
+						<link>https://google.github.io/gson/apidocs</link>
+						<link>https://www.javadoc.io/doc/org.aspectj/aspectjweaver</link>
+						<link>https://www.slf4j.org/api/</link>
+						<link>https://docs.spring.io/spring/docs/4.3.8.RELEASE/javadoc-api/</link>
+						<link>http://docs.spring.io/spring-data/data-commons/docs/1.13.3.RELEASE/api/</link>
+						<link>http://docs.spring.io/spring-data/jpa/docs/1.11.6.RELEASE/api/</link>
+						<link>https://eclipse.org/aspectj/doc/released/runtime-api</link>
+						<link>http://docs.spring.io/spring-security/site/docs/4.2.2.RELEASE/apidocs/</link>
+						<link>https://tomcat.apache.org/tomcat-8.0-doc/servletapi/</link>
+						<link>http://docs.spring.io/spring-security/oauth/apidocs/</link>
+						<link>http://www.thymeleaf.org/apidocs/thymeleaf/3.0.3.RELEASE/</link>
+						<link>https://jersey.github.io/apidocs/2.25.1/jersey/</link>
+						<link>https://docs.oracle.com/javaee/7/api/</link>
+						<link>https://docs.jboss.org/drools/release/6.5.0.Final/kie-api-javadoc/</link>
+						<link>https://docs.camunda.org/javadoc/camunda-bpm-platform/7.6/</link>
+						<link>http://docs.jboss.org/hibernate/beanvalidation/spec/1.1/api/</link>
+					</links>
+
+					<failOnError>false</failOnError>
+				</configuration>
+
+				<executions>
+					<execution>
+						<id>aggregate</id>
+						<phase>site</phase>
+						<goals>
+							<goal>aggregate</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
 		</plugins>
 	</build>
 
@@ -167,6 +221,9 @@
 					<configLocation>buildtools/googleCheckStyle.xml</configLocation>
 				</configuration>
 			</plugin>
+
+			<!-- <plugin> <groupId>org.apache.maven.plugins</groupId> <artifactId>maven-javadoc-plugin</artifactId> 
+				<version>${maven.javadoc.plugin}</version> </plugin> -->
 
 			<!-- <plugin> <groupId>com.github.spotbugs</groupId> <artifactId>spotbugs-maven-plugin</artifactId> 
 				<version>4.0.4</version> </plugin> -->

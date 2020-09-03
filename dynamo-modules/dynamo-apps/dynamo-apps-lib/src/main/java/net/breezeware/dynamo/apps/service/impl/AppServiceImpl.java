@@ -33,6 +33,9 @@ public class AppServiceImpl implements AppService {
 
     Logger logger = LoggerFactory.getLogger(AppServiceImpl.class);
 
+    /**
+     * {@inheritDoc}
+     */
     @Transactional
     @Auditable(event = "Retireve All Apps", argNames = "predicate, pageable")
     public Page<DynamoApp> findAllApps(Predicate predicate, Pageable pageable) {
@@ -40,9 +43,20 @@ public class AppServiceImpl implements AppService {
 
         logger.info("Leaving findAllApps Method()");
         return dynamoAppRepository.findAll(predicate, pageable);
-
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Transactional
+    @Auditable(event = "Retrieve All Apps", argNames = "")
+    public List<DynamoApp> findAllApps() {
+        return dynamoAppRepository.findAll();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     @Transactional
     @Auditable(event = "Retrieve App", argNames = "appId")
     public DynamoApp findAppById(long appId) {
@@ -64,6 +78,9 @@ public class AppServiceImpl implements AppService {
         return app;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Transactional
     @Auditable(event = "Retrieve App", argNames = "appName")
     public DynamoApp findByAppName(String appName) {
@@ -72,6 +89,9 @@ public class AppServiceImpl implements AppService {
         return dynamoAppRepository.findByNameIgnoreCase(appName);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Transactional
     @Auditable(event = "Retrieve App Feature", argNames = "featureName")
     public AppFeature findByFeatureName(String featureName) {
@@ -80,6 +100,9 @@ public class AppServiceImpl implements AppService {
         return appFeatureRepository.findByNameIgnoreCase(featureName);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Transactional
     @Auditable(event = "Save App", argNames = "app")
     public DynamoApp saveDynamoApp(DynamoApp app) throws Exception {
@@ -101,15 +124,14 @@ public class AppServiceImpl implements AppService {
 
             List<Long> editedAppFeatures = new ArrayList<Long>();
             for (AppFeature feature : features) {
-                // new app feature
                 if (feature.getId() <= 0) {
+                    // new app feature
                     feature.setAppId(savedAppId);
                     feature.setCreatedDate(Calendar.getInstance());
                     feature.setModifiedDate(Calendar.getInstance());
                     feature.setStatus("active");
-                }
-                // existing app feature
-                else {
+                } else {
+                    // existing app feature
                     feature.setAppId(savedAppId);
                     feature.setModifiedDate(Calendar.getInstance());
                     feature.setStatus("active");
@@ -120,9 +142,8 @@ public class AppServiceImpl implements AppService {
 
             // delete app features not part of the edit
             appFeatureRepository.deleteOrphanedAppFeatures();
-        }
-        // app does not exist, create new app
-        else {
+        } else {
+            // app does not exist, create new app
             app.setAppFeatures(new ArrayList<AppFeature>());
             app = dynamoAppRepository.save(app);
 
@@ -148,6 +169,9 @@ public class AppServiceImpl implements AppService {
         return app;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     // FIXME: revisit logic
     @Transactional
     @Auditable(event = "Remove Features From App", argNames = "featureId")
@@ -160,6 +184,9 @@ public class AppServiceImpl implements AppService {
         return false;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Transactional
     @Auditable(event = "Update App Status", argNames = "appId, appStatus")
     public boolean updateAppStatus(long appId, String appStatus) {
@@ -177,6 +204,9 @@ public class AppServiceImpl implements AppService {
     }
 
     // FIXME: revisit logic
+    /**
+     * {@inheritDoc}
+     */
     @Transactional
     @Auditable(event = "Update App Feature Status", argNames = "featureStatus")
     public void updateFeaturesStatus(Map<Long, String> featureStatus) {
@@ -191,6 +221,9 @@ public class AppServiceImpl implements AppService {
         logger.info("Leaving updateFeaturesStatus Method()");
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Transactional
     @Auditable(event = "Remove App with Features", argNames = "appId")
     public boolean removeAppWithFeatures(long appId) {
@@ -212,12 +245,9 @@ public class AppServiceImpl implements AppService {
         }
     }
 
-    @Transactional
-    @Auditable(event = "Retrieve All Apps", argNames = "")
-    public List<DynamoApp> findAllApps() {
-        return dynamoAppRepository.findAll();
-    }
-
+    /**
+     * {@inheritDoc}
+     */
     @Transactional
     @Auditable(event = "Retrieve All Features", argNames = "")
     public List<AppFeature> findAllFeatures() {

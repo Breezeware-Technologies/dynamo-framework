@@ -2,7 +2,6 @@ package net.breezeware.dynamo.apps.controller;
 
 import java.util.Calendar;
 
-import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.slf4j.Logger;
@@ -46,12 +45,13 @@ public class AppsManagementController {
     AppService appService;
 
     /**
-     * Re-directs to the all-apps page displaying the list of apps.
-     * @param model
-     * @param predicate
-     * @param pageable
-     * @param parameters
-     * @return
+     * Redirect to the all-apps page displaying the list of apps.
+     * @param model      the holder for Model attributes
+     * @param predicate  the interface for Boolean typed expressions. Supports
+     *                   binding of HTTP parameters to QueryDSL predicate
+     * @param pageable   the interface for pagination information
+     * @param parameters the holder for HTTP parameters in request
+     * @return a string to identify the Thymeleaf template
      */
     @RequestMapping(value = "/apps", method = RequestMethod.GET)
     public String listApps(Model model, @QuerydslPredicate(root = DynamoApp.class) Predicate predicate,
@@ -72,10 +72,10 @@ public class AppsManagementController {
     }
 
     /**
-     * Gets the id of the app and re-directs to the view-app page.
-     * @param id
-     * @param model
-     * @return
+     * Redirect to the view-app page.
+     * @param id    the ID used to uniquely identify the app
+     * @param model the holder for Model attributes
+     * @return a string to identify the Thymeleaf template
      */
     @RequestMapping(value = "/viewApp", method = RequestMethod.GET)
     public String viewApp(@RequestParam("id") long id, Model model) {
@@ -91,10 +91,12 @@ public class AppsManagementController {
     }
 
     /**
-     * Redirects to the create app page.
+     * Redirect to the create app page.
+     * @param model the holder for Model attributes
+     * @return a string to identify the Thymeleaf template
      */
     @RequestMapping(value = "/createApp", method = RequestMethod.GET)
-    public String createApp(Model model, HttpSession session) {
+    public String createApp(Model model) {
 
         DynamoApp app = new DynamoApp();
         model.addAttribute("dynamoApp", app);
@@ -103,15 +105,17 @@ public class AppsManagementController {
     }
 
     /**
-     * Creates a new app. If any errors occur during app creation, user is
+     * Create a new app. If any errors occurs during app creation, user is
      * redirected to the create-app page.
-     * @param app           Gets the populated app instance from the create-app
-     *                      page.
-     * @param bindingResult Captures errors present in the form.
+     * @param app           the DynamoApp entity that contains data from the form
+     *                      submitted
+     * @param bindingResult the interface to represent binding results
+     * @param model         the holder for Model attributes
+     * @return a string to identify the Thymeleaf template
      */
     @RequestMapping(value = "/createApp", method = RequestMethod.POST)
     public ModelAndView createApp(@Valid @ModelAttribute("dynamoApp") DynamoApp app, BindingResult bindingResult,
-            Model model, HttpSession session) {
+            Model model) {
 
         app.setCreatedDate(Calendar.getInstance());
         app.setModifiedDate(Calendar.getInstance());
@@ -147,7 +151,10 @@ public class AppsManagementController {
     }
 
     /**
-     * Redirects to the edit-app page.
+     * Redirect to the edit-app page.
+     * @param id    the ID used to uniquely identify the app
+     * @param model the holder for Model attributes
+     * @return a string to identify the Thymeleaf template
      */
     @RequestMapping(value = "/editApp", method = RequestMethod.GET)
     public String editGroup(@RequestParam("id") String id, Model model) {
@@ -162,9 +169,17 @@ public class AppsManagementController {
 
     }
 
+    /**
+     * Save the updated values for an app.
+     * @param app           the DynamoApp entity that contains data from the form
+     *                      submitted
+     * @param bindingResult the interface to represent binding results.
+     * @param model         the holder for Model attributes
+     * @return a string to identify the Thymeleaf template
+     */
     @RequestMapping(value = "/editApp", method = RequestMethod.POST)
     public ModelAndView editApp(@Valid @ModelAttribute("dynamoApp") DynamoApp app, BindingResult bindingResult,
-            Model model, HttpSession session) {
+            Model model) {
         app.setCreatedDate(Calendar.getInstance());
         app.setModifiedDate(Calendar.getInstance());
 
