@@ -122,7 +122,6 @@ public class AppServiceImpl implements AppService {
         if (app.getId() > 0) {
             savedAppId = app.getId();
 
-            List<Long> editedAppFeatures = new ArrayList<Long>();
             for (AppFeature feature : features) {
                 if (feature.getId() <= 0) {
                     // new app feature
