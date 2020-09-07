@@ -258,7 +258,7 @@
 			<!-- Breezeware custom checkstyle modification 'sortImportsInGroupAlphabetically' 
 				changed from 'true' to 'false' & 'separateLineBetweenGroups' changed from 
 				'true' to 'false' -->
-			<property name="groups" value="/^java\./,javax,org,com,net" />
+			<property name="groups" value="/^java\./,javax,org,com,net,lombok" />
 			<property name="ordered" value="true" />
 			<property name="separated" value="true" />
 			<property name="option" value="above" />

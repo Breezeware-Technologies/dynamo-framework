@@ -17,9 +17,10 @@ public interface OAuthService {
     /**
      * Renew the User token if it is about to expire in the next 5 minutes or if it
      * has already expired.
-     * 
-     * @param userOAuthToken
-     * @param oauthConnectionProperties
+     * @param userOAuthToken            the authentication token associated with a
+     *                                  Dynamo User
+     * @param oauthConnectionProperties the properties to hold connection details to
+     *                                  an external service
      * @return
      */
     Optional<UserOAuthToken> renewToken(UserOAuthToken userOAuthToken,

@@ -17,7 +17,7 @@ public interface UserOAuthTokenRepository extends JpaRepository<UserOAuthToken, 
 
     UserOAuthToken findByUserIdAtSource(String userIdAtSource);
 
-    default public void customize(QuerydslBindings bindings, QUserOAuthToken token) {
+    default void customize(QuerydslBindings bindings, QUserOAuthToken token) {
         bindings.bind(String.class).first((StringPath path, String value) -> path.containsIgnoreCase(value));
     }
 }

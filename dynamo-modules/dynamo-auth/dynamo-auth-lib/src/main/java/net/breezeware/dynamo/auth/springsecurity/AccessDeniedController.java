@@ -8,24 +8,20 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 /**
- * 
- * Controller methods for access denied
+ * Controller methods for access denied.
  */
 @Controller
 public class AccessDeniedController {
-	Logger logger = LoggerFactory.getLogger(AccessDeniedController.class);
+    Logger logger = LoggerFactory.getLogger(AccessDeniedController.class);
 
-	/**
-	 * 
-	 * Maps to the access denied message page.
-	 * 
-	 * @param model
-	 * 
-	 * @return returns a string that maps to the 'access-denied' template.
-	 */
-	@RequestMapping(value = "/accessDenied", method = RequestMethod.GET)
-	public String accessDenied(Model model) {
-		return "access-denied";
-	}
+    /**
+     * Maps to the access denied message page.
+     * @param model the holder for Model attributes
+     * @return returns a string that maps to the 'access-denied' template.
+     */
+    @RequestMapping(value = "/accessDenied", method = RequestMethod.GET)
+    public String accessDenied(Model model) {
+        return "access-denied";
+    }
 
 }

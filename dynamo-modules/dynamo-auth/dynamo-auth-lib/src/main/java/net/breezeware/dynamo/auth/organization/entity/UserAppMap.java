@@ -23,9 +23,6 @@ import com.google.gson.annotations.Expose;
 @Table(name = "user_app_map", schema = "dynamo")
 public class UserAppMap implements Serializable {
 
-    /**
-     * 
-     */
     private static final long serialVersionUID = 1L;
 
     /**

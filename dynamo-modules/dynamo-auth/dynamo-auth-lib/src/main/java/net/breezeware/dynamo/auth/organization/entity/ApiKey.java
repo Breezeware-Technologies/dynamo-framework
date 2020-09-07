@@ -16,7 +16,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 /**
- * Key provided to external entities to access application APIs
+ * Key provided to external entities to access application APIs.
  */
 @Table(name = "api_key", schema = "dynamo")
 @ToString

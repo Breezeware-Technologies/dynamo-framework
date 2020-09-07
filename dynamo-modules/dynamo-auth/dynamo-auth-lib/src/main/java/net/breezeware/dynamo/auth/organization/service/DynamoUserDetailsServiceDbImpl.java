@@ -35,6 +35,9 @@ public class DynamoUserDetailsServiceDbImpl implements DynamoUserDetailsService 
     @Autowired
     OrganizationService organizationService;
 
+    /**
+     * {@inheritDoc}
+     */
     @Auditable(event = "Retrieve User by Username", argNames = "username")
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         logger.info("Entering loadUserByUsername(). username = '{}'.", username);

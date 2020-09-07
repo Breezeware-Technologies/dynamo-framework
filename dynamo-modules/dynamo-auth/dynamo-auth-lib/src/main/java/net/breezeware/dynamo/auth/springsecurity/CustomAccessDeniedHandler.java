@@ -15,18 +15,21 @@ import org.springframework.security.web.access.AccessDeniedHandler;
 
 public class CustomAccessDeniedHandler implements AccessDeniedHandler {
 
-	Logger logger = LoggerFactory.getLogger(CustomAccessDeniedHandler.class);
+    Logger logger = LoggerFactory.getLogger(CustomAccessDeniedHandler.class);
 
-	public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException exc)
-			throws IOException, ServletException {
+    /**
+     * Handle the situation where a user tried to access a restricted resource.
+     */
+    public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException exc)
+            throws IOException, ServletException {
 
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		if (auth != null) {
-			logger.warn(
-					"User: " + auth.getName() + " attempted to access the protected URL: " + request.getRequestURI());
-		}
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth != null) {
+            logger.warn(
+                    "User: " + auth.getName() + " attempted to access the protected URL: " + request.getRequestURI());
+        }
 
-		// response.sendRedirect(request.getContextPath() + "/accessDenied");
-		response.getWriter().print("You do not required permissions to access this resource.");
-	}
+        // response.sendRedirect(request.getContextPath() + "/accessDenied");
+        response.getWriter().print("You do not required permissions to access this resource.");
+    }
 }

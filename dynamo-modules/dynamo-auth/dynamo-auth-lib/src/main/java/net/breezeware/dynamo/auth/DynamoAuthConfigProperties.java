@@ -8,9 +8,7 @@ import com.google.gson.Gson;
 
 /**
  * Bean to hold Dynamo Audit Module's configuration properties.
- * 
  * @author karthik
- *
  */
 
 @Configuration
@@ -18,17 +16,17 @@ import com.google.gson.Gson;
 @RefreshScope
 public class DynamoAuthConfigProperties {
 
-	private String passwordEncoding;
+    private String passwordEncoding;
 
-	public String getPasswordEncoding() {
-		return passwordEncoding;
-	}
+    public String getPasswordEncoding() {
+        return passwordEncoding;
+    }
 
-	public void setPasswordEncoding(String passwordEncoding) {
-		this.passwordEncoding = passwordEncoding;
-	}
+    public void setPasswordEncoding(String passwordEncoding) {
+        this.passwordEncoding = passwordEncoding;
+    }
 
-	public String toString() {
-		return new Gson().toJson(this);
-	}
+    public String toString() {
+        return new Gson().toJson(this);
+    }
 }
