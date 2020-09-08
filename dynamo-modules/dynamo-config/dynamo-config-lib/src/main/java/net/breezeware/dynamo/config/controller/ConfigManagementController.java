@@ -30,115 +30,122 @@ import net.breezeware.dynamo.config.service.api.AppConfigService;
 
 /**
  * Controller methods for config management.
- * 
  */
 @Controller
 @RequestMapping(value = "/admin/configManagement/*")
 @PreAuthorize("hasAnyAuthority('ROLE_SYSTEM_ADMIN')")
 public class ConfigManagementController {
 
-	Logger logger = LoggerFactory.getLogger(ConfigManagementController.class);
+    Logger logger = LoggerFactory.getLogger(ConfigManagementController.class);
 
-	@Autowired
-	AppConfigService appConfigService;
+    @Autowired
+    AppConfigService appConfigService;
 
-	/**
-	 * 
-	 * Re-directs to the page displaying all configuration properties page.
-	 * 
-	 * @param model
-	 * @param predicate
-	 * @param pageable
-	 * @param parameters
-	 * @return
-	 */
-	@RequestMapping(value = "/listConfigs", method = RequestMethod.GET)
-	public String listConfigs(Model model, @QuerydslPredicate(root = AppProperty.class) Predicate predicate,
-			@PageableDefault(sort = { "id" }, page = 0, size = 12) Pageable pageable,
-			@RequestParam MultiValueMap<String, String> parameters) {
+    /**
+     * Re-direct to the page displaying all configuration properties page.
+     * @param model      the holder for Model attributes
+     * @param predicate  the interface for Boolean typed expressions. Supports
+     *                   binding of HTTP parameters to QueryDSL predicate
+     * @param pageable   the interface for pagination information
+     * @param parameters the holder for HTTP parameters in request
+     * @return a string to identify the Thymeleaf template
+     */
+    @RequestMapping(value = "/listConfigs", method = RequestMethod.GET)
+    public String listConfigs(Model model, @QuerydslPredicate(root = AppProperty.class) Predicate predicate,
+            @PageableDefault(sort = { "id" }, page = 0, size = 12) Pageable pageable,
+            @RequestParam MultiValueMap<String, String> parameters) {
 
-		logger.info("Entering listConfigs()");
-		logger.info("# of params = " + parameters.size());
+        logger.info("Entering listConfigs()");
+        logger.info("# of params = " + parameters.size());
 
-		Page<AppProperty> pagedConfigs = appConfigService.findAppProperties(predicate, pageable);
-		logger.info("# of properties fetched = {}", pagedConfigs.getNumberOfElements());
+        Page<AppProperty> pagedConfigs = appConfigService.findAppProperties(predicate, pageable);
+        logger.info("# of properties fetched = {}", pagedConfigs.getNumberOfElements());
 
-		model.addAttribute("pagedConfigs", pagedConfigs);
-		model.addAttribute("activeNav", "config");
-		logger.info("Leaving listConfigs()");
-		return "config/list-configs";
+        model.addAttribute("pagedConfigs", pagedConfigs);
+        model.addAttribute("activeNav", "config");
+        logger.info("Leaving listConfigs()");
+        return "config/list-configs";
 
-	}
+    }
 
-	/**
-	 * 
-	 * Gets the id of the configuration property and re-directs to the view property
-	 * page.
-	 * 
-	 * @param id
-	 * @param model
-	 * @return
-	 */
-	@RequestMapping(value = "/viewConfig", method = RequestMethod.GET)
-	public String viewConfig(@RequestParam("id") long id, Model model) {
+    /**
+     * Get the id of the configuration property and re-directs to the view property
+     * page.
+     * @param id    the ID to uniquely identify an AppProperty
+     * @param model the holder for Model attributes
+     * @return a string to identify the Thymeleaf template
+     */
+    @RequestMapping(value = "/viewConfig", method = RequestMethod.GET)
+    public String viewConfig(@RequestParam("id") long id, Model model) {
 
-		logger.info("Entering viewConfig()");
-		AppProperty config = appConfigService.getAppPropertyById(id);
+        logger.info("Entering viewConfig()");
+        AppProperty config = appConfigService.getAppPropertyById(id);
 
-		model.addAttribute("config", config);
-		model.addAttribute("activeNav", "config");
-		logger.info("Leaving viewConfig()");
-		return "config/view-config";
-	}
+        model.addAttribute("config", config);
+        model.addAttribute("activeNav", "config");
+        logger.info("Leaving viewConfig()");
+        return "config/view-config";
+    }
 
-	/**
-	 * Redirects to the edit configuration page.
-	 */
-	@RequestMapping(value = "/editConfig", method = RequestMethod.GET)
-	public String editConfig(@RequestParam("id") long id, Model model) {
+    /**
+     * Redirect to the edit configuration page.
+     * @param id    the ID to uniquely identify an AppProperty
+     * @param model the holder for Model attributes
+     * @return a string to identify the Thymeleaf template
+     */
+    @RequestMapping(value = "/editConfig", method = RequestMethod.GET)
+    public String editConfig(@RequestParam("id") long id, Model model) {
 
-		logger.info("Entering editConfig()");
+        logger.info("Entering editConfig()");
 
-		AppProperty config = appConfigService.getAppPropertyById(id);
+        AppProperty config = appConfigService.getAppPropertyById(id);
 
-		logger.info("App property = {}", config);
+        logger.info("App property = {}", config);
 
-		model.addAttribute("config", config);
-		model.addAttribute("activeNav", "config");
+        model.addAttribute("config", config);
+        model.addAttribute("activeNav", "config");
 
-		logger.info("Leaving editConfig()");
-		return "config/edit-config";
+        logger.info("Leaving editConfig()");
+        return "config/edit-config";
 
-	}
+    }
 
-	@RequestMapping(value = "/editConfig", method = RequestMethod.POST)
-	public ModelAndView editApp(@Valid @ModelAttribute("config") AppProperty config, BindingResult bindingResult,
-			Model model, HttpSession session) {
+    /**
+     * Save the changes to the AppProperty entity.
+     * @param config        the AppProperty entity to be saved
+     * @param bindingResult the interface to represent binding results
+     * @param model         the holder for Model attributes
+     * @param session       the HTTPSession entity
+     * @return reference to the view page that is the result of this operation
+     */
+    @RequestMapping(value = "/editConfig", method = RequestMethod.POST)
+    public ModelAndView editApp(@Valid @ModelAttribute("config") AppProperty config, BindingResult bindingResult,
+            Model model, HttpSession session) {
 
-		logger.info("App property = {}", config);
+        logger.info("App property = {}", config);
 
-		if (bindingResult.hasErrors()) {
-			for (FieldError fe : bindingResult.getFieldErrors()) {
-				logger.info("Field error = " + fe.getField().toString() + ", " + fe.getDefaultMessage() + ", "
-						+ fe.getCode());
-			}
-			model.addAttribute("config", config);
-			model.addAttribute("activeNav", "config");
-			return new ModelAndView("config/edit-config");
-		} else {
-			try {
-				appConfigService.saveAppProperty(config);
-			} catch (Exception e) {
-				bindingResult.addError(new ObjectError("config", e.getMessage()));
+        if (bindingResult.hasErrors()) {
+            for (FieldError fe : bindingResult.getFieldErrors()) {
+                logger.info("Field error = " + fe.getField().toString() + ", " + fe.getDefaultMessage() + ", "
+                        + fe.getCode());
+            }
+            model.addAttribute("config", config);
+            model.addAttribute("activeNav", "config");
+            return new ModelAndView("config/edit-config");
+        } else {
+            try {
+                appConfigService.saveAppProperty(config);
+            } catch (Exception e) {
+                bindingResult.addError(new ObjectError("config", e.getMessage()));
 
-				model.addAttribute("config", config);
-				model.addAttribute("activeNav", "config");
+                model.addAttribute("config", config);
+                model.addAttribute("activeNav", "config");
 
-				return new ModelAndView("config/edit-config");
-			}
-		}
+                return new ModelAndView("config/edit-config");
+            }
+        }
 
-		model.addAttribute("activeNav", "config");
-		return new ModelAndView("redirect:/admin/configManagement/listConfigs");
-	}
+        model.addAttribute("activeNav", "config");
+        return new ModelAndView("redirect:/admin/configManagement/listConfigs");
+    }
 }

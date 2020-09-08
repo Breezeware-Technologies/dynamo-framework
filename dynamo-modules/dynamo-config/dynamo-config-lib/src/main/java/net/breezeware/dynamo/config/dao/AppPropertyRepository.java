@@ -25,7 +25,7 @@ public interface AppPropertyRepository extends JpaRepository<AppProperty, Long>,
 
     AppProperty findByApplicationAndProfileAndLabelAndKey(String application, String profile, String label, String key);
 
-    default public void customize(QuerydslBindings bindings, QAppProperty prop) {
+    default void customize(QuerydslBindings bindings, QAppProperty prop) {
         bindings.bind(String.class).first((StringPath path, String value) -> path.containsIgnoreCase(value));
     }
 }
