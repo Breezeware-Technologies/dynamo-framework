@@ -9,7 +9,6 @@ import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
@@ -17,7 +16,6 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import net.breezeware.dynamo.auth.audit.entity.LoginAudit;
-import net.breezeware.dynamo.auth.audit.service.api.AuthAuditService;
 
 /**
  * Aspect class to create an entry into the audit logs whenever a user logs in
@@ -29,8 +27,8 @@ public class LoginAspect {
 
     Logger logger = LoggerFactory.getLogger(LoginAspect.class);
 
-    @Autowired
-    private AuthAuditService authAuditService;
+    // @Autowired
+    // private AuthAuditService authAuditService;
 
     /**
      * Creates a entry into the audit logs when a user attempts to login to the

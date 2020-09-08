@@ -11,8 +11,6 @@ import org.springframework.security.oauth2.config.annotation.web.configurers.Res
 public class OAuth2ResourceServerConfig extends ResourceServerConfigurerAdapter {
 
     private static final String RESOURCE_ID = "dynamo";
-    private static final String SECURED_READ_SCOPE = "#oauth2.hasScope('read')";
-    private static final String SECURED_WRITE_SCOPE = "#oauth2.hasScope('write')";
     private static final String SECURED_PATTERN = "/api/**";
 
     @Override

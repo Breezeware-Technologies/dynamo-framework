@@ -32,6 +32,8 @@ public class OrganizationApiKeyMap implements Serializable {
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_gen")
     @SequenceGenerator(name = "seq_gen", sequenceName = "org_api_key_map_seq", schema = "dynamo", allocationSize = 1)
+    @Getter
+    @Setter
     private long id;
 
     /**

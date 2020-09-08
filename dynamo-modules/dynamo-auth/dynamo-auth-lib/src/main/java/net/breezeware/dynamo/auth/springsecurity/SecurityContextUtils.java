@@ -60,7 +60,7 @@ public class SecurityContextUtils {
                 && SecurityContextHolder.getContext().getAuthentication().getPrincipal() instanceof DynamoSpringUser) {
             DynamoSpringUser dynamoSpringUser = (DynamoSpringUser) SecurityContextHolder.getContext()
                     .getAuthentication().getPrincipal();
-            return (dynamoSpringUser.getOrganizationId());
+            return dynamoSpringUser.getOrganizationId();
         } else {
             return defaultOrganizationId;
         }

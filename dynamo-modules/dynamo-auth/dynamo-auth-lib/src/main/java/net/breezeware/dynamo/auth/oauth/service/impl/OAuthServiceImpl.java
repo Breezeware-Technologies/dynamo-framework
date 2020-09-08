@@ -79,8 +79,13 @@ public class OAuthServiceImpl implements OAuthService {
     public UserOAuthToken retrieveTokenByUserIdAtSource(String userIdAtSource) {
         log.info("Entering retrieveTokenByUserIdAtSource(), userIdAtSource = {}", userIdAtSource);
         UserOAuthToken token = userOAuthTokenRepository.findByUserIdAtSource(userIdAtSource);
+
         log.info("Leaving retrieveTokenByUserIdAtSource(), UserOAuthToken = {}", token);
-        return token;
+        if (token == null) {
+            return null;
+        } else {
+            return token;
+        }
     }
 
     /**

@@ -10,7 +10,6 @@ import org.springframework.security.authentication.dao.AbstractUserDetailsAuthen
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import net.breezeware.dynamo.auth.DynamoAuthConfigProperties;
@@ -39,9 +38,6 @@ public class DynamoUserDetailsAuthenticationProvider extends AbstractUserDetails
      */
     @Autowired
     DynamoUserDetailsService dynamoUserDetailsService;
-
-    @Autowired
-    private PasswordEncoder userPasswordEncoder;
 
     @Autowired
     private DynamoAuthConfigProperties dynamoAuthConfigProperties;

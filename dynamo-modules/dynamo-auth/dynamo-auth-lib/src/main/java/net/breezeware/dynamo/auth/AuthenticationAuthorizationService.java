@@ -14,7 +14,7 @@ import net.breezeware.dynamo.util.usermgmt.CurrentUserDto;
 /**
  * Interface to interact with various entities in the Authentication and
  * Authorization module. Generally it is used to retrieve items that are common
- * to both Database and LDAP authentication & authorization sources.
+ * to both Database and LDAP authentication and authorization sources.
  */
 public interface AuthenticationAuthorizationService {
 
@@ -147,13 +147,14 @@ public interface AuthenticationAuthorizationService {
     /**
      * Create a new ApiKey for an Organization.
      * @param organizationId the organization for which the key will be created
+     * @return OrganizationApiKeyMap created for the organization
      */
     OrganizationApiKeyMap createOrganizationApiKey(long organizationId);
 
     /**
      * Retrieve an OrganizationApiKeyMap by ApiKey value.
      * @param apiKeyValue the key value associated with the organization
-     * @return
+     * @return a non-null OrganizationApiKeyMap if available, else an empty Optional
      */
     Optional<OrganizationApiKeyMap> retrieveOrganizationApiKeyByKeyValue(UUID apiKeyValue);
 
