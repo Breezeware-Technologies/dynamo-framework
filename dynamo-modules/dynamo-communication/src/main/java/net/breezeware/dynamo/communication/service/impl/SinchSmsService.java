@@ -14,27 +14,30 @@ import net.breezeware.dynamo.communication.service.api.SmsService;
 
 @Service
 public class SinchSmsService implements SmsService {
-	Logger logger = LoggerFactory.getLogger(SinchSmsService.class);
+    Logger logger = LoggerFactory.getLogger(SinchSmsService.class);
 
-	@Autowired
-	DynamoCommunicationConfigProperties dynamoCommunicationConfigProperties;
+    @Autowired
+    DynamoCommunicationConfigProperties dynamoCommunicationConfigProperties;
 
-	public String sendSms(String message, String phoneNumber) {
-		logger.info("Entering sendSms(). Message = {}, Phone number = {}, Service Plan ID = {}, API Token = {}",
-				message, phoneNumber, dynamoCommunicationConfigProperties.getSinchServicePlanId(),
-				dynamoCommunicationConfigProperties.getSinchApiToken());
+    /**
+     * {@inheritDoc}
+     */
+    public String sendSms(String message, String phoneNumber) {
+        logger.info("Entering sendSms(). Message = {}, Phone number = {}, Service Plan ID = {}, API Token = {}",
+                message, phoneNumber, dynamoCommunicationConfigProperties.getSinchServicePlanId(),
+                dynamoCommunicationConfigProperties.getSinchApiToken());
 
-		try {
-			ApiConnection conn = ApiConnection.builder()
-					.servicePlanId(dynamoCommunicationConfigProperties.getSinchServicePlanId())
-					.token(dynamoCommunicationConfigProperties.getSinchApiToken()).start();
+        try {
+            ApiConnection conn = ApiConnection.builder()
+                    .servicePlanId(dynamoCommunicationConfigProperties.getSinchServicePlanId())
+                    .token(dynamoCommunicationConfigProperties.getSinchApiToken()).start();
 
-			MtBatchTextSmsResult result = conn
-					.createBatch(ClxApi.batchTextSms().sender("12345").addRecipient(phoneNumber).body(message).build());
-			return result.body();
-		} catch (Exception e) {
-			logger.error("Error SMS " + e);
-			return "Error " + e;
-		}
-	}
+            MtBatchTextSmsResult result = conn
+                    .createBatch(ClxApi.batchTextSms().sender("12345").addRecipient(phoneNumber).body(message).build());
+            return result.body();
+        } catch (Exception e) {
+            logger.error("Error SMS " + e);
+            return "Error " + e;
+        }
+    }
 }
