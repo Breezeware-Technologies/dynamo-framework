@@ -6,7 +6,6 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,9 +27,12 @@ public class LdapServiceImpl implements LdapService {
     @Autowired
     GroupLdapRepository groupLdapRepository;
 
-    @Value("${spring.ldap.base}")
-    private String springLdapBase;
+    // @Value("${spring.ldap.base}")
+    // private String springLdapBase;
 
+    /**
+     * {@inheritDoc}
+     */
     @Transactional
     @Auditable(event = "Retrieve User", argNames = "uid")
     public User getUserByUid(String uid) {
@@ -42,6 +44,9 @@ public class LdapServiceImpl implements LdapService {
         return user;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Transactional
     @Auditable(event = "Retrive User Groups", argNames = "dn")
     public List<Group> getUserGroups(String dn) {
@@ -61,6 +66,9 @@ public class LdapServiceImpl implements LdapService {
         return groups;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Transactional
     @Auditable(event = "Retrieve Groups", argNames = "")
     public List<Group> getGroups() {
@@ -85,6 +93,9 @@ public class LdapServiceImpl implements LdapService {
         return groups;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Transactional
     @Auditable(event = "Retrieve Users", argNames = "")
     public List<User> getUsers() {

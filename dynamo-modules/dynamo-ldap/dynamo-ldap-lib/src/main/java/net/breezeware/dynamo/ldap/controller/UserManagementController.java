@@ -1,7 +1,6 @@
 package net.breezeware.dynamo.ldap.controller;
 
 import java.util.ArrayList;
-
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -22,7 +21,6 @@ import net.breezeware.dynamo.ldap.service.api.LdapService;
 
 /**
  * Controller methods for managing users and groups.
- *
  */
 @Profile("LDAPAuthentication")
 @Controller
@@ -39,13 +37,9 @@ public class UserManagementController {
     private String springLdapBase;
 
     /**
-     * Redirects to the all-groups page displaying the list of groups.
-     * 
-     * @param model
-     * @param predicate
-     * @param pageable
-     * @param parameters
-     * @return
+     * Redirect to the all-groups page displaying the list of groups.
+     * @param model the holder for Model attributes
+     * @return a string to identify the Thymeleaf template
      */
     // @PreAuthorize("hasAuthority('admin')")
     @RequestMapping(value = "/groups", method = RequestMethod.GET)
@@ -62,7 +56,9 @@ public class UserManagementController {
     }
 
     /**
-     * Redirects to the all-users page displaying the list of users.
+     * Redirect to the all-users page displaying the list of users.
+     * @param model the holder for Model attributes
+     * @return a string to identify the Thymeleaf template
      */
     // @PreAuthorize("hasAuthority('admin')")
     @RequestMapping(value = "/users", method = RequestMethod.GET)
@@ -79,7 +75,10 @@ public class UserManagementController {
     }
 
     /**
-     * Retrieves a single user and the groups associated with the user.
+     * Retrieve a single user and the groups associated with the user.
+     * @param uid   the ID to uniquely identify a User
+     * @param model the holder for Model attributes
+     * @return a string to identify the Thymeleaf template
      */
     // @PreAuthorize("hasAuthority('admin')")
     @RequestMapping(value = "/viewUser", method = RequestMethod.GET)
