@@ -8,14 +8,9 @@ import com.google.gson.annotations.Expose;
 
 /**
  * Represents a single Form.
- * 
  * @author Karthik Muthukumaraswamy
- * 
  */
 public class Form implements Serializable {
-    /**
-     * 
-     */
     private static final long serialVersionUID = 1L;
 
     @Expose

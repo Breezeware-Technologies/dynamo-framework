@@ -25,10 +25,23 @@ public class FileSystemStorageService {
     @Value("${dynamo.fileUploadLocation}")
     private Path rootLocation;
 
+    /**
+     * Store the file in the file system.
+     * @param file              the file to be stored
+     * @param acceptedFileTypes the list of file types accepted for storing
+     * @param originalFilename  the name assigned to the file by the end user. It
+     *                          need not be unique.
+     * @param uniqueFilename    the name assigned to the file by the application to
+     *                          uniquely identify it.
+     * @return the path string where the file is stored
+     * @throws StorageException the exception is thrown if there are any issues
+     *                          while storing the file
+     */
     public String store(MultipartFile file, List<String> acceptedFileTypes, String originalFilename,
             String uniqueFilename) throws StorageException {
         logger.info(
-                "Entering store(). File's type = {}. # of accpeted file types = {}. Original filename = {}. Unique filename = {}",
+                "Entering store(). File's type = {}. # of accpeted file types = {}. "
+                        + "Original filename = {}. Unique filename = {}",
                 file.getContentType(), acceptedFileTypes.size(), originalFilename, uniqueFilename);
 
         String filePath = "";
@@ -97,6 +110,12 @@ public class FileSystemStorageService {
         return filePath;
     }
 
+    /**
+     * Load all the files available in the application's storage location.
+     * @return a stream of file paths
+     * @throws StorageException an exception is thrown if there are any problems
+     *                          while loading the file paths
+     */
     public Stream<Path> loadAll() throws StorageException {
         try {
             return Files.walk(this.rootLocation, 1).filter(path -> !path.equals(this.rootLocation))
@@ -107,10 +126,23 @@ public class FileSystemStorageService {
 
     }
 
+    /**
+     * Load a specific file in the applications' storage location.
+     * @param filename the file name to load
+     * @return Path the path of the loaded file
+     */
     public Path load(String filename) {
         return rootLocation.resolve(filename);
     }
 
+    /**
+     * Load a specific file in the application's storage location as a Resource
+     * entity.
+     * @param filename the file name to load
+     * @return Resource the resource entity corresponding to the file
+     * @throws StorageException an exception is thrown if there are any problems
+     *                          while loading the file
+     */
     public Resource loadAsResource(String filename) throws StorageException {
         try {
             Path file = load(filename);
@@ -126,10 +158,18 @@ public class FileSystemStorageService {
         }
     }
 
+    /**
+     * Delete all the files in the application's storage location.
+     */
     public void deleteAll() {
         FileSystemUtils.deleteRecursively(rootLocation.toFile());
     }
 
+    /**
+     * Initialize the FileSystemStorageService.
+     * @throws StorageException the exception is thrown if there is an error while
+     *                          initializing the service
+     */
     public void init() throws StorageException {
         try {
             Files.createDirectories(rootLocation);

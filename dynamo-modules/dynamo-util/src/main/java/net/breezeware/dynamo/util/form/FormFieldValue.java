@@ -7,14 +7,9 @@ import com.google.gson.annotations.Expose;
 
 /**
  * Represents a possible complex form field value.
- * 
  * @author Karthik Muthukumaraswamy
- * 
  */
 public class FormFieldValue implements Serializable {
-    /**
-     * 
-     */
     private static final long serialVersionUID = 1L;
 
     @Expose
