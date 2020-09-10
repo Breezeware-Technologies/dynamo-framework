@@ -39,9 +39,9 @@ public class UserRegistrationController {
     private boolean encodePassword;
 
     /**
-     * Displays a page for the user to set his initial password.
-     * @param model
-     * @param session
+     * Display a page for the user to set his initial password.
+     * @param model   the holder for Model attributes
+     * @param session the HTTPSession entity
      * @param token   user-registration token.
      * @return returns the string to user-registration template.
      */
@@ -53,10 +53,10 @@ public class UserRegistrationController {
         if (token != null && token.length() > 0) {
 
             // retrieve token based on token value param
-            UserRegistrationToken uRToken = organizationService.getUserRegistrationToken(token);
+            UserRegistrationToken userRegToken = organizationService.getUserRegistrationToken(token);
 
             // if token is valid, redirect to set password page
-            if (uRToken != null) {
+            if (userRegToken != null) {
                 UserRegistrationDto dto = new UserRegistrationDto();
                 dto.setRegistrationToken(token);
                 model.addAttribute("userRegistrationDto", dto);
@@ -73,15 +73,15 @@ public class UserRegistrationController {
     }
 
     /**
-     * Completes user creation by setting the initial password for the user. User
+     * Complete user creation by setting the initial password for the user. User
      * will be automatically logged into the system after this step.
-     * @param userRegistrationDto DTO.
-     * @param bindingResult
-     * @param model
-     * @param session
+     * @param userRegistrationDto the DTO entity that holds the user registration
+     *                            details.
+     * @param bindingResult       the interface to represent binding results
+     * @param model               the holder for Model attributes
+     * @param session             the HTTPSession entity
      * @return returns to the 'login' mapping.
      */
-
     @RequestMapping(value = "/registerUser", method = RequestMethod.POST)
     public ModelAndView registerUser(@ModelAttribute("userRegistrationDto") UserRegistrationDto userRegistrationDto,
             BindingResult bindingResult, Model model, HttpSession session,
@@ -108,9 +108,9 @@ public class UserRegistrationController {
         } else {
             String token = userRegistrationDto.getRegistrationToken();
             if (token != null) {
-                UserRegistrationToken uRToken = organizationService.getUserRegistrationToken(token);
-                if (uRToken != null) {
-                    User user = uRToken.getUser();
+                UserRegistrationToken userRegToken = organizationService.getUserRegistrationToken(token);
+                if (userRegToken != null) {
+                    User user = userRegToken.getUser();
                     user.setStatus(User.STATUS_ACTIVE);
                     user.setPassword(userRegistrationDto.getPassword());
                     try {

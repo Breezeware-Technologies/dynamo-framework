@@ -35,7 +35,6 @@
 		ref="category/java/codestyle.xml/UnnecessaryFullyQualifiedName" />
 	<rule ref="category/java/codestyle.xml/UnnecessaryModifier" />
 	<rule ref="category/java/codestyle.xml/UnnecessaryReturn" />
-	<rule ref="category/java/codestyle.xml/UselessParentheses" />
 	<rule ref="category/java/codestyle.xml/UselessQualifiedThis" />
 	<rule ref="category/java/design.xml/CollapsibleIfStatements" />
 	<rule ref="category/java/design.xml/SimplifiedTernary" />

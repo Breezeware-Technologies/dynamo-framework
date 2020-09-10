@@ -20,6 +20,9 @@ import javax.xml.bind.annotation.XmlRootElement;
 import com.google.gson.Gson;
 import com.google.gson.annotations.Expose;
 
+import lombok.Getter;
+import lombok.Setter;
+
 /**
  * Application generated token used to generate a unique URL for resetting the
  * password.
@@ -30,74 +33,42 @@ import com.google.gson.annotations.Expose;
 @Table(name = "password_reset_token", schema = "dynamo")
 public class PasswordResetToken implements Serializable {
 
-    /**
-     * 
-     */
     private static final long serialVersionUID = 1L;
 
     @Expose
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_gen")
-    @SequenceGenerator(name = "seq_gen", sequenceName = "password_reset_token_seq", schema = "dynamo", allocationSize = 1)
+    @SequenceGenerator(name = "seq_gen", sequenceName = "password_reset_token_seq", schema = "dynamo",
+            allocationSize = 1)
+    @Getter
+    @Setter
     private long id;
 
     @Expose
     @Column(name = "token", length = 45)
+    @Getter
+    @Setter
     private String token;
 
     @Expose
     @OneToOne(targetEntity = User.class, fetch = FetchType.EAGER)
+    @Getter
+    @Setter
     @JoinColumn(nullable = false, name = "user_id")
-    private User User;
+    private User user;
 
     @Expose
     @Column(name = "token_created_date")
+    @Getter
+    @Setter
     private Calendar tokenCreatedDate;
 
     @Expose
     @Column(name = "token_expiry_date")
+    @Getter
+    @Setter
     private Calendar tokenExpiryDate;
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public String getToken() {
-        return token;
-    }
-
-    public void setToken(String token) {
-        this.token = token;
-    }
-
-    public User getUser() {
-        return User;
-    }
-
-    public void setUser(User User) {
-        this.User = User;
-    }
-
-    public Calendar getTokenCreatedDate() {
-        return tokenCreatedDate;
-    }
-
-    public void setTokenCreatedDate(Calendar tokenCreatedDate) {
-        this.tokenCreatedDate = tokenCreatedDate;
-    }
-
-    public Calendar getTokenExpiryDate() {
-        return tokenExpiryDate;
-    }
-
-    public void setTokenExpiryDate(Calendar tokenExpiryDate) {
-        this.tokenExpiryDate = tokenExpiryDate;
-    }
 
     @Override
     public String toString() {

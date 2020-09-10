@@ -23,13 +23,14 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
-// import org.hibernate.envers.Audited;
 import org.springframework.format.annotation.DateTimeFormat;
+// import org.hibernate.envers.Audited;
+
+import net.breezeware.dynamo.util.string.RandomString;
 
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import net.breezeware.dynamo.util.string.RandomString;
 
 @XmlRootElement
 @Entity
@@ -231,6 +232,10 @@ public class User implements Serializable {
         return rs.nextString();
     }
 
+    /**
+     * Retrieve a list of TimeZone options.
+     * @return a list of time zones
+     */
     public static List<String> userTimeZoneOptions() {
         List<String> ts = new ArrayList<String>();
 

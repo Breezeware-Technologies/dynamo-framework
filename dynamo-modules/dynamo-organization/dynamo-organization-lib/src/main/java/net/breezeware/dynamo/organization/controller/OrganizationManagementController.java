@@ -6,7 +6,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
@@ -104,12 +103,14 @@ public class OrganizationManagementController {
     OrganizationManagementUtil organizationManagementUtil;
 
     /**
-     * Redirects to the all-groups page displaying the list of groups.
-     * @param model
-     * @param predicate
-     * @param pageable
-     * @param parameters
-     * @return
+     * Redirect to the all-groups page displaying the list of groups.
+     * @param model      the holder for Model attributes
+     * @param predicate  the interface for Boolean typed expressions. Supports
+     *                   binding of HTTP parameters to QueryDSL predicate
+     * @param pageable   the interface for pagination information
+     * @param session    the HTTPSession entity
+     * @param parameters the holder for HTTP parameters in request
+     * @return a string to identify the Thymeleaf template
      */
     @RequestMapping(value = "/groups", method = RequestMethod.GET)
     public String listGroups(Model model, @QuerydslPredicate(root = Group.class) Predicate predicate,
@@ -129,7 +130,14 @@ public class OrganizationManagementController {
     }
 
     /**
-     * Redirects to the all-roles page displaying the list of roles.
+     * Redirect to the all-roles page displaying the list of roles.
+     * @param model      the holder for Model attributes
+     * @param predicate  the interface for Boolean typed expressions. Supports
+     *                   binding of HTTP parameters to QueryDSL predicate
+     * @param pageable   the interface for pagination information
+     * @param parameters the holder for HTTP parameters in request
+     * @param session    the HTTPSession entity
+     * @return a string to identify the Thymeleaf template
      */
     @RequestMapping(value = "/roles", method = RequestMethod.GET)
     public String listRoles(Model model, @QuerydslPredicate(root = Role.class) Predicate predicate,
@@ -149,8 +157,15 @@ public class OrganizationManagementController {
     }
 
     /**
-     * Redirects to the all-users page displaying the list of users across
+     * Redirect to the all-users page displaying the list of users across
      * organizations.
+     * @param model      the holder for Model attributes
+     * @param predicate  the interface for Boolean typed expressions. Supports
+     *                   binding of HTTP parameters to QueryDSL predicate
+     * @param pageable   the interface for pagination information
+     * @param parameters the holder for HTTP parameters in request
+     * @param session    the HTTPSession entity
+     * @return a string to identify the Thymeleaf template
      */
     @PreAuthorize("hasAnyAuthority('ROLE_SYSTEM_ADMIN')")
     @RequestMapping(value = "/users", method = RequestMethod.GET)
@@ -171,8 +186,15 @@ public class OrganizationManagementController {
     }
 
     /**
-     * Redirects to the all-users page displaying the list of users in the user's
+     * Redirect to the all-users page displaying the list of users in the user's
      * organization.
+     * @param model      the holder for Model attributes
+     * @param predicate  the interface for Boolean typed expressions. Supports
+     *                   binding of HTTP parameters to QueryDSL predicate
+     * @param pageable   the interface for pagination information
+     * @param parameters the holder for HTTP parameters in request
+     * @param session    the HTTPSession entity
+     * @return a string to identify the Thymeleaf template
      */
     @RequestMapping(value = "/orgUsers", method = RequestMethod.GET)
     public String listOrganizationUsers(Model model, @QuerydslPredicate(root = User.class) Predicate predicate,
@@ -194,6 +216,12 @@ public class OrganizationManagementController {
 
     /**
      * Redirects to all-organizations page displaying the list of organizations.
+     * @param model      the holder for Model attributes
+     * @param predicate  the interface for Boolean typed expressions. Supports
+     *                   binding of HTTP parameters to QueryDSL predicate
+     * @param pageable   the interface for pagination information
+     * @param parameters the holder for HTTP parameters in request
+     * @return a string to identify the Thymeleaf template
      */
     @PreAuthorize("hasAuthority('ROLE_SYSTEM_ADMIN')")
     @RequestMapping(value = "/organizations", method = RequestMethod.GET)
@@ -213,7 +241,10 @@ public class OrganizationManagementController {
     }
 
     /**
-     * Redirects to the create-group page.
+     * Redirect to the create-group page.
+     * @param model   the holder for Model attributes
+     * @param session the HTTPSession entity
+     * @return a string to identify the Thymeleaf template
      */
     @RequestMapping(value = "/createGroup", method = RequestMethod.GET)
     public String createGroup(Model model, HttpSession session) {
@@ -227,9 +258,11 @@ public class OrganizationManagementController {
     /**
      * Gets the group instance from create-group page,if any errors redirects to the
      * create-group page else forwards to the all-groups page.
-     * @param group         Gets the populated group instance from the create-group
-     *                      page.
-     * @param bindingResult Captures errors present in the form.
+     * @param group         the group entity populated in the form
+     * @param bindingResult the interface to represent binding results
+     * @param model         the holder for Model attributes
+     * @param session       the HTTPSession entity
+     * @return a string to identify the Thymeleaf template
      */
     @RequestMapping(value = "/createGroup", method = RequestMethod.POST)
     public ModelAndView createGroup(@Valid @ModelAttribute("group") Group group, BindingResult bindingResult,
@@ -273,7 +306,10 @@ public class OrganizationManagementController {
     }
 
     /**
-     * Redirects to the create-role page.
+     * Redirect to the create-role page.
+     * @param model   the holder for Model attributes
+     * @param session the HTTPSession entity
+     * @return a string to identify the Thymeleaf template
      */
     @RequestMapping(value = "/createRole", method = RequestMethod.GET)
     public String createRole(Model model, HttpSession session) {
@@ -287,11 +323,11 @@ public class OrganizationManagementController {
     /**
      * Gets the role instance from create-role page and forwards to the all-roles
      * page.
-     * @param role
-     * @param bindingResult
-     * @param model
-     * @param session
-     * @return
+     * @param role          the role entity populated in the form
+     * @param bindingResult the interface to represent binding results
+     * @param model         the holder for Model attributes
+     * @param session       the HTTPSession entity
+     * @return a string to identify the Thymeleaf template
      */
     @RequestMapping(value = "/createRole", method = RequestMethod.POST)
     public ModelAndView createRole(@Valid @ModelAttribute("role") Role role, BindingResult bindingResult, Model model,
@@ -335,7 +371,10 @@ public class OrganizationManagementController {
     }
 
     /**
-     * Redirects to the edit-group page.
+     * Redirect to the edit-group page.
+     * @param id    the ID to uniquely identify the group to be edited
+     * @param model the holder for Model attributes
+     * @return a string to identify the Thymeleaf template
      */
     @RequestMapping(value = "/editGroup", method = RequestMethod.GET)
     public String editGroup(@RequestParam("id") String id, Model model) {
@@ -351,11 +390,11 @@ public class OrganizationManagementController {
     }
 
     /**
-     * Gets the group instance from edit-group page,if any errors redirects to the
-     * edit-group page else forwards to the all-groups page.
-     * @param group         Gets the populated group instance from the edit-group
-     *                      page.
-     * @param bindingResult Captures errors present in the form.
+     * Save the changes made to the group entity.
+     * @param group         the group entity populated in the form
+     * @param bindingResult the interface to represent binding results
+     * @param model         the holder for Model attributes
+     * @return a string to identify the Thymeleaf template
      */
     @RequestMapping(value = "/editGroup", method = RequestMethod.POST)
     public ModelAndView editGroup(@Valid @ModelAttribute("group") Group group, BindingResult bindingResult,
@@ -393,7 +432,10 @@ public class OrganizationManagementController {
     }
 
     /**
-     * Redirects to the edit-role page.
+     * Redirect to the edit-role page.
+     * @param id    the ID to uniquely identify the role to be edited
+     * @param model the holder for Model attributes
+     * @return a string to identify the Thymeleaf template
      */
     @RequestMapping(value = "/editRole", method = RequestMethod.GET)
     public String editRole(@RequestParam("id") String id, Model model) {
@@ -409,11 +451,12 @@ public class OrganizationManagementController {
     }
 
     /**
-     * Gets the role instance from edit-role page,if any errors redirects to the
-     * edit-role page else forwards to the all-roles page.
-     * @param role          Gets the populated role instance from the edit-role
-     *                      page.
-     * @param bindingResult Captures errors present in the form.
+     * Save the changes made to a role. If any errors redirects to the edit-role
+     * page else forwards to the all-roles page.
+     * @param bindingResult the interface to represent binding results
+     * @param model         the holder for Model attributes
+     * @param role          the role entity to be edited
+     * @return a string to identify the Thymeleaf template
      */
     @RequestMapping(value = "/editRole", method = RequestMethod.POST)
     public ModelAndView editRole(@Valid @ModelAttribute("role") Role role, BindingResult bindingResult, Model model) {
@@ -450,7 +493,10 @@ public class OrganizationManagementController {
     }
 
     /**
-     * Redirects to the create-user page.
+     * Redirect to the create-user page.
+     * @param model   the holder for Model attributes
+     * @param session the HTTPSession entity
+     * @return a string to identify the Thymeleaf template
      */
     @RequestMapping(value = "/createUser", method = RequestMethod.GET)
     public String createUser(Model model, HttpSession session) {
@@ -478,18 +524,17 @@ public class OrganizationManagementController {
     }
 
     /**
-     * Gets the user instance from create-user page,if any errors redirects to the
-     * create-user page else forwards to the all-users page.
-     * @param user
-     * @param bindingResult
-     * @param session
-     * @param model
-     * @param request
-     * @return
+     * Create a new user entity.
+     * @param user               the user entity to be saved
+     * @param bindingResult      the interface to represent binding results
+     * @param session            the HTTPSession entity
+     * @param model              the holder for Model attributes
+     * @param redirectAttributes the RedirectAttributes entity
+     * @return a string to identify the Thymeleaf template
      */
     @RequestMapping(value = "/createUser", method = RequestMethod.POST)
     public ModelAndView createUser(@Valid @ModelAttribute("user") User user, BindingResult bindingResult,
-            HttpSession session, Model model, HttpServletRequest request, RedirectAttributes redirectAttributes) {
+            HttpSession session, Model model, RedirectAttributes redirectAttributes) {
         logger.info("Entering Create User : POST ");
 
         boolean hasErrors = false;
@@ -515,8 +560,9 @@ public class OrganizationManagementController {
             hasErrors = true;
         }
 
-        // return to the create user screen if there are binding errors
         if (hasErrors == true) {
+            // return to the create user screen if there are binding errors
+
             logger.info("There are binding errors. Returning to create user screen");
 
             List<Group> groups = organizationService
@@ -530,11 +576,8 @@ public class OrganizationManagementController {
             model.addAttribute("activeNav", "users");
 
             return new ModelAndView("dynamo-organization/usermanagement/create-user");
-        }
-        // proceed with user creation if there are no errors
-        else {
-            List<Group> groupList = organizationService.findMultipleGroups(user.getUserGroupId());
-            List<Role> roleList = organizationService.findMultipleRoles(user.getUserRoleId());
+        } else {
+            // proceed with user creation if there are no errors
 
             // generate unique ID for user if required
             String userUniqueId = user.getUserUniqueId();
@@ -580,6 +623,9 @@ public class OrganizationManagementController {
                 return new ModelAndView("dynamo-organization/usermanagement/create-user");
             }
 
+            List<Group> groupList = organizationService.findMultipleGroups(user.getUserGroupId());
+            List<Role> roleList = organizationService.findMultipleRoles(user.getUserRoleId());
+
             // create roles and groups for user
             if (groupList != null && roleList != null) {
                 for (Group group : groupList) {
@@ -605,11 +651,11 @@ public class OrganizationManagementController {
 
             if (requireUserRegistrationByEmail) {
                 // create a user registration token for user
-                UserRegistrationToken userRegistrationToken = organizationService.createUserRegistrationToken(user);
                 logger.info("Created user registration token");
 
                 // email the user registration token for user
                 Map<String, String> keyVals = new HashMap<String, String>();
+                UserRegistrationToken userRegistrationToken = organizationService.createUserRegistrationToken(user);
                 keyVals.put("applicationName", applicationName);
                 keyVals.put("applicationOwner", applicationOwner);
                 keyVals.put("firstName", userRegistrationToken.getUser().getFirstName());
@@ -644,9 +690,10 @@ public class OrganizationManagementController {
 
     /**
      * Gets the user by user ID and re-directs to the edit-user page.
-     * @param userId
-     * @param model
-     * @return returns a string to the edit-user template.
+     * @param userId  the ID to identify the user to be edited.
+     * @param model   the holder for Model attributes
+     * @param session the HTTPSession entity
+     * @return a string to identify the Thymeleaf template
      */
     @RequestMapping(value = "/editUser", method = RequestMethod.GET)
     public String editUser(@RequestParam("userId") long userId, Model model, HttpSession session) {
@@ -687,12 +734,12 @@ public class OrganizationManagementController {
     }
 
     /**
-     * Gets the populated user.If there exist errors then redirects to the edit-user
-     * page,else redirects to the all-users page.
-     * @param user          Populated entity.
-     * @param bindingResult
-     * @param model
-     * @return returns to a template/controller mapping.
+     * Saves changes to the user entity.
+     * @param user               the User entity to be edited
+     * @param bindingResult      the interface to represent binding results
+     * @param model              the holder for Model attributes
+     * @param redirectAttributes the RedirectAttributes entity
+     * @return a string to identify the Thymeleaf template
      */
     @RequestMapping(value = "/editUser", method = RequestMethod.POST)
     public ModelAndView editUser(@Valid @ModelAttribute("user") User user, BindingResult bindingResult, Model model,
@@ -820,7 +867,10 @@ public class OrganizationManagementController {
     }
 
     /**
-     * Redirects to the create-organization page.
+     * Redirect to the page to create an organization entity.
+     * @param model   the holder for Model attributes
+     * @param session the HTTPSession entity
+     * @return a string to identify the Thymeleaf template
      */
     @PreAuthorize("hasAnyAuthority('ROLE_SYSTEM_ADMIN')")
     @RequestMapping(value = "/createOrganization", method = RequestMethod.GET)
@@ -838,19 +888,18 @@ public class OrganizationManagementController {
     }
 
     /**
-     * Creates a new organization with a default user.
-     * @param createOrganizationDto
-     * @param bindingResult
-     * @param session
-     * @param model
-     * @param request
-     * @return
+     * Create an organization entity.
+     * @param createOrganizationDto the entity populated on the form
+     * @param bindingResult         the interface to represent binding results
+     * @param model                 the holder for Model attributes
+     * @param session               the HTTPSession entity
+     * @return a string to identify the Thymeleaf template
      */
     @PreAuthorize("hasAnyAuthority('ROLE_SYSTEM_ADMIN')")
     @RequestMapping(value = "/createOrganization", method = RequestMethod.POST)
     public ModelAndView createOrganization(
             @Valid @ModelAttribute("createOrganizationDto") CreateOrganizationDto createOrganizationDto,
-            BindingResult bindingResult, HttpSession session, Model model, HttpServletRequest request) {
+            BindingResult bindingResult, HttpSession session, Model model) {
         logger.info("Entering createOrganization():POST");
 
         boolean hasErrors = false;
@@ -874,9 +923,8 @@ public class OrganizationManagementController {
             model.addAttribute("activeNav", "organizations");
 
             return new ModelAndView("dynamo-organization/usermanagement/create-organization");
-        }
-        // proceed with organization creation if there are no errors
-        else {
+        } else {
+            // proceed with organization creation if there are no errors
             try {
                 Organization organization = organizationService
                         .createOrganizationWithDefaultUser(createOrganizationDto);

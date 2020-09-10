@@ -18,7 +18,7 @@ public interface OrganizationRepository extends JpaRepository<Organization, Long
         QuerydslPredicateExecutor<Organization>, QuerydslBinderCustomizer<QOrganization> {
     List<Organization> findByNameIgnoreCase(String name);
 
-    default public void customize(QuerydslBindings bindings, QOrganization organization) {
+    default void customize(QuerydslBindings bindings, QOrganization organization) {
 
         bindings.bind(String.class).first((StringPath path, String value) -> path.containsIgnoreCase(value));
     }

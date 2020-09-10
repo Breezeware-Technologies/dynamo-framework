@@ -58,12 +58,13 @@ public class OrganizationManagementRestController {
     DynamoAppBootstrapBean dynamoAppBootstrapBean;
 
     /**
-     * Redirects to the all-groups page displaying the list of groups.
-     * @param model
-     * @param predicate
-     * @param pageable
-     * @param parameters
-     * @return
+     * Redirect to the all-groups page displaying the list of groups.
+     * @param model     the holder for Model attributes
+     * @param predicate the interface for Boolean typed expressions. Supports
+     *                  binding of HTTP parameters to QueryDSL predicate
+     * @param pageable  the interface for pagination information
+     * @param session   the HTTPSession entity
+     * @return a JSON string representing the list of groups
      */
     @RequestMapping(value = "/groups", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(value = HttpStatus.OK)
@@ -92,11 +93,11 @@ public class OrganizationManagementRestController {
     }
 
     /**
-     * Retrieves a single user by email
-     * @param model
-     * @param email
-     * @param session
-     * @return
+     * Retrieve a single user by email.
+     * @param model   the holder for Model attributes
+     * @param email   the email to uniquely identify a user
+     * @param session the HTTPSession entity
+     * @return a JSON string representing the user
      */
     @RequestMapping(value = "/users", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public @ResponseBody User getUserByEmail(Model model, @RequestParam("email") String email, HttpSession session) {
@@ -109,11 +110,9 @@ public class OrganizationManagementRestController {
     }
 
     /**
-     * Retrieves a user DTO entity by email
-     * @param model
-     * @param email
-     * @param session
-     * @return
+     * Retrieve a flat version (no nested properties) of the user entity.
+     * @param email the email to uniquely identify a user
+     * @return a JSON string representing the a flat version of the user entity
      */
     @RequestMapping(value = "/mobileUser", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     public @ResponseBody UserDto getUserByEmail(@Valid @RequestBody String email) {

@@ -15,9 +15,6 @@ import net.breezeware.dynamo.organization.entity.User;
 @XmlRootElement
 public class CreateOrganizationDto implements java.io.Serializable {
 
-    /**
-     * 
-     */
     private static final long serialVersionUID = 1L;
 
     @Expose
@@ -120,6 +117,11 @@ public class CreateOrganizationDto implements java.io.Serializable {
         return new Gson().toJson(this);
     }
 
+    /**
+     * Create an Organization entity from the CreateOrganizationDto entity.
+     * @param dto the CreateOrganizationDto
+     * @return an Organization entity
+     */
     public static Organization createOrganizationFromDto(CreateOrganizationDto dto) {
         Organization organization = new Organization();
         organization.setName(dto.getOrganizationName());
@@ -130,6 +132,13 @@ public class CreateOrganizationDto implements java.io.Serializable {
         return organization;
     }
 
+    /**
+     * Create an User entity from the CreateOrganizationDto entity and the
+     * Organization entity.
+     * @param organization an Organization entity
+     * @param dto          the CreateOrganizationDto entity
+     * @return a User entity
+     */
     public static User createUserFromDto(Organization organization, CreateOrganizationDto dto) {
         User user = new User();
 

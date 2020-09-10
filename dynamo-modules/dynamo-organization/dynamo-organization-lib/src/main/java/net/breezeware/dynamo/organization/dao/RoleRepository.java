@@ -24,7 +24,7 @@ public interface RoleRepository
 
     Role findById(long roleId);
 
-    default public void customize(QuerydslBindings bindings, QRole Role) {
+    default void customize(QuerydslBindings bindings, QRole role) {
 
         bindings.bind(String.class).first((StringPath path, String value) -> path.containsIgnoreCase(value));
     }

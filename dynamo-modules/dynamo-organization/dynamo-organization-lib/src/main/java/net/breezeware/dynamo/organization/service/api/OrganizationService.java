@@ -27,33 +27,33 @@ import net.breezeware.dynamo.util.exeption.DynamoDataAccessException;
 public interface OrganizationService {
 
     /**
-     * Retrieves all organizations.
+     * Retrieve all organizations.
      * @return List of organizations.
      */
     List<Organization> findAllOrganizations();
 
     /**
-     * Retrives all users.
+     * Retrive all users.
      * @return List of organizations.
      */
     List<User> findAllUsers();
 
     /**
-     * Retrieves all users with the organizationId.
+     * Retrieve all users with the organizationId.
      * @param organizationId Key assigned by the user to identify the list of users.
      * @return List of users.
      */
     List<User> findUsers(long organizationId);
 
     /**
-     * Retrieves all users associated with the role.
+     * Retrieve all users associated with the role.
      * @param role String given by the user to identify the list of users.
      * @return List of users.
      */
     List<User> findUsers(String role);
 
     /**
-     * Retrieves all users having combination of both the organizationId and the
+     * Retrieve all users having combination of both the organizationId and the
      * role.
      * @param organizationId Key assigned by the user.
      * @param role           String given by the user.
@@ -62,61 +62,62 @@ public interface OrganizationService {
     List<User> findUsers(long organizationId, String role);
 
     /**
-     * Retrieves an organization by its ID
-     * @param organizationId
-     * @return Organization
+     * Retrieve an organization by its ID.
+     * @param organizationId ID to identify an organization
+     * @return Organization the Organization entity corresponding to the ID
      */
     Organization findOrganizationById(long organizationId);
 
     /**
-     * Retrieves an organization by its name
+     * Retrieve an organization by its name.
      * @param name Unique name assigned to an organization
-     * @return Organization
+     * @return Organization Organization the Organization entity corresponding to
+     *         the name
      */
     Organization findOrganizationByName(String name);
 
     /**
-     * Retrieves the user having the particular email.
+     * Retrieve the user having the particular email.
      * @param email Email of the user.
      * @return User instance.
      */
     User findByEmailIgnoreCase(String email);
 
     /**
-     * Retrieves the user having the specified Unique User Id.
+     * Retrieve the user having the specified Unique User Id.
      * @param uniqueUserId Unique user ID of the user.
      * @return User instance.
      */
     User findByUniqueUserIdIgnoreCase(String uniqueUserId);
 
     /**
-     * Gets the password for the user identified by email
+     * Get the password for the user identified by email.
      * @param email Email to uniquely identify a user
-     * @return
+     * @return the password string
      */
     String findPasswordByEmail(String email);
 
     /**
-     * Gets the password for the user identified by user ID
+     * Get the password for the user identified by user ID.
      * @param userId User ID to uniquely identify a user
-     * @return
+     * @return the password string
      */
     String findPasswordByUserId(long userId);
 
-    /**
-     * Retrieves all roles.
-     * @return List of roles.
-     */
+    // /**
+    // * Retrieves all roles.
+    // * @return List of roles.
+    // */
     // List<Role> findAllRoles();
 
     /**
-     * Retrieves all the roles defined for an organization.
+     * Retrieve all the roles defined for an organization.
      * @return List of roles.
      */
     List<Role> getRolesInOrganization(long organizationId);
 
     // /**
-    // * Retrieves all roles for a single user
+    // * Retrieve all roles for a single user.
     // *
     // * @param userId User defined unique ID of a user
     // * @return List of roles if found, else empty list.
@@ -130,7 +131,7 @@ public interface OrganizationService {
     List<Group> findAllGroups();
 
     /**
-     * Retrieves all groups taking into consideration all the sort, page and filter
+     * Retrieve all groups taking into consideration all the sort, page and filter
      * criteria.
      * @param organizationId Organization for which the groups are defined.
      * @param predicate      Filtering criteria.
@@ -141,13 +142,13 @@ public interface OrganizationService {
 
     /**
      * Retrieve all the groups defined for an organization.
-     * @param organizationId
-     * @return
+     * @param organizationId the ID of organization whose groups will be retrieved
+     * @return a list of Group entities
      */
     List<Group> getGroupsInOrganization(long organizationId);
 
     /**
-     * Retrieves all roles taking into consideration all the sort, page and filter
+     * Retrieve all roles taking into consideration all the sort, page and filter
      * criteria.
      * @param organizationId Organization for which the groups are defined.
      * @param predicate      Filtering criteria.
@@ -157,8 +158,8 @@ public interface OrganizationService {
     Page<Role> getRoles(long organizationId, Predicate predicate, Pageable pageable);
 
     /**
-     * Retrieves all users across all organizations taking into consideration all
-     * the sort, page and filter criteria.
+     * Retrieve all users across all organizations taking into consideration all the
+     * sort, page and filter criteria.
      * @param predicate Filtering criteria.
      * @param pageable  Paging and Sorting criteria.
      * @return Page of users.
@@ -166,8 +167,8 @@ public interface OrganizationService {
     Page<User> getUsers(Predicate predicate, Pageable pageable);
 
     /**
-     * Retrieves all users in an organization taking into consideration all the
-     * sort, page and filter criteria.
+     * Retrieve all users in an organization taking into consideration all the sort,
+     * page and filter criteria.
      * @param organizationId ID representing the organization whose users will be
      *                       retrieved.
      * @param predicate      Filtering criteria.
@@ -177,7 +178,7 @@ public interface OrganizationService {
     Page<User> getUsers(long organizationId, Predicate predicate, Pageable pageable);
 
     /**
-     * Retrieves all organizations taking into consideration all the sort, page and
+     * Retrieve all organizations taking into consideration all the sort, page and
      * filter criteria.
      * @param predicate Filtering criteria.
      * @param pageable  Paging and Sorting criteria.
@@ -186,16 +187,16 @@ public interface OrganizationService {
     Page<Organization> getOrganizations(Predicate predicate, Pageable pageable);
 
     /**
-     * Saves a group. Used for both create and update.
+     * Save a group. Used for both create and update.
      * @param group Group instance.
-     * @return Group.
+     * @return Group
      * @throws DynamoDataAccessException when groupId or name is already existing in
      *                                   database.
      */
     Group saveGroup(Group group) throws DynamoDataAccessException;
 
     /**
-     * Saves a role.Used for both create and update.
+     * Save a role.Used for both create and update.
      * @param role Role instance.
      * @return Role.
      * @throws DynamoDataAccessException when roleId or name is already existing in
@@ -204,21 +205,21 @@ public interface OrganizationService {
     Role saveRole(Role role) throws DynamoDataAccessException;
 
     /**
-     * Edits an existing group.
+     * Edit an existing group.
      * @param group Group instance.
      * @return Edited group.
      */
     Group editGroup(Group group);
 
     /**
-     * Finds a group by its id.
+     * Find a group by its id.
      * @param groupId User given id,readable format.
      * @return Group.
      */
     Group findGroup(long groupId);
 
     /**
-     * Finds a role by its id.
+     * Find a role by its id.
      * @param roleId User given id,readable format.
      * @return Role.
      */
@@ -233,28 +234,33 @@ public interface OrganizationService {
     Optional<Role> findRoleByName(long organizationId, String roleName);
 
     /**
-     * Saves a user. Used for both create and edit.
-     * @param user
-     * @param encodePassword
-     * @return
-     * @throws DynamoDataAccessException
+     * Save a user. Used for both create and edit.
+     * @param user           the User entity to be saved
+     * @param encodePassword the flag to denote whether the password provided in the
+     *                       User entity should be encoded or not before it is saved
+     * @return the User entity that was saved
+     * @throws DynamoDataAccessException the exception that is thrown when there is
+     *                                   any issue while saving the User entity
      */
     User saveUser(User user, boolean encodePassword) throws DynamoDataAccessException;
 
     /**
-     * Creates a new user with specified roles and groups. User password will be
+     * Create a new user with specified roles and groups. User password will be
      * encoded before it is persisted based on the application setting.
-     * @param user
-     * @param encodePassword
-     * @return
-     * @throws DynamoDataAccessException
+     * @param user the user entity to be saved
+     * @return the User entity that was saved
+     * @throws DynamoDataAccessException the exception that is thrown when there is
+     *                                   any issue while saving the User entity
      */
     User createUser(User user) throws DynamoDataAccessException;
 
     /**
-     * Saves an organization.
-     * @param organization Organization instance.
-     * @return Organization.
+     * Save an organization.
+     * @param organization the Organization to be saved
+     * @return Organization the Organization entity that was saved
+     * @throws DynamoDataAccessException the exception that is thrown when there is
+     *                                   any issue while saving the Organization
+     *                                   entity
      */
     Organization saveOrganization(Organization organization) throws DynamoDataAccessException;
 
@@ -262,23 +268,26 @@ public interface OrganizationService {
      * Creates a new organization and a default user with ORGANIZATION_ADMIN role in
      * it. An email is sent to the newly created user's email address upon
      * successful creation.
-     * @param createOrganizationDto
-     * @return
-     * @throws DynamoDataAccessException
+     * @param createOrganizationDto the DTO containing the details of organization
+     *                              and user that will be created
+     * @return the Organization entity that was created
+     * @throws DynamoDataAccessException the exception that is thrown when there is
+     *                                   any issue while saving the Organization
+     *                                   entity
      */
     Organization createOrganizationWithDefaultUser(CreateOrganizationDto createOrganizationDto)
             throws DynamoDataAccessException;
 
     /**
-     * Finds the groups by their respective ids.
-     * @param ids
+     * Find the groups by their respective ids.
+     * @param ids the list of Group IDs to be retrieved
      * @return List of Groups.
      */
     List<Group> findMultipleGroups(List<Long> ids);
 
     /**
-     * Finds the roles by their respective ids.
-     * @param ids
+     * Find the roles by their respective ids.
+     * @param ids the list of Role IDs to be retrieved
      * @return List of Roles.
      */
     List<Role> findMultipleRoles(List<Long> ids);
@@ -320,11 +329,11 @@ public interface OrganizationService {
     User getUserByEmail(String email);
 
     /**
-     * Retrieves a user by his unique user ID
+     * Retrieves a user by his unique user ID.
      * @param uniqueUserId Unique user ID assigned to uniquely identify a user.
      * @return User if found, else null.
      */
-    User getUserByUserUniqueId(String userUniqueId);
+    User getUserByUserUniqueId(String uniqueUserId);
 
     /**
      * Retrieves a user by its ID.

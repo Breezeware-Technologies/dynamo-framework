@@ -26,9 +26,6 @@ import com.google.gson.annotations.Expose;
 // @Audited
 @Table(name = "dynamo_group", schema = "dynamo")
 public class Group implements Serializable {
-    /**
-     * 
-     */
     private static final long serialVersionUID = 1L;
 
     /**

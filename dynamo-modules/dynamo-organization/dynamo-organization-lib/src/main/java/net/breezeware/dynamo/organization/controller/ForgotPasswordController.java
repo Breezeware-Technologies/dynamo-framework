@@ -66,8 +66,11 @@ public class ForgotPasswordController {
     private String applicationAdminEmail;
 
     /**
-     * Maps to the forgot-password page.
-     * @param model
+     * Redirect the user to the forgot-password page.
+     * @param model the holder for Model attributes
+     * @source the source that initiated this request. It is used to redirect the
+     *         user to appropriate page after the password is reset. Valid value is
+     *         'mobile'
      * @return returns a string that maps to the 'forgot-password' template.
      */
     @RequestMapping(value = "/forgotPassword", method = RequestMethod.GET)
@@ -80,13 +83,19 @@ public class ForgotPasswordController {
     }
 
     /**
-     * Gets the username and checks in database whether it exits.If so sends a email
-     * containing a reset-password link(associated with a token),else redirects to
+     * Get the username and check in database whether it exits. If so send an email
+     * containing a reset-password link (associated with a token), else, redirect to
      * the 'reset-password-email-template' page.
-     * @param forgotPassword populated DTO.
-     * @param model
-     * @param request
-     * @return returns to a template/controller mapping.
+     * @param forgotPassword the DTP populated using the form on the UI
+     * @param source         the source that initiated this request. It is used to
+     *                       redirect the user to appropriate page after the
+     *                       password is reset. Valid value is 'mobile'
+     * @param email          the email to identify the user whose password will be
+     *                       reset
+     * @param model          the holder for Model attributes
+     * @param request        the HTTPServeletRequest
+     * @param bindingResult  the interface to represent binding results
+     * @return
      */
     @RequestMapping(value = "/forgotPassword", method = RequestMethod.POST)
     public ModelAndView forgotPassword(@Valid @ModelAttribute("forgotPassword") ForgotPasswordDto forgotPassword,
@@ -158,12 +167,15 @@ public class ForgotPasswordController {
     }
 
     /**
-     * Gets the token from the email link and redirects to the 'reset-password'
-     * page.
-     * @param model
-     * @param session
-     * @param token   password-reset token.
-     * @return returns the string to the reset-password template.
+     * Get the token from the email link and redirect to the 'reset-password' page.
+     * @param model   the holder for Model attributes
+     * @param session the HTTPSession entity
+     * @param token   the request param required to identify a specific password
+     *                reset request
+     * @param source  the source that initiated this request. It is used to redirect
+     *                the user to appropriate page after the password is reset.
+     *                Valid value is 'mobile'
+     * @return a string that maps to the UI Thymeleaf template
      */
     @RequestMapping(value = "/resetPassword", method = RequestMethod.GET)
     public String resetPassword(Model model, HttpSession session, @RequestParam("token") String token,
@@ -173,10 +185,10 @@ public class ForgotPasswordController {
         if (token != null && token.length() > 0) {
 
             // retrieve token based on token value param
-            PasswordResetToken pRToken = organizationService.getPasswordResetToken(token);
+            PasswordResetToken prToken = organizationService.getPasswordResetToken(token);
 
             // if token is valid, redirect to set password page
-            if (pRToken != null) {
+            if (prToken != null) {
                 ForgotPasswordDto dto = new ForgotPasswordDto();
                 dto.setToken(token);
                 model.addAttribute("passwordDto", dto);
@@ -193,19 +205,23 @@ public class ForgotPasswordController {
     }
 
     /**
-     * Gets the password and persists the changed password associated with the user
-     * in the database.
-     * @param passwordDto   populated DTO.
-     * @param bindingResult
-     * @param model
-     * @param session
+     * Update the password associated with the user in the database.
+     * @param passwordDto   the DTO populated in form that contains the password
+     *                      entered by the user
+     * @param source        the source that initiated this request. It is used to
+     *                      redirect the user to appropriate page after the password
+     *                      is reset. Valid value is 'mobile'
+     * @param bindingResult the interface to represent binding results
+     * @param model         the holder for Model attributes
+     * @param redir         the RedirectAttributes entity
      * @return returns to the 'login' controller mapping.
-     * @throws DynamoDataAccessException
+     * @throws DynamoDataAccessException exception thrown when there is an error
+     *                                   while resetting the password
      */
     @RequestMapping(value = "/resetPassword", method = RequestMethod.POST)
     public ModelAndView resetPassword(@ModelAttribute("passwordDto") ForgotPasswordDto passwordDto,
             @RequestParam(required = false) String source, BindingResult bindingResult, Model model,
-            HttpSession session, RedirectAttributes redir) throws DynamoDataAccessException {
+            RedirectAttributes redir) throws DynamoDataAccessException {
         logger.info("Entering resetPassword Controller : POST. passwordDto = {} source = {}", passwordDto, source);
 
         boolean hasErrors = false;
@@ -215,19 +231,16 @@ public class ForgotPasswordController {
                 || passwordDto.getConfirmPassword().trim().length() == 0) {
             hasErrors = true;
             bindingResult.addError(new ObjectError("passwordDto", "Passsword fields should not be empty"));
+        } else if (!passwordDto.getPassword().equals(passwordDto.getConfirmPassword())) {
+            hasErrors = true;
+            bindingResult.addError(new ObjectError("passwordDto", "Password fields do not match!"));
         }
-
         // else if (!checkPasswordStrength(passwordDto.getPassword())) {
         // hasErrors = true;
         // bindingResult.addError(new ObjectError("passwordDto",
         // "Please enter a strong password. Minumum 8 characters with a numeric, a upper
         // case alphabet and a special character"));
         // }
-
-        else if (!passwordDto.getPassword().equals(passwordDto.getConfirmPassword())) {
-            hasErrors = true;
-            bindingResult.addError(new ObjectError("passwordDto", "Password fields do not match!"));
-        }
 
         if (hasErrors == true) {
             model.addAttribute("passwordDto", passwordDto);
@@ -236,9 +249,9 @@ public class ForgotPasswordController {
         } else {
             String token = passwordDto.getToken();
             if (token != null) {
-                PasswordResetToken pRToken = organizationService.getPasswordResetToken(token);
-                if (pRToken != null) {
-                    User user = pRToken.getUser();
+                PasswordResetToken prToken = organizationService.getPasswordResetToken(token);
+                if (prToken != null) {
+                    User user = prToken.getUser();
                     if (user.getStatus().equalsIgnoreCase(User.STATUS_NEW)) {
                         user.setStatus(User.STATUS_ACTIVE);
                     }
@@ -267,9 +280,9 @@ public class ForgotPasswordController {
         return new ModelAndView("redirect:/");
     }
 
-    private boolean checkPasswordStrength(String password) {
-        String pattern = "(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}";
-        return password.matches(pattern);
-    }
-
+    // private boolean checkPasswordStrength(String password) {
+    // String pattern =
+    // "(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}";
+    // return password.matches(pattern);
+    // }
 }

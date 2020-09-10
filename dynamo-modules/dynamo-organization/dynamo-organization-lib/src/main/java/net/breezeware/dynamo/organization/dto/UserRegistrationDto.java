@@ -12,9 +12,6 @@ import com.google.gson.annotations.Expose;
 @XmlRootElement
 public class UserRegistrationDto implements java.io.Serializable {
 
-    /**
-     * 
-     */
     private static final long serialVersionUID = 1L;
 
     /**
@@ -25,7 +22,7 @@ public class UserRegistrationDto implements java.io.Serializable {
     private String registrationToken;
 
     /**
-     * Password set by the user
+     * Password set by the user.
      */
     @Expose
     private String password;

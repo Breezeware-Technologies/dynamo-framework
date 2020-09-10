@@ -28,9 +28,6 @@ import com.google.gson.annotations.Expose;
 @Table(name = "organization", schema = "dynamo")
 public class Organization implements Serializable {
 
-    /**
-     * 
-     */
     private static final long serialVersionUID = 1L;
 
     @Expose
@@ -41,7 +38,7 @@ public class Organization implements Serializable {
     private long id;
 
     /**
-     * Organization name
+     * Organization name.
      */
     @Expose
     @Column(name = "name", length = 45)

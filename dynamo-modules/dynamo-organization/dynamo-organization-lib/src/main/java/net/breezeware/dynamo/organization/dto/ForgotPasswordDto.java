@@ -20,7 +20,7 @@ public class ForgotPasswordDto {
     String token;
 
     /**
-     * Password set by the user
+     * Password set by the user.
      */
     private String password;
 
