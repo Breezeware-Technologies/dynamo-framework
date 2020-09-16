@@ -17,6 +17,13 @@ public class MailContentBuilder {
         this.templateEngine = templateEngine;
     }
 
+    /**
+     * Create a body content by substituting the place holders in the email template
+     * with the values provided.
+     * @param keyVals      the values which are inserted in the template
+     * @param templateName the template containing the place holders
+     * @return the body content after inserting values into template
+     */
     public String build(Map<String, String> keyVals, String templateName) {
         Context context = new Context();
 

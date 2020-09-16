@@ -23,9 +23,6 @@ import com.google.gson.annotations.Expose;
 @Table(name = "role_app_map", schema = "dynamo")
 public class RoleAppMap implements Serializable {
 
-    /**
-     * 
-     */
     private static final long serialVersionUID = 1L;
 
     /**

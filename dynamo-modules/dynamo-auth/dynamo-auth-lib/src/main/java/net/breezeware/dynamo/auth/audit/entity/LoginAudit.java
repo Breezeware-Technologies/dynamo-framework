@@ -15,126 +15,77 @@ import javax.xml.bind.annotation.XmlRootElement;
 import com.google.gson.Gson;
 import com.google.gson.annotations.Expose;
 
+import lombok.Getter;
+import lombok.Setter;
+
 /**
- * 
  * Entity to record the login details.
- * 
  * @author gowtham
- *
  */
 @XmlRootElement
 @Entity
 @Table(name = "audit_login", schema = "dynamo")
 public class LoginAudit implements Serializable {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	@Expose
-	@Id
-	@Column(name = "id")
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_gen")
-	@SequenceGenerator(name = "seq_gen", sequenceName = "audit_login_seq", schema = "dynamo", allocationSize = 1)
-	private long id;
+    @Expose
+    @Id
+    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_gen")
+    @SequenceGenerator(name = "seq_gen", sequenceName = "audit_login_seq", schema = "dynamo", allocationSize = 1)
+    @Getter
+    @Setter
+    private long id;
 
-	@Expose
-	@Column(name = "login_date")
-	private Calendar loginDate;
+    @Expose
+    @Column(name = "login_date")
+    @Getter
+    @Setter
+    private Calendar loginDate;
 
-	@Expose
-	@Column(name = "ip_address")
-	private String ipAddress;
+    @Expose
+    @Column(name = "ip_address")
+    @Getter
+    @Setter
+    private String ipAddress;
 
-	@Expose
-	@Column(name = "client_details")
-	private String clientDetails;
+    @Expose
+    @Column(name = "client_details")
+    @Getter
+    @Setter
+    private String clientDetails;
 
-	@Expose
-	@Column(name = "protocol")
-	private String protocol;
+    @Expose
+    @Column(name = "protocol")
+    @Getter
+    @Setter
+    private String protocol;
 
-	@Expose
-	@Column(name = "login_email")
-	private String loginEmail;
+    @Expose
+    @Column(name = "login_email")
+    @Getter
+    @Setter
+    private String loginEmail;
 
-	@Expose
-	@Column(name = "login_roles")
-	private String loginRoles;
+    @Expose
+    @Column(name = "login_roles")
+    @Getter
+    @Setter
+    private String loginRoles;
 
-	@Expose
-	@Column(name = "created_date")
-	private Calendar createdDate;
+    @Expose
+    @Column(name = "created_date")
+    @Getter
+    @Setter
+    private Calendar createdDate;
 
-	@Expose
-	@Column(name = "modified_date")
-	private Calendar modifiedDate;
+    @Expose
+    @Column(name = "modified_date")
+    @Getter
+    @Setter
+    private Calendar modifiedDate;
 
-	public Calendar getLoginDate() {
-		return loginDate;
-	}
-
-	public void setLoginDate(Calendar loginDate) {
-		this.loginDate = loginDate;
-	}
-
-	public String getIpAddress() {
-		return ipAddress;
-	}
-
-	public void setIpAddress(String ipAddress) {
-		this.ipAddress = ipAddress;
-	}
-
-	public String getClientDetails() {
-		return clientDetails;
-	}
-
-	public void setClientDetails(String clientDetails) {
-		this.clientDetails = clientDetails;
-	}
-
-	public String getProtocol() {
-		return protocol;
-	}
-
-	public void setProtocol(String protocol) {
-		this.protocol = protocol;
-	}
-
-	public String getLoginEmail() {
-		return loginEmail;
-	}
-
-	public void setLoginEmail(String loginEmail) {
-		this.loginEmail = loginEmail;
-	}
-
-	public String getLoginRoles() {
-		return loginRoles;
-	}
-
-	public void setLoginRoles(String loginRoles) {
-		this.loginRoles = loginRoles;
-	}
-
-	public Calendar getCreatedDate() {
-		return createdDate;
-	}
-
-	public void setCreatedDate(Calendar createdDate) {
-		this.createdDate = createdDate;
-	}
-
-	public Calendar getModifiedDate() {
-		return modifiedDate;
-	}
-
-	public void setModifiedDate(Calendar modifiedDate) {
-		this.modifiedDate = modifiedDate;
-	}
-
-	public String toString() {
-		return new Gson().toJson(this);
-	}
+    public String toString() {
+        return new Gson().toJson(this);
+    }
 }

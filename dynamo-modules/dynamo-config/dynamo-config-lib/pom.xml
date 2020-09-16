@@ -3,7 +3,7 @@
 	<parent>
 		<groupId>net.breezeware.dynamo</groupId>
 		<artifactId>dynamo-config</artifactId>
-		<version>1.7.0</version>
+		<version>1.8.0</version>
 	</parent>
 	<artifactId>dynamo-config-lib</artifactId>
 	<name>Dynamo Config Lib</name>

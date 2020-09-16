@@ -12,10 +12,11 @@ import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import net.breezeware.dynamo.organization.entity.User;
+
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import net.breezeware.dynamo.organization.entity.User;
 
 /**
  * Single OAuth token associated with a single Dynamo User. A Dynamo User entity
@@ -34,7 +35,8 @@ public class UserOAuthToken {
     @Setter
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "auth_uotoken_seq_gen")
-    @SequenceGenerator(name = "auth_uotoken_seq_gen", sequenceName = "auth_uotoken_seq", schema = "dynamo", allocationSize = 1)
+    @SequenceGenerator(name = "auth_uotoken_seq_gen", sequenceName = "auth_uotoken_seq", schema = "dynamo",
+            allocationSize = 1)
     private long id;
 
     /**
@@ -56,7 +58,7 @@ public class UserOAuthToken {
     private String application;
 
     /**
-     * Most recent access_token
+     * Most recent access_token.
      */
     @Getter
     @Setter
@@ -64,7 +66,7 @@ public class UserOAuthToken {
     private String accessToken;
 
     /**
-     * Most recent refresh_token
+     * Most recent refresh_token.
      */
     @Getter
     @Setter
@@ -72,7 +74,7 @@ public class UserOAuthToken {
     private String refreshToken;
 
     /**
-     * Expiration time of access_token
+     * Expiration time of access_token.
      */
     @Getter
     @Setter
@@ -88,7 +90,7 @@ public class UserOAuthToken {
     private String userIdAtSource;
 
     /**
-     * Instant when the token was created/updated in the DB
+     * Instant when the token was created/updated in the DB.
      */
     @Getter
     @Setter

@@ -23,13 +23,14 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
-//import org.hibernate.envers.Audited;
 import org.springframework.format.annotation.DateTimeFormat;
+// import org.hibernate.envers.Audited;
+
+import net.breezeware.dynamo.util.string.RandomString;
 
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import net.breezeware.dynamo.util.string.RandomString;
 
 @XmlRootElement
 @Entity
@@ -39,7 +40,6 @@ import net.breezeware.dynamo.util.string.RandomString;
 public class User implements Serializable {
     /**
      * A Class for users.
-     *
      * @author gowtham
      */
     private static final long serialVersionUID = 1L;
@@ -168,9 +168,7 @@ public class User implements Serializable {
     private Calendar modifiedDate;
 
     /**
-     * User is mapped to one to more roles.
-     * 
-     * One-to-many relationship.
+     * User is mapped to one to more roles. One-to-many relationship.
      */
 
     @OneToMany(fetch = FetchType.EAGER)
@@ -190,9 +188,7 @@ public class User implements Serializable {
     private List<Long> userGroupId;
 
     /**
-     * User is mapped to one or more groups.
-     * 
-     * One-to-many relationship.
+     * User is mapped to one or more groups. One-to-many relationship.
      */
 
     @OneToMany(fetch = FetchType.EAGER)
@@ -236,6 +232,10 @@ public class User implements Serializable {
         return rs.nextString();
     }
 
+    /**
+     * Retrieve a list of TimeZone options.
+     * @return a list of time zones
+     */
     public static List<String> userTimeZoneOptions() {
         List<String> ts = new ArrayList<String>();
 

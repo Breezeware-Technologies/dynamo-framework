@@ -26,11 +26,12 @@ import org.springframework.web.client.RestTemplate;
 
 import com.querydsl.core.types.Predicate;
 
-import lombok.extern.slf4j.Slf4j;
 import net.breezeware.dynamo.auth.oauth.dao.UserOAuthTokenRepository;
 import net.breezeware.dynamo.auth.oauth.dto.OAuthConnectionProperties;
 import net.breezeware.dynamo.auth.oauth.entity.UserOAuthToken;
 import net.breezeware.dynamo.auth.oauth.service.api.OAuthService;
+
+import lombok.extern.slf4j.Slf4j;
 
 @Service
 @Slf4j
@@ -42,6 +43,9 @@ public class OAuthServiceImpl implements OAuthService {
     @Autowired(required = false)
     RestTemplate restTemplate;
 
+    /**
+     * {@inheritDoc}
+     */
     @Transactional
     public UserOAuthToken createToken(UserOAuthToken userOAuthToken) {
         log.info("Entering createToken(). UserOAuthToken = {}", userOAuthToken);
@@ -52,6 +56,9 @@ public class OAuthServiceImpl implements OAuthService {
         return userOAuthToken;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Transactional
     public List<UserOAuthToken> retrieveToken(Predicate predicate) {
         log.info("Entering retrieveToken(). Predicate = {}", predicate);
@@ -65,14 +72,25 @@ public class OAuthServiceImpl implements OAuthService {
         return tokensList;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Transactional
     public UserOAuthToken retrieveTokenByUserIdAtSource(String userIdAtSource) {
         log.info("Entering retrieveTokenByUserIdAtSource(), userIdAtSource = {}", userIdAtSource);
         UserOAuthToken token = userOAuthTokenRepository.findByUserIdAtSource(userIdAtSource);
+
         log.info("Leaving retrieveTokenByUserIdAtSource(), UserOAuthToken = {}", token);
-        return token;
+        if (token == null) {
+            return null;
+        } else {
+            return token;
+        }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Transactional
     public Optional<UserOAuthToken> renewToken(UserOAuthToken userOAuthToken,
             OAuthConnectionProperties oauthConnectionProperties) {
@@ -82,8 +100,8 @@ public class OAuthServiceImpl implements OAuthService {
             log.info("Access token is valid, returning it.");
             return Optional.ofNullable(userOAuthToken);
         } else {
-            log.info(
-                    "Access token is about to expire in 5 minutes or less or has already expired. Thereby renewing it.");
+            log.info("Access token is about to expire in 5 minutes or less or has "
+                    + "already expired. Thereby renewing it.");
 
             HttpHeaders headers = new HttpHeaders();
             String encodedHeader = getBase64EncodedHeader(oauthConnectionProperties.getClientId(),
@@ -101,7 +119,7 @@ public class OAuthServiceImpl implements OAuthService {
                 String queryParams = "grant_type=refresh_token&refresh_token=" + userOAuthToken.getRefreshToken();
                 String url = oauthConnectionProperties.getRefreshTokenUrl() + "?" + queryParams;
 
-                ResponseEntity<String> response = getAPIResponse(url, request, HttpMethod.POST);
+                ResponseEntity<String> response = getApiResponse(url, request, HttpMethod.POST);
 
                 if (response != null) {
                     // parse the response and create a local token entity
@@ -115,7 +133,8 @@ public class OAuthServiceImpl implements OAuthService {
                     log.info("Leaving renewToken(). New User OAuth Token = {}", newUserOAuthToken);
                     return Optional.ofNullable(newUserOAuthToken);
                 } else {
-                    log.info("Leaving renewToken(). Reponse to renew token returned null. Therefore returning null.");
+                    log.info("Leaving renewToken(). Reponse to renew token returned null. "
+                            + "Therefore returning null.");
                     return Optional.ofNullable(null);
                 }
             } else {
@@ -125,6 +144,9 @@ public class OAuthServiceImpl implements OAuthService {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Transactional
     public boolean deleteToken(long tokenId) {
         log.info("Entering deleteToken(). Token ID = {}", tokenId);
@@ -135,6 +157,9 @@ public class OAuthServiceImpl implements OAuthService {
         return false;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Transactional
     public boolean deleteToken(UserOAuthToken userOAuthToken) {
         log.info("Entering deleteToken(). Token = {}", userOAuthToken);
@@ -160,8 +185,8 @@ public class OAuthServiceImpl implements OAuthService {
         return null;
     }
 
-    private ResponseEntity<String> getAPIResponse(String url, HttpEntity<String> request, HttpMethod httpMethod) {
-        log.info("Entering getAPIResponse(). URL = {}", url);
+    private ResponseEntity<String> getApiResponse(String url, HttpEntity<String> request, HttpMethod httpMethod) {
+        log.info("Entering getApiResponse(). URL = {}", url);
 
         if (url != null && request != null && !request.getHeaders().isEmpty()) {
             try {
@@ -179,7 +204,7 @@ public class OAuthServiceImpl implements OAuthService {
             }
         }
 
-        log.info("Leaving getAPIResponse().");
+        log.info("Leaving getApiResponse().");
         return null;
     }
 

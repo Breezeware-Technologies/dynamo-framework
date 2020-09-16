@@ -17,7 +17,7 @@ public interface DynamoAppRepository extends JpaRepository<DynamoApp, Long>, Que
 
     DynamoApp findByNameIgnoreCase(String name);
 
-    default public void customize(QuerydslBindings bindings, QDynamoApp App) {
+    default void customize(QuerydslBindings bindings, QDynamoApp app) {
         bindings.bind(String.class).first((StringPath path, String value) -> path.containsIgnoreCase(value));
     }
 }

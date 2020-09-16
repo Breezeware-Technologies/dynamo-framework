@@ -65,6 +65,9 @@ public class AuthenticationAuthorizationServiceDbImpl implements AuthenticationA
     @Autowired
     DynamoAppRepository dynamoAppRepository;
 
+    /**
+     * {@inheritDoc}
+     */
     @Transactional
     public CurrentUserDto getCurrentUserDto(String userId) {
         logger.info("Entering getCurrentUserDto(). userId = {}.", userId);
@@ -104,6 +107,9 @@ public class AuthenticationAuthorizationServiceDbImpl implements AuthenticationA
         return userDto;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Transactional
     @Auditable(event = "Retrieve Apps Subscribed by Organization", argNames = "organizationId")
     public List<DynamoApp> getAppsSubscribedByOrganization(String organizationId) {
@@ -119,6 +125,9 @@ public class AuthenticationAuthorizationServiceDbImpl implements AuthenticationA
         return apps;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Transactional
     @Auditable(event = "Retrieve If App is Subscribed by Organization", argNames = "organizationId, appId")
     public boolean isAppSubscribedByOrganization(String organizationId, String appId) {
@@ -135,6 +144,9 @@ public class AuthenticationAuthorizationServiceDbImpl implements AuthenticationA
         return subscribed;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Transactional
     @Auditable(event = "Retrieve Apps Available for Subscription", argNames = "organizationId")
     public List<DynamoApp> getAppsAvailableForSubscriptionForOrganization(String organizationId) {
@@ -149,18 +161,18 @@ public class AuthenticationAuthorizationServiceDbImpl implements AuthenticationA
         logger.info("# of subscribed apps = {}", organizationAppMaps.size());
 
         // creating a list of available apps
-        for (DynamoApp dApp : allApps) {
+        for (DynamoApp dyApp : allApps) {
             boolean subscribed = false;
             for (OrganizationAppMap map : organizationAppMaps) {
-                logger.debug("dApp ID = {}. map.getAppId = {}", dApp.getId(), map.getAppId());
-                if (dApp.getId() == Long.valueOf(map.getAppId())) {
+                logger.debug("dApp ID = {}. map.getAppId = {}", dyApp.getId(), map.getAppId());
+                if (dyApp.getId() == Long.valueOf(map.getAppId())) {
                     subscribed = true;
                     break;
                 }
             }
 
             if (subscribed == false) {
-                availableApps.add(dApp);
+                availableApps.add(dyApp);
             }
         }
 
@@ -169,6 +181,9 @@ public class AuthenticationAuthorizationServiceDbImpl implements AuthenticationA
         return availableApps;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Transactional
     @Auditable(event = "Retrieve Apps for Role", argNames = "roleId")
     public List<DynamoApp> getAppsForRole(String roleId) {
@@ -183,6 +198,9 @@ public class AuthenticationAuthorizationServiceDbImpl implements AuthenticationA
         return apps;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Transactional
     @Auditable(event = "Retrieve Apps for User", argNames = "userId")
     public List<DynamoApp> getAppsForUser(String userId) {
@@ -197,6 +215,9 @@ public class AuthenticationAuthorizationServiceDbImpl implements AuthenticationA
         return apps;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Transactional
     @Auditable(event = "Retrieve Single App for Role", argNames = "appId, roleId")
     public DynamoApp getSingleAppForRole(String appId, String roleId) {
@@ -204,6 +225,9 @@ public class AuthenticationAuthorizationServiceDbImpl implements AuthenticationA
         return null;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Transactional
     @Auditable(event = "Save Organization App Map", argNames = "organizationId, appIds")
     public List<OrganizationAppMap> saveOrganizationAppMap(String organizationId, List<String> appIds) {
@@ -226,6 +250,9 @@ public class AuthenticationAuthorizationServiceDbImpl implements AuthenticationA
         return organizationAppMapRepository.saveAll(maps);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Transactional
     @Auditable(event = "Save Role App Map", argNames = "roleId, appIds")
     public List<RoleAppMap> saveRoleAppMap(String roleId, List<String> appIds) {
@@ -247,6 +274,9 @@ public class AuthenticationAuthorizationServiceDbImpl implements AuthenticationA
         return roleAppMapRepository.saveAll(maps);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Transactional
     @Auditable(event = "Retrieve Role App Map", argNames = "organizationId, appId")
     public List<RoleAppMap> getRoleAppMap(String organizationId, String appId) {
@@ -259,6 +289,9 @@ public class AuthenticationAuthorizationServiceDbImpl implements AuthenticationA
         return maps;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Transactional
     @Auditable(event = "Reset Role App Map", argNames = "organizationId, appId, roleIds")
     public List<RoleAppMap> resetRoleAppMap(String organizationId, String appId, List<String> roleIds) {
@@ -290,6 +323,9 @@ public class AuthenticationAuthorizationServiceDbImpl implements AuthenticationA
         return maps;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Transactional
     @Auditable(event = "Save User App Map", argNames = "userId, appIds")
     public List<UserAppMap> saveUserAppMap(String userId, List<String> appIds) {
@@ -297,6 +333,9 @@ public class AuthenticationAuthorizationServiceDbImpl implements AuthenticationA
         return null;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Transactional
     @Auditable(event = "Remove Organization App Map", argNames = "organizationId, appId")
     public boolean removeOrganizationAppMap(String organizationId, String appId) {
@@ -314,6 +353,9 @@ public class AuthenticationAuthorizationServiceDbImpl implements AuthenticationA
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Transactional
     @Auditable(event = "Remove Role App Map", argNames = "roleId, appId")
     public boolean removeRoleAppMap(String roleId, String appId) {
@@ -329,6 +371,9 @@ public class AuthenticationAuthorizationServiceDbImpl implements AuthenticationA
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Transactional
     @Auditable(event = "Remove User App Map", argNames = "userId, appId")
     public boolean removeUserAppMap(String userId, String appId) {
@@ -336,6 +381,9 @@ public class AuthenticationAuthorizationServiceDbImpl implements AuthenticationA
         return false;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Transactional
     @Auditable(event = "Create API Key for Organization", argNames = "organizationId")
     public OrganizationApiKeyMap createOrganizationApiKey(long organizationId) {
@@ -367,11 +415,15 @@ public class AuthenticationAuthorizationServiceDbImpl implements AuthenticationA
         }
 
         logger.info(
-                "Leaving createOrganizationApiKey(). API Key with ID = {} and value = {} created and stored for Organization.",
+                "Leaving createOrganizationApiKey(). API Key with ID = {} and "
+                        + "value = {} created and stored for Organization.",
                 okMap.getApiKey().getId(), okMap.getApiKey().getValue());
         return okMap;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Transactional
     @Auditable(event = "Retrieve API Key By Value", argNames = "apiKeyValue")
     public Optional<OrganizationApiKeyMap> retrieveOrganizationApiKeyByKeyValue(UUID apiKeyValue) {
@@ -383,6 +435,9 @@ public class AuthenticationAuthorizationServiceDbImpl implements AuthenticationA
         return Optional.ofNullable(okMap);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Transactional
     @Auditable(event = "Retrieve API Keys for Organization", argNames = "organizationId")
     public Optional<List<OrganizationApiKeyMap>> retrieveOrganizationApiKeysForOrganization(long organizationId) {

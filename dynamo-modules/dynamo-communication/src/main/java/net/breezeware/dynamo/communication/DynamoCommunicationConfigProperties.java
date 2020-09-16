@@ -8,9 +8,7 @@ import com.google.gson.Gson;
 
 /**
  * Bean to hold Dynamo Communication Module's configuration properties.
- * 
  * @author karthik
- *
  */
 
 @Configuration
@@ -18,60 +16,60 @@ import com.google.gson.Gson;
 @RefreshScope
 public class DynamoCommunicationConfigProperties {
 
-	/**
-	 * Amazon Web Services (AWS) SNS (Simple Notification Service) credentials.
-	 */
-	private String awsSnsAccesskey;
-	private String awsSnsSecretkey;
-	private String awsSnsRegion;
+    /**
+     * Amazon Web Services (AWS) SNS (Simple Notification Service) credentials.
+     */
+    private String awsSnsAccesskey;
+    private String awsSnsSecretkey;
+    private String awsSnsRegion;
 
-	/**
-	 * Sinch Messaging Service credentials.
-	 */
-	private String sinchApiToken;
-	private String sinchServicePlanId;
+    /**
+     * Sinch Messaging Service credentials.
+     */
+    private String sinchApiToken;
+    private String sinchServicePlanId;
 
-	public String getAwsSnsAccesskey() {
-		return awsSnsAccesskey;
-	}
+    public String getAwsSnsAccesskey() {
+        return awsSnsAccesskey;
+    }
 
-	public void setAwsSnsAccesskey(String awsSnsAccesskey) {
-		this.awsSnsAccesskey = awsSnsAccesskey;
-	}
+    public void setAwsSnsAccesskey(String awsSnsAccesskey) {
+        this.awsSnsAccesskey = awsSnsAccesskey;
+    }
 
-	public String getAwsSnsSecretkey() {
-		return awsSnsSecretkey;
-	}
+    public String getAwsSnsSecretkey() {
+        return awsSnsSecretkey;
+    }
 
-	public void setAwsSnsSecretkey(String awsSnsSecretkey) {
-		this.awsSnsSecretkey = awsSnsSecretkey;
-	}
+    public void setAwsSnsSecretkey(String awsSnsSecretkey) {
+        this.awsSnsSecretkey = awsSnsSecretkey;
+    }
 
-	public String getAwsSnsRegion() {
-		return awsSnsRegion;
-	}
+    public String getAwsSnsRegion() {
+        return awsSnsRegion;
+    }
 
-	public void setAwsSnsRegion(String awsSnsRegion) {
-		this.awsSnsRegion = awsSnsRegion;
-	}
+    public void setAwsSnsRegion(String awsSnsRegion) {
+        this.awsSnsRegion = awsSnsRegion;
+    }
 
-	public String getSinchApiToken() {
-		return sinchApiToken;
-	}
+    public String getSinchApiToken() {
+        return sinchApiToken;
+    }
 
-	public void setSinchApiToken(String sinchApiToken) {
-		this.sinchApiToken = sinchApiToken;
-	}
+    public void setSinchApiToken(String sinchApiToken) {
+        this.sinchApiToken = sinchApiToken;
+    }
 
-	public String getSinchServicePlanId() {
-		return sinchServicePlanId;
-	}
+    public String getSinchServicePlanId() {
+        return sinchServicePlanId;
+    }
 
-	public void setSinchServicePlanId(String sinchServicePlanId) {
-		this.sinchServicePlanId = sinchServicePlanId;
-	}
+    public void setSinchServicePlanId(String sinchServicePlanId) {
+        this.sinchServicePlanId = sinchServicePlanId;
+    }
 
-	public String toString() {
-		return new Gson().toJson(this);
-	}
+    public String toString() {
+        return new Gson().toJson(this);
+    }
 }

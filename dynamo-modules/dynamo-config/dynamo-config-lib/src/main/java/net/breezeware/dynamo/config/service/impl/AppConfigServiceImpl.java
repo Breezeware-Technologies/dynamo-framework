@@ -26,6 +26,9 @@ public class AppConfigServiceImpl implements AppConfigService {
     @Autowired
     AppPropertyRepository appPropertyRepository;
 
+    /**
+     * {@inheritDoc}
+     */
     @Transactional
     @Auditable(event = "Retrieve App Properties", argNames = "")
     public List<AppProperty> getAppProperties() {
@@ -37,6 +40,9 @@ public class AppConfigServiceImpl implements AppConfigService {
         return properties;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Transactional
     @Auditable(event = "Retrieve App Properties", argNames = "application")
     public List<AppProperty> findByApplication(String application) {
@@ -48,6 +54,9 @@ public class AppConfigServiceImpl implements AppConfigService {
         return properties;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Transactional
     @Auditable(event = "Retrieve App Properties", argNames = "application, profile")
     public List<AppProperty> findByApplicationAndProfile(String application, String profile) {
@@ -59,6 +68,9 @@ public class AppConfigServiceImpl implements AppConfigService {
         return properties;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Transactional
     @Auditable(event = "Retrieve App Properties", argNames = "application, profile, label")
     public List<AppProperty> findByApplicationAndProfileAndLabel(String application, String profile, String label) {
@@ -71,6 +83,9 @@ public class AppConfigServiceImpl implements AppConfigService {
         return properties;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Transactional
     @Auditable(event = "Retrieve App Properties", argNames = "application, profile, label, key")
     public AppProperty findByApplicationAndProfileAndLabelAndKey(String application, String profile, String label,
@@ -84,6 +99,9 @@ public class AppConfigServiceImpl implements AppConfigService {
         return property;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Transactional
     @Auditable(event = "Retrieve App Property", argNames = "id")
     public AppProperty getAppPropertyById(long id) {
@@ -95,6 +113,9 @@ public class AppConfigServiceImpl implements AppConfigService {
         return item;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Transactional
     @Auditable(event = "Retrieve App Property", argNames = "predicate, pageable")
     public Page<AppProperty> findAppProperties(Predicate predicate, Pageable pageable) {
@@ -106,6 +127,9 @@ public class AppConfigServiceImpl implements AppConfigService {
         return propertiesPage;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Transactional
     @Auditable(event = "Save App Property", argNames = "config")
     public AppProperty saveAppProperty(AppProperty config) throws Exception {

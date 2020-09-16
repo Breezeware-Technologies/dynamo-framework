@@ -9,10 +9,10 @@ import java.util.Date;
 public class DateUtils {
     /**
      * Parse a string of form 'yyyy-MM-dd' into a Calendar object.
-     * 
-     * @param dateValStr
+     * @param dateValStr the string holding the date value
      * @return Calendar object created form the String value
-     * @throws ParseException
+     * @throws ParseException the exception is thrown if there are any errors while
+     *                        parsing the string
      */
     public static Calendar parseDateString_yyyyMMdd(String dateValStr) throws ParseException {
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -23,9 +23,8 @@ public class DateUtils {
     }
 
     /**
-     * Format the Calendar object into a string of form 'mm-dd-yyyy'
-     * 
-     * @param cal
+     * Format the Calendar object into a string of form 'mm-dd-yyyy'.
+     * @param cal the Calendar entity to be formatted
      * @return String value of the Calendar object formatted in specified pattern
      */
     public static String formatCalendar_mmddyyyy_withDashes(Calendar cal) {
@@ -39,23 +38,22 @@ public class DateUtils {
     }
 
     /**
-     * Format the Calendar object into a string of form 'mm-dd-yyyy'
-     * 
-     * @param cal
+     * Format the Calendar object into a string of form 'mm-dd-yyyy hh:mm:ss'.
+     * @param cal the Calendar entity to be formatted
      * @return String value of the Calendar object formatted in specified pattern
      */
     public static String formatCalendar_mmddyyyyhhmmss_withDashes(Calendar cal) {
         if (cal != null) {
-            String AM_PM = "";
+            String amPm = "";
             if (cal.get(Calendar.AM_PM) == 0) {
-                AM_PM = "AM";
+                amPm = "AM";
             } else {
-                AM_PM = "PM";
+                amPm = "PM";
             }
 
             String formattedDateValStr = (cal.get(Calendar.MONTH) + 1) + "-" + cal.get(Calendar.DAY_OF_MONTH) + "-"
                     + cal.get(Calendar.YEAR) + " " + cal.get(Calendar.HOUR) + ":" + cal.get(Calendar.MINUTE) + ":"
-                    + cal.get(Calendar.SECOND) + " " + AM_PM;
+                    + cal.get(Calendar.SECOND) + " " + amPm;
             return formattedDateValStr;
         } else {
             return "";

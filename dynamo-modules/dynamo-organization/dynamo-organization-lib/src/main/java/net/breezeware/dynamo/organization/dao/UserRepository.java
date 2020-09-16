@@ -24,22 +24,12 @@ public interface UserRepository
     /*
      * This method uses JPARepository's Query Property expressions. Using this we
      * can specify the embedded properties present in the current object's property.
-     * 
      * http://docs.spring.io/spring-data/jpa/docs/current/reference/html/#
-     * repositories.query-methods.query-property-expressions
-     * 
-     * In this case it is "Organization" and then "Id"
+     * repositories.query-methods.query-property-expressions In this case it is
+     * "Organization" and then "Id"
      */
     List<User> findByOrganizationId(long organizationId);
 
-    /**
-     * Retrieves a list of User within an organization and with one of the provided
-     * roles.
-     * 
-     * @param organizationId
-     * @param roles
-     * @return
-     */
     List<User> findByOrganizationIdAndUserRoleMapRoleNameIn(long organizationId, List<String> roles);
 
     @Query("SELECT password FROM User u WHERE u.email = ?1")
@@ -48,7 +38,7 @@ public interface UserRepository
     @Query("SELECT password FROM User u WHERE u.id = ?1")
     String findPasswordByUserId(long userId);
 
-    default public void customize(QuerydslBindings bindings, QUser User) {
+    default void customize(QuerydslBindings bindings, QUser user) {
 
         bindings.bind(String.class).first((StringPath path, String value) -> path.containsIgnoreCase(value));
     }

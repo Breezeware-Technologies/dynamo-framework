@@ -20,7 +20,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
-//import org.hibernate.envers.Audited;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import com.google.gson.Gson;
@@ -31,13 +30,9 @@ import com.google.gson.annotations.Expose;
  */
 @XmlRootElement
 @Entity
-// @Audited
 @Table(name = "dynamo_app", schema = "dynamo")
 public class DynamoApp implements Serializable {
 
-    /**
-     * 
-     */
     private static final long serialVersionUID = 1L;
 
     @Expose

@@ -23,9 +23,6 @@ import com.google.gson.annotations.Expose;
 @Table(name = "organization_app_map", schema = "dynamo")
 public class OrganizationAppMap implements Serializable {
 
-    /**
-     * 
-     */
     private static final long serialVersionUID = 1L;
 
     /**
@@ -35,7 +32,8 @@ public class OrganizationAppMap implements Serializable {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_gen")
-    @SequenceGenerator(name = "seq_gen", sequenceName = "organization_app_map_seq", schema = "dynamo", allocationSize = 1)
+    @SequenceGenerator(name = "seq_gen", sequenceName = "organization_app_map_seq", schema = "dynamo",
+            allocationSize = 1)
     private long id;
 
     /**

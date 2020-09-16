@@ -8,7 +8,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 
-//import javax.servlet.http.HttpServletRequest;
+// import javax.servlet.http.HttpServletRequest;
 
 import org.hibernate.exception.ConstraintViolationException;
 import org.slf4j.Logger;
@@ -22,8 +22,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-//import org.springframework.web.context.request.RequestContextHolder;
-//import org.springframework.web.context.request.ServletRequestAttributes;
+// import org.springframework.web.context.request.RequestContextHolder;
+// import org.springframework.web.context.request.ServletRequestAttributes;
 
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Predicate;
@@ -60,8 +60,8 @@ public class OrganizationServiceImpl implements OrganizationService {
 
     Logger logger = LoggerFactory.getLogger(OrganizationServiceImpl.class);
 
-//	@Autowired
-//	DynamoAppBootstrapBean dynamoAppBootstrapBean;
+    // @Autowired
+    // DynamoAppBootstrapBean dynamoAppBootstrapBean;
 
     @Autowired
     OrganizationRepository organizationRepository;
@@ -100,10 +100,6 @@ public class OrganizationServiceImpl implements OrganizationService {
     @Value("${dynamo.applicationName}")
     private String applicationName;
 
-    // applicationOwner
-    @Value("${dynamo.applicationOwner}")
-    private String applicationOwner;
-
     // applicationAdminEmai
     @Value("${dynamo.applicationAdminEmail}")
     private String applicationAdminEmail;
@@ -114,24 +110,36 @@ public class OrganizationServiceImpl implements OrganizationService {
     @Value("${dynamo.generateUniqueUserId}")
     private boolean generateUniqueUserId;
 
+    /**
+     * {@inheritDoc}
+     */
     @Transactional
     @Auditable(event = "Retrieve All Organizations", argNames = "")
     public List<Organization> findAllOrganizations() {
         return organizationRepository.findAll();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Transactional
     @Auditable(event = "Retrieve All Users", argNames = "")
     public List<User> findAllUsers() {
         return userRepository.findAll();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Transactional
     @Auditable(event = "Retrieve Users", argNames = "organizationId")
     public List<User> findUsers(long organizationId) {
         return userRepository.findByOrganizationId(organizationId);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Transactional
     @Auditable(event = "Retrieve Users", argNames = "role")
     public List<User> findUsers(String role) {
@@ -150,6 +158,9 @@ public class OrganizationServiceImpl implements OrganizationService {
         return usersByRole;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Transactional
     @Auditable(event = "Retrieve Users", argNames = "organizationId, role")
     public List<User> findUsers(long organizationId, String role) {
@@ -168,6 +179,9 @@ public class OrganizationServiceImpl implements OrganizationService {
         return usersByRole;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Transactional
     @Auditable(event = "Retrieve Organization", argNames = "organizationId")
     public Organization findOrganizationById(long organizationId) {
@@ -179,6 +193,9 @@ public class OrganizationServiceImpl implements OrganizationService {
         return organization;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Transactional
     @Auditable(event = "Retrieve Organization", argNames = "name")
     public Organization findOrganizationByName(String name) {
@@ -194,6 +211,9 @@ public class OrganizationServiceImpl implements OrganizationService {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Transactional
     @Auditable(event = "Retrieve User By Email", argNames = "email")
     public User findByEmailIgnoreCase(String email) {
@@ -208,6 +228,9 @@ public class OrganizationServiceImpl implements OrganizationService {
         return retVal;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Transactional
     @Auditable(event = "Retrieve User by Unique User ID", argNames = "uniqueUserId")
     public User findByUniqueUserIdIgnoreCase(String uniqueUserId) {
@@ -219,6 +242,9 @@ public class OrganizationServiceImpl implements OrganizationService {
         return user;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Transactional
     @Auditable(event = "Retrieve Password", argNames = "email")
     public String findPasswordByEmail(String email) {
@@ -228,6 +254,9 @@ public class OrganizationServiceImpl implements OrganizationService {
         return password;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Transactional
     @Auditable(event = "Retrieve Password", argNames = "userId")
     public String findPasswordByUserId(long userId) {
@@ -237,28 +266,31 @@ public class OrganizationServiceImpl implements OrganizationService {
         return password;
     }
 
-//	@Transactional
-//	@Auditable(event = "Retrieve All Roles", argNames = "")
-//	public List<Role> findAllRoles() {
-//
-//		List<String> currentUserRoles = dynamoAppBootstrapBean.getCurrentUserRoles();
-//
-//		List<Role> allRoles = roleRepository.findAll();
-//		List<Role> filteredRoles = new ArrayList<Role>();
-//
-//		if (currentUserRoles.contains(Role.USER_ROLE_SYSTEM_ADMIN)) {
-//			filteredRoles = allRoles;
-//		} else {
-//			for (Role role : allRoles) {
-//				if (!role.getName().equalsIgnoreCase(Role.USER_ROLE_SYSTEM_ADMIN)) {
-//					filteredRoles.add(role);
-//				}
-//			}
-//		}
-//
-//		return filteredRoles;
-//	}
+    // @Transactional
+    // @Auditable(event = "Retrieve All Roles", argNames = "")
+    // public List<Role> findAllRoles() {
+    //
+    // List<String> currentUserRoles = dynamoAppBootstrapBean.getCurrentUserRoles();
+    //
+    // List<Role> allRoles = roleRepository.findAll();
+    // List<Role> filteredRoles = new ArrayList<Role>();
+    //
+    // if (currentUserRoles.contains(Role.USER_ROLE_SYSTEM_ADMIN)) {
+    // filteredRoles = allRoles;
+    // } else {
+    // for (Role role : allRoles) {
+    // if (!role.getName().equalsIgnoreCase(Role.USER_ROLE_SYSTEM_ADMIN)) {
+    // filteredRoles.add(role);
+    // }
+    // }
+    // }
+    //
+    // return filteredRoles;
+    // }
 
+    /**
+     * {@inheritDoc}
+     */
     @Transactional
     @Auditable(event = "Retrieve Roles in Organization", argNames = "")
     public List<Role> getRolesInOrganization(long organizationId) {
@@ -270,12 +302,18 @@ public class OrganizationServiceImpl implements OrganizationService {
         return roles;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Transactional
     @Auditable(event = "Retrieve All Groups", argNames = "")
     public List<Group> findAllGroups() {
         return groupRepository.findAll();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Transactional
     // @Auditable(event = "getGroups", argNames = "predicate, pageable")
     public Page<Group> getGroups(long organizationId, Predicate predicate, Pageable pageable) {
@@ -309,6 +347,9 @@ public class OrganizationServiceImpl implements OrganizationService {
         return groupRepository.findAll(bb, pageable);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Transactional
     @Auditable(event = "Retrieve Groups in Organization", argNames = "organizationId")
     public List<Group> getGroupsInOrganization(long organizationId) {
@@ -320,6 +361,9 @@ public class OrganizationServiceImpl implements OrganizationService {
         return groups;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Transactional
     @Auditable(event = "Save Group", argNames = "group")
     public Group saveGroup(Group group) throws DynamoDataAccessException {
@@ -357,6 +401,9 @@ public class OrganizationServiceImpl implements OrganizationService {
         return returnGroup;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Transactional
     @Auditable(event = "Edit Group", argNames = "group")
     public Group editGroup(Group group) {
@@ -366,18 +413,27 @@ public class OrganizationServiceImpl implements OrganizationService {
         return groupRepository.save(group);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Transactional
     @Auditable(event = "Retrieve Group", argNames = "groupId")
     public Group findGroup(long groupId) {
         return groupRepository.getOne(groupId);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Transactional
     @Auditable(event = "Retrieve Role", argNames = "roleId")
     public Role findRole(long roleId) {
         return roleRepository.getOne(roleId);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Transactional
     @Auditable(event = "Retrieve Role by Name", argNames = "organizationId, roleName")
     public Optional<Role> findRoleByName(long organizationId, String roleName) {
@@ -389,6 +445,9 @@ public class OrganizationServiceImpl implements OrganizationService {
         return Optional.ofNullable(roleList.get(0));
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Transactional
     @Auditable(event = "Retrieve Roles", argNames = "predicate, pageable")
     public Page<Role> getRoles(long organizationId, Predicate predicate, Pageable pageable) {
@@ -422,17 +481,20 @@ public class OrganizationServiceImpl implements OrganizationService {
         return roleRepository.findAll(bb, pageable);
     }
 
-//    @Transactional
-//    @Auditable(event = "Retrieve Roles", argNames = "userId")
-//    public List<Role> findUserRoles(String userId) {
-//        logger.info("Entering findUserRoles(). User ID = {}", userId);
-//
-//        List<Role> roles = new ArrayList<Role>();
-//
-//        logger.info("Leaving findUserRoles(). # of roles for user = {}");
-//        return roles;
-//    }
+    // @Transactional
+    // @Auditable(event = "Retrieve Roles", argNames = "userId")
+    // public List<Role> findUserRoles(String userId) {
+    // logger.info("Entering findUserRoles(). User ID = {}", userId);
+    //
+    // List<Role> roles = new ArrayList<Role>();
+    //
+    // logger.info("Leaving findUserRoles(). # of roles for user = {}");
+    // return roles;
+    // }
 
+    /**
+     * {@inheritDoc}
+     */
     @Transactional
     @Auditable(event = "getUsers", argNames = "predicate, pageable")
     public Page<User> getUsers(Predicate predicate, Pageable pageable) {
@@ -457,6 +519,9 @@ public class OrganizationServiceImpl implements OrganizationService {
         return pagedUsers;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Transactional
     @Auditable(event = "getUsers", argNames = "predicate, pageable")
     public Page<User> getUsers(long organizationId, Predicate predicate, Pageable pageable) {
@@ -502,6 +567,9 @@ public class OrganizationServiceImpl implements OrganizationService {
         return pagedUsers;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Transactional
     @Auditable(event = "Retrieve Organizations", argNames = "predicate, pageable")
     public Page<Organization> getOrganizations(Predicate predicate, Pageable pageable) {
@@ -520,6 +588,9 @@ public class OrganizationServiceImpl implements OrganizationService {
         return pagedOrgs;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Transactional
     @Auditable(event = "Save Role", argNames = "role")
     public Role saveRole(Role role) throws DynamoDataAccessException {
@@ -556,6 +627,9 @@ public class OrganizationServiceImpl implements OrganizationService {
         return returnRole;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Transactional
     // @Auditable(event = "Save User", argNames = "user")
     public User saveUser(User user, boolean encodePassword) throws DynamoDataAccessException {
@@ -606,6 +680,9 @@ public class OrganizationServiceImpl implements OrganizationService {
         return returnUser;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Transactional
     public User createUser(User user) throws DynamoDataAccessException {
         logger.info("Entering createUser(). User = {}", user);
@@ -643,14 +720,11 @@ public class OrganizationServiceImpl implements OrganizationService {
         }
         user.setUserUniqueId(userUniqueId);
 
-        // define selected user Group and Role IDs
-        List<Group> userGroups = findMultipleGroups(user.getUserGroupId());
-        List<Role> userRoles = findMultipleRoles(user.getUserRoleId());
-
         // persist User
         user = userRepository.save(user);
 
         // persist User Groups
+        List<Group> userGroups = findMultipleGroups(user.getUserGroupId());
         List<UserGroupMap> userGroupsMapList = new ArrayList<UserGroupMap>();
         for (Group group : userGroups) {
             UserGroupMap userGroupMap = new UserGroupMap();
@@ -663,12 +737,13 @@ public class OrganizationServiceImpl implements OrganizationService {
         saveUserGroupMapList(userGroupsMapList);
 
         // persist User Roles
+        List<Role> userRoles = findMultipleRoles(user.getUserRoleId());
         List<UserRoleMap> userRolesMapList = new ArrayList<UserRoleMap>();
-        for (Role Role : userRoles) {
+        for (Role role : userRoles) {
             UserRoleMap userRoleMap = new UserRoleMap();
             userRoleMap.setCreatedDate(Calendar.getInstance());
             userRoleMap.setModifiedDate(Calendar.getInstance());
-            userRoleMap.setRole(Role);
+            userRoleMap.setRole(role);
             userRoleMap.setUserId(user.getId());
             userRolesMapList.add(userRoleMap);
         }
@@ -678,6 +753,9 @@ public class OrganizationServiceImpl implements OrganizationService {
         return user;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Transactional
     @Auditable(event = "Save Organization", argNames = "organization")
     public Organization saveOrganization(Organization organization) throws DynamoDataAccessException {
@@ -689,6 +767,9 @@ public class OrganizationServiceImpl implements OrganizationService {
         return organization;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Transactional
     @Auditable(event = "Retrieve Groups", argNames = "ids")
     public List<Group> findMultipleGroups(List<Long> ids) {
@@ -706,6 +787,9 @@ public class OrganizationServiceImpl implements OrganizationService {
         return groupsList;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Transactional
     @Auditable(event = "Retrieve Roles", argNames = "ids")
     public List<Role> findMultipleRoles(List<Long> ids) {
@@ -723,23 +807,30 @@ public class OrganizationServiceImpl implements OrganizationService {
         return rolesList;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Transactional
     @Auditable(event = "Save User Group Map", argNames = "userGroupMap")
     public UserGroupMap saveUserGroupMap(UserGroupMap userGroupMap) {
         return userGroupMapRepository.save(userGroupMap);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Transactional
     @Auditable(event = "Save User Role Map", argNames = "userRoleMap")
     public UserRoleMap saveUserRoleMap(UserRoleMap userRoleMap) {
         return userRoleMapRepository.save(userRoleMap);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Transactional
     public UserRegistrationToken createUserRegistrationToken(User user) {
         logger.info("Entering createToken(). User = {}", user);
-
-        String tokenString = UUID.randomUUID().toString();
 
         UserRegistrationToken token = new UserRegistrationToken();
         token.setTokenCreatedDate(Calendar.getInstance());
@@ -748,6 +839,7 @@ public class OrganizationServiceImpl implements OrganizationService {
         expDate.add(Calendar.DATE, 1);
 
         token.setTokenExpiryDate(expDate);
+        String tokenString = UUID.randomUUID().toString();
         token.setToken(tokenString);
         token.setUser(user);
         token = userRegistrationTokenRepository.save(token);
@@ -756,6 +848,9 @@ public class OrganizationServiceImpl implements OrganizationService {
         return token;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Transactional
     @Auditable(event = "Retrieve User Registration Token", argNames = "token")
     public UserRegistrationToken getUserRegistrationToken(String token) {
@@ -765,6 +860,9 @@ public class OrganizationServiceImpl implements OrganizationService {
         return userRegistrationTokenRepository.findByTokenIgnoreCase(token);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Transactional
     @Auditable(event = "Retrieve User", argNames = "email")
     public User getUserByEmail(String email) {
@@ -782,6 +880,9 @@ public class OrganizationServiceImpl implements OrganizationService {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Transactional
     @Auditable(event = "Retrieve User", argNames = "userUniqueId")
     public User getUserByUserUniqueId(String userUniqueId) {
@@ -793,6 +894,9 @@ public class OrganizationServiceImpl implements OrganizationService {
         return user;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Transactional
     @Auditable(event = "Retrieve User", argNames = "id")
     public User getUserById(long userId) {
@@ -804,24 +908,31 @@ public class OrganizationServiceImpl implements OrganizationService {
         return user;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Transactional
     @Auditable(event = "Delete User Gruop Map", argNames = "userGroupMap")
     public void deleteUserGroupMap(UserGroupMap userGroupMap) {
         userGroupMapRepository.delete(userGroupMap);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Transactional
     @Auditable(event = "Delete User Role Map", argNames = "userRoleMap")
     public void deleteUserRoleMap(UserRoleMap userRoleMap) {
         userRoleMapRepository.delete(userRoleMap);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Transactional
     @Auditable(event = "Create Password Reset Token", argNames = "user")
     public PasswordResetToken createPasswordResetToken(User user) {
         logger.info("Entering createToken(). User = {}", user);
-
-        String tokenString = UUID.randomUUID().toString();
 
         PasswordResetToken token = new PasswordResetToken();
         token.setTokenCreatedDate(Calendar.getInstance());
@@ -830,6 +941,7 @@ public class OrganizationServiceImpl implements OrganizationService {
         expDate.add(Calendar.DATE, 1);
 
         token.setTokenExpiryDate(expDate);
+        String tokenString = UUID.randomUUID().toString();
         token.setToken(tokenString);
         token.setUser(user);
 
@@ -838,6 +950,9 @@ public class OrganizationServiceImpl implements OrganizationService {
 
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Transactional
     @Auditable(event = "Retrieve Password Reset Token", argNames = "token")
     public PasswordResetToken getPasswordResetToken(String token) {
@@ -848,6 +963,9 @@ public class OrganizationServiceImpl implements OrganizationService {
 
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Transactional(rollbackFor = Exception.class)
     @Auditable(event = "Create Organization with Default User", argNames = "createOrganizationDto")
     public Organization createOrganizationWithDefaultUser(CreateOrganizationDto createOrganizationDto)
@@ -930,6 +1048,9 @@ public class OrganizationServiceImpl implements OrganizationService {
         return organization;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Transactional
     public List<User> retrieveUsersByRole(long organizationId, List<String> roles) {
         logger.info("Entering retrieveUsersByRole(). Organization ID = {}, roles = {}", organizationId, roles);

@@ -21,8 +21,7 @@ public interface GroupRepository
 
     List<Group> findByOrganizationId(long organizationId);
 
-    default public void customize(QuerydslBindings bindings, QGroup Group) {
-
+    default void customize(QuerydslBindings bindings, QGroup group) {
         bindings.bind(String.class).first((StringPath path, String value) -> path.containsIgnoreCase(value));
         // bindings.excluding(Group.name);
     }

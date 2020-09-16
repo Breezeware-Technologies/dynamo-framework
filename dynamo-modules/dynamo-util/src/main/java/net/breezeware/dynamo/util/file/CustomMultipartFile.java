@@ -14,14 +14,17 @@ public class CustomMultipartFile implements MultipartFile {
 
     private String fileName;
 
-    private String contentType;
-
     private File file;
 
     private String destPath = System.getProperty("java.io.tmpdir");
 
     private FileOutputStream fileOutputStream;
 
+    /**
+     * Constructor to initialize class properties.
+     * @param fileData the file data assigned to file content
+     * @param name     the name assigned to the file
+     */
     public CustomMultipartFile(byte[] fileData, String name) {
         this.fileContent = fileData;
         this.fileName = name;
@@ -29,6 +32,11 @@ public class CustomMultipartFile implements MultipartFile {
 
     }
 
+    /**
+     * Clear the output stream and delete the file upon exit.
+     * @throws IOException the exception thrown if there is an error while clearing
+     *                     out streams
+     */
     public void clearOutStreams() throws IOException {
         if (null != fileOutputStream) {
             fileOutputStream.flush();

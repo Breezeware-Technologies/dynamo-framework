@@ -14,9 +14,10 @@ import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import net.breezeware.dynamo.organization.entity.Organization;
+
 import lombok.Getter;
 import lombok.Setter;
-import net.breezeware.dynamo.organization.entity.Organization;
 
 /**
  * Entity to map a Dynamo Organization to an API key.
@@ -25,15 +26,14 @@ import net.breezeware.dynamo.organization.entity.Organization;
 @Table(name = "organization_api_key_map", schema = "dynamo")
 public class OrganizationApiKeyMap implements Serializable {
 
-    /**
-     * 
-     */
     private static final long serialVersionUID = 1L;
 
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_gen")
     @SequenceGenerator(name = "seq_gen", sequenceName = "org_api_key_map_seq", schema = "dynamo", allocationSize = 1)
+    @Getter
+    @Setter
     private long id;
 
     /**

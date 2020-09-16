@@ -20,21 +20,20 @@ public interface OrganizationApiKeyMapRepository extends JpaRepository<Organizat
 
     /**
      * Retrieves an OrganizationApiKey by API key value.
-     * 
-     * @param apiKeyValue
-     * @return
+     * @param apiKeyValue the UUID value associated with the API key
+     * @return the OrganizationApiKeyMap associated with the API key value
      */
     OrganizationApiKeyMap findByApiKeyValue(UUID apiKeyValue);
 
     /**
-     * Retrieves a list of OrganizationApiKeyMap for an organization
-     * 
-     * @param organizationId
-     * @return
+     * Retrieves a list of OrganizationApiKeyMap for an organization.
+     * @param organizationId the organization for which the OrganizationApiKeyMap
+     *                       are retrieved
+     * @return a list of OrganizationApiKeyMap for an organization
      */
     List<OrganizationApiKeyMap> findByOrganizationId(long organizationId);
 
-    default public void customize(QuerydslBindings bindings, QOrganizationApiKeyMap feed) {
+    default void customize(QuerydslBindings bindings, QOrganizationApiKeyMap feed) {
         bindings.bind(String.class).first((StringPath path, String value) -> path.containsIgnoreCase(value));
     }
 }

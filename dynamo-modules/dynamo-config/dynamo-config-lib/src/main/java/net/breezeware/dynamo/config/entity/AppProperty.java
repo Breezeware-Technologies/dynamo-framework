@@ -19,9 +19,7 @@ import com.google.gson.annotations.Expose;
  * Represents the 'Property' concept as defined by Spring Cloud Config project.
  * Spring cloud config server will expect a DB table called 'properties' with
  * the following fields of type string: application, profile, label, key, value.
- * 
  * https://github.com/spring-cloud/spring-cloud-config/blob/master/docs/src/main/asciidoc/spring-cloud-config.adoc#jdbc-backend
- * 
  */
 @XmlRootElement
 @Entity
@@ -35,9 +33,6 @@ import com.google.gson.annotations.Expose;
 
 public class AppProperty implements Serializable {
 
-    /**
-     * 
-     */
     private static final long serialVersionUID = 1L;
 
     @Expose

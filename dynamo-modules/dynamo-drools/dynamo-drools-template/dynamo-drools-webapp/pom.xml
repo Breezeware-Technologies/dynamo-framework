@@ -3,7 +3,7 @@
 	<parent>
 		<groupId>net.breezeware.dynamo</groupId>
 		<artifactId>dynamo-drools-template</artifactId>
-		<version>1.7.0</version>
+		<version>1.8.0</version>
 	</parent>
 	<artifactId>dynamo-drools-webapp</artifactId>
 	<packaging>war</packaging>
@@ -131,7 +131,6 @@
 					<skip>true</skip>
 				</configuration>
 			</plugin>
-
 
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>

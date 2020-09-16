@@ -3,10 +3,9 @@
 	<parent>
 		<groupId>net.breezeware.dynamo</groupId>
 		<artifactId>dynamo-modules</artifactId>
-		<version>1.7.0</version>
+		<version>1.8.0</version>
 	</parent>
 	<artifactId>dynamo-apps</artifactId>
-	<version>1.7.0</version>
 	<packaging>pom</packaging>
 	<name>Dynamo Apps Module</name>
 	<description>Dynamo module for managing Apps and their features.</description>

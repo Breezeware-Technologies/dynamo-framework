@@ -1,6 +1,10 @@
 Dynamo Framework - Spring based framework for developing web & mobile applications.
 
 
+1.8.0:
+------
+●   Added support for Checkstyle, PMD and Javadocs.
+
 1.7.0:
 ------
 ●   Updated controller to support password reset requests from mobile applications.

@@ -15,10 +15,6 @@ import net.breezeware.dynamo.organization.entity.UserRoleMap;
 
 @XmlRootElement
 public class UserDto implements java.io.Serializable {
-
-    /**
-     * 
-     */
     private static final long serialVersionUID = 1L;
 
     @Expose
@@ -155,9 +151,8 @@ public class UserDto implements java.io.Serializable {
 
     /**
      * Create a DTO object from User entity.
-     * 
-     * @param user
-     * @return
+     * @param user the User entity
+     * @return a UserDto entity
      */
     public static UserDto createDto(User user) {
         UserDto dto = new UserDto();

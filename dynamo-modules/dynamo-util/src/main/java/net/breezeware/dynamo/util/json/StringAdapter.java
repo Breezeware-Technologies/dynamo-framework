@@ -8,6 +8,10 @@ import com.google.gson.stream.JsonToken;
 import com.google.gson.stream.JsonWriter;
 
 public class StringAdapter extends TypeAdapter<String> {
+
+    /**
+     * Read method for String adapter.
+     */
     public String read(JsonReader reader) throws IOException {
         if (reader.peek() == JsonToken.NULL) {
             reader.nextNull();
@@ -16,6 +20,9 @@ public class StringAdapter extends TypeAdapter<String> {
         return reader.nextString();
     }
 
+    /**
+     * Write method for String adapter.
+     */
     public void write(JsonWriter writer, String value) throws IOException {
         if (value == null) {
             writer.nullValue();

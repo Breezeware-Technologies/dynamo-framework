@@ -17,5 +17,4 @@ pipelines:
           - ls -alt /usr/local/
           - echo "Hello World! I am Dynamo Framework"
           - which java
-          - /usr/local/apache-maven-3.6.3/bin/mvn clean validate
           - /usr/local/apache-maven-3.6.3/bin/mvn clean package -Dmaven.test.skip=true

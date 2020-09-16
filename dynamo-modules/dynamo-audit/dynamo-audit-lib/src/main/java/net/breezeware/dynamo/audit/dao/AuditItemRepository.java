@@ -15,20 +15,23 @@ import net.breezeware.dynamo.audit.entity.QAuditItem;
 
 @Repository
 public interface AuditItemRepository extends JpaRepository<AuditItem, Long>, QuerydslPredicateExecutor<AuditItem>,
-		QuerydslBinderCustomizer<QAuditItem> {
+        QuerydslBinderCustomizer<QAuditItem> {
 
-	default public void customize(QuerydslBindings bindings, QAuditItem item) {
-		bindings.bind(String.class).first((StringPath path, String value) -> path.containsIgnoreCase(value));
+    /**
+     * Customization for repository queries.
+     */
+    default void customize(QuerydslBindings bindings, QAuditItem item) {
+        bindings.bind(String.class).first((StringPath path, String value) -> path.containsIgnoreCase(value));
 
-		// The customization is to support search a range of dates.
-		// Code sample taken from here:
-		// https://stackoverflow.com/questions/35155824/can-spring-data-rests-querydsl-integration-be-used-to-perform-more-complex-quer
+        // The customization is to support search a range of dates.
+        // Code sample taken from here:
+        // https://stackoverflow.com/questions/35155824/can-spring-data-rests-querydsl-integration-be-used-to-perform-more-complex-quer
 
-		bindings.bind(item.auditDateFrom).first((path, value) -> item.auditDate.after(value.toInstant()));
+        bindings.bind(item.auditDateFrom).first((path, value) -> item.auditDate.after(value.toInstant()));
 
-		// add one extra day to the 'auditDateTo' field to include the 'to' date during
-		// search.
-		bindings.bind(item.auditDateTo).first(
-				(path, value) -> item.auditDate.before(new Date(value.getTime() + (1000 * 60 * 60 * 24)).toInstant()));
-	}
+        // add one extra day to the 'auditDateTo' field to include the 'to' date during
+        // search.
+        bindings.bind(item.auditDateTo).first(
+                (path, value) -> item.auditDate.before(new Date(value.getTime() + (1000 * 60 * 60 * 24)).toInstant()));
+    }
 }
