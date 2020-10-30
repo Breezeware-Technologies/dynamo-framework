@@ -3,9 +3,10 @@
 	<parent>
 		<groupId>net.breezeware.dynamo</groupId>
 		<artifactId>dynamo-ldap</artifactId>
-		<version>1.8.0</version>
+		<version>1.8.1</version>
 	</parent>
 	<artifactId>dynamo-ldap-lib</artifactId>
+  <version>1.8.1</version>
 	<name>Dynamo LDAP Module</name>
 	<description>Dynam module containing entities, repositories and services required to interact with an LDAP directory.</description>
 

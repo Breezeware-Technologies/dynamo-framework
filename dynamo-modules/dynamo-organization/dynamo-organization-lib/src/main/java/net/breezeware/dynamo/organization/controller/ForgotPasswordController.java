@@ -7,6 +7,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -19,8 +21,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
-import com.sun.org.slf4j.internal.LoggerFactory;
 
 import net.breezeware.dynamo.organization.dto.ForgotPasswordDto;
 import net.breezeware.dynamo.organization.entity.PasswordResetToken;
@@ -64,6 +64,10 @@ public class ForgotPasswordController {
     // applicationAdminEmai
     @Value("${dynamo.applicationAdminEmail}")
     private String applicationAdminEmail;
+
+    // applicationAdminEmai
+    @Value("${dynamo.appLogoWebUrl}")
+    private String applicationLogoWebUrl;
 
     /**
      * Redirect the user to the forgot-password page.
@@ -133,6 +137,7 @@ public class ForgotPasswordController {
             keyVals.put("firstName", passwordResetToken.getUser().getFirstName());
             keyVals.put("lastName", passwordResetToken.getUser().getLastName());
             keyVals.put("applicationAdminEmail", applicationAdminEmail);
+            keyVals.put("applicationLogoWebUrl", applicationLogoWebUrl);
 
             // get server address/host name and port for current deployment
             StringBuffer url = request.getRequestURL();

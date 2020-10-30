@@ -3,9 +3,10 @@
 	<parent>
 		<groupId>net.breezeware.dynamo</groupId>
 		<artifactId>dynamo-modules</artifactId>
-		<version>1.8.0</version>
+		<version>1.8.1</version>
 	</parent>
 	<artifactId>dynamo-communication-lib</artifactId>
+  <version>1.8.1</version>
 	<name>Dynamo Communication Lib</name>
 	<description>Dynamo Communication Module contains support for SMS, Email communications.</description>
 

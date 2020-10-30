@@ -587,6 +587,11 @@ public class OrganizationManagementController {
             } else {
                 logger.debug("Unique ID '{}' is used from the user input, since generateUniqueUserId = {}",
                         userUniqueId, generateUniqueUserId);
+
+                // if unique User ID is null, the set it to the value of email.
+                if (userUniqueId == null || userUniqueId != null && userUniqueId.trim().length() == 0) {
+                    userUniqueId = user.getEmail();
+                }
             }
 
             // create the user
