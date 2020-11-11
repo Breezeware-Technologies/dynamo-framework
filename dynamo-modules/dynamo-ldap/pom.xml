@@ -3,9 +3,10 @@
   <parent>
     <groupId>net.breezeware.dynamo</groupId>
     <artifactId>dynamo-modules</artifactId>
-    <version>1.8.0</version>
+    <version>1.8.1</version>
   </parent>
   <artifactId>dynamo-ldap</artifactId>
+  <version>1.8.1</version>
   <packaging>pom</packaging>
   <name>Dynamo LDAP module</name>
   <description>Dynamo module for managing LDAP directories like Apache Directory etc…</description>

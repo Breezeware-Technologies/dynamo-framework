@@ -65,6 +65,10 @@ public class ForgotPasswordController {
     @Value("${dynamo.applicationAdminEmail}")
     private String applicationAdminEmail;
 
+    // applicationAdminEmai
+    @Value("${dynamo.appLogoWebUrl}")
+    private String applicationLogoWebUrl;
+
     /**
      * Redirect the user to the forgot-password page.
      * @param model the holder for Model attributes
@@ -132,6 +136,8 @@ public class ForgotPasswordController {
             keyVals.put("applicationOwner", applicationOwner);
             keyVals.put("firstName", passwordResetToken.getUser().getFirstName());
             keyVals.put("lastName", passwordResetToken.getUser().getLastName());
+            keyVals.put("applicationAdminEmail", applicationAdminEmail);
+            keyVals.put("applicationLogoWebUrl", applicationLogoWebUrl);
 
             // get server address/host name and port for current deployment
             StringBuffer url = request.getRequestURL();

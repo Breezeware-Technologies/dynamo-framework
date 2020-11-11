@@ -1,6 +1,10 @@
 Dynamo Framework - Spring based framework for developing web & mobile applications.
 
 
+1.8.1:
+------
+●   Updated code to set additional configuration attributes in Email templates.
+
 1.8.0:
 ------
 ●   Added support for Checkstyle, PMD and Javadocs.

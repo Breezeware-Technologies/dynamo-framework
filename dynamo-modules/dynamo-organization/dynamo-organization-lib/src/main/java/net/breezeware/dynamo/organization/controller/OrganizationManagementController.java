@@ -98,6 +98,10 @@ public class OrganizationManagementController {
     // applicationAdminEmai
     @Value("${dynamo.applicationAdminEmail}")
     private String applicationAdminEmail;
+    
+    // applicationAdminEmai
+    @Value("${dynamo.appLogoWebUrl}")
+    private String applicationLogoWebUrl;
 
     @Autowired
     OrganizationManagementUtil organizationManagementUtil;
@@ -587,6 +591,11 @@ public class OrganizationManagementController {
             } else {
                 logger.debug("Unique ID '{}' is used from the user input, since generateUniqueUserId = {}",
                         userUniqueId, generateUniqueUserId);
+
+                // if unique User ID is null, the set it to the value of email.
+                if (userUniqueId == null || userUniqueId != null && userUniqueId.trim().length() == 0) {
+                    userUniqueId = user.getEmail();
+                }
             }
 
             // create the user
@@ -658,6 +667,8 @@ public class OrganizationManagementController {
                 UserRegistrationToken userRegistrationToken = organizationService.createUserRegistrationToken(user);
                 keyVals.put("applicationName", applicationName);
                 keyVals.put("applicationOwner", applicationOwner);
+                keyVals.put("applicationLogoWebUrl", applicationLogoWebUrl);
+                keyVals.put("applicationAdminEmail", applicationAdminEmail);
                 keyVals.put("firstName", userRegistrationToken.getUser().getFirstName());
                 keyVals.put("lastName", userRegistrationToken.getUser().getLastName());
                 keyVals.put("registrationLink",
