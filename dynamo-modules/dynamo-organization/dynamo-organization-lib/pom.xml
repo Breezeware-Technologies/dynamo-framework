@@ -3,11 +3,11 @@
 	<parent>
 		<groupId>net.breezeware.dynamo</groupId>
 		<artifactId>dynamo-organization</artifactId>
-		<version>1.8.1</version>
+		<version>1.8.2-SNAPSHOT</version>
 	</parent>
 
 	<artifactId>dynamo-organization-lib</artifactId>
-  <version>1.8.1</version>
+  <version>1.8.2-SNAPSHOT</version>
 	<name>Dynamo Organization Library Module</name>
 	<description>Dynamo module under Organization to manage entities, repositories and services. This module can be included in a webapplication.</description>
 

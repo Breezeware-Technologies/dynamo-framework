@@ -237,7 +237,6 @@ CREATE TABLE dynamo.organization_address_map
       ON UPDATE NO ACTION ON DELETE NO ACTION
 );
 
-
 -- *** dynamo_orgth_data.sql *** --
 INSERT INTO dynamo.organization (id, name, description, created_date, modified_date) VALUES (1, 'Default Organization','Default Organization',now(), now()), (2, 'Breeze Tech','Breeze Technologies India',now(),now());
 INSERT INTO dynamo.dynamo_group (id, organization_id, name, description, created_date, modified_date) VALUES (1,2,'Business','Business',now(),now()),(2,2,'Technical','Technical',now(),now());
@@ -259,5 +258,3 @@ select setval('dynamo.password_reset_token_seq', (select max(id)+1 from dynamo.p
 select setval('dynamo.user_registration_token_seq', (select max(id)+1 from dynamo.user_registration_token), false);
 select setval('dynamo.address_seq', (select max(id)+1 from dynamo.address), false);
 select setval('dynamo.organization_address__map_seq', (select max(id)+1 from dynamo.organization_address_map), false);
-
-

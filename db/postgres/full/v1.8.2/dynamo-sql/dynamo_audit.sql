@@ -1,17 +1,23 @@
+----------------------------------------------------------------------------- 
+-- ~~~~~~~~~~#################### DYNAMO AUDIT ####################~~~~~~~~~~
+-----------------------------------------------------------------------------
+
+-- =============== Dynamo Audit Schema =============== 
+
 CREATE SCHEMA IF NOT EXISTS dynamo;
 
-DROP SEQUENCE IF EXISTS dynamo.dynamo_audit_audit_item_seq;
-CREATE SEQUENCE dynamo.dynamo_audit_audit_item_seq
+DROP SEQUENCE IF EXISTS dynamo.audit_item_seq;
+CREATE SEQUENCE dynamo.audit_item_seq
   INCREMENT 1
   MINVALUE 1
   MAXVALUE 9223372036854775807
   START 1
   CACHE 1;
 
-DROP TABLE IF EXISTS dynamo.dynamo_audit_audit_item;
-CREATE TABLE dynamo.dynamo_audit_audit_item
+DROP TABLE IF EXISTS dynamo.audit_item;
+CREATE TABLE dynamo.audit_item
 (
-  id bigint NOT NULL DEFAULT nextval('dynamo.dynamo_audit_audit_item_seq'::regclass),
+  id bigint NOT NULL DEFAULT nextval('dynamo.audit_item_seq'::regclass),
   audit_date timestamp with time zone,
   audit_event character varying(255),
   audit_item_id character varying(255),
@@ -25,7 +31,7 @@ CREATE TABLE dynamo.dynamo_audit_audit_item
   protocol character varying(255),
   created_date timestamp with time zone,
   modified_date timestamp with time zone,
-  CONSTRAINT dynamo_audit_audit_item_pkey PRIMARY KEY (id),
+  CONSTRAINT audit_item_pkey PRIMARY KEY (id),
   CONSTRAINT audit_item_reference_constraint FOREIGN KEY (organization_id)
       REFERENCES dynamo.organization (id) MATCH SIMPLE
       ON UPDATE NO ACTION ON DELETE NO ACTION

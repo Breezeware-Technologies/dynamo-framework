@@ -1,3 +1,9 @@
+------------------------------------------------------------------------------ 
+-- ~~~~~~~~~~#################### DYNAMO CONFIG ####################~~~~~~~~~~
+------------------------------------------------------------------------------
+
+-- =============== Dynamo Config Schema =============== 
+
 CREATE SCHEMA IF NOT EXISTS dynamo; 
 
 DROP SEQUENCE IF EXISTS properties_seq;
@@ -19,6 +25,8 @@ CREATE TABLE properties
   value character varying(180),
   CONSTRAINT dynamo_admin_properties_pkey PRIMARY KEY (id)
 );  
+
+-- =============== Dynamo Config Data =============== 
 
 -- Set Auditing Flag for all modules under the Dynamo Framework 
 INSERT INTO properties (id, application, profile, label, key, value) VALUES (1, 'dynamoadminwebapp', 'DBAuthentication','master','enableAuditing','true'), (2, 'dynamoadminwebapp', 'DBAuthentication','master','applicationServerAddress','http://localhost:8080');
