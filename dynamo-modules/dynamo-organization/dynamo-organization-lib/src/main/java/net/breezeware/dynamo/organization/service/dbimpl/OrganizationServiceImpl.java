@@ -31,6 +31,7 @@ import com.querydsl.core.types.PredicateOperation;
 import com.querydsl.core.types.dsl.BooleanOperation;
 
 import net.breezeware.dynamo.audit.aspectj.Auditable;
+import net.breezeware.dynamo.organization.dao.AddressRepository;
 import net.breezeware.dynamo.organization.dao.GroupRepository;
 import net.breezeware.dynamo.organization.dao.OrganizationRepository;
 import net.breezeware.dynamo.organization.dao.PasswordResetTokenRepository;
@@ -40,6 +41,7 @@ import net.breezeware.dynamo.organization.dao.UserRegistrationTokenRepository;
 import net.breezeware.dynamo.organization.dao.UserRepository;
 import net.breezeware.dynamo.organization.dao.UserRoleMapRepository;
 import net.breezeware.dynamo.organization.dto.CreateOrganizationDto;
+import net.breezeware.dynamo.organization.entity.Address;
 import net.breezeware.dynamo.organization.entity.Group;
 import net.breezeware.dynamo.organization.entity.Organization;
 import net.breezeware.dynamo.organization.entity.PasswordResetToken;
@@ -74,6 +76,9 @@ public class OrganizationServiceImpl implements OrganizationService {
 
     @Autowired
     GroupRepository groupRepository;
+
+    @Autowired
+    AddressRepository addressRepository;
 
     @Autowired
     UserRoleMapRepository userRoleMapRepository;
@@ -987,6 +992,11 @@ public class OrganizationServiceImpl implements OrganizationService {
         Organization organization = CreateOrganizationDto.createOrganizationFromDto(createOrganizationDto);
         organization = organizationRepository.save(organization);
         logger.info("ID of newly created organization = {}", organization.getId());
+
+        // save organization Address
+        Address organizationAddress = CreateOrganizationDto.createAddressFromDto(createOrganizationDto);
+        organizationAddress = addressRepository.save(organizationAddress);
+        logger.info("Address for organization = {}", organizationAddress.toString());
 
         // ** create default user from createOrganizationDto **//
         User user = CreateOrganizationDto.createUserFromDto(organization, createOrganizationDto);
