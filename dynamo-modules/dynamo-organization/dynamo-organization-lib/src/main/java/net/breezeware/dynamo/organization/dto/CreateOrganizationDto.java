@@ -1,19 +1,22 @@
 package net.breezeware.dynamo.organization.dto;
 
 import java.util.Calendar;
+import java.util.Optional;
 
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import com.google.gson.Gson;
 import com.google.gson.annotations.Expose;
 
 import net.breezeware.dynamo.organization.entity.Address;
 import net.breezeware.dynamo.organization.entity.Organization;
 import net.breezeware.dynamo.organization.entity.User;
 
+import lombok.Data;
+
 @XmlRootElement
+@Data
 public class CreateOrganizationDto implements java.io.Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -45,12 +48,6 @@ public class CreateOrganizationDto implements java.io.Serializable {
     private String defaultUserEmail;
 
     @Expose
-    private Calendar createdDate;
-
-    @Expose
-    private Calendar modifiedDate;
-
-    @Expose
     private String addressLine1;
 
     @Expose
@@ -62,116 +59,17 @@ public class CreateOrganizationDto implements java.io.Serializable {
     @Expose
     private String state;
 
+    /**
+     * ZIP code in an address. This is also called postal code in certain countries.
+     */
     @Expose
     private String pincode;
 
-    public String getOrganizationName() {
-        return organizationName;
-    }
+    @Expose
+    private Calendar createdDate;
 
-    public void setOrganizationName(String organizationName) {
-        this.organizationName = organizationName;
-    }
-
-    public String getOrganizationDescription() {
-        return organizationDescription;
-    }
-
-    public void setOrganizationDescription(String organizationDescription) {
-        this.organizationDescription = organizationDescription;
-    }
-
-    public String getDefaultUserFirstName() {
-        return defaultUserFirstName;
-    }
-
-    public void setDefaultUserFirstName(String defaultUserFirstName) {
-        this.defaultUserFirstName = defaultUserFirstName;
-    }
-
-    public String getDefaultUserLastName() {
-        return defaultUserLastName;
-    }
-
-    public void setDefaultUserLastName(String defaultUserLastName) {
-        this.defaultUserLastName = defaultUserLastName;
-    }
-
-    public String getDefaultUserMiddleInitial() {
-        return defaultUserMiddleInitial;
-    }
-
-    public void setDefaultUserMiddleInitial(String defaultUserMiddleInitial) {
-        this.defaultUserMiddleInitial = defaultUserMiddleInitial;
-    }
-
-    public String getDefaultUserEmail() {
-        return defaultUserEmail;
-    }
-
-    public void setDefaultUserEmail(String defaultUserEmail) {
-        this.defaultUserEmail = defaultUserEmail;
-    }
-
-    public Calendar getCreatedDate() {
-        return createdDate;
-    }
-
-    public void setCreatedDate(Calendar createdDate) {
-        this.createdDate = createdDate;
-    }
-
-    public Calendar getModifiedDate() {
-        return modifiedDate;
-    }
-
-    public void setModifiedDate(Calendar modifiedDate) {
-        this.modifiedDate = modifiedDate;
-    }
-
-    public String getAddressLine1() {
-        return addressLine1;
-    }
-
-    public void setAddressLine1(String addressLine1) {
-        this.addressLine1 = addressLine1;
-    }
-
-    public String getAddressLine2() {
-        return addressLine2;
-    }
-
-    public void setAddressLine2(String addressLine2) {
-        this.addressLine2 = addressLine2;
-    }
-
-    public String getCity() {
-        return city;
-    }
-
-    public void setCity(String city) {
-        this.city = city;
-    }
-
-    public String getState() {
-        return state;
-    }
-
-    public void setState(String state) {
-        this.state = state;
-    }
-
-    public String getPincode() {
-        return pincode;
-    }
-
-    public void setPincode(String pincode) {
-        this.pincode = pincode;
-    }
-
-    public String toString() {
-        return new Gson().toJson(this);
-    }
+    @Expose
+    private Calendar modifiedDate;
 
     /**
      * Create an Organization entity from the CreateOrganizationDto entity.
@@ -216,15 +114,22 @@ public class CreateOrganizationDto implements java.io.Serializable {
      * @param dto the CreateOrganizationDto
      * @return Address entity
      */
-    public static Address createAddressFromDto(CreateOrganizationDto dto) {
-        Address organizationAddress = new Address();
-        organizationAddress.setAddressLine1(dto.getAddressLine1());
-        organizationAddress.setAddressLine2(dto.getAddressLine2());
-        organizationAddress.setCity(dto.getCity());
-        organizationAddress.setState(dto.getState());
-        organizationAddress.setPincode(dto.getPincode());
+    public static Optional<Address> createAddressFromDto(CreateOrganizationDto dto) {
 
-        return organizationAddress;
+        Optional<Address> addrOpt = Optional.empty();
+
+        // create a valid address entity only if the city value is present
+        if (dto != null && dto.getCity() != null && dto.getCity().trim().length() > 0) {
+            Address organizationAddress = new Address();
+            organizationAddress.setAddressLine1(dto.getAddressLine1());
+            organizationAddress.setAddressLine2(dto.getAddressLine2());
+            organizationAddress.setCity(dto.getCity());
+            organizationAddress.setState(dto.getState());
+            organizationAddress.setPincode(dto.getPincode());
+
+            addrOpt = Optional.of(organizationAddress);
+        }
+
+        return addrOpt;
     }
-
 }

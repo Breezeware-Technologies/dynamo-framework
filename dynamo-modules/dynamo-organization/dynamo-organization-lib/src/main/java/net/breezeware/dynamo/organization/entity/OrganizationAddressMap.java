@@ -10,8 +10,11 @@ import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import lombok.Data;
+
 @Entity
 @Table(name = "organization_address_map", schema = "dynamo")
+@Data
 public class OrganizationAddressMap {
 
     /**

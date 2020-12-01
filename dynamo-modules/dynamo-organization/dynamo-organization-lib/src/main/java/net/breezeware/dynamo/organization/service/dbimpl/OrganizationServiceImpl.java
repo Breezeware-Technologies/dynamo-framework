@@ -993,10 +993,12 @@ public class OrganizationServiceImpl implements OrganizationService {
         organization = organizationRepository.save(organization);
         logger.info("ID of newly created organization = {}", organization.getId());
 
-        // save organization Address
-        Address organizationAddress = CreateOrganizationDto.createAddressFromDto(createOrganizationDto);
-        organizationAddress = addressRepository.save(organizationAddress);
-        logger.info("Address for organization = {}", organizationAddress.toString());
+        // save organization Address if available
+        Optional<Address> orgAddrOpt = CreateOrganizationDto.createAddressFromDto(createOrganizationDto);
+        if (orgAddrOpt.isPresent()) {
+            addressRepository.save(orgAddrOpt.get());
+            logger.debug("Address for organization = {}", orgAddrOpt.get());
+        }
 
         // ** create default user from createOrganizationDto **//
         User user = CreateOrganizationDto.createUserFromDto(organization, createOrganizationDto);

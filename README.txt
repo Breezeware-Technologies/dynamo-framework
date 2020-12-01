@@ -1,6 +1,11 @@
 Dynamo Framework - Spring based framework for developing web & mobile applications.
 
 
+1.8.2:
+------
+●   Added Address entity to manage postal addresses.
+●   Updated default Organization creation functionality to support addresses.
+
 1.8.1:
 ------
 ●   Updated code to set additional configuration attributes in Email templates.

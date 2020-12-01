@@ -13,7 +13,10 @@ import net.breezeware.dynamo.organization.entity.User;
 import net.breezeware.dynamo.organization.entity.UserGroupMap;
 import net.breezeware.dynamo.organization.entity.UserRoleMap;
 
+import lombok.Data;
+
 @XmlRootElement
+@Data
 public class UserDto implements java.io.Serializable {
     private static final long serialVersionUID = 1L;
 

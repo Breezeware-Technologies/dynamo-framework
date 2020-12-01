@@ -3,10 +3,10 @@
 	<parent>
 		<groupId>net.breezeware.dynamo</groupId>
 		<artifactId>dynamo-modules</artifactId>
-		<version>1.8.2-SNAPSHOT</version>
+		<version>1.8.2</version>
 	</parent>
 	<artifactId>dynamo-organization</artifactId>
-  <version>1.8.2-SNAPSHOT</version>
+  <version>1.8.2</version>
 	<packaging>pom</packaging>
 	<name>Dynamo Organization Module</name>
 	<description>Dynamo module for managing organization artifacts like Organizations, Users, Roles, Groups etc…</description>

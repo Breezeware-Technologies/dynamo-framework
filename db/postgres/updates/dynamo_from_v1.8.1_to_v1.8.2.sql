@@ -6,16 +6,7 @@ CREATE SEQUENCE dynamo.address_seq
   START 1
   CACHE 1;  
   
-DROP SEQUENCE IF EXISTS dynamo.organization_address__map_seq;
-CREATE SEQUENCE dynamo.organization_address__map_seq
-  INCREMENT 1
-  MINVALUE 1
-  MAXVALUE 9223372036854775807
-  START 1
-  CACHE 1;  
-  
-  
-  DROP TABLE IF EXISTS dynamo.address;
+DROP TABLE IF EXISTS dynamo.address;
 CREATE TABLE dynamo.address
 (
   id bigint NOT NULL DEFAULT nextval('dynamo.address_seq'::regclass),
@@ -26,6 +17,14 @@ CREATE TABLE dynamo.address
   pincode character varying(15),
   CONSTRAINT addresss_pkey PRIMARY KEY (id)
 );
+
+DROP SEQUENCE IF EXISTS dynamo.organization_address__map_seq;
+CREATE SEQUENCE dynamo.organization_address__map_seq
+  INCREMENT 1
+  MINVALUE 1
+  MAXVALUE 9223372036854775807
+  START 1
+  CACHE 1;  
 
 DROP TABLE IF EXISTS dynamo.organization_address_map;
 CREATE TABLE dynamo.organization_address_map
