@@ -971,7 +971,7 @@ public class OrganizationServiceImpl implements OrganizationService {
     /**
      * {@inheritDoc}
      */
-    @Transactional(rollbackFor = Exception.class)
+    @Transactional
     @Auditable(event = "Create Organization with Default User", argNames = "createOrganizationDto")
     public Organization createOrganizationWithDefaultUser(CreateOrganizationDto createOrganizationDto)
             throws DynamoDataAccessException {

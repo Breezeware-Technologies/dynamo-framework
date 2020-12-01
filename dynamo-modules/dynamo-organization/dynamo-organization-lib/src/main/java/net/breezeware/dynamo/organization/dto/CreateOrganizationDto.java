@@ -63,7 +63,7 @@ public class CreateOrganizationDto implements java.io.Serializable {
      * ZIP code in an address. This is also called postal code in certain countries.
      */
     @Expose
-    private String pincode;
+    private String zipCode;
 
     @Expose
     private Calendar createdDate;
