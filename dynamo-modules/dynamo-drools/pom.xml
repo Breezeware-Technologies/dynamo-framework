@@ -27,7 +27,7 @@
 			<dependency>
 				<groupId>net.breezeware.dynamo</groupId>
 				<artifactId>dynamo-dependencies</artifactId>
-				<version>1.8.1</version>
+				<version>1.8.2</version>
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>
