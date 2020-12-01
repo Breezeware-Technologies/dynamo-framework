@@ -9,11 +9,10 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 import com.google.gson.annotations.Expose;
 
+import lombok.Data;
 import net.breezeware.dynamo.organization.entity.Address;
 import net.breezeware.dynamo.organization.entity.Organization;
 import net.breezeware.dynamo.organization.entity.User;
-
-import lombok.Data;
 
 @XmlRootElement
 @Data
@@ -125,7 +124,7 @@ public class CreateOrganizationDto implements java.io.Serializable {
             organizationAddress.setAddressLine2(dto.getAddressLine2());
             organizationAddress.setCity(dto.getCity());
             organizationAddress.setState(dto.getState());
-            organizationAddress.setPincode(dto.getPincode());
+            organizationAddress.setZipcode(dto.getZipCode());
 
             addrOpt = Optional.of(organizationAddress);
         }

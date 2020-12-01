@@ -43,6 +43,6 @@ public class Address implements Serializable {
     /**
      * ZIP code in an address. This is also called postal code in certain countries.
      */
-    @Column(name = "pincode")
-    private String pincode;
+    @Column(name = "zipcode")
+    private String zipcode;
 }

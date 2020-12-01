@@ -218,7 +218,7 @@ CREATE TABLE dynamo.address
   address_line2 character varying(100),
   city  character varying(100),
   state character varying(100),
-  pincode character varying(15),
+  zipcode character varying(15),
   CONSTRAINT addresss_pkey PRIMARY KEY (id)
 );
 
