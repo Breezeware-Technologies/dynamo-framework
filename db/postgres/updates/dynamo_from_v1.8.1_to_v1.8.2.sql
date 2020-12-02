@@ -12,8 +12,8 @@ CREATE TABLE dynamo.address
   id bigint NOT NULL DEFAULT nextval('dynamo.address_seq'::regclass),
   address_line1 character varying(100),
   address_line2 character varying(100),
-  city  character varying(100),
-  state character varying(100),
+  city  character varying(45),
+  state character varying(45),
   pincode character varying(15),
   CONSTRAINT addresss_pkey PRIMARY KEY (id)
 );
