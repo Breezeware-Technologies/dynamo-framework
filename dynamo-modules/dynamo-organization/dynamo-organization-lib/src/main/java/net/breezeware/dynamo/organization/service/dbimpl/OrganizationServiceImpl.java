@@ -105,15 +105,26 @@ public class OrganizationServiceImpl implements OrganizationService {
     @Value("${dynamo.applicationName}")
     private String applicationName;
 
-    // applicationAdminEmai
-    @Value("${dynamo.applicationAdminEmail}")
-    private String applicationAdminEmail;
-
     @Value("${dynamo.encodePassword}")
     private boolean encodePassword;
 
     @Value("${dynamo.generateUniqueUserId}")
     private boolean generateUniqueUserId;
+
+    // applicationOwner
+    @Value("${dynamo.applicationOwner}")
+    private String applicationOwner;
+
+    // applicationAdminEmail
+    @Value("${dynamo.applicationAdminEmail}")
+    private String applicationAdminEmail;
+
+    // applicationAdminEmai
+    @Value("${dynamo.appLogoWebUrl}")
+    private String applicationLogoWebUrl;
+
+    @Value("${dynamo.applicationCopyrightYear}")
+    private String applicationCopyrightYear;
 
     /**
      * {@inheritDoc}
@@ -1045,6 +1056,10 @@ public class OrganizationServiceImpl implements OrganizationService {
         keyVals.put("applicationName", applicationName);
         keyVals.put("firstName", userRegistrationToken.getUser().getFirstName());
         keyVals.put("lastName", userRegistrationToken.getUser().getLastName());
+        keyVals.put("applicationOwner", applicationOwner);
+        keyVals.put("applicationAdminEmail", applicationAdminEmail);
+        keyVals.put("applicationLogoWebUrl", applicationLogoWebUrl);
+        keyVals.put("applicationCopyrightYear", applicationCopyrightYear);
 
         // get server address from Dynamo bootstrap bean
         String serverAddress = applicationServerUrl;
