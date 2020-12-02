@@ -31,6 +31,7 @@ import com.querydsl.core.types.PredicateOperation;
 import com.querydsl.core.types.dsl.BooleanOperation;
 
 import net.breezeware.dynamo.audit.aspectj.Auditable;
+import net.breezeware.dynamo.organization.dao.AddressOrganizationRepositoryMap;
 import net.breezeware.dynamo.organization.dao.AddressRepository;
 import net.breezeware.dynamo.organization.dao.GroupRepository;
 import net.breezeware.dynamo.organization.dao.OrganizationRepository;
@@ -44,6 +45,7 @@ import net.breezeware.dynamo.organization.dto.CreateOrganizationDto;
 import net.breezeware.dynamo.organization.entity.Address;
 import net.breezeware.dynamo.organization.entity.Group;
 import net.breezeware.dynamo.organization.entity.Organization;
+import net.breezeware.dynamo.organization.entity.OrganizationAddressMap;
 import net.breezeware.dynamo.organization.entity.PasswordResetToken;
 import net.breezeware.dynamo.organization.entity.QGroup;
 import net.breezeware.dynamo.organization.entity.QRole;
@@ -91,6 +93,9 @@ public class OrganizationServiceImpl implements OrganizationService {
 
     @Autowired
     PasswordResetTokenRepository passwordResetTokenRepository;
+
+    @Autowired
+    AddressOrganizationRepositoryMap addressOrganizationRepositoryMap;
 
     @Autowired
     EmailService emailService;
@@ -1008,6 +1013,10 @@ public class OrganizationServiceImpl implements OrganizationService {
         Optional<Address> orgAddrOpt = CreateOrganizationDto.createAddressFromDto(createOrganizationDto);
         if (orgAddrOpt.isPresent()) {
             addressRepository.save(orgAddrOpt.get());
+            OrganizationAddressMap organizationAddressMap = new OrganizationAddressMap();
+            organizationAddressMap.setOrganizationId(organization.getId());
+            organizationAddressMap.setAddress(orgAddrOpt.get());
+            addressOrganizationRepositoryMap.save(organizationAddressMap);
             logger.debug("Address for organization = {}", orgAddrOpt.get());
         }
 
