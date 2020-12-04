@@ -31,6 +31,8 @@ import com.querydsl.core.types.PredicateOperation;
 import com.querydsl.core.types.dsl.BooleanOperation;
 
 import net.breezeware.dynamo.audit.aspectj.Auditable;
+import net.breezeware.dynamo.organization.dao.AddressOrganizationRepositoryMap;
+import net.breezeware.dynamo.organization.dao.AddressRepository;
 import net.breezeware.dynamo.organization.dao.GroupRepository;
 import net.breezeware.dynamo.organization.dao.OrganizationRepository;
 import net.breezeware.dynamo.organization.dao.PasswordResetTokenRepository;
@@ -40,8 +42,10 @@ import net.breezeware.dynamo.organization.dao.UserRegistrationTokenRepository;
 import net.breezeware.dynamo.organization.dao.UserRepository;
 import net.breezeware.dynamo.organization.dao.UserRoleMapRepository;
 import net.breezeware.dynamo.organization.dto.CreateOrganizationDto;
+import net.breezeware.dynamo.organization.entity.Address;
 import net.breezeware.dynamo.organization.entity.Group;
 import net.breezeware.dynamo.organization.entity.Organization;
+import net.breezeware.dynamo.organization.entity.OrganizationAddressMap;
 import net.breezeware.dynamo.organization.entity.PasswordResetToken;
 import net.breezeware.dynamo.organization.entity.QGroup;
 import net.breezeware.dynamo.organization.entity.QRole;
@@ -76,6 +80,9 @@ public class OrganizationServiceImpl implements OrganizationService {
     GroupRepository groupRepository;
 
     @Autowired
+    AddressRepository addressRepository;
+
+    @Autowired
     UserRoleMapRepository userRoleMapRepository;
 
     @Autowired
@@ -86,6 +93,9 @@ public class OrganizationServiceImpl implements OrganizationService {
 
     @Autowired
     PasswordResetTokenRepository passwordResetTokenRepository;
+
+    @Autowired
+    AddressOrganizationRepositoryMap addressOrganizationRepositoryMap;
 
     @Autowired
     EmailService emailService;
@@ -100,15 +110,26 @@ public class OrganizationServiceImpl implements OrganizationService {
     @Value("${dynamo.applicationName}")
     private String applicationName;
 
-    // applicationAdminEmai
-    @Value("${dynamo.applicationAdminEmail}")
-    private String applicationAdminEmail;
-
     @Value("${dynamo.encodePassword}")
     private boolean encodePassword;
 
     @Value("${dynamo.generateUniqueUserId}")
     private boolean generateUniqueUserId;
+
+    // applicationOwner
+    @Value("${dynamo.applicationOwner}")
+    private String applicationOwner;
+
+    // applicationAdminEmail
+    @Value("${dynamo.applicationAdminEmail}")
+    private String applicationAdminEmail;
+
+    // applicationAdminEmai
+    @Value("${dynamo.appLogoWebUrl}")
+    private String applicationLogoWebUrl;
+
+    @Value("${dynamo.applicationCopyrightYear}")
+    private String applicationCopyrightYear;
 
     /**
      * {@inheritDoc}
@@ -966,7 +987,7 @@ public class OrganizationServiceImpl implements OrganizationService {
     /**
      * {@inheritDoc}
      */
-    @Transactional(rollbackFor = Exception.class)
+    @Transactional
     @Auditable(event = "Create Organization with Default User", argNames = "createOrganizationDto")
     public Organization createOrganizationWithDefaultUser(CreateOrganizationDto createOrganizationDto)
             throws DynamoDataAccessException {
@@ -987,6 +1008,17 @@ public class OrganizationServiceImpl implements OrganizationService {
         Organization organization = CreateOrganizationDto.createOrganizationFromDto(createOrganizationDto);
         organization = organizationRepository.save(organization);
         logger.info("ID of newly created organization = {}", organization.getId());
+
+        // save organization Address if available
+        Optional<Address> orgAddrOpt = CreateOrganizationDto.createAddressFromDto(createOrganizationDto);
+        if (orgAddrOpt.isPresent()) {
+            addressRepository.save(orgAddrOpt.get());
+            OrganizationAddressMap organizationAddressMap = new OrganizationAddressMap();
+            organizationAddressMap.setOrganizationId(organization.getId());
+            organizationAddressMap.setAddress(orgAddrOpt.get());
+            addressOrganizationRepositoryMap.save(organizationAddressMap);
+            logger.debug("Address for organization = {}", orgAddrOpt.get());
+        }
 
         // ** create default user from createOrganizationDto **//
         User user = CreateOrganizationDto.createUserFromDto(organization, createOrganizationDto);
@@ -1033,6 +1065,10 @@ public class OrganizationServiceImpl implements OrganizationService {
         keyVals.put("applicationName", applicationName);
         keyVals.put("firstName", userRegistrationToken.getUser().getFirstName());
         keyVals.put("lastName", userRegistrationToken.getUser().getLastName());
+        keyVals.put("applicationOwner", applicationOwner);
+        keyVals.put("applicationAdminEmail", applicationAdminEmail);
+        keyVals.put("applicationLogoWebUrl", applicationLogoWebUrl);
+        keyVals.put("applicationCopyrightYear", applicationCopyrightYear);
 
         // get server address from Dynamo bootstrap bean
         String serverAddress = applicationServerUrl;

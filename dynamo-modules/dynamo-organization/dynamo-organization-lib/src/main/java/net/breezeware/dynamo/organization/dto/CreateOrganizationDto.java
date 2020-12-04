@@ -1,18 +1,21 @@
 package net.breezeware.dynamo.organization.dto;
 
 import java.util.Calendar;
+import java.util.Optional;
 
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import com.google.gson.Gson;
 import com.google.gson.annotations.Expose;
 
+import lombok.Data;
+import net.breezeware.dynamo.organization.entity.Address;
 import net.breezeware.dynamo.organization.entity.Organization;
 import net.breezeware.dynamo.organization.entity.User;
 
 @XmlRootElement
+@Data
 public class CreateOrganizationDto implements java.io.Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -44,78 +47,28 @@ public class CreateOrganizationDto implements java.io.Serializable {
     private String defaultUserEmail;
 
     @Expose
+    private String addressLine1;
+
+    @Expose
+    private String addressLine2;
+
+    @Expose
+    private String city;
+
+    @Expose
+    private String state;
+
+    /**
+     * ZIP code in an address. This is also called postal code in certain countries.
+     */
+    @Expose
+    private String zipCode;
+
+    @Expose
     private Calendar createdDate;
 
     @Expose
     private Calendar modifiedDate;
-
-    public String getOrganizationName() {
-        return organizationName;
-    }
-
-    public void setOrganizationName(String organizationName) {
-        this.organizationName = organizationName;
-    }
-
-    public String getOrganizationDescription() {
-        return organizationDescription;
-    }
-
-    public void setOrganizationDescription(String organizationDescription) {
-        this.organizationDescription = organizationDescription;
-    }
-
-    public String getDefaultUserFirstName() {
-        return defaultUserFirstName;
-    }
-
-    public void setDefaultUserFirstName(String defaultUserFirstName) {
-        this.defaultUserFirstName = defaultUserFirstName;
-    }
-
-    public String getDefaultUserLastName() {
-        return defaultUserLastName;
-    }
-
-    public void setDefaultUserLastName(String defaultUserLastName) {
-        this.defaultUserLastName = defaultUserLastName;
-    }
-
-    public String getDefaultUserMiddleInitial() {
-        return defaultUserMiddleInitial;
-    }
-
-    public void setDefaultUserMiddleInitial(String defaultUserMiddleInitial) {
-        this.defaultUserMiddleInitial = defaultUserMiddleInitial;
-    }
-
-    public String getDefaultUserEmail() {
-        return defaultUserEmail;
-    }
-
-    public void setDefaultUserEmail(String defaultUserEmail) {
-        this.defaultUserEmail = defaultUserEmail;
-    }
-
-    public Calendar getCreatedDate() {
-        return createdDate;
-    }
-
-    public void setCreatedDate(Calendar createdDate) {
-        this.createdDate = createdDate;
-    }
-
-    public Calendar getModifiedDate() {
-        return modifiedDate;
-    }
-
-    public void setModifiedDate(Calendar modifiedDate) {
-        this.modifiedDate = modifiedDate;
-    }
-
-    public String toString() {
-        return new Gson().toJson(this);
-    }
 
     /**
      * Create an Organization entity from the CreateOrganizationDto entity.
@@ -153,5 +106,29 @@ public class CreateOrganizationDto implements java.io.Serializable {
         user.setUserUniqueId(User.generateUniqueId());
 
         return user;
+    }
+
+    /**
+     * Create Address entity from CreateOrganizationDto entity
+     * @param dto the CreateOrganizationDto
+     * @return Address entity
+     */
+    public static Optional<Address> createAddressFromDto(CreateOrganizationDto dto) {
+
+        Optional<Address> addrOpt = Optional.empty();
+
+        // create a valid address entity only if the city value is present
+        if (dto != null && dto.getCity() != null && dto.getCity().trim().length() > 0) {
+            Address organizationAddress = new Address();
+            organizationAddress.setAddressLine1(dto.getAddressLine1());
+            organizationAddress.setAddressLine2(dto.getAddressLine2());
+            organizationAddress.setCity(dto.getCity());
+            organizationAddress.setState(dto.getState());
+            organizationAddress.setZipcode(dto.getZipCode());
+
+            addrOpt = Optional.of(organizationAddress);
+        }
+
+        return addrOpt;
     }
 }
