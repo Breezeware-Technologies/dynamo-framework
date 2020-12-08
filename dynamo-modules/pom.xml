@@ -1,11 +1,14 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>net.breezeware.dynamo</groupId>
 		<artifactId>dynamo-framework</artifactId>
-		<version>1.8.2</version>
+		<version> 1.9.0-SNAPSHOT</version>
 	</parent>
 	<artifactId>dynamo-modules</artifactId>
+	<version> 1.9.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<name>Dynamo Modules</name>
 	<description>Dynamo Modules project containing other sub modules</description>
@@ -48,11 +51,8 @@
 		</dependency>
 
 		<!-- ******************** Spring Cloud Config Client ******************** -->
-<!-- 		<dependency>
-			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-config-client</artifactId>
-		</dependency>
- -->
+		<!-- <dependency> <groupId>org.springframework.cloud</groupId> <artifactId>spring-cloud-config-client</artifactId> 
+			</dependency> -->
 		<!-- ******************** Spring Boot Starter Data JPA ******************** -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -150,6 +150,18 @@
 		<dependency>
 			<groupId>com.google.code.gson</groupId>
 			<artifactId>gson</artifactId>
+		</dependency>
+
+		<!-- ******************** Java Validation API ******************** -->
+		<dependency>
+			<groupId>javax.validation</groupId>
+			<artifactId>validation-api</artifactId>
+		</dependency>
+
+		<!-- ******************** Hibernate Validator ******************** -->
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-validator</artifactId>
 		</dependency>
 	</dependencies>
 </project>
