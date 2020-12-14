@@ -1,5 +1,6 @@
 package net.breezeware.dynamo.organization.service.dbimpl;
 
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -13,6 +14,7 @@ import java.util.UUID;
 import org.hibernate.exception.ConstraintViolationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -42,6 +44,7 @@ import net.breezeware.dynamo.organization.dao.UserRegistrationTokenRepository;
 import net.breezeware.dynamo.organization.dao.UserRepository;
 import net.breezeware.dynamo.organization.dao.UserRoleMapRepository;
 import net.breezeware.dynamo.organization.dto.CreateOrganizationDto;
+import net.breezeware.dynamo.organization.dto.UserCreatedMessage;
 import net.breezeware.dynamo.organization.entity.Address;
 import net.breezeware.dynamo.organization.entity.Group;
 import net.breezeware.dynamo.organization.entity.Organization;
@@ -130,6 +133,12 @@ public class OrganizationServiceImpl implements OrganizationService {
 
     @Value("${dynamo.applicationCopyrightYear}")
     private String applicationCopyrightYear;
+
+    @Autowired
+    RabbitTemplate rabbitTemplate;
+
+    @Value("${rabbitmq.accountTotalCountUpdateExchange}")
+    String accountTotalCountUpdateExchange;
 
     /**
      * {@inheritDoc}
@@ -1055,6 +1064,17 @@ public class OrganizationServiceImpl implements OrganizationService {
         userRoleMap.setRole(role);
         userRoleMap.setUserId(user.getId());
         saveUserRoleMap(userRoleMap);
+
+        /**
+         * RabbitMQ event publishing after user creation.
+         */
+        UserCreatedMessage userCreatedMessage = new UserCreatedMessage();
+        userCreatedMessage.setOrganization(organization);
+        userCreatedMessage.setUser(user);
+        userCreatedMessage.setMessageId(UUID.randomUUID());
+        userCreatedMessage.setCreatedDate(Instant.now());
+
+        rabbitTemplate.convertAndSend(accountTotalCountUpdateExchange, "", userCreatedMessage);
 
         // ** create a user registration token for user **//
         UserRegistrationToken userRegistrationToken = createUserRegistrationToken(user);
