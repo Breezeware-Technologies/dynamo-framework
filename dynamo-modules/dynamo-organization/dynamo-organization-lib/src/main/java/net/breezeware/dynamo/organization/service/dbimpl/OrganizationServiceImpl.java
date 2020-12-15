@@ -17,6 +17,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -140,6 +141,9 @@ public class OrganizationServiceImpl implements OrganizationService {
     @Value("${rabbitmq.accountTotalCountUpdateExchange}")
     String accountTotalCountUpdateExchange;
 
+    @Autowired
+    ApplicationEventPublisher applicationEventPublisher;
+
     /**
      * {@inheritDoc}
      */
@@ -213,7 +217,7 @@ public class OrganizationServiceImpl implements OrganizationService {
      * {@inheritDoc}
      */
     @Transactional
-    @Auditable(event = "Retrieve Organization", argNames = "organizationId")
+    // @Auditable(event = "Retrieve Organization", argNames = "organizationId")
     public Organization findOrganizationById(long organizationId) {
         logger.info("Entering findOrganizationById(). organizationId = {}", organizationId);
 
@@ -779,6 +783,19 @@ public class OrganizationServiceImpl implements OrganizationService {
         }
         saveUserRoleMapList(userRolesMapList);
 
+        /**
+         * RabbitMQ event publishing after user creation.
+         */
+        UserCreatedMessage userCreatedMessage = new UserCreatedMessage();
+        userCreatedMessage.setOrganization(user.getOrganization());
+        userCreatedMessage.setUser(user);
+        userCreatedMessage.setMessageId(UUID.randomUUID());
+        userCreatedMessage.setCreatedDate(Instant.now());
+
+        // rabbitTemplate.convertAndSend(accountTotalCountUpdateExchange, "",
+        // userCreatedMessage);
+        applicationEventPublisher.publishEvent(userCreatedMessage);
+
         logger.info("Leaving createUser()");
         return user;
     }
@@ -928,7 +945,7 @@ public class OrganizationServiceImpl implements OrganizationService {
      * {@inheritDoc}
      */
     @Transactional
-    @Auditable(event = "Retrieve User", argNames = "id")
+    // @Auditable(event = "Retrieve User", argNames = "id")
     public User getUserById(long userId) {
         logger.info("Entering getUserById(). userId = {}", userId);
 
@@ -1074,7 +1091,9 @@ public class OrganizationServiceImpl implements OrganizationService {
         userCreatedMessage.setMessageId(UUID.randomUUID());
         userCreatedMessage.setCreatedDate(Instant.now());
 
-        rabbitTemplate.convertAndSend(accountTotalCountUpdateExchange, "", userCreatedMessage);
+        // rabbitTemplate.convertAndSend(accountTotalCountUpdateExchange, "",
+        // userCreatedMessage);
+        applicationEventPublisher.publishEvent(userCreatedMessage);
 
         // ** create a user registration token for user **//
         UserRegistrationToken userRegistrationToken = createUserRegistrationToken(user);
