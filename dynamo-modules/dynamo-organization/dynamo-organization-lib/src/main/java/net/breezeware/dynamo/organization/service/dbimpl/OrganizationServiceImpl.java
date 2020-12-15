@@ -1162,6 +1162,7 @@ public class OrganizationServiceImpl implements OrganizationService {
         return userRoleMapList;
     }
 
+    @Transactional
     public List<Address> retrieveAddressByOrganization(long organizationId) {
         List<Address> addressList = addressOrganizationRepositoryMap.findByorganizationId(organizationId);
         return addressList;
