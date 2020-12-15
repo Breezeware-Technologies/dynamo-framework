@@ -1162,4 +1162,15 @@ public class OrganizationServiceImpl implements OrganizationService {
         return userRoleMapList;
     }
 
+    public List<Address> retrieveAddressByOrganization(long organizationId) {
+        List<Address> addressList = addressOrganizationRepositoryMap.findByorganizationId(organizationId);
+        return addressList;
+
+    }
+
+    @Transactional
+    public UserRoleMap retrieveUserRoleMap(Role role) {
+        return userRoleMapRepository.findByRole(role);
+    }
+
 }

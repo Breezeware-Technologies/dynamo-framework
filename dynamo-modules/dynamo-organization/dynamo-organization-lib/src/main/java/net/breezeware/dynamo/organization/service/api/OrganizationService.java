@@ -9,6 +9,7 @@ import org.springframework.data.domain.Pageable;
 import com.querydsl.core.types.Predicate;
 
 import net.breezeware.dynamo.organization.dto.CreateOrganizationDto;
+import net.breezeware.dynamo.organization.entity.Address;
 import net.breezeware.dynamo.organization.entity.Group;
 import net.breezeware.dynamo.organization.entity.Organization;
 import net.breezeware.dynamo.organization.entity.PasswordResetToken;
@@ -377,4 +378,7 @@ public interface OrganizationService {
      */
     List<User> retrieveUsersByRole(long organizationId, List<String> roles);
 
+    List<Address> retrieveAddressByOrganization(long organizationId);
+
+    UserRoleMap retrieveUserRoleMap(Role role);
 }
