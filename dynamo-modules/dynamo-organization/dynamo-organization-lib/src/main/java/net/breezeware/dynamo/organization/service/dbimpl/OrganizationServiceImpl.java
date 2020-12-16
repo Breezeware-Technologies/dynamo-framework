@@ -474,7 +474,7 @@ public class OrganizationServiceImpl implements OrganizationService {
         logger.info("Entering findRoleByName(). Org ID = {}, Role name = {}", organizationId, roleName);
 
         List<Role> roleList = roleRepository.findByNameIgnoreCaseAndOrganizationId(roleName, organizationId);
-        logger.info("Leaving findRoleByName().");
+        logger.info("Leaving findRoleByName(). roleList {}", roleList);
 
         return Optional.ofNullable(roleList.get(0));
     }
@@ -1182,9 +1182,11 @@ public class OrganizationServiceImpl implements OrganizationService {
     }
 
     @Transactional
-    public List<Address> retrieveAddressByOrganization(long organizationId) {
-        List<Address> addressList = addressOrganizationRepositoryMap.findByorganizationId(organizationId);
-        return addressList;
+    public Address retrieveAddressByOrganization(long organizationId) {
+        List<OrganizationAddressMap> addressList = addressOrganizationRepositoryMap
+                .findByorganizationId(organizationId);
+        Address address = addressList.get(0).getAddress();
+        return address;
 
     }
 

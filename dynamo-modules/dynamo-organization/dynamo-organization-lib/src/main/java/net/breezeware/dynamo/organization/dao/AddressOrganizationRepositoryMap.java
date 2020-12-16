@@ -9,14 +9,13 @@ import org.springframework.data.querydsl.binding.QuerydslBindings;
 
 import com.querydsl.core.types.dsl.StringPath;
 
-import net.breezeware.dynamo.organization.entity.Address;
 import net.breezeware.dynamo.organization.entity.OrganizationAddressMap;
 import net.breezeware.dynamo.organization.entity.QOrganizationAddressMap;
 
 public interface AddressOrganizationRepositoryMap extends JpaRepository<OrganizationAddressMap, Long>,
         QuerydslPredicateExecutor<OrganizationAddressMap>, QuerydslBinderCustomizer<QOrganizationAddressMap> {
 
-    List<Address> findByorganizationId(long organizationId);
+    List<OrganizationAddressMap> findByorganizationId(long organizationId);
 
     @Override
     default void customize(QuerydslBindings bindings, QOrganizationAddressMap address) {

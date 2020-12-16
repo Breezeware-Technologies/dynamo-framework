@@ -378,7 +378,7 @@ public interface OrganizationService {
      */
     List<User> retrieveUsersByRole(long organizationId, List<String> roles);
 
-    List<Address> retrieveAddressByOrganization(long organizationId);
+    Address retrieveAddressByOrganization(long organizationId);
 
     UserRoleMap retrieveUserRoleMap(Role role);
 }
