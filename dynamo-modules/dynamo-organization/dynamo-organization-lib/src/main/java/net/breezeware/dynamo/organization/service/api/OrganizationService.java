@@ -254,6 +254,8 @@ public interface OrganizationService {
      */
     User createUser(User user) throws DynamoDataAccessException;
 
+    User createUserWithRoleAndGroup(User user, Organization organization);
+
     /**
      * Save an organization.
      * @param organization the Organization to be saved

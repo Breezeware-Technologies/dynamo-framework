@@ -1032,6 +1032,7 @@ public class OrganizationServiceImpl implements OrganizationService {
 
         // save organization
         Organization organization = CreateOrganizationDto.createOrganizationFromDto(createOrganizationDto);
+        logger.info("Organization before save {}", organization);
         organization = organizationRepository.save(organization);
         logger.info("ID of newly created organization = {}", organization.getId());
 
@@ -1179,6 +1180,12 @@ public class OrganizationServiceImpl implements OrganizationService {
         }
 
         return userRoleMapList;
+    }
+
+    @Override
+    public User createUserWithRoleAndGroup(User user, Organization organization) {
+        User _user = new User();
+        return null;
     }
 
 }

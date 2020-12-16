@@ -1,18 +1,22 @@
 package net.breezeware.dynamo.organization.controller;
 
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.annotation.Profile;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -37,6 +41,7 @@ import com.querydsl.core.types.Predicate;
 
 import net.breezeware.dynamo.config.DynamoConfigProperties;
 import net.breezeware.dynamo.organization.dto.CreateOrganizationDto;
+import net.breezeware.dynamo.organization.dto.UserCreatedMessage;
 import net.breezeware.dynamo.organization.entity.Group;
 import net.breezeware.dynamo.organization.entity.Organization;
 import net.breezeware.dynamo.organization.entity.Role;
@@ -98,13 +103,22 @@ public class OrganizationManagementController {
     // applicationAdminEmai
     @Value("${dynamo.applicationAdminEmail}")
     private String applicationAdminEmail;
-    
+
     // applicationAdminEmai
     @Value("${dynamo.appLogoWebUrl}")
     private String applicationLogoWebUrl;
 
     @Autowired
     OrganizationManagementUtil organizationManagementUtil;
+
+    @Autowired
+    RabbitTemplate rabbitTemplate;
+
+    @Value("${rabbitmq.accountTotalCountUpdateExchange}")
+    String accountTotalCountUpdateExchange;
+
+    @Autowired
+    ApplicationEventPublisher applicationEventPublisher;
 
     /**
      * Redirect to the all-groups page displaying the list of groups.
@@ -657,6 +671,20 @@ public class OrganizationManagementController {
                     logger.info("Saved user role map");
                 }
             }
+
+            /**
+             * RabbitMQ event publishing after user creation.
+             */
+            logger.info("Building RabbbitMQ UserCreatedMessage message creation");
+            UserCreatedMessage userCreatedMessage = new UserCreatedMessage();
+            userCreatedMessage.setOrganization(user.getOrganization());
+            userCreatedMessage.setUser(user);
+            userCreatedMessage.setMessageId(UUID.randomUUID());
+            userCreatedMessage.setCreatedDate(Instant.now());
+
+            rabbitTemplate.convertAndSend(accountTotalCountUpdateExchange, "", userCreatedMessage);
+            logger.info("Leaving RabbitMQ messaging after publishing event, UserCreatedMessage {}", userCreatedMessage);
+            // applicationEventPublisher.publishEvent(userCreatedMessage);
 
             if (requireUserRegistrationByEmail) {
                 // create a user registration token for user
