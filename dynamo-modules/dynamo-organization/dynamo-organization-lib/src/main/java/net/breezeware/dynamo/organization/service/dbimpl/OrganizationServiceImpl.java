@@ -474,7 +474,7 @@ public class OrganizationServiceImpl implements OrganizationService {
         logger.info("Entering findRoleByName(). Org ID = {}, Role name = {}", organizationId, roleName);
 
         List<Role> roleList = roleRepository.findByNameIgnoreCaseAndOrganizationId(roleName, organizationId);
-        logger.info("Leaving findRoleByName().");
+        logger.info("Leaving findRoleByName(). roleList {}", roleList);
 
         return Optional.ofNullable(roleList.get(0));
     }
@@ -1033,7 +1033,8 @@ public class OrganizationServiceImpl implements OrganizationService {
         // save organization
         Organization organization = CreateOrganizationDto.createOrganizationFromDto(createOrganizationDto);
         logger.info("Organization before save {}", organization);
-        organization = organizationRepository.save(organization);
+        // organization = organizationRepository.save(organization);
+        organization = saveOrganization(organization);
         logger.info("ID of newly created organization = {}", organization.getId());
 
         // save organization Address if available
@@ -1058,7 +1059,7 @@ public class OrganizationServiceImpl implements OrganizationService {
         List<User> existingUsersWithEmail = userRepository.findByEmailIgnoreCase(email);
         if (existingUsersWithEmail != null && existingUsersWithEmail.size() > 0
                 && user.getId() != existingUsersWithEmail.get(0).getId()) {
-            throw new DynamoDataAccessException("Email already exists in the application. Please choose a new one.");
+            throw new DynamoDataAccessException("Email already exists in the application.Please choose a new one.");
         }
 
         // save user
@@ -1082,6 +1083,21 @@ public class OrganizationServiceImpl implements OrganizationService {
         userRoleMap.setRole(role);
         userRoleMap.setUserId(user.getId());
         saveUserRoleMap(userRoleMap);
+
+        Group group = new Group();
+        group.setCreatedDate(Calendar.getInstance());
+        group.setModifiedDate(Calendar.getInstance());
+        group.setDescription("Business");
+        group.setOrganizationId(organizationId);
+        group.setName("Business");
+        group = groupRepository.save(group);
+
+        UserGroupMap userGroupMap = new UserGroupMap();
+        userGroupMap.setGroup(group);
+        userGroupMap.setUserId(user.getId());
+        userGroupMap.setModifiedDate(Calendar.getInstance());
+        userGroupMap.setCreatedDate(Calendar.getInstance());
+        saveUserGroupMap(userGroupMap);
 
         /**
          * RabbitMQ event publishing after user creation.
@@ -1120,7 +1136,7 @@ public class OrganizationServiceImpl implements OrganizationService {
                 templateName);
         logger.info("Sent email to user with email {}", user.getEmail());
 
-        logger.info("Leaving createOrganizationWithDefaultUser(). Organization ID = {}", organization.getId());
+        logger.info("Leaving createOrganizationWithDefaultUser(). Organization ID ={}", organization.getId());
         return organization;
     }
 
@@ -1186,6 +1202,20 @@ public class OrganizationServiceImpl implements OrganizationService {
     public User createUserWithRoleAndGroup(User user, Organization organization) {
         User _user = new User();
         return null;
+    }
+
+    @Transactional
+    public Address retrieveAddressByOrganization(long organizationId) {
+        List<OrganizationAddressMap> addressList = addressOrganizationRepositoryMap
+                .findByorganizationId(organizationId);
+        Address address = addressList.get(0).getAddress();
+        return address;
+
+    }
+
+    @Transactional
+    public UserRoleMap retrieveUserRoleMap(Role role) {
+        return userRoleMapRepository.findByRole(role);
     }
 
 }
