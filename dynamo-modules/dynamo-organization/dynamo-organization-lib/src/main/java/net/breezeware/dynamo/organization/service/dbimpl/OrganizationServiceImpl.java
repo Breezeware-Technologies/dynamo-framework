@@ -821,7 +821,7 @@ public class OrganizationServiceImpl implements OrganizationService {
     @Transactional
     @Auditable(event = "Retrieve Groups", argNames = "ids")
     public List<Group> findMultipleGroups(List<Long> ids) {
-        logger.info("Entering findMultipleGroups().");
+        logger.info("Entering findMultipleGroups(). , ids {}", ids);
 
         List<Group> groupsList = new ArrayList<Group>();
 
@@ -1073,7 +1073,8 @@ public class OrganizationServiceImpl implements OrganizationService {
         role.setOrganizationId(organization.getId());
 
         role = saveRole(role);
-        List<Long> roleIdList = List.of(role.getId());
+        List<Long> roleIdList = new ArrayList<Long>();
+        roleIdList.add(role.getId());
 
         Group group = new Group();
         group.setCreatedDate(Calendar.getInstance());
@@ -1083,7 +1084,8 @@ public class OrganizationServiceImpl implements OrganizationService {
         group.setName("Business");
 
         group = saveGroup(group);
-        List<Long> groupIdList = List.of(group.getId());
+        List<Long> groupIdList = new ArrayList<Long>();
+        groupIdList.add(group.getId());
 
         // ** create default user from createOrganizationDto **//
         User user = CreateOrganizationDto.createUserFromDto(organization, createOrganizationDto);
@@ -1110,6 +1112,8 @@ public class OrganizationServiceImpl implements OrganizationService {
         // user = saveUser(user, encodePassword);
         // user = userRepository.save(user);
         logger.info("ID of newly created user = {}", user.getId());
+
+        // createRabbitMQMessage(user);
 
         // // ** create an ORGANIZATION_ADMIN role for this organization **//
         // Role role = new Role();
@@ -1299,6 +1303,7 @@ public class OrganizationServiceImpl implements OrganizationService {
         // save the user entity
         // try {
         user = saveUser(user, encodePassword);
+
         // }catch(
         //
         // DynamoDataAccessException e)
@@ -1316,11 +1321,12 @@ public class OrganizationServiceImpl implements OrganizationService {
         // return new ModelAndView("dynamo-organization/usermanagement/create-user");
         // }
 
-        List<Group> groupList = findMultipleGroups(user.getUserGroupId());
-        List<Role> roleList = findMultipleRoles(user.getUserRoleId());
+        List<Group> groupList = findMultipleGroups(groupIdList);
+        List<Role> roleList = findMultipleRoles(roleIdList);
 
         // create roles and groups for user
-        if (groupList != null && roleList != null) {
+        if (groupList != null && groupIdList.size() > 0) {
+
             for (Group group : groupList) {
                 UserGroupMap userGroupMap = new UserGroupMap();
                 userGroupMap.setCreatedDate(Calendar.getInstance());
@@ -1330,7 +1336,8 @@ public class OrganizationServiceImpl implements OrganizationService {
                 userGroupMap = saveUserGroupMap(userGroupMap);
                 logger.info("Saved user group map");
             }
-
+        }
+        if (roleList != null && roleList.size() > 0) {
             for (Role role : roleList) {
                 UserRoleMap userRoleMap = new UserRoleMap();
                 userRoleMap.setCreatedDate(Calendar.getInstance());
@@ -1341,7 +1348,6 @@ public class OrganizationServiceImpl implements OrganizationService {
                 logger.info("Saved user role map");
             }
         }
-
         /**
          * RabbitMQ event publishing after user creation.
          */
@@ -1351,12 +1357,13 @@ public class OrganizationServiceImpl implements OrganizationService {
         userCreatedMessage.setUser(user);
         userCreatedMessage.setMessageId(UUID.randomUUID());
         userCreatedMessage.setCreatedDate(Instant.now());
-
-        // rabbitTemplate.convertAndSend(accountTotalCountUpdateExchange, "",
-        // userCreatedMessage);
+        //
+        // // rabbitTemplate.convertAndSend(accountTotalCountUpdateExchange, "",
+        // // userCreatedMessage);
         applicationEventPublisher.publishEvent(userCreatedMessage);
 
-        logger.info("Leaving RabbitMQ messaging after publishing event, UserCreatedMessage {}", userCreatedMessage);
+        // logger.info("Leaving RabbitMQ messaging after publishing event,
+        // UserCreatedMessage {}", userCreatedMessage);
 
         // if (requireUserRegistrationByEmail) {
         // // create a user registration token for user
@@ -1390,6 +1397,24 @@ public class OrganizationServiceImpl implements OrganizationService {
         // }
 
         return user;
+    }
+
+    private void createRabbitMQMessage(User user) {
+        /**
+         * RabbitMQ event publishing after user creation.
+         */
+        logger.info("Building RabbbitMQ UserCreatedMessage message creation");
+        UserCreatedMessage userCreatedMessage = new UserCreatedMessage();
+        userCreatedMessage.setOrganization(user.getOrganization());
+        userCreatedMessage.setUser(user);
+        userCreatedMessage.setMessageId(UUID.randomUUID());
+        userCreatedMessage.setCreatedDate(Instant.now());
+
+        // rabbitTemplate.convertAndSend(accountTotalCountUpdateExchange, "",
+        // userCreatedMessage);
+        applicationEventPublisher.publishEvent(userCreatedMessage);
+        logger.info("Leaving RabbbitMQ UserCreatedMessage message ");
+
     }
 
     @Transactional
