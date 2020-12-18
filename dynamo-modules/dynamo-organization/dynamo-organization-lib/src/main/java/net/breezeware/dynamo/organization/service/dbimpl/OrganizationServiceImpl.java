@@ -475,8 +475,11 @@ public class OrganizationServiceImpl implements OrganizationService {
 
         List<Role> roleList = roleRepository.findByNameIgnoreCaseAndOrganizationId(roleName, organizationId);
         logger.info("Leaving findRoleByName(). roleList {}", roleList);
-
-        return Optional.ofNullable(roleList.get(0));
+        if (roleList != null && roleList.size() > 0) {
+            return Optional.of(roleList.get(0));
+        } else {
+            return Optional.empty();
+        }
     }
 
     /**
