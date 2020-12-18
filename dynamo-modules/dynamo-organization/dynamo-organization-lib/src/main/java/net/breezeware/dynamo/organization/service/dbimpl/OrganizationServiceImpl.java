@@ -796,7 +796,7 @@ public class OrganizationServiceImpl implements OrganizationService {
         userCreatedMessage.setMessageId(UUID.randomUUID());
         userCreatedMessage.setCreatedDate(Instant.now());
 
-        // rabbitTemplate.convertAndSend(accountTotalCountUpdateExchange, "",
+        // rabbitTemplate.convertAndSend(dynamoOrgExchange, "",
         // userCreatedMessage);
         applicationEventPublisher.publishEvent(userCreatedMessage);
 
