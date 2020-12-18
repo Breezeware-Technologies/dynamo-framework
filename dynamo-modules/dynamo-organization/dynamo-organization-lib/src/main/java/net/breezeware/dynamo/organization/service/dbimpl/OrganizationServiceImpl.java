@@ -139,8 +139,8 @@ public class OrganizationServiceImpl implements OrganizationService {
     @Autowired
     RabbitTemplate rabbitTemplate;
 
-    @Value("${rabbitmq.accountTotalCountUpdateExchange}")
-    String accountTotalCountUpdateExchange;
+    @Value("${rabbitmq.dynamoOrgExchange}")
+    String dynamoOrgExchange;
 
     @Autowired
     ApplicationEventPublisher applicationEventPublisher;
