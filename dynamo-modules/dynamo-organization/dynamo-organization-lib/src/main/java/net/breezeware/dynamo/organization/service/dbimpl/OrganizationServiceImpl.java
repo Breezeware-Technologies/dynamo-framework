@@ -1029,8 +1029,7 @@ public class OrganizationServiceImpl implements OrganizationService {
         String orgName = createOrganizationDto.getOrganizationName().trim();
         long organizationId = -1;
         List<Organization> existingOrgsWithName = organizationRepository.findByNameIgnoreCase(orgName);
-        // List<User> existingUsersWithEmail =
-        // userRepository.findByEmailIgnoreCase(email);
+
         if (existingOrgsWithName != null && existingOrgsWithName.size() > 0
                 && organizationId != existingOrgsWithName.get(0).getId()) {
             throw new DynamoDataAccessException("Organization Name already exists.");
@@ -1046,7 +1045,6 @@ public class OrganizationServiceImpl implements OrganizationService {
         // save organization
         Organization organization = CreateOrganizationDto.createOrganizationFromDto(createOrganizationDto);
         logger.info("Organization before save {}", organization);
-        // organization = organizationRepository.save(organization);
         organization = saveOrganization(organization);
         logger.info("ID of newly created organization = {}", organization.getId());
 
@@ -1058,10 +1056,6 @@ public class OrganizationServiceImpl implements OrganizationService {
             Address address = orgAddrOpt.get();
             address = saveAddress(address);
 
-            // OrganizationAddressMap organizationAddressMap = new OrganizationAddressMap();
-            // organizationAddressMap.setOrganizationId(organization.getId());
-            // organizationAddressMap.setAddress(orgAddrOpt.get());
-            // addressOrganizationRepositoryMap.save(organizationAddressMap);
             OrganizationAddressMap organizationAddressMap = createOrganizationAddressMap(address, organization);
             logger.debug("OrganizationAddressMap {}", organizationAddressMap);
 
@@ -1093,91 +1087,11 @@ public class OrganizationServiceImpl implements OrganizationService {
         // ** create default user from createOrganizationDto **//
         User user = CreateOrganizationDto.createUserFromDto(organization, createOrganizationDto);
 
-        user = createUserWithRoleAndGroup(user, organization.getId(), roleIdList, groupIdList);
-        // throw exception if duplicate email name exists
-        // String email = user.getEmail();
-        // // email = email != null ? (email.trim().length() > 0) ? email : '') : '';
-        // if (email != null) {
-        // email = email.trim();
-        // }
-        //
-        // User existingUserWithEmail = getUserByEmail(email);
-        // // userRepository.findByEmailIgnoreCase(email);
-        // if (existingUserWithEmail != null &&
-        // !(user.getEmail().equalsIgnoreCase(existingUserWithEmail.getEmail()))
-        // && user.getId() != existingUserWithEmail.getId()) {
-        // throw new DynamoDataAccessException("Email already exists in the
-        // application.Please choose a new one.");
-        // }
+        user = createUserWithOrganizationAndRoleAndGroup(user, organization.getId(), roleIdList, groupIdList);
 
-        // save user
-        // user.setStatus(User.STATUS_NEW);
-        // user = saveUser(user, encodePassword);
-        // user = userRepository.save(user);
         logger.info("ID of newly created user = {}", user.getId());
 
-        // createRabbitMQMessage(user);
-
-        // // ** create an ORGANIZATION_ADMIN role for this organization **//
-        // Role role = new Role();
-        // role.setCreatedDate(Calendar.getInstance());
-        // role.setModifiedDate(Calendar.getInstance());
-        // role.setDescription("Organization Admin");
-        // role.setName(Role.USER_ROLE_ORGANIZATION_ADMIN);
-        // role.setOrganizationId(organization.getId());
-        // role = roleRepository.save(role);
-
-        // ** map ORGANIZATION_ADMIN role to default user **//
-        // UserRoleMap userRoleMap = new UserRoleMap();
-        // userRoleMap.setCreatedDate(Calendar.getInstance());
-        // userRoleMap.setModifiedDate(Calendar.getInstance());
-        // userRoleMap.setRole(role);
-        // userRoleMap.setUserId(user.getId());
-        // saveUserRoleMap(userRoleMap);
-        //
-        // UserGroupMap userGroupMap = new UserGroupMap();
-        // userGroupMap.setGroup(group);
-        // userGroupMap.setUserId(user.getId());
-        // userGroupMap.setModifiedDate(Calendar.getInstance());
-        // userGroupMap.setCreatedDate(Calendar.getInstance());
-        // saveUserGroupMap(userGroupMap);
-
-        // /**
-        // * RabbitMQ event publishing after user creation.
-        // */
-        // UserCreatedMessage userCreatedMessage = new UserCreatedMessage();
-        // userCreatedMessage.setOrganization(organization);
-        // userCreatedMessage.setUser(user);
-        // userCreatedMessage.setMessageId(UUID.randomUUID());
-        // userCreatedMessage.setCreatedDate(Instant.now());
-        //
-        // // rabbitTemplate.convertAndSend(accountTotalCountUpdateExchange, "",
-        // // userCreatedMessage);
-        // applicationEventPublisher.publishEvent(userCreatedMessage);
-
-        // ** create a user registration token for user **//
-        UserRegistrationToken userRegistrationToken = createUserRegistrationToken(user);
-        logger.info("Created user registration token");
-
-        // ** email the user registration token for user **//
-        Map<String, String> keyVals = new HashMap<String, String>();
-        keyVals.put("applicationName", applicationName);
-        keyVals.put("firstName", userRegistrationToken.getUser().getFirstName());
-        keyVals.put("lastName", userRegistrationToken.getUser().getLastName());
-        keyVals.put("applicationOwner", applicationOwner);
-        keyVals.put("applicationAdminEmail", applicationAdminEmail);
-        keyVals.put("applicationLogoWebUrl", applicationLogoWebUrl);
-        keyVals.put("applicationCopyrightYear", applicationCopyrightYear);
-
-        // get server address from Dynamo bootstrap bean
-        String serverAddress = applicationServerUrl;
-        keyVals.put("registrationLink", serverAddress + "/registerUser?token=" + userRegistrationToken.getToken());
-        String templateName = "user-registration-email-template";
-        logger.info("Sending email with template name = {}", templateName);
-
-        emailService.sendMail(applicationAdminEmail, user.getEmail(), applicationName + " - Complete Signup.", keyVals,
-                templateName);
-        logger.info("Sent email to user with email {}", user.getEmail());
+        sendRegistrationEmail(user);
 
         logger.info("Leaving createOrganizationWithDefaultUser(). Organization ID ={}", organization.getId());
         return organization;
@@ -1264,16 +1178,24 @@ public class OrganizationServiceImpl implements OrganizationService {
         return userRoleMapList;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Transactional
-    public User createUserWithRoleAndGroup(User user, long organizationId, List<Long> roleIdList,
+    public User createUserWithOrganizationAndRoleAndGroup(User user, long organizationId, List<Long> roleIdList,
             List<Long> groupIdList) throws DynamoDataAccessException {
         logger.info("Entering createUserWithRoleAndGroup(), user {}, organizationId {}, roleIdList {}, groupIdList {}",
                 user, organizationId, roleIdList, groupIdList);
         String userUniqueId = user.getUserUniqueId();
         if (generateUniqueUserId) {
-            if (!(userUniqueId != null && userUniqueId.trim().length() > 0))
-                userUniqueId = User.generateUniqueId();
             logger.debug("Unique ID generated for user = {}", userUniqueId);
+
+            // if userUniqueId is not generated before, then generate a new
+            // useruniqueId for the user.
+            if (!(userUniqueId != null && userUniqueId.trim().length() > 0)) {
+                userUniqueId = User.generateUniqueId();
+            }
+
         } else {
             logger.debug("Unique ID '{}' is used from the user input, since generateUniqueUserId = {}", userUniqueId,
                     generateUniqueUserId);
@@ -1285,8 +1207,6 @@ public class OrganizationServiceImpl implements OrganizationService {
         }
 
         // set user with related properties
-        // long organizationId =
-        // organizationManagementUtil.getOrganizationIdFromSession(session);
         Organization organization = findOrganizationById(organizationId);
         user.setOrganization(organization);
         user.setUserUniqueId(userUniqueId);
@@ -1303,31 +1223,13 @@ public class OrganizationServiceImpl implements OrganizationService {
             user.setStatus(User.STATUS_ACTIVE);
         }
 
-        // save the user entity
-        // try {
+        // encode password if available and save user.
         user = saveUser(user, encodePassword);
-
-        // }catch(
-        //
-        // DynamoDataAccessException e)
-        // {
-        // List<Group> groups = organizationService.findAllGroups();
-        // List<Role> roles = organizationService
-        // .getRolesInOrganization(dynamoAppBootstrapBean.getCurrentUserOrganizationId());
-        // model.addAttribute("groups", groups);
-        // model.addAttribute("roles", roles);
-        // model.addAttribute("user", user);
-        // model.addAttribute("activeNav", "users");
-        //
-        // bindingResult.addError(new ObjectError("user", e.getMessage()));
-        //
-        // return new ModelAndView("dynamo-organization/usermanagement/create-user");
-        // }
 
         List<Group> groupList = findMultipleGroups(groupIdList);
         List<Role> roleList = findMultipleRoles(roleIdList);
 
-        // create roles and groups for user
+        // create groups for user if available
         if (groupList != null && groupIdList.size() > 0) {
 
             for (Group group : groupList) {
@@ -1340,6 +1242,8 @@ public class OrganizationServiceImpl implements OrganizationService {
                 logger.info("Saved user group map");
             }
         }
+
+        // create roles for user if available
         if (roleList != null && roleList.size() > 0) {
             for (Role role : roleList) {
                 UserRoleMap userRoleMap = new UserRoleMap();
@@ -1351,6 +1255,7 @@ public class OrganizationServiceImpl implements OrganizationService {
                 logger.info("Saved user role map");
             }
         }
+
         /**
          * RabbitMQ event publishing after user creation.
          */
@@ -1360,75 +1265,67 @@ public class OrganizationServiceImpl implements OrganizationService {
         userCreatedMessage.setUser(user);
         userCreatedMessage.setMessageId(UUID.randomUUID());
         userCreatedMessage.setCreatedDate(Instant.now());
-        //
-        // // rabbitTemplate.convertAndSend(accountTotalCountUpdateExchange, "",
-        // // userCreatedMessage);
+
         applicationEventPublisher.publishEvent(userCreatedMessage);
+        logger.info("Leaving RabbitMQ messaging after publishing event, UserCreatedMessage {}", userCreatedMessage);
 
-        // logger.info("Leaving RabbitMQ messaging after publishing event,
-        // UserCreatedMessage {}", userCreatedMessage);
-
-        // if (requireUserRegistrationByEmail) {
-        // // create a user registration token for user
-        // logger.info("Created user registration token");
-        //
-        // // email the user registration token for user
-        // Map<String, String> keyVals = new HashMap<String, String>();
-        // UserRegistrationToken userRegistrationToken =
-        // createUserRegistrationToken(user);
-        // keyVals.put("applicationName", applicationName);
-        // keyVals.put("applicationOwner", applicationOwner);
-        // keyVals.put("applicationLogoWebUrl", applicationLogoWebUrl);
-        // keyVals.put("applicationAdminEmail", applicationAdminEmail);
-        // keyVals.put("firstName", userRegistrationToken.getUser().getFirstName());
-        // keyVals.put("lastName", userRegistrationToken.getUser().getLastName());
-        // keyVals.put("registrationLink",
-        // applicationServerUrl + "/registerUser?token=" +
-        // userRegistrationToken.getToken());
-        // String templateName = "user-registration-email-template";
-        // logger.info("Sending email with template name = {}", templateName);
-        //
-        // String emailSubject = applicationName + " - Complete Signup";
-        // emailService.sendMail(applicationAdminEmail, user.getEmail(), emailSubject,
-        // keyVals, templateName);
-        //
-        // logger.info("Sent email!");
-        // } else {
-        // logger.info("Since requireUserRegistrationByEmail is set to {}, Email is not
-        // being sent.",
-        // requireUserRegistrationByEmail);
-        // }
+        // Build and Send email service for user registration.
+        sendRegistrationEmail(user);
 
         return user;
     }
 
-    private void createRabbitMQMessage(User user) {
-        /**
-         * RabbitMQ event publishing after user creation.
-         */
-        logger.info("Building RabbbitMQ UserCreatedMessage message creation");
-        UserCreatedMessage userCreatedMessage = new UserCreatedMessage();
-        userCreatedMessage.setOrganization(user.getOrganization());
-        userCreatedMessage.setUser(user);
-        userCreatedMessage.setMessageId(UUID.randomUUID());
-        userCreatedMessage.setCreatedDate(Instant.now());
+    /**
+     * Sends a user registration email.
+     * @param user User to which the email has to be send.
+     */
+    private void sendRegistrationEmail(User user) {
+        if (requireUserRegistrationByEmail) {
+            // create a user registration token for user
+            logger.info("Created user registration token");
 
-        // rabbitTemplate.convertAndSend(accountTotalCountUpdateExchange, "",
-        // userCreatedMessage);
-        applicationEventPublisher.publishEvent(userCreatedMessage);
-        logger.info("Leaving RabbbitMQ UserCreatedMessage message ");
+            // email the user registration token for user
+            Map<String, String> keyVals = new HashMap<String, String>();
+            UserRegistrationToken userRegistrationToken = createUserRegistrationToken(user);
+            keyVals.put("applicationName", applicationName);
+            keyVals.put("applicationOwner", applicationOwner);
+            keyVals.put("applicationLogoWebUrl", applicationLogoWebUrl);
+            keyVals.put("applicationAdminEmail", applicationAdminEmail);
+            keyVals.put("firstName", userRegistrationToken.getUser().getFirstName());
+            keyVals.put("lastName", userRegistrationToken.getUser().getLastName());
+            keyVals.put("registrationLink",
+                    applicationServerUrl + "/registerUser?token=" + userRegistrationToken.getToken());
+            String templateName = "user-registration-email-template";
+            logger.info("Sending email with template name = {}", templateName);
 
+            String emailSubject = applicationName + " - Complete Signup";
+            emailService.sendMail(applicationAdminEmail, user.getEmail(), emailSubject, keyVals, templateName);
+
+            logger.info("Sent email!");
+        } else {
+            logger.info("Since requireUserRegistrationByEmail is set to {}, Email is not being sent.",
+                    requireUserRegistrationByEmail);
+        }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Transactional
-    public Address retrieveAddressByOrganization(long organizationId) {
-        List<OrganizationAddressMap> addressList = addressOrganizationRepositoryMap
-                .findByorganizationId(organizationId);
-        Address address = addressList.get(0).getAddress();
-        return address;
+    public Optional<Address> retrieveAddressByOrganization(long organizationId) {
+        Optional<OrganizationAddressMap> optOrganizationAddress = addressOrganizationRepositoryMap
+                .findByOrganizationId(organizationId);
+        Optional<Address> optAddress = Optional.empty();
+        if (optOrganizationAddress.isPresent()) {
+            optAddress = Optional.of(optOrganizationAddress.get().getAddress());
+        }
+        return optAddress;
 
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Transactional
     public UserRoleMap retrieveUserRoleMap(Role role) {
         return userRoleMapRepository.findByRole(role);

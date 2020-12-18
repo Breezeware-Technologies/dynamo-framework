@@ -596,7 +596,7 @@ public class OrganizationManagementController {
 
             try {
                 long organizationId = organizationManagementUtil.getOrganizationIdFromSession(session);
-                user = organizationService.createUserWithRoleAndGroup(user, organizationId, user.getUserRoleId(),
+                user = organizationService.createUserWithOrganizationAndRoleAndGroup(user, organizationId, user.getUserRoleId(),
                         user.getUserGroupId());
             } catch (DynamoDataAccessException e) {
                 List<Group> groups = organizationService.findAllGroups();
@@ -611,105 +611,6 @@ public class OrganizationManagementController {
 
                 return new ModelAndView("dynamo-organization/usermanagement/create-user");
             }
-
-            // generate unique ID for user if required
-            // String userUniqueId = user.getUserUniqueId();
-            // if (generateUniqueUserId) {
-            // userUniqueId = User.generateUniqueId();
-            // logger.debug("Unique ID generated for user = {}", userUniqueId);
-            // } else {
-            // logger.debug("Unique ID '{}' is used from the user input, since
-            // generateUniqueUserId = {}",
-            // userUniqueId, generateUniqueUserId);
-            //
-            // // if unique User ID is null, the set it to the value of email.
-            // if (userUniqueId == null || userUniqueId != null &&
-            // userUniqueId.trim().length() == 0) {
-            // userUniqueId = user.getEmail();
-            // }
-            // }
-            //
-            // // create the user
-            // user.setUserUniqueId(userUniqueId);
-            // user.setCreatedDate(Calendar.getInstance());
-            // user.setModifiedDate(Calendar.getInstance());
-            //
-            // if (requireUserRegistrationByEmail) {
-            // logger.debug("requireUserRegistrationByEmail = {}. So setting user status to
-            // new ",
-            // requireUserRegistrationByEmail);
-            // user.setStatus(User.STATUS_NEW);
-            // } else {
-            // logger.debug("requireUserRegistrationByEmail = {}. So setting user status to
-            // active ",
-            // requireUserRegistrationByEmail);
-            // user.setStatus(User.STATUS_ACTIVE);
-            // }
-            //
-            // // save the user entity
-            // long organizationId =
-            // organizationManagementUtil.getOrganizationIdFromSession(session);
-            // user.setOrganization(organizationService.findOrganizationById(organizationId));
-            // try {
-            // organizationService.saveUser(user, encodePassword);
-            // } catch (DynamoDataAccessException e) {
-            // List<Group> groups = organizationService.findAllGroups();
-            // List<Role> roles = organizationService
-            // .getRolesInOrganization(dynamoAppBootstrapBean.getCurrentUserOrganizationId());
-            // model.addAttribute("groups", groups);
-            // model.addAttribute("roles", roles);
-            // model.addAttribute("user", user);
-            // model.addAttribute("activeNav", "users");
-            //
-            // bindingResult.addError(new ObjectError("user", e.getMessage()));
-            //
-            // return new ModelAndView("dynamo-organization/usermanagement/create-user");
-            // }
-            //
-            // List<Group> groupList =
-            // organizationService.findMultipleGroups(user.getUserGroupId());
-            // List<Role> roleList =
-            // organizationService.findMultipleRoles(user.getUserRoleId());
-            //
-            // // create roles and groups for user
-            // if (groupList != null && roleList != null) {
-            // for (Group group : groupList) {
-            // UserGroupMap userGroupMap = new UserGroupMap();
-            // userGroupMap.setCreatedDate(Calendar.getInstance());
-            // userGroupMap.setModifiedDate(Calendar.getInstance());
-            // userGroupMap.setGroup(group);
-            // userGroupMap.setUserId(user.getId());
-            // organizationService.saveUserGroupMap(userGroupMap);
-            // logger.info("Saved user group map");
-            // }
-            //
-            // for (Role role : roleList) {
-            // UserRoleMap userRoleMap = new UserRoleMap();
-            // userRoleMap.setCreatedDate(Calendar.getInstance());
-            // userRoleMap.setModifiedDate(Calendar.getInstance());
-            // userRoleMap.setRole(role);
-            // userRoleMap.setUserId(user.getId());
-            // organizationService.saveUserRoleMap(userRoleMap);
-            // logger.info("Saved user role map");
-            // }
-            // }
-            //
-            // /**
-            // * RabbitMQ event publishing after user creation.
-            // */
-            // logger.info("Building RabbbitMQ UserCreatedMessage message creation");
-            // UserCreatedMessage userCreatedMessage = new UserCreatedMessage();
-            // userCreatedMessage.setOrganization(user.getOrganization());
-            // userCreatedMessage.setUser(user);
-            // userCreatedMessage.setMessageId(UUID.randomUUID());
-            // userCreatedMessage.setCreatedDate(Instant.now());
-            //
-            // rabbitTemplate.convertAndSend(accountTotalCountUpdateExchange, "",
-            // userCreatedMessage);
-            // logger.info("Leaving RabbitMQ messaging after publishing event,
-            // UserCreatedMessage {}", userCreatedMessage);
-            // // applicationEventPublisher.publishEvent(userCreatedMessage);
-
             if (requireUserRegistrationByEmail) {
                 // create a user registration token for user
                 logger.info("Created user registration token");

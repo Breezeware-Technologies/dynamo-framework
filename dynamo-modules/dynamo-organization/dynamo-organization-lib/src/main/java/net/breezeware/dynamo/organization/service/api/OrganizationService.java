@@ -256,8 +256,19 @@ public interface OrganizationService {
      */
     User createUser(User user) throws DynamoDataAccessException;
 
-    User createUserWithRoleAndGroup(User user, long organizationId, List<Long> roleIdList, List<Long> groupIdList)
-            throws DynamoDataAccessException;
+    /**
+     * Create a new user for the organization with specific roles and groups. <br>
+     * Sends a registration email after creation.
+     * @param user           User to be created.
+     * @param organizationId OrganizationId to which the user has to be created.
+     * @param roleIdList     List of roles selected for the user.
+     * @param groupIdList    List of groups selected for the user.
+     * @return User
+     * @throws DynamoDataAccessException Exception if email is already register to
+     *                                   some other user.
+     */
+    User createUserWithOrganizationAndRoleAndGroup(User user, long organizationId, List<Long> roleIdList,
+            List<Long> groupIdList) throws DynamoDataAccessException;
 
     /**
      * Save an organization.
@@ -269,8 +280,19 @@ public interface OrganizationService {
      */
     Organization saveOrganization(Organization organization) throws DynamoDataAccessException;
 
+    /**
+     * Saves the Address of the Organization.
+     * @param address Address to be stored.
+     * @return Address Saved instance of the Address.
+     */
     Address saveAddress(Address address);
 
+    /**
+     * Creates a Map of Organization and Address.
+     * @param address      Address of the organization.
+     * @param organization Organization to which the address has to be mapped.
+     * @return OrganizationAddressMap Saved instance of OrganizationAddressMap.
+     */
     OrganizationAddressMap createOrganizationAddressMap(Address address, Organization organization);
 
     /**
@@ -386,7 +408,17 @@ public interface OrganizationService {
      */
     List<User> retrieveUsersByRole(long organizationId, List<String> roles);
 
-    Address retrieveAddressByOrganization(long organizationId);
+    /**
+     * Retrieves the mapped Address of the organization.
+     * @param organizationId Id of the organization.
+     * @return Optional Address if present, else returns an empty.
+     */
+    Optional<Address> retrieveAddressByOrganization(long organizationId);
 
+    /**
+     * Retrieves an UserRoleMap.
+     * @param role Role of the user
+     * @return UserRoleMap mapped to the user.
+     */
     UserRoleMap retrieveUserRoleMap(Role role);
 }
