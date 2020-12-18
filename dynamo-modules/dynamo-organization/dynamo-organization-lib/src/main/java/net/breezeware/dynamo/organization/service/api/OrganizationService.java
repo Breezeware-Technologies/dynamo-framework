@@ -12,6 +12,7 @@ import net.breezeware.dynamo.organization.dto.CreateOrganizationDto;
 import net.breezeware.dynamo.organization.entity.Address;
 import net.breezeware.dynamo.organization.entity.Group;
 import net.breezeware.dynamo.organization.entity.Organization;
+import net.breezeware.dynamo.organization.entity.OrganizationAddressMap;
 import net.breezeware.dynamo.organization.entity.PasswordResetToken;
 import net.breezeware.dynamo.organization.entity.Role;
 import net.breezeware.dynamo.organization.entity.User;
@@ -255,6 +256,9 @@ public interface OrganizationService {
      */
     User createUser(User user) throws DynamoDataAccessException;
 
+    User createUserWithRoleAndGroup(User user, long organizationId, List<Long> roleIdList, List<Long> groupIdList)
+            throws DynamoDataAccessException;
+
     /**
      * Save an organization.
      * @param organization the Organization to be saved
@@ -264,6 +268,10 @@ public interface OrganizationService {
      *                                   entity
      */
     Organization saveOrganization(Organization organization) throws DynamoDataAccessException;
+
+    Address saveAddress(Address address);
+
+    OrganizationAddressMap createOrganizationAddressMap(Address address, Organization organization);
 
     /**
      * Creates a new organization and a default user with ORGANIZATION_ADMIN role in

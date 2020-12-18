@@ -95,15 +95,15 @@ public class CreateOrganizationDto implements java.io.Serializable {
     public static User createUserFromDto(Organization organization, CreateOrganizationDto dto) {
         User user = new User();
 
-        user.setOrganization(organization);
-        user.setCreatedDate(Calendar.getInstance());
+        // user.setOrganization(organization);
+        // user.setCreatedDate(Calendar.getInstance());
         user.setEmail(dto.getDefaultUserEmail());
         user.setFirstName(dto.getDefaultUserFirstName());
         user.setLastName(dto.getDefaultUserLastName());
         user.setMiddleInitial(dto.getDefaultUserMiddleInitial());
-        user.setModifiedDate(Calendar.getInstance());
-        user.setStatus(User.STATUS_NEW);
-        user.setUserUniqueId(User.generateUniqueId());
+        // user.setModifiedDate(Calendar.getInstance());
+        // user.setStatus(User.STATUS_NEW);
+        // user.setUserUniqueId(User.generateUniqueId());
 
         return user;
     }
