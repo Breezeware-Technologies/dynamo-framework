@@ -17,15 +17,15 @@ public class UserCreationEventListener {
     @Autowired
     RabbitTemplate rabbitTemplate;
 
-    @Value("${rabbitmq.accountTotalCountUpdateExchange}")
-    String accountTotalCountUpdateExchange;
+    @Value("${rabbitmq.dynamoOrgExchange}")
+    String dynamoOrgExchange;
 
     @TransactionalEventListener(phase = TransactionPhase.AFTER_COMMIT)
-    public void updateTotaluserCountListener(UserCreatedMessage userCreatedMessage) {
+    public void dynamoUserCreatedListener(UserCreatedMessage userCreatedMessage) {
 
         // sending message to RabbitMQ
         log.info("Sending message to RabbitMQ from Dynamo Organization module...");
-        rabbitTemplate.convertAndSend(accountTotalCountUpdateExchange, "", userCreatedMessage);
+        rabbitTemplate.convertAndSend(dynamoOrgExchange, "", userCreatedMessage);
 
     }
 
