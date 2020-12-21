@@ -14,7 +14,6 @@ import java.util.UUID;
 import org.hibernate.exception.ConstraintViolationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationEventPublisher;
@@ -43,7 +42,6 @@ import net.breezeware.dynamo.organization.dao.UserRegistrationTokenRepository;
 import net.breezeware.dynamo.organization.dao.UserRepository;
 import net.breezeware.dynamo.organization.dao.UserRoleMapRepository;
 import net.breezeware.dynamo.organization.dto.CreateOrganizationDto;
-import net.breezeware.dynamo.organization.dto.UserCreatedMessage;
 import net.breezeware.dynamo.organization.entity.Address;
 import net.breezeware.dynamo.organization.entity.Group;
 import net.breezeware.dynamo.organization.entity.Organization;
@@ -57,6 +55,7 @@ import net.breezeware.dynamo.organization.entity.User;
 import net.breezeware.dynamo.organization.entity.UserGroupMap;
 import net.breezeware.dynamo.organization.entity.UserRegistrationToken;
 import net.breezeware.dynamo.organization.entity.UserRoleMap;
+import net.breezeware.dynamo.organization.messaging.UserCreatedMessage;
 import net.breezeware.dynamo.organization.service.api.OrganizationService;
 import net.breezeware.dynamo.util.exeption.DynamoDataAccessException;
 import net.breezeware.dynamo.util.mail.api.EmailService;
@@ -135,12 +134,6 @@ public class OrganizationServiceImpl implements OrganizationService {
 
     @Value("${dynamo.applicationCopyrightYear}")
     private String applicationCopyrightYear;
-
-    @Autowired
-    RabbitTemplate rabbitTemplate;
-
-    @Value("${rabbitmq.dynamoOrgExchange}")
-    String dynamoOrgExchange;
 
     @Autowired
     ApplicationEventPublisher applicationEventPublisher;
@@ -796,8 +789,6 @@ public class OrganizationServiceImpl implements OrganizationService {
         userCreatedMessage.setMessageId(UUID.randomUUID());
         userCreatedMessage.setCreatedDate(Instant.now());
 
-        // rabbitTemplate.convertAndSend(dynamoOrgExchange, "",
-        // userCreatedMessage);
         applicationEventPublisher.publishEvent(userCreatedMessage);
 
         logger.info("Leaving createUser()");
@@ -1186,22 +1177,28 @@ public class OrganizationServiceImpl implements OrganizationService {
             List<Long> groupIdList) throws DynamoDataAccessException {
         logger.info("Entering createUserWithRoleAndGroup(), user {}, organizationId {}, roleIdList {}, groupIdList {}",
                 user, organizationId, roleIdList, groupIdList);
+
         String userUniqueId = user.getUserUniqueId();
+        logger.debug("User unique ID from form is {}.", userUniqueId);
+
         if (generateUniqueUserId) {
-            logger.debug("Unique ID generated for user = {}", userUniqueId);
+            logger.debug("Generate unique ID is set to true.");
 
             // if userUniqueId is not generated before, then generate a new
             // useruniqueId for the user.
             if (!(userUniqueId != null && userUniqueId.trim().length() > 0)) {
                 userUniqueId = User.generateUniqueId();
+                logger.debug("User ID from form is blank. Therefore generated a new one {}.", userUniqueId);
+            } else {
+                logger.debug("User ID from form is not blank. Therefore using it and NOT generating a new one");
             }
-
         } else {
-            logger.debug("Unique ID '{}' is used from the user input, since generateUniqueUserId = {}", userUniqueId,
-                    generateUniqueUserId);
+            logger.debug("Generate unique ID is set to false.");
 
             // if unique User ID is null, the set it to the value of email.
             if (userUniqueId == null || (userUniqueId != null && userUniqueId.trim().length() == 0)) {
+                logger.debug("User ID from form is blank. Therefore assigned user's email {} to userUniqueId",
+                        user.getEmail());
                 userUniqueId = user.getEmail();
             }
         }

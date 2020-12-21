@@ -8,7 +8,6 @@ import org.springframework.transaction.event.TransactionPhase;
 import org.springframework.transaction.event.TransactionalEventListener;
 
 import lombok.extern.slf4j.Slf4j;
-import net.breezeware.dynamo.organization.dto.UserCreatedMessage;
 
 @Component
 @Slf4j
