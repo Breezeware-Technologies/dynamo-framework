@@ -3,10 +3,10 @@
 	<parent>
 		<groupId>net.breezeware.dynamo</groupId>
 		<artifactId>dynamo-audit</artifactId>
-		<version> 1.9.0-SNAPSHOT</version>
+		<version>1.9.0</version>
 	</parent>
 	<artifactId>dynamo-audit-web</artifactId>
-  <version> 1.9.0-SNAPSHOT</version>
+  <version>1.9.0</version>
 	<name>Dynamo Audit Web</name>
 	<description>Dynamo Audit Web</description>
 
