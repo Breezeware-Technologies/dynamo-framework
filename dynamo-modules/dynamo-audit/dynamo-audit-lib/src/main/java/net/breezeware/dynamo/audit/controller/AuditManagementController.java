@@ -3,6 +3,8 @@ package net.breezeware.dynamo.audit.controller;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -20,6 +22,7 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.querydsl.core.types.Predicate;
 
@@ -88,7 +91,8 @@ public class AuditManagementController {
      * @return a string to identify the Thymeleaf template
      */
     @RequestMapping(value = "/orgLogs", method = RequestMethod.GET)
-    public String listOrganizationAuditLogs(Model model, @QuerydslPredicate(root = AuditItem.class) Predicate predicate,
+    public ModelAndView listOrganizationAuditLogs(Model model,
+            @QuerydslPredicate(root = AuditItem.class) Predicate predicate,
             @PageableDefault(sort = { "id" }, page = 0, size = 12) Pageable pageable,
             @RequestParam MultiValueMap<String, String> parameters, HttpSession session) {
 
@@ -109,10 +113,13 @@ public class AuditManagementController {
         model.addAttribute("pagedItems", pagedItems);
         model.addAttribute("activeNav", "audit");
 
+        Map<String, Object> mavAttributes = new HashMap<String, Object>();
+        mavAttributes.put("pagedAuditItems", pagedItems);
+
         // model.addAttribute("locale", Locale.US);
 
         logger.info("Leaving listAuditLogs()");
-        return "dynamo-audit/list-audit-logs";
+        return new ModelAndView("dynamo-audit/list-audit-logs");
     }
 
     /**
