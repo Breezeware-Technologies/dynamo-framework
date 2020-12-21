@@ -721,6 +721,7 @@ public class OrganizationManagementController {
                         + fe.getCode());
             }
             hasErrors = true;
+            
         }
 
         if (user.getUserGroupId() == null || user.getUserGroupId() != null && user.getUserGroupId().size() == 0) {
@@ -732,6 +733,8 @@ public class OrganizationManagementController {
             hasErrors = true;
         }
 
+        Map<String, Object> mavAttributes = new HashMap<String, Object>();
+        mavAttributes.put("bindingResult", bindingResult);
         if (hasErrors == false) {
 
             // FIXME: move the logic of creating user and its sub properties (including
@@ -788,7 +791,7 @@ public class OrganizationManagementController {
                 }
 
                 model.addAttribute("activeNav", "user");
-
+                
                 redirectAttributes.addFlashAttribute("successMessage", "User details were saved successfully");
 
                 return new ModelAndView("redirect:/organization/orgUsers");
@@ -827,6 +830,7 @@ public class OrganizationManagementController {
                 user.setUserRoleId(selectedRoleIds);
             }
         }
+       
         return new ModelAndView("dynamo-organization/usermanagement/edit-user");
     }
 
