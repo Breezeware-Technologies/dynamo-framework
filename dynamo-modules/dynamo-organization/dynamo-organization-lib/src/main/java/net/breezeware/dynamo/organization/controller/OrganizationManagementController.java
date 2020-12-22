@@ -5,6 +5,7 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -596,8 +597,8 @@ public class OrganizationManagementController {
 
             try {
                 long organizationId = organizationManagementUtil.getOrganizationIdFromSession(session);
-                user = organizationService.createUserWithOrganizationAndRoleAndGroup(user, organizationId, user.getUserRoleId(),
-                        user.getUserGroupId());
+                user = organizationService.createUserWithOrganizationAndRoleAndGroup(user, organizationId,
+                        user.getUserRoleId(), user.getUserGroupId());
             } catch (DynamoDataAccessException e) {
                 List<Group> groups = organizationService.findAllGroups();
                 List<Role> roles = organizationService
@@ -669,7 +670,20 @@ public class OrganizationManagementController {
 
         // get groups and roles of the user organization selected for edit
         List<Group> groups = organizationService.getGroupsInOrganization(organizationId);
-        List<Role> roles = organizationService.getRolesInOrganization(organizationId);
+        List<Role> roles = new ArrayList<>();
+
+        Optional<Role> optrole = organizationService.findRoleByName(organizationId, "PATIENT");
+        if (optrole.isPresent()) {
+
+            Optional<UserRoleMap> optUserRoleMap = organizationService
+                    .retrieveUserRoleMapWithRoleAndUserId(optrole.get(), user.getId());
+            if (optUserRoleMap.isPresent()) {
+                roles.add(optrole.get());
+            } else {
+                roles = organizationService.getRolesInOrganization(organizationId);
+                roles.remove(optrole.get());
+            }
+        }
 
         model.addAttribute("groups", groups);
         model.addAttribute("roles", roles);
@@ -721,7 +735,7 @@ public class OrganizationManagementController {
                         + fe.getCode());
             }
             hasErrors = true;
-            
+
         }
 
         if (user.getUserGroupId() == null || user.getUserGroupId() != null && user.getUserGroupId().size() == 0) {
@@ -791,7 +805,7 @@ public class OrganizationManagementController {
                 }
 
                 model.addAttribute("activeNav", "user");
-                
+
                 redirectAttributes.addFlashAttribute("successMessage", "User details were saved successfully");
 
                 return new ModelAndView("redirect:/organization/orgUsers");
@@ -807,8 +821,20 @@ public class OrganizationManagementController {
         if (hasErrors == true) {
             List<Group> groups = organizationService
                     .getGroupsInOrganization(dynamoAppBootstrapBean.getCurrentUserOrganizationId());
-            List<Role> roles = organizationService
-                    .getRolesInOrganization(dynamoAppBootstrapBean.getCurrentUserOrganizationId());
+            List<Role> roles = new ArrayList<>();
+            long organizationId = user.getOrganization().getId();
+            Optional<Role> optrole = organizationService.findRoleByName(organizationId, "PATIENT");
+            if (optrole.isPresent()) {
+
+                Optional<UserRoleMap> optUserRoleMap = organizationService
+                        .retrieveUserRoleMapWithRoleAndUserId(optrole.get(), user.getId());
+                if (optUserRoleMap.isPresent()) {
+                    roles.add(optrole.get());
+                } else {
+                    roles = organizationService.getRolesInOrganization(organizationId);
+                    roles.remove(optrole.get());
+                }
+            }
             model.addAttribute("groups", groups);
             model.addAttribute("roles", roles);
             model.addAttribute("user", user);
@@ -830,7 +856,7 @@ public class OrganizationManagementController {
                 user.setUserRoleId(selectedRoleIds);
             }
         }
-       
+
         return new ModelAndView("dynamo-organization/usermanagement/edit-user");
     }
 

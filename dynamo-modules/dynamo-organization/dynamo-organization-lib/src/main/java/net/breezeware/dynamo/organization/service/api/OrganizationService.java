@@ -420,5 +420,7 @@ public interface OrganizationService {
      * @param role Role of the user
      * @return UserRoleMap mapped to the user.
      */
-    UserRoleMap retrieveUserRoleMap(Role role);
+    List<UserRoleMap> retrieveUserRoleMap(Role role);
+
+    Optional<UserRoleMap> retrieveUserRoleMapWithRoleAndUserId(Role role, long userId);
 }

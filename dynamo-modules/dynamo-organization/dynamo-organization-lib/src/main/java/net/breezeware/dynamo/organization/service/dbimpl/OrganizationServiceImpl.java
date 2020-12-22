@@ -1324,8 +1324,18 @@ public class OrganizationServiceImpl implements OrganizationService {
      * {@inheritDoc}
      */
     @Transactional
-    public UserRoleMap retrieveUserRoleMap(Role role) {
+    public List<UserRoleMap> retrieveUserRoleMap(Role role) {
         return userRoleMapRepository.findByRole(role);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Transactional
+    public Optional<UserRoleMap> retrieveUserRoleMapWithRoleAndUserId(Role role, long userId) {
+        Optional<UserRoleMap> optUserRoleMap = userRoleMapRepository.findByRoleAndUserId(role, userId);
+
+        return optUserRoleMap;
     }
 
 }
