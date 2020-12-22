@@ -1056,7 +1056,7 @@ public class OrganizationServiceImpl implements OrganizationService {
         Role role = new Role();
         role.setCreatedDate(Calendar.getInstance());
         role.setModifiedDate(Calendar.getInstance());
-        role.setDescription("Organization Admin");
+        role.setDescription("Organization Administrator");
         role.setName(Role.USER_ROLE_ORGANIZATION_ADMIN);
         role.setOrganizationId(organization.getId());
 
@@ -1067,9 +1067,9 @@ public class OrganizationServiceImpl implements OrganizationService {
         Group group = new Group();
         group.setCreatedDate(Calendar.getInstance());
         group.setModifiedDate(Calendar.getInstance());
-        group.setDescription("Business");
+        group.setDescription("Administration");
         group.setOrganizationId(organization.getId());
-        group.setName("Business");
+        group.setName("ADMINISTRATION");
 
         group = saveGroup(group);
         List<Long> groupIdList = new ArrayList<Long>();
@@ -1081,9 +1081,6 @@ public class OrganizationServiceImpl implements OrganizationService {
         user = createUserWithOrganizationAndRoleAndGroup(user, organization.getId(), roleIdList, groupIdList);
 
         logger.info("ID of newly created user = {}", user.getId());
-
-        sendRegistrationEmail(user);
-
         logger.info("Leaving createOrganizationWithDefaultUser(). Organization ID ={}", organization.getId());
         return organization;
     }
@@ -1336,6 +1333,12 @@ public class OrganizationServiceImpl implements OrganizationService {
         Optional<UserRoleMap> optUserRoleMap = userRoleMapRepository.findByRoleAndUserId(role, userId);
 
         return optUserRoleMap;
+    }
+
+    @Transactional
+    public List<Role> saveMultipleRoles(List<Role> roleList) {
+        roleList = roleRepository.saveAll(roleList);
+        return roleList;
     }
 
 }
