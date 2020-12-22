@@ -206,6 +206,8 @@ public interface OrganizationService {
      */
     Role saveRole(Role role) throws DynamoDataAccessException;
 
+    List<Role> saveMultipleRoles(List<Role> roleList);
+
     /**
      * Edit an existing group.
      * @param group Group instance.
