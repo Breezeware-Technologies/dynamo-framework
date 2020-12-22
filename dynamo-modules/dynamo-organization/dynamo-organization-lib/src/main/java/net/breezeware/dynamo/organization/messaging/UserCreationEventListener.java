@@ -24,7 +24,7 @@ public class UserCreationEventListener {
 
         // sending message to RabbitMQ
         log.info("Sending message to RabbitMQ from Dynamo Organization module...");
-        rabbitTemplate.convertAndSend(dynamoOrgExchange, "", userCreatedMessage);
+        rabbitTemplate.convertAndSend(dynamoOrgExchange, "dynOrg.user.created", userCreatedMessage);
 
     }
 
