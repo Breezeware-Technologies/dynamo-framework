@@ -402,10 +402,9 @@ public class OrganizationServiceImpl implements OrganizationService {
             // check for duplicate group name before saving
             String groupName = group.getName().trim();
             long organizationId = group.getOrganizationId();
-            List<Group> existingGroupsWithName = groupRepository.findByNameIgnoreCaseAndOrganizationId(groupName,
+            Group existingGroupWithName = groupRepository.findByNameIgnoreCaseAndOrganizationId(groupName,
                     organizationId);
-            if (existingGroupsWithName != null && existingGroupsWithName.size() > 0
-                    && group.getId() != existingGroupsWithName.get(0).getId()) {
+            if (existingGroupWithName != null && group.getId() != existingGroupWithName.getId()) {
                 throw new DynamoDataAccessException(
                         "Group Name already exists in your organization. Please choose a new one.");
             }
@@ -1339,6 +1338,16 @@ public class OrganizationServiceImpl implements OrganizationService {
     public List<Role> saveMultipleRoles(List<Role> roleList) {
         roleList = roleRepository.saveAll(roleList);
         return roleList;
+    }
+
+    @Transactional
+    public Optional<Group> findGroupByOrganizationIdAndGroupName(long organizationId, String groupName) {
+        Optional<Group> optGroup = Optional.empty();
+        Group group = groupRepository.findByNameIgnoreCaseAndOrganizationId(groupName, organizationId);
+        if (group != null) {
+            optGroup = Optional.of(group);
+        }
+        return optGroup;
     }
 
 }

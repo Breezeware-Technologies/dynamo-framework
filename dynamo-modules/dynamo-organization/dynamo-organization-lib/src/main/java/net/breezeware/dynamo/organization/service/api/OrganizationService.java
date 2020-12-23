@@ -222,6 +222,8 @@ public interface OrganizationService {
      */
     Group findGroup(long groupId);
 
+    Optional<Group> findGroupByOrganizationIdAndGroupName(long organizationId, String groupName);
+
     /**
      * Find a role by its id.
      * @param roleId User given id,readable format.
