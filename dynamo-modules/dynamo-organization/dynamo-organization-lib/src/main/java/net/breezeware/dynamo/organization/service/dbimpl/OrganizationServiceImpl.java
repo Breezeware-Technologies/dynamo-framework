@@ -1340,6 +1340,9 @@ public class OrganizationServiceImpl implements OrganizationService {
         return roleList;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Transactional
     public Optional<Group> findGroupByOrganizationIdAndGroupName(long organizationId, String groupName) {
         Optional<Group> optGroup = Optional.empty();

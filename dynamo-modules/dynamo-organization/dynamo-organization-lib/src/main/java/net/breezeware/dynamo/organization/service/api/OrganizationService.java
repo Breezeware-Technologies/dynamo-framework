@@ -222,6 +222,13 @@ public interface OrganizationService {
      */
     Group findGroup(long groupId);
 
+    /**
+     * Returns a Goup with a given name in the organization identified by its ID.
+     * @param organizationId ID of the organization to which the role belongs to
+     * @param groupName      Name of the group to be found
+     * @return Optional Group if a group with the name is found in the organization,
+     *         else Empty
+     */
     Optional<Group> findGroupByOrganizationIdAndGroupName(long organizationId, String groupName);
 
     /**
@@ -426,5 +433,11 @@ public interface OrganizationService {
      */
     List<UserRoleMap> retrieveUserRoleMap(Role role);
 
+    /**
+     * Returns a UserRoleMap with the role and ID of the user provided.
+     * @param role   Role which is used to retrieve userRoleMap.
+     * @param userId ID of the user
+     * @return Optional UserRoleMap is role and user ID is present, else Empty
+     */
     Optional<UserRoleMap> retrieveUserRoleMapWithRoleAndUserId(Role role, long userId);
 }
