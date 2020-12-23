@@ -113,13 +113,10 @@ public class AuditManagementController {
         model.addAttribute("pagedItems", pagedItems);
         model.addAttribute("activeNav", "audit");
 
-        Map<String, Object> mavAttributes = new HashMap<String, Object>();
-        mavAttributes.put("pagedItems", pagedItems);
-
         // model.addAttribute("locale", Locale.US);
 
         logger.info("Leaving listAuditLogs()");
-        return new ModelAndView("dynamo-audit/list-audit-logs", mavAttributes);
+        return new ModelAndView("dynamo-audit/list-audit-logs");
     }
 
     /**
