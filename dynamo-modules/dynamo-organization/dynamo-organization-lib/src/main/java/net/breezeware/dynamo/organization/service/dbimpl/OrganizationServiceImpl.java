@@ -1078,8 +1078,13 @@ public class OrganizationServiceImpl implements OrganizationService {
         User user = CreateOrganizationDto.createUserFromDto(organization, createOrganizationDto);
 
         user = createUserWithOrganizationAndRoleAndGroup(user, organization.getId(), roleIdList, groupIdList);
-
         logger.info("ID of newly created user = {}", user.getId());
+
+        if (user != null) {
+            // Build and Send email service for user registration.
+            sendRegistrationEmail(user);
+        }
+
         logger.info("Leaving createOrganizationWithDefaultUser(). Organization ID ={}", organization.getId());
         return organization;
     }
@@ -1261,9 +1266,6 @@ public class OrganizationServiceImpl implements OrganizationService {
 
         applicationEventPublisher.publishEvent(userCreatedMessage);
         logger.info("Leaving RabbitMQ messaging after publishing event, UserCreatedMessage {}", userCreatedMessage);
-
-        // Build and Send email service for user registration.
-        sendRegistrationEmail(user);
 
         return user;
     }
