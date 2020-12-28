@@ -5,14 +5,17 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.annotation.Profile;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -98,13 +101,22 @@ public class OrganizationManagementController {
     // applicationAdminEmai
     @Value("${dynamo.applicationAdminEmail}")
     private String applicationAdminEmail;
-    
+
     // applicationAdminEmai
     @Value("${dynamo.appLogoWebUrl}")
     private String applicationLogoWebUrl;
 
     @Autowired
     OrganizationManagementUtil organizationManagementUtil;
+
+    @Autowired
+    RabbitTemplate rabbitTemplate;
+
+    @Value("${rabbitmq.dynamoOrgExchange}")
+    String dynamoOrgExchange;
+
+    @Autowired
+    ApplicationEventPublisher applicationEventPublisher;
 
     /**
      * Redirect to the all-groups page displaying the list of groups.
@@ -583,41 +595,10 @@ public class OrganizationManagementController {
         } else {
             // proceed with user creation if there are no errors
 
-            // generate unique ID for user if required
-            String userUniqueId = user.getUserUniqueId();
-            if (generateUniqueUserId) {
-                userUniqueId = User.generateUniqueId();
-                logger.debug("Unique ID generated for user = {}", userUniqueId);
-            } else {
-                logger.debug("Unique ID '{}' is used from the user input, since generateUniqueUserId = {}",
-                        userUniqueId, generateUniqueUserId);
-
-                // if unique User ID is null, the set it to the value of email.
-                if (userUniqueId == null || userUniqueId != null && userUniqueId.trim().length() == 0) {
-                    userUniqueId = user.getEmail();
-                }
-            }
-
-            // create the user
-            user.setUserUniqueId(userUniqueId);
-            user.setCreatedDate(Calendar.getInstance());
-            user.setModifiedDate(Calendar.getInstance());
-
-            if (requireUserRegistrationByEmail) {
-                logger.debug("requireUserRegistrationByEmail = {}. So setting user status to new ",
-                        requireUserRegistrationByEmail);
-                user.setStatus(User.STATUS_NEW);
-            } else {
-                logger.debug("requireUserRegistrationByEmail = {}. So setting user status to active ",
-                        requireUserRegistrationByEmail);
-                user.setStatus(User.STATUS_ACTIVE);
-            }
-
-            // save the user entity
-            long organizationId = organizationManagementUtil.getOrganizationIdFromSession(session);
-            user.setOrganization(organizationService.findOrganizationById(organizationId));
             try {
-                organizationService.saveUser(user, encodePassword);
+                long organizationId = organizationManagementUtil.getOrganizationIdFromSession(session);
+                user = organizationService.createUserWithOrganizationAndRoleAndGroup(user, organizationId,
+                        user.getUserRoleId(), user.getUserGroupId());
             } catch (DynamoDataAccessException e) {
                 List<Group> groups = organizationService.findAllGroups();
                 List<Role> roles = organizationService
@@ -631,33 +612,6 @@ public class OrganizationManagementController {
 
                 return new ModelAndView("dynamo-organization/usermanagement/create-user");
             }
-
-            List<Group> groupList = organizationService.findMultipleGroups(user.getUserGroupId());
-            List<Role> roleList = organizationService.findMultipleRoles(user.getUserRoleId());
-
-            // create roles and groups for user
-            if (groupList != null && roleList != null) {
-                for (Group group : groupList) {
-                    UserGroupMap userGroupMap = new UserGroupMap();
-                    userGroupMap.setCreatedDate(Calendar.getInstance());
-                    userGroupMap.setModifiedDate(Calendar.getInstance());
-                    userGroupMap.setGroup(group);
-                    userGroupMap.setUserId(user.getId());
-                    organizationService.saveUserGroupMap(userGroupMap);
-                    logger.info("Saved user group map");
-                }
-
-                for (Role role : roleList) {
-                    UserRoleMap userRoleMap = new UserRoleMap();
-                    userRoleMap.setCreatedDate(Calendar.getInstance());
-                    userRoleMap.setModifiedDate(Calendar.getInstance());
-                    userRoleMap.setRole(role);
-                    userRoleMap.setUserId(user.getId());
-                    organizationService.saveUserRoleMap(userRoleMap);
-                    logger.info("Saved user role map");
-                }
-            }
-
             if (requireUserRegistrationByEmail) {
                 // create a user registration token for user
                 logger.info("Created user registration token");
@@ -716,7 +670,20 @@ public class OrganizationManagementController {
 
         // get groups and roles of the user organization selected for edit
         List<Group> groups = organizationService.getGroupsInOrganization(organizationId);
-        List<Role> roles = organizationService.getRolesInOrganization(organizationId);
+        List<Role> roles = new ArrayList<>();
+
+        Optional<Role> optrole = organizationService.findRoleByName(organizationId, "PATIENT");
+        if (optrole.isPresent()) {
+
+            Optional<UserRoleMap> optUserRoleMap = organizationService
+                    .retrieveUserRoleMapWithRoleAndUserId(optrole.get(), user.getId());
+            if (optUserRoleMap.isPresent()) {
+                roles.add(optrole.get());
+            } else {
+                roles = organizationService.getRolesInOrganization(organizationId);
+                roles.remove(optrole.get());
+            }
+        }
 
         model.addAttribute("groups", groups);
         model.addAttribute("roles", roles);
@@ -768,6 +735,7 @@ public class OrganizationManagementController {
                         + fe.getCode());
             }
             hasErrors = true;
+
         }
 
         if (user.getUserGroupId() == null || user.getUserGroupId() != null && user.getUserGroupId().size() == 0) {
@@ -779,6 +747,8 @@ public class OrganizationManagementController {
             hasErrors = true;
         }
 
+        Map<String, Object> mavAttributes = new HashMap<String, Object>();
+        mavAttributes.put("bindingResult", bindingResult);
         if (hasErrors == false) {
 
             // FIXME: move the logic of creating user and its sub properties (including
@@ -851,8 +821,20 @@ public class OrganizationManagementController {
         if (hasErrors == true) {
             List<Group> groups = organizationService
                     .getGroupsInOrganization(dynamoAppBootstrapBean.getCurrentUserOrganizationId());
-            List<Role> roles = organizationService
-                    .getRolesInOrganization(dynamoAppBootstrapBean.getCurrentUserOrganizationId());
+            List<Role> roles = new ArrayList<>();
+            long organizationId = user.getOrganization().getId();
+            Optional<Role> optrole = organizationService.findRoleByName(organizationId, "PATIENT");
+            if (optrole.isPresent()) {
+
+                Optional<UserRoleMap> optUserRoleMap = organizationService
+                        .retrieveUserRoleMapWithRoleAndUserId(optrole.get(), user.getId());
+                if (optUserRoleMap.isPresent()) {
+                    roles.add(optrole.get());
+                } else {
+                    roles = organizationService.getRolesInOrganization(organizationId);
+                    roles.remove(optrole.get());
+                }
+            }
             model.addAttribute("groups", groups);
             model.addAttribute("roles", roles);
             model.addAttribute("user", user);
@@ -874,6 +856,7 @@ public class OrganizationManagementController {
                 user.setUserRoleId(selectedRoleIds);
             }
         }
+
         return new ModelAndView("dynamo-organization/usermanagement/edit-user");
     }
 

@@ -2,7 +2,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>net.breezeware.dynamo</groupId>
 	<artifactId>build-tools</artifactId>
-	<version>1.8.2</version>
+	<version>1.9.0</version>
 	<name>Build Tools</name>
 	<description>Module to manage miscellaneous build tools used in Dynamo Framework</description>
 

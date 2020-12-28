@@ -9,8 +9,10 @@ import org.springframework.data.domain.Pageable;
 import com.querydsl.core.types.Predicate;
 
 import net.breezeware.dynamo.organization.dto.CreateOrganizationDto;
+import net.breezeware.dynamo.organization.entity.Address;
 import net.breezeware.dynamo.organization.entity.Group;
 import net.breezeware.dynamo.organization.entity.Organization;
+import net.breezeware.dynamo.organization.entity.OrganizationAddressMap;
 import net.breezeware.dynamo.organization.entity.PasswordResetToken;
 import net.breezeware.dynamo.organization.entity.Role;
 import net.breezeware.dynamo.organization.entity.User;
@@ -204,6 +206,8 @@ public interface OrganizationService {
      */
     Role saveRole(Role role) throws DynamoDataAccessException;
 
+    List<Role> saveMultipleRoles(List<Role> roleList);
+
     /**
      * Edit an existing group.
      * @param group Group instance.
@@ -217,6 +221,15 @@ public interface OrganizationService {
      * @return Group.
      */
     Group findGroup(long groupId);
+
+    /**
+     * Returns a Goup with a given name in the organization identified by its ID.
+     * @param organizationId ID of the organization to which the role belongs to
+     * @param groupName      Name of the group to be found
+     * @return Optional Group if a group with the name is found in the organization,
+     *         else Empty
+     */
+    Optional<Group> findGroupByOrganizationIdAndGroupName(long organizationId, String groupName);
 
     /**
      * Find a role by its id.
@@ -255,6 +268,20 @@ public interface OrganizationService {
     User createUser(User user) throws DynamoDataAccessException;
 
     /**
+     * Create a new user for the organization with specific roles and groups. <br>
+     * Sends a registration email after creation.
+     * @param user           User to be created.
+     * @param organizationId OrganizationId to which the user has to be created.
+     * @param roleIdList     List of roles selected for the user.
+     * @param groupIdList    List of groups selected for the user.
+     * @return User
+     * @throws DynamoDataAccessException Exception if email is already register to
+     *                                   some other user.
+     */
+    User createUserWithOrganizationAndRoleAndGroup(User user, long organizationId, List<Long> roleIdList,
+            List<Long> groupIdList) throws DynamoDataAccessException;
+
+    /**
      * Save an organization.
      * @param organization the Organization to be saved
      * @return Organization the Organization entity that was saved
@@ -263,6 +290,21 @@ public interface OrganizationService {
      *                                   entity
      */
     Organization saveOrganization(Organization organization) throws DynamoDataAccessException;
+
+    /**
+     * Saves the Address of the Organization.
+     * @param address Address to be stored.
+     * @return Address Saved instance of the Address.
+     */
+    Address saveAddress(Address address);
+
+    /**
+     * Creates a Map of Organization and Address.
+     * @param address      Address of the organization.
+     * @param organization Organization to which the address has to be mapped.
+     * @return OrganizationAddressMap Saved instance of OrganizationAddressMap.
+     */
+    OrganizationAddressMap createOrganizationAddressMap(Address address, Organization organization);
 
     /**
      * Creates a new organization and a default user with ORGANIZATION_ADMIN role in
@@ -377,4 +419,25 @@ public interface OrganizationService {
      */
     List<User> retrieveUsersByRole(long organizationId, List<String> roles);
 
+    /**
+     * Retrieves the mapped Address of the organization.
+     * @param organizationId Id of the organization.
+     * @return Optional Address if present, else returns an empty.
+     */
+    Optional<Address> retrieveAddressByOrganization(long organizationId);
+
+    /**
+     * Retrieves an UserRoleMap.
+     * @param role Role of the user
+     * @return UserRoleMap mapped to the user.
+     */
+    List<UserRoleMap> retrieveUserRoleMap(Role role);
+
+    /**
+     * Returns a UserRoleMap with the role and ID of the user provided.
+     * @param role   Role which is used to retrieve userRoleMap.
+     * @param userId ID of the user
+     * @return Optional UserRoleMap is role and user ID is present, else Empty
+     */
+    Optional<UserRoleMap> retrieveUserRoleMapWithRoleAndUserId(Role role, long userId);
 }
