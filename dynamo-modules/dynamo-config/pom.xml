@@ -3,10 +3,10 @@
 	<parent>
 		<groupId>net.breezeware.dynamo</groupId>
 		<artifactId>dynamo-modules</artifactId>
-		<version>1.8.2</version>
+		<version>1.9.0-SNAPSHOT</version>
 	</parent>
 	<artifactId>dynamo-config</artifactId>
-  <version>1.8.2</version>
+  <version>1.9.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<name>Dynamo Config</name>
 	<description>Dynamo Config Module</description>

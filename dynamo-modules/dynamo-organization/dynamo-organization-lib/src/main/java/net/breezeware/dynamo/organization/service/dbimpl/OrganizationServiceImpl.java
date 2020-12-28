@@ -1,5 +1,6 @@
 package net.breezeware.dynamo.organization.service.dbimpl;
 
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -15,6 +16,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -22,8 +24,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-// import org.springframework.web.context.request.RequestContextHolder;
-// import org.springframework.web.context.request.ServletRequestAttributes;
 
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Predicate;
@@ -55,6 +55,7 @@ import net.breezeware.dynamo.organization.entity.User;
 import net.breezeware.dynamo.organization.entity.UserGroupMap;
 import net.breezeware.dynamo.organization.entity.UserRegistrationToken;
 import net.breezeware.dynamo.organization.entity.UserRoleMap;
+import net.breezeware.dynamo.organization.messaging.UserCreatedMessage;
 import net.breezeware.dynamo.organization.service.api.OrganizationService;
 import net.breezeware.dynamo.util.exeption.DynamoDataAccessException;
 import net.breezeware.dynamo.util.mail.api.EmailService;
@@ -103,6 +104,15 @@ public class OrganizationServiceImpl implements OrganizationService {
     @Autowired
     PasswordEncoder userPasswordEncoder;
 
+    @Value("${dynamo.requireUserRegistrationByEmail}")
+    private boolean requireUserRegistrationByEmail;
+
+    @Value("${dynamo.generateUniqueUserId}")
+    private boolean generateUniqueUserId;
+
+    @Value("${dynamo.encodePassword}")
+    private boolean encodePassword;
+
     @Value("${dynamo.applicationServerUrl}")
     private String applicationServerUrl;
 
@@ -110,17 +120,11 @@ public class OrganizationServiceImpl implements OrganizationService {
     @Value("${dynamo.applicationName}")
     private String applicationName;
 
-    @Value("${dynamo.encodePassword}")
-    private boolean encodePassword;
-
-    @Value("${dynamo.generateUniqueUserId}")
-    private boolean generateUniqueUserId;
-
     // applicationOwner
     @Value("${dynamo.applicationOwner}")
     private String applicationOwner;
 
-    // applicationAdminEmail
+    // applicationAdminEmai
     @Value("${dynamo.applicationAdminEmail}")
     private String applicationAdminEmail;
 
@@ -130,6 +134,9 @@ public class OrganizationServiceImpl implements OrganizationService {
 
     @Value("${dynamo.applicationCopyrightYear}")
     private String applicationCopyrightYear;
+
+    @Autowired
+    ApplicationEventPublisher applicationEventPublisher;
 
     /**
      * {@inheritDoc}
@@ -204,7 +211,7 @@ public class OrganizationServiceImpl implements OrganizationService {
      * {@inheritDoc}
      */
     @Transactional
-    @Auditable(event = "Retrieve Organization", argNames = "organizationId")
+    // @Auditable(event = "Retrieve Organization", argNames = "organizationId")
     public Organization findOrganizationById(long organizationId) {
         logger.info("Entering findOrganizationById(). organizationId = {}", organizationId);
 
@@ -395,10 +402,9 @@ public class OrganizationServiceImpl implements OrganizationService {
             // check for duplicate group name before saving
             String groupName = group.getName().trim();
             long organizationId = group.getOrganizationId();
-            List<Group> existingGroupsWithName = groupRepository.findByNameIgnoreCaseAndOrganizationId(groupName,
+            Group existingGroupWithName = groupRepository.findByNameIgnoreCaseAndOrganizationId(groupName,
                     organizationId);
-            if (existingGroupsWithName != null && existingGroupsWithName.size() > 0
-                    && group.getId() != existingGroupsWithName.get(0).getId()) {
+            if (existingGroupWithName != null && group.getId() != existingGroupWithName.getId()) {
                 throw new DynamoDataAccessException(
                         "Group Name already exists in your organization. Please choose a new one.");
             }
@@ -461,9 +467,12 @@ public class OrganizationServiceImpl implements OrganizationService {
         logger.info("Entering findRoleByName(). Org ID = {}, Role name = {}", organizationId, roleName);
 
         List<Role> roleList = roleRepository.findByNameIgnoreCaseAndOrganizationId(roleName, organizationId);
-        logger.info("Leaving findRoleByName().");
-
-        return Optional.ofNullable(roleList.get(0));
+        logger.info("Leaving findRoleByName(). roleList {}", roleList);
+        if (roleList != null && roleList.size() > 0) {
+            return Optional.of(roleList.get(0));
+        } else {
+            return Optional.empty();
+        }
     }
 
     /**
@@ -697,7 +706,7 @@ public class OrganizationServiceImpl implements OrganizationService {
             throw new DynamoDataAccessException(e.getCause().getMessage());
         }
 
-        logger.info("Leaving saveUser().");
+        logger.info("Leaving saveUser(). user {}", returnUser);
         return returnUser;
     }
 
@@ -770,6 +779,17 @@ public class OrganizationServiceImpl implements OrganizationService {
         }
         saveUserRoleMapList(userRolesMapList);
 
+        /**
+         * RabbitMQ event publishing after user creation.
+         */
+        UserCreatedMessage userCreatedMessage = new UserCreatedMessage();
+        userCreatedMessage.setOrganization(user.getOrganization());
+        userCreatedMessage.setUser(user);
+        userCreatedMessage.setMessageId(UUID.randomUUID());
+        userCreatedMessage.setCreatedDate(Instant.now());
+
+        applicationEventPublisher.publishEvent(userCreatedMessage);
+
         logger.info("Leaving createUser()");
         return user;
     }
@@ -794,7 +814,7 @@ public class OrganizationServiceImpl implements OrganizationService {
     @Transactional
     @Auditable(event = "Retrieve Groups", argNames = "ids")
     public List<Group> findMultipleGroups(List<Long> ids) {
-        logger.info("Entering findMultipleGroups().");
+        logger.info("Entering findMultipleGroups(). , ids {}", ids);
 
         List<Group> groupsList = new ArrayList<Group>();
 
@@ -919,7 +939,7 @@ public class OrganizationServiceImpl implements OrganizationService {
      * {@inheritDoc}
      */
     @Transactional
-    @Auditable(event = "Retrieve User", argNames = "id")
+    // @Auditable(event = "Retrieve User", argNames = "id")
     public User getUserById(long userId) {
         logger.info("Entering getUserById(). userId = {}", userId);
 
@@ -999,89 +1019,97 @@ public class OrganizationServiceImpl implements OrganizationService {
         String orgName = createOrganizationDto.getOrganizationName().trim();
         long organizationId = -1;
         List<Organization> existingOrgsWithName = organizationRepository.findByNameIgnoreCase(orgName);
+
         if (existingOrgsWithName != null && existingOrgsWithName.size() > 0
                 && organizationId != existingOrgsWithName.get(0).getId()) {
-            throw new DynamoDataAccessException("Organization Name already exists. Please choose a new one.");
+            throw new DynamoDataAccessException("Organization Name already exists.");
+        }
+
+        String email = createOrganizationDto.getDefaultUserEmail().trim();
+        User existingUserWithEmail = getUserByEmail(email);
+
+        if (existingUserWithEmail != null && existingUserWithEmail.getEmail().equalsIgnoreCase(email)) {
+            throw new DynamoDataAccessException("Email already exists in the application.");
         }
 
         // save organization
         Organization organization = CreateOrganizationDto.createOrganizationFromDto(createOrganizationDto);
-        organization = organizationRepository.save(organization);
+        logger.info("Organization before save {}", organization);
+        organization = saveOrganization(organization);
         logger.info("ID of newly created organization = {}", organization.getId());
 
         // save organization Address if available
         Optional<Address> orgAddrOpt = CreateOrganizationDto.createAddressFromDto(createOrganizationDto);
         if (orgAddrOpt.isPresent()) {
-            addressRepository.save(orgAddrOpt.get());
-            OrganizationAddressMap organizationAddressMap = new OrganizationAddressMap();
-            organizationAddressMap.setOrganizationId(organization.getId());
-            organizationAddressMap.setAddress(orgAddrOpt.get());
-            addressOrganizationRepositoryMap.save(organizationAddressMap);
             logger.debug("Address for organization = {}", orgAddrOpt.get());
-        }
 
-        // ** create default user from createOrganizationDto **//
-        User user = CreateOrganizationDto.createUserFromDto(organization, createOrganizationDto);
+            Address address = orgAddrOpt.get();
+            address = saveAddress(address);
 
-        // throw exception if duplicate email name exists
-        String email = user.getEmail();
-        if (email != null) {
-            email = email.trim();
-        }
-        List<User> existingUsersWithEmail = userRepository.findByEmailIgnoreCase(email);
-        if (existingUsersWithEmail != null && existingUsersWithEmail.size() > 0
-                && user.getId() != existingUsersWithEmail.get(0).getId()) {
-            throw new DynamoDataAccessException("Email already exists in the application. Please choose a new one.");
-        }
+            OrganizationAddressMap organizationAddressMap = createOrganizationAddressMap(address, organization);
+            logger.debug("OrganizationAddressMap {}", organizationAddressMap);
 
-        // save user
-        user.setStatus(User.STATUS_NEW);
-        user = userRepository.save(user);
-        logger.info("ID of newly created user = {}", user.getId());
+        }
 
         // ** create an ORGANIZATION_ADMIN role for this organization **//
         Role role = new Role();
         role.setCreatedDate(Calendar.getInstance());
         role.setModifiedDate(Calendar.getInstance());
-        role.setDescription("Organization Admin");
+        role.setDescription("Organization Administrator");
         role.setName(Role.USER_ROLE_ORGANIZATION_ADMIN);
         role.setOrganizationId(organization.getId());
-        role = roleRepository.save(role);
 
-        // ** map ORGANIZATION_ADMIN role to default user **//
-        UserRoleMap userRoleMap = new UserRoleMap();
-        userRoleMap.setCreatedDate(Calendar.getInstance());
-        userRoleMap.setModifiedDate(Calendar.getInstance());
-        userRoleMap.setRole(role);
-        userRoleMap.setUserId(user.getId());
-        saveUserRoleMap(userRoleMap);
+        role = saveRole(role);
+        List<Long> roleIdList = new ArrayList<Long>();
+        roleIdList.add(role.getId());
 
-        // ** create a user registration token for user **//
-        UserRegistrationToken userRegistrationToken = createUserRegistrationToken(user);
-        logger.info("Created user registration token");
+        Group group = new Group();
+        group.setCreatedDate(Calendar.getInstance());
+        group.setModifiedDate(Calendar.getInstance());
+        group.setDescription("Administration");
+        group.setOrganizationId(organization.getId());
+        group.setName("ADMINISTRATION");
 
-        // ** email the user registration token for user **//
-        Map<String, String> keyVals = new HashMap<String, String>();
-        keyVals.put("applicationName", applicationName);
-        keyVals.put("firstName", userRegistrationToken.getUser().getFirstName());
-        keyVals.put("lastName", userRegistrationToken.getUser().getLastName());
-        keyVals.put("applicationOwner", applicationOwner);
-        keyVals.put("applicationAdminEmail", applicationAdminEmail);
-        keyVals.put("applicationLogoWebUrl", applicationLogoWebUrl);
-        keyVals.put("applicationCopyrightYear", applicationCopyrightYear);
+        group = saveGroup(group);
+        List<Long> groupIdList = new ArrayList<Long>();
+        groupIdList.add(group.getId());
 
-        // get server address from Dynamo bootstrap bean
-        String serverAddress = applicationServerUrl;
-        keyVals.put("registrationLink", serverAddress + "/registerUser?token=" + userRegistrationToken.getToken());
-        String templateName = "user-registration-email-template";
-        logger.info("Sending email with template name = {}", templateName);
+        // ** create default user from createOrganizationDto **//
+        User user = CreateOrganizationDto.createUserFromDto(organization, createOrganizationDto);
 
-        emailService.sendMail(applicationAdminEmail, user.getEmail(), applicationName + " - Complete Signup.", keyVals,
-                templateName);
-        logger.info("Sent email to user with email {}", user.getEmail());
+        user = createUserWithOrganizationAndRoleAndGroup(user, organization.getId(), roleIdList, groupIdList);
+        logger.info("ID of newly created user = {}", user.getId());
 
-        logger.info("Leaving createOrganizationWithDefaultUser(). Organization ID = {}", organization.getId());
+        if (user != null) {
+            // Build and Send email service for user registration.
+            sendRegistrationEmail(user);
+        }
+
+        logger.info("Leaving createOrganizationWithDefaultUser(). Organization ID ={}", organization.getId());
         return organization;
+    }
+
+    @Transactional
+    public Address saveAddress(Address address) {
+
+        logger.info("Entering saveAddress(), address {}", address);
+        address = addressRepository.save(address);
+        logger.info("Leaving saveAddress(), address {}", address);
+
+        return address;
+    }
+
+    @Transactional
+    public OrganizationAddressMap createOrganizationAddressMap(Address address, Organization organization) {
+        logger.info("Entering CreateOrganizationAddressMap(), address {}", address);
+
+        OrganizationAddressMap organizationAddressMap = new OrganizationAddressMap();
+        organizationAddressMap.setOrganizationId(organization.getId());
+        organizationAddressMap.setAddress(address);
+        organizationAddressMap = addressOrganizationRepositoryMap.save(organizationAddressMap);
+
+        logger.info("Leaaving CreateOrganizationAddressMap(), address {}", address);
+        return organizationAddressMap;
     }
 
     /**
@@ -1140,6 +1168,191 @@ public class OrganizationServiceImpl implements OrganizationService {
         }
 
         return userRoleMapList;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Transactional
+    public User createUserWithOrganizationAndRoleAndGroup(User user, long organizationId, List<Long> roleIdList,
+            List<Long> groupIdList) throws DynamoDataAccessException {
+        logger.info("Entering createUserWithRoleAndGroup(), user {}, organizationId {}, roleIdList {}, groupIdList {}",
+                user, organizationId, roleIdList, groupIdList);
+
+        String userUniqueId = user.getUserUniqueId();
+        logger.debug("User unique ID from form is {}.", userUniqueId);
+
+        if (generateUniqueUserId) {
+            logger.debug("Generate unique ID is set to true.");
+
+            // if userUniqueId is not generated before, then generate a new
+            // useruniqueId for the user.
+            if (!(userUniqueId != null && userUniqueId.trim().length() > 0)) {
+                userUniqueId = User.generateUniqueId();
+                logger.debug("User ID from form is blank. Therefore generated a new one {}.", userUniqueId);
+            } else {
+                logger.debug("User ID from form is not blank. Therefore using it and NOT generating a new one");
+            }
+        } else {
+            logger.debug("Generate unique ID is set to false.");
+
+            // if unique User ID is null, the set it to the value of email.
+            if (userUniqueId == null || (userUniqueId != null && userUniqueId.trim().length() == 0)) {
+                logger.debug("User ID from form is blank. Therefore assigned user's email {} to userUniqueId",
+                        user.getEmail());
+                userUniqueId = user.getEmail();
+            }
+        }
+
+        // set user with related properties
+        Organization organization = findOrganizationById(organizationId);
+        user.setOrganization(organization);
+        user.setUserUniqueId(userUniqueId);
+        user.setCreatedDate(Calendar.getInstance());
+        user.setModifiedDate(Calendar.getInstance());
+
+        if (requireUserRegistrationByEmail) {
+            logger.debug("requireUserRegistrationByEmail = {}. So setting user status to new ",
+                    requireUserRegistrationByEmail);
+            user.setStatus(User.STATUS_NEW);
+        } else {
+            logger.debug("requireUserRegistrationByEmail = {}. So setting user status to active ",
+                    requireUserRegistrationByEmail);
+            user.setStatus(User.STATUS_ACTIVE);
+        }
+
+        // encode password if available and save user.
+        user = saveUser(user, encodePassword);
+
+        List<Group> groupList = findMultipleGroups(groupIdList);
+        List<Role> roleList = findMultipleRoles(roleIdList);
+
+        // create groups for user if available
+        if (groupList != null && groupIdList.size() > 0) {
+
+            for (Group group : groupList) {
+                UserGroupMap userGroupMap = new UserGroupMap();
+                userGroupMap.setCreatedDate(Calendar.getInstance());
+                userGroupMap.setModifiedDate(Calendar.getInstance());
+                userGroupMap.setGroup(group);
+                userGroupMap.setUserId(user.getId());
+                userGroupMap = saveUserGroupMap(userGroupMap);
+                logger.info("Saved user group map");
+            }
+        }
+
+        // create roles for user if available
+        if (roleList != null && roleList.size() > 0) {
+            for (Role role : roleList) {
+                UserRoleMap userRoleMap = new UserRoleMap();
+                userRoleMap.setCreatedDate(Calendar.getInstance());
+                userRoleMap.setModifiedDate(Calendar.getInstance());
+                userRoleMap.setRole(role);
+                userRoleMap.setUserId(user.getId());
+                userRoleMap = saveUserRoleMap(userRoleMap);
+                logger.info("Saved user role map");
+            }
+        }
+
+        /**
+         * RabbitMQ event publishing after user creation.
+         */
+        logger.info("Building RabbbitMQ UserCreatedMessage message creation");
+        UserCreatedMessage userCreatedMessage = new UserCreatedMessage();
+        userCreatedMessage.setOrganization(user.getOrganization());
+        userCreatedMessage.setUser(user);
+        userCreatedMessage.setMessageId(UUID.randomUUID());
+        userCreatedMessage.setCreatedDate(Instant.now());
+
+        applicationEventPublisher.publishEvent(userCreatedMessage);
+        logger.info("Leaving RabbitMQ messaging after publishing event, UserCreatedMessage {}", userCreatedMessage);
+
+        return user;
+    }
+
+    /**
+     * Sends a user registration email.
+     * @param user User to which the email has to be send.
+     */
+    private void sendRegistrationEmail(User user) {
+        if (requireUserRegistrationByEmail) {
+            // create a user registration token for user
+            logger.info("Created user registration token");
+
+            // email the user registration token for user
+            Map<String, String> keyVals = new HashMap<String, String>();
+            UserRegistrationToken userRegistrationToken = createUserRegistrationToken(user);
+            keyVals.put("applicationName", applicationName);
+            keyVals.put("applicationOwner", applicationOwner);
+            keyVals.put("applicationLogoWebUrl", applicationLogoWebUrl);
+            keyVals.put("applicationAdminEmail", applicationAdminEmail);
+            keyVals.put("firstName", userRegistrationToken.getUser().getFirstName());
+            keyVals.put("lastName", userRegistrationToken.getUser().getLastName());
+            keyVals.put("registrationLink",
+                    applicationServerUrl + "/registerUser?token=" + userRegistrationToken.getToken());
+            String templateName = "user-registration-email-template";
+            logger.info("Sending email with template name = {}", templateName);
+
+            String emailSubject = applicationName + " - Complete Signup";
+            emailService.sendMail(applicationAdminEmail, user.getEmail(), emailSubject, keyVals, templateName);
+
+            logger.info("Sent email!");
+        } else {
+            logger.info("Since requireUserRegistrationByEmail is set to {}, Email is not being sent.",
+                    requireUserRegistrationByEmail);
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Transactional
+    public Optional<Address> retrieveAddressByOrganization(long organizationId) {
+        Optional<OrganizationAddressMap> optOrganizationAddress = addressOrganizationRepositoryMap
+                .findByOrganizationId(organizationId);
+        Optional<Address> optAddress = Optional.empty();
+        if (optOrganizationAddress.isPresent()) {
+            optAddress = Optional.of(optOrganizationAddress.get().getAddress());
+        }
+        return optAddress;
+
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Transactional
+    public List<UserRoleMap> retrieveUserRoleMap(Role role) {
+        return userRoleMapRepository.findByRole(role);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Transactional
+    public Optional<UserRoleMap> retrieveUserRoleMapWithRoleAndUserId(Role role, long userId) {
+        Optional<UserRoleMap> optUserRoleMap = userRoleMapRepository.findByRoleAndUserId(role, userId);
+
+        return optUserRoleMap;
+    }
+
+    @Transactional
+    public List<Role> saveMultipleRoles(List<Role> roleList) {
+        roleList = roleRepository.saveAll(roleList);
+        return roleList;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Transactional
+    public Optional<Group> findGroupByOrganizationIdAndGroupName(long organizationId, String groupName) {
+        Optional<Group> optGroup = Optional.empty();
+        Group group = groupRepository.findByNameIgnoreCaseAndOrganizationId(groupName, organizationId);
+        if (group != null) {
+            optGroup = Optional.of(group);
+        }
+        return optGroup;
     }
 
 }

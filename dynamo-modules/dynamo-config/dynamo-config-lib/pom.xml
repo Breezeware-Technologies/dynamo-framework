@@ -3,10 +3,10 @@
 	<parent>
 		<groupId>net.breezeware.dynamo</groupId>
 		<artifactId>dynamo-config</artifactId>
-		<version>1.8.2</version>
+		<version>1.9.0-SNAPSHOT</version>
 	</parent>
 	<artifactId>dynamo-config-lib</artifactId>
-  <version>1.8.2</version>
+  <version>1.9.0-SNAPSHOT</version>
 	<name>Dynamo Config Lib</name>
 	<description>Dynamo Config Library module contains entities, service APIs and repository support.</description>
 
