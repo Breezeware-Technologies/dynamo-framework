@@ -1,5 +1,8 @@
 Dynamo Framework - Spring based framework for developing web & mobile applications.
 
+1.9.0:
+------
+●   Updated user creation functionality.
 
 1.8.2:
 ------

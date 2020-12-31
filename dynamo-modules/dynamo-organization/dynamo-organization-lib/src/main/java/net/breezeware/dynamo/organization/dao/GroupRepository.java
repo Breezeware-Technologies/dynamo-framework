@@ -17,7 +17,7 @@ import net.breezeware.dynamo.organization.entity.QGroup;
 public interface GroupRepository
         extends JpaRepository<Group, Long>, QuerydslPredicateExecutor<Group>, QuerydslBinderCustomizer<QGroup> {
 
-    List<Group> findByNameIgnoreCaseAndOrganizationId(String name, long organizationId);
+    Group findByNameIgnoreCaseAndOrganizationId(String name, long organizationId);
 
     List<Group> findByOrganizationId(long organizationId);
 
