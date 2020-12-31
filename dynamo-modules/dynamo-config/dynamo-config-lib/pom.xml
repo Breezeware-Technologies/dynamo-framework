@@ -8,7 +8,6 @@
 		<version>2.0.0-SNAPSHOT</version>
 	</parent>
 	<artifactId>dynamo-config-lib</artifactId>
-	<version>2.0.0-SNAPSHOT</version>
 	<name>Dynamo Config Lib</name>
 	<description>Dynamo Config Library module contains entities, service APIs and repository support.</description>
 
