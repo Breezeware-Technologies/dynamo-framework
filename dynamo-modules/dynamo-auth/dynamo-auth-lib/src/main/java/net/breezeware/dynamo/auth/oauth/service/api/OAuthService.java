@@ -15,7 +15,15 @@ public interface OAuthService {
      * @param userOAuthToken the token to be saved
      * @return Token that was persisted in the database
      */
-    UserOAuthToken createToken(UserOAuthToken userOAuthToken);
+    // UserOAuthToken createToken(UserOAuthToken userOAuthToken);
+
+    /**
+     * Create a new token or update an existing token with the one provided.
+     * @param userOAuthToken the token that will replace the existing token with
+     *                       similar User and Application.
+     * @return Token that was persisted in the database
+     */
+    UserOAuthToken createOrUpdateToken(UserOAuthToken userOAuthToken);
 
     /**
      * Retrieve a list of UserOAuthTokens that match the criteria.
@@ -25,8 +33,8 @@ public interface OAuthService {
     List<UserOAuthToken> retrieveToken(Predicate predicate);
 
     /**
-     * Renew the User token if it is about to expire in the next 5 minutes or if it
-     * has already expired.
+     * If a token is about to expire in the next 5 minutes or if it has already
+     * expired, renew the token by calling the Authorization service that issued it.
      * @param userOAuthToken            the authentication token associated with a
      *                                  Dynamo User
      * @param oauthConnectionProperties the properties to hold connection details to
