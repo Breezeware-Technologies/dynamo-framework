@@ -56,6 +56,13 @@
 					</exclusion>
 				</exclusions>
 			</dependency>
+			
+			<!-- Dynamo Workflow -->
+			<dependency>
+				<groupId>net.breezeware.dynamo</groupId>
+				<artifactId>dynamo-inventory-lib</artifactId>
+				<version>${project.version}</version>
+			</dependency>
 
 			<!-- Dynamo LDAP Lib -->
 			<dependency>
