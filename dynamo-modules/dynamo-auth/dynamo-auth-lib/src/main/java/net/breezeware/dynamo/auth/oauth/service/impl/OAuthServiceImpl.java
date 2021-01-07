@@ -45,19 +45,6 @@ public class OAuthServiceImpl implements OAuthService {
     @Autowired(required = false)
     RestTemplate restTemplate;
 
-    // /**
-    // * {@inheritDoc}
-    // */
-    // @Transactional
-    // public UserOAuthToken createToken(UserOAuthToken userOAuthToken) {
-    // log.info("Entering createToken(). UserOAuthToken = {}", userOAuthToken);
-    //
-    // userOAuthToken = userOAuthTokenRepository.save(userOAuthToken);
-    //
-    // log.info("Leaving createToken(). UserOAuthToken = {}", userOAuthToken);
-    // return userOAuthToken;
-    // }
-
     /**
      * {@inheritDoc}
      */

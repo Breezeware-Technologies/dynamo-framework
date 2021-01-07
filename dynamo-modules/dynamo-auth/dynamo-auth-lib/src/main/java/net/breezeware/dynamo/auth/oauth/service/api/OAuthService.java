@@ -11,13 +11,6 @@ import net.breezeware.dynamo.auth.oauth.entity.UserOAuthToken;
 public interface OAuthService {
 
     /**
-     * Persist the UserOAuthToken in the database.
-     * @param userOAuthToken the token to be saved
-     * @return Token that was persisted in the database
-     */
-    // UserOAuthToken createToken(UserOAuthToken userOAuthToken);
-
-    /**
      * Create a new token or update an existing token with the one provided.
      * @param userOAuthToken the token that will replace the existing token with
      *                       similar User and Application.
