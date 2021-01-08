@@ -9,7 +9,4 @@
   <packaging>pom</packaging>
   <name>Dynamo Inventory Module</name>
   <description>Dynamo module for managing Inventory</description>
-  <modules>
-  	<module>dynamo-inventory-lib</module>
-  </modules>
 </project>

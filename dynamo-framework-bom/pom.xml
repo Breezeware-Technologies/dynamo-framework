@@ -57,10 +57,10 @@
 				</exclusions>
 			</dependency>
 			
-			<!-- Dynamo Workflow -->
+			<!-- Dynamo Inventory -->
 			<dependency>
 				<groupId>net.breezeware.dynamo</groupId>
-				<artifactId>dynamo-inventory-lib</artifactId>
+				<artifactId>dynamo-inventory</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 
