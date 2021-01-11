@@ -1,6 +1,9 @@
 package net.breezeware.dynamo.inventory.entity;
 
+import java.time.Instant;
+
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -9,11 +12,26 @@ import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 @Data
 @Table(name = "inventory_item", schema = "dynamo",
         uniqueConstraints = { @UniqueConstraint(columnNames = { "item_sku" }) })
+@Entity
 public class InventoryItem {
+
+    public enum ItemSku {
+        BT_BP_v1("BT-BP-v1"), BT_WS_v1("BT-WS-v1"), IG_BG_v1("IG-BG-v1");
+
+        @Getter
+        @Setter
+        String itemSku;
+
+        ItemSku(String itemSku) {
+            this.itemSku = itemSku;
+        }
+    }
 
     /**
      * Unique key to identify a inventory item,auto-generated value.
@@ -41,9 +59,9 @@ public class InventoryItem {
     private String itemSku;
 
     @Column(name = "created_date")
-    private String createdDate;
+    private Instant createdDate;
 
     @Column(name = "modified_date")
-    private String modified_date;
+    private Instant modifiedDate;
 
 }
