@@ -22,6 +22,7 @@
 		<module>dynamo-ldap</module>
 		<module>dynamo-config</module>
 		<module>dynamo-communication</module>
+		<module>dynamo-shipping</module>
 	</modules>
 
 	<!-- #################### DEPENDENCY MANAGEMENT #################### -->
