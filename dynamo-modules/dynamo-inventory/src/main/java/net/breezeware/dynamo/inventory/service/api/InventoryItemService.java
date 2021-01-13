@@ -1,10 +1,12 @@
 package net.breezeware.dynamo.inventory.service.api;
 
+import java.util.Optional;
+
 import net.breezeware.dynamo.inventory.entity.InventoryItem;
 
 public interface InventoryItemService {
 
-    InventoryItem retrieveInventoryItemByItemSku(String itemSku);
+    Optional<InventoryItem> retrieveInventoryItemByItemSku(String itemSku);
 
     InventoryItem saveInventoryItem(InventoryItem inventoryItem);
 }
