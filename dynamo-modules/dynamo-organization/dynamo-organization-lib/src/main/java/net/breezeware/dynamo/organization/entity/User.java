@@ -26,10 +26,11 @@ import org.hibernate.annotations.FetchMode;
 import org.springframework.format.annotation.DateTimeFormat;
 // import org.hibernate.envers.Audited;
 
+import net.breezeware.dynamo.util.string.RandomString;
+
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import net.breezeware.dynamo.util.string.RandomString;
 
 @XmlRootElement
 @Entity
@@ -87,7 +88,7 @@ public class User implements Serializable {
     @Setter
     private Organization organization;
 
-    @Size(min = 6, max = 45, message = "{Size.user.email}")
+    @Size(min = 6, max = 90, message = "{Size.user.email}")
     @Pattern(regexp = ".+@.+\\..+", message = "{Pattern.user.email}")
     @Getter
     @Setter

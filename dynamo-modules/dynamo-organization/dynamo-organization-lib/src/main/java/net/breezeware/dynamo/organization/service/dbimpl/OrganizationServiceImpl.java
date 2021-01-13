@@ -1228,7 +1228,7 @@ public class OrganizationServiceImpl implements OrganizationService {
         List<Role> roleList = findMultipleRoles(roleIdList);
 
         // create groups for user if available
-        if (groupList != null && groupIdList.size() > 0) {
+        if (groupList != null && groupList.size() > 0) {
 
             for (Group group : groupList) {
                 UserGroupMap userGroupMap = new UserGroupMap();
