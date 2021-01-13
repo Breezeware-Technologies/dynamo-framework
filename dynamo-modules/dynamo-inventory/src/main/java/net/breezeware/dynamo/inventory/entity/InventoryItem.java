@@ -33,6 +33,19 @@ public class InventoryItem {
         }
     }
 
+    public enum ItemStatus {
+        IN_WAREHOUSE("in-warehouse"), SHIPPED("shipped"), DELIVERED("delivered"),
+        ACTIVE_WITH_PATIENT("active with patient"), INACTIVE_WITH_PATIENT("inactive with patient");
+
+        @Getter
+        @Setter
+        String itemStatus;
+
+        ItemStatus(String itemStatus) {
+            this.itemStatus = itemStatus;
+        }
+    }
+
     /**
      * Unique key to identify a inventory item,auto-generated value.
      */
