@@ -72,7 +72,8 @@ public class ShipmentServiceImpl implements ShipmentService {
     @Override
     public String CreateShippingLabel(ShipmentRequest shipmentRequest) {
         log.info("CreateShippingLabel = {}", shipmentRequest);
-        shipmentRequest = populateShippingLabelCreation();
+        Shipment shipment = populatShipmentDto();
+        shipmentRequest = populateShippingLabelCreation(shipment);
 
         Gson gson = new Gson();
         String requestBody = gson.toJson(shipmentRequest);
@@ -80,9 +81,17 @@ public class ShipmentServiceImpl implements ShipmentService {
         return makeLabelCreationCall(requestBody);
     }
 
-    public ShipmentRequest populateShippingLabelCreation() {
+    @Override
+    public ShipmentRequest populateShippingLabelCreation(Shipment shipment) {
+        // shipment = populatShipmentDto();
 
         ShipmentRequest shipmentRequest = new ShipmentRequest();
+        shipmentRequest.setShipment(shipment);
+        return shipmentRequest;
+    }
+
+    @Override
+    public Shipment populatShipmentDto() {
 
         Shipment shipment = new Shipment();
         Address address = populateShipperAddress();
@@ -99,10 +108,8 @@ public class ShipmentServiceImpl implements ShipmentService {
         shipment.setPaymentInformation(paymentInformation);
         shipment.setService(service);
         shipment.setPackage(_package);
+        return shipment;
 
-        shipmentRequest.setShipment(shipment);
-
-        return shipmentRequest;
     }
 
     private Shipper populateShipperDetails(Address address, Phone phone) {
