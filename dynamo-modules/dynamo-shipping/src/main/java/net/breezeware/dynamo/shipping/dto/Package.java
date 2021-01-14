@@ -8,16 +8,16 @@ public class Package {
     private String Description;
 
     @Data
-    class Packaging {
+    public class Packaging {
         private String Code;
 
     }
 
     @Data
-    class PacakgeWeight {
+    public class PackageWeight {
 
         @Data
-        class UnitOfMeasurement {
+        public class UnitOfMeasurement {
             private String Code;
         }
 
