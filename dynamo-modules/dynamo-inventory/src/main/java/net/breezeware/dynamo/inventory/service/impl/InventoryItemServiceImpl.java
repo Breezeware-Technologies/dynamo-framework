@@ -1,5 +1,7 @@
 package net.breezeware.dynamo.inventory.service.impl;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,8 +17,8 @@ public class InventoryItemServiceImpl implements InventoryItemService {
     InventoryItemRepository inventoryItemRepository;
 
     @Transactional
-    public InventoryItem retrieveInventoryItemByItemSku(String itemSku) {
-        InventoryItem inventoryItem = inventoryItemRepository.findByItemSku(itemSku);
+    public Optional<InventoryItem> retrieveInventoryItemByItemSku(String itemSku) {
+        Optional<InventoryItem> inventoryItem = Optional.ofNullable(inventoryItemRepository.findByItemSku(itemSku));
         return inventoryItem;
     }
 
