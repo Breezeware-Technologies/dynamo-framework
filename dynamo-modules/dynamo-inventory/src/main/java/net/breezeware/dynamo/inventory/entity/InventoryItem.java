@@ -31,6 +31,15 @@ public class InventoryItem {
         ItemSku(String itemSku) {
             this.itemSku = itemSku;
         }
+
+        public static ItemSku getItemSku(String itemSkuName) {
+            for (ItemSku itemSku : ItemSku.values()) {
+                if (itemSku.getItemSku().equals(itemSkuName)) {
+                    return itemSku;
+                }
+            }
+            return null;
+        }
     }
 
     /**
