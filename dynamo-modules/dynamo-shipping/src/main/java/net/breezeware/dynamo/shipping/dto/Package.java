@@ -7,22 +7,8 @@ public class Package {
 
     private String Description;
 
-    @Data
-    public class Packaging {
-        private String Code;
+    private Packaging Packaging;
 
-    }
-
-    @Data
-    public class PackageWeight {
-
-        @Data
-        public class UnitOfMeasurement {
-            private String Code;
-        }
-
-        private String Weight;
-
-    }
+    private PackageWeight PackageWeight;
 
 }

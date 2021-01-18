@@ -17,11 +17,6 @@ public class Shipment {
 
     private Package Package;
 
-    @Data
-    class LabelSpecification {
-
-        private String LabelImageFormat;
-        private String Code;
-    }
+    private LabelSpecification labelSpecification;
 
 }

@@ -5,14 +5,8 @@ import lombok.Data;
 @Data
 public class PaymentInformation {
 
-    @Data
-    public class ShipmentCharge {
-        private String Type;
-    }
+    private ShipmentCharge shipmentCharge;
 
-    @Data
-    public class BillShipper {
-        private String AccountNumber;
-    }
+    private BillShipper billShipper;
 
 }

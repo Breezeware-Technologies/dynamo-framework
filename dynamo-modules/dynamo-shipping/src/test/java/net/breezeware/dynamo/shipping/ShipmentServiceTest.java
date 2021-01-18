@@ -1,36 +1,41 @@
 package net.breezeware.dynamo.shipping;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.AbstractJUnit4SpringContextTests;
-import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
-import org.testng.annotations.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import lombok.extern.slf4j.Slf4j;
 import net.breezeware.dynamo.shipping.dto.Address;
+import net.breezeware.dynamo.shipping.dto.BillShipper;
+import net.breezeware.dynamo.shipping.dto.LabelImageFormat;
+import net.breezeware.dynamo.shipping.dto.LabelSpecification;
 import net.breezeware.dynamo.shipping.dto.Package;
-import net.breezeware.dynamo.shipping.dto.Package.PackageWeight;
-import net.breezeware.dynamo.shipping.dto.Package.Packaging;
+import net.breezeware.dynamo.shipping.dto.PackageWeight;
+import net.breezeware.dynamo.shipping.dto.Packaging;
 import net.breezeware.dynamo.shipping.dto.PaymentInformation;
-import net.breezeware.dynamo.shipping.dto.PaymentInformation.BillShipper;
-import net.breezeware.dynamo.shipping.dto.PaymentInformation.ShipmentCharge;
 import net.breezeware.dynamo.shipping.dto.Phone;
 import net.breezeware.dynamo.shipping.dto.ShipTo;
 import net.breezeware.dynamo.shipping.dto.Shipment;
+import net.breezeware.dynamo.shipping.dto.ShipmentCharge;
 import net.breezeware.dynamo.shipping.dto.ShipmentRequest;
 import net.breezeware.dynamo.shipping.dto.Shipper;
+import net.breezeware.dynamo.shipping.dto.UnitOfMeasurement;
 import net.breezeware.dynamo.shipping.service.api.ShipmentService;
 import net.breezeware.dynamo.shipping.service.impl.ShipmentServiceImpl;
 
 @Slf4j
-@ContextConfiguration(classes = TestApplication.class)
-public class ShipmentServiceTest extends AbstractTestNGSpringContextTests {
+public class ShipmentServiceTest {
 
-    @Autowired
     ShipmentService shipmentService;
 
-    // @Test
-    public void CreatelabelRequestTest() {
+    @BeforeEach
+    public void setupMethod() {
+
+        shipmentService = new ShipmentServiceImpl();
+
+    }
+
+    @Test
+    public void createlabelRequestTest() {
 
         log.info("Entering CreateLabelReqestTest");
 
@@ -67,15 +72,6 @@ public class ShipmentServiceTest extends AbstractTestNGSpringContextTests {
 
     }
 
-    @Test
-    public void helloTest() {
-
-        String Hello = shipmentService.helloworld();
-
-        System.out.println(Hello);
-
-    }
-
     private ShipmentRequest populateShippingLabelCreation() {
 
         ShipmentRequest shipmentRequest = new ShipmentRequest();
@@ -87,6 +83,8 @@ public class ShipmentServiceTest extends AbstractTestNGSpringContextTests {
         PaymentInformation paymentInformation = populatePaymentInfo();
         Package _package = populatePackageDetails();
         ShipTo shipTo = populateShipToDetails();
+        LabelSpecification labelSpecification = populateLabelSpecification();
+
         net.breezeware.dynamo.shipping.dto.Service service = populateServiceDetails();
 
         shipment.setDescription("MediKit");
@@ -95,6 +93,7 @@ public class ShipmentServiceTest extends AbstractTestNGSpringContextTests {
         shipment.setPaymentInformation(paymentInformation);
         shipment.setService(service);
         shipment.setPackage(_package);
+        shipment.setLabelSpecification(labelSpecification);
 
         shipmentRequest.setShipment(shipment);
 
@@ -187,12 +186,14 @@ public class ShipmentServiceTest extends AbstractTestNGSpringContextTests {
 
         PaymentInformation paymentInformation = new PaymentInformation();
 
-        BillShipper billShipper = paymentInformation.new BillShipper();
-
-        ShipmentCharge shipmentCharge = paymentInformation.new ShipmentCharge();
-
+        BillShipper billShipper = new BillShipper();
         billShipper.setAccountNumber("34V933");
+
+        ShipmentCharge shipmentCharge = new ShipmentCharge();
         shipmentCharge.setType("01");
+
+        paymentInformation.setBillShipper(billShipper);
+        paymentInformation.setShipmentCharge(shipmentCharge);
 
         return paymentInformation;
 
@@ -204,13 +205,18 @@ public class ShipmentServiceTest extends AbstractTestNGSpringContextTests {
 
         _package.setDescription("medical Goods");
 
-        PackageWeight pacakgeWeight = _package.new PackageWeight();
-        Packaging packaging = _package.new Packaging();
+        Packaging packaging = new Packaging();
         packaging.setCode("02");
 
-        PackageWeight.UnitOfMeasurement unitOfMeasurement = pacakgeWeight.new UnitOfMeasurement();
+        PackageWeight packageWeight = new PackageWeight();
+
+        UnitOfMeasurement unitOfMeasurement = new UnitOfMeasurement();
         unitOfMeasurement.setCode("LBS");
-        pacakgeWeight.setWeight("45");
+        packageWeight.setWeight("45");
+        packageWeight.setUnitOfMeasurement(unitOfMeasurement);
+
+        _package.setPackageWeight(packageWeight);
+        _package.setPackaging(packaging);
 
         return _package;
     }
@@ -224,4 +230,21 @@ public class ShipmentServiceTest extends AbstractTestNGSpringContextTests {
 
         return service;
     }
+
+    private LabelSpecification populateLabelSpecification() {
+
+        LabelSpecification labelSpecification = new LabelSpecification();
+
+        LabelImageFormat labelImageFormat = new LabelImageFormat();
+
+        labelImageFormat.setCode("PNG");
+        labelSpecification.setLabelImageFormat(labelImageFormat);
+        return labelSpecification;
+    }
+    // NOTE: request parsed data
+
+    // {"shipment":{"Description":"MediKit","Shipper":{"Name":"breeze","ShipperNumber":"34V933","Phone":{"Number":"1234567890"},"Address":{"AddressLine":"usa","City":"georgia","StateProvinceCode":"GA","PostalCode":"30004","CountryCode":"US"}},"ShipTo":{"Name":"john","Phone":{"Number":"96566455454"},"Address":{"AddressLine":"usa","City":"georgia","StateProvinceCode":"GA","PostalCode":"30004","CountryCode":"US"}},"PaymentInformation":{"shipmentCharge":{"Type":"01"},"billShipper":{"AccountNumber":"34V933"}},"Service":{"Code":"03","Description":"forward
+    // postal service"},"Package":{"Description":"medical
+    // Goods","Packaging":{"Code":"02"},"PackageWeight":{"unitOfMeasurement":{"Code":"LBS"},"Weight":"45"}},"labelSpecification":{"labelImageFormat":{"Code":"PNG"}}}}
+
 }
