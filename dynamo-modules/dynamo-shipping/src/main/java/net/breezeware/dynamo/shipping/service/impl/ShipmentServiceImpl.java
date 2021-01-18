@@ -70,144 +70,192 @@ public class ShipmentServiceImpl implements ShipmentService {
     }
 
     @Override
-    public String CreateShippingLabel(ShipmentRequest shipmentRequest) {
-        log.info("CreateShippingLabel = {}", shipmentRequest);
-        Shipment shipment = populatShipmentDto();
-        shipmentRequest = populateShippingLabelCreation(shipment);
+    public String createShippingLabel(ShipmentRequest shipmentRequest) {
+        log.info("createShippingLabel = {}", shipmentRequest);
+        // shipmentRequest = populateShippingLabelCreation();
 
         Gson gson = new Gson();
         String requestBody = gson.toJson(shipmentRequest);
+        System.out.println(requestBody);
         log.info("Request Body as JSON = {}", requestBody);
         return makeLabelCreationCall(requestBody);
     }
 
     @Override
-    public ShipmentRequest populateShippingLabelCreation(Shipment shipment) {
-        // shipment = populatShipmentDto();
+    public String helloworld() {
 
-        ShipmentRequest shipmentRequest = new ShipmentRequest();
-        shipmentRequest.setShipment(shipment);
-        return shipmentRequest;
+        String hello = "Hello World";
+
+        return hello;
     }
 
-    @Override
-    public Shipment populatShipmentDto() {
+    // @Override
+    // public String CreateShippingLabel() {
+    // // log.info("CreateShippingLabel = {}", shipmentRequest);
+    // Shipment shipment = populatShipmentDto();
+    // ShipmentRequest shipmentRequest = populateShippingLabelCreation(shipment);
+    //
+    // Gson gson = new Gson();
+    // String requestBody = gson.toJson(shipmentRequest);
+    // log.info("Request Body as JSON = {}", requestBody);
+    // return makeLabelCreationCall(requestBody);
+    // }
 
-        Shipment shipment = new Shipment();
-        Address address = populateShipperAddress();
-        Phone phone = populateShipperPhoneDetails();
-        Shipper shipper = populateShipperDetails(address, phone);
-        PaymentInformation paymentInformation = populatePaymentInfo();
-        Package _package = populatePackageDetails();
-        ShipTo shipTo = populateShipToDetails();
-        net.breezeware.dynamo.shipping.dto.Service service = populateServiceDetails();
-
-        shipment.setDescription("MediKit");
-        shipment.setShipper(shipper);
-        shipment.setShipTo(shipTo);
-        shipment.setPaymentInformation(paymentInformation);
-        shipment.setService(service);
-        shipment.setPackage(_package);
-        return shipment;
-
-    }
-
-    private Shipper populateShipperDetails(Address address, Phone phone) {
-
-        Shipper shipper = new Shipper();
-
-        shipper.setAddress(address);
-        shipper.setName("breeze");
-        shipper.setPhone(phone);
-        shipper.setShipperNumber(upsAccountNumber);
-
-        return shipper;
-
-    }
-
-    private ShipTo populateShipToDetails() {
-
-        ShipTo shipTo = new ShipTo();
-
-        shipTo.setName("john");
-
-        Address address = new Address();
-        address.setAddressLine("usa");
-        address.setCity("georgia");
-        address.setCountryCode("US");
-        address.setPostalCode("30004");
-        address.setStateProvinceCode("GA");
-
-        shipTo.setAddress(address);
-        Phone phone = new Phone();
-        phone.setNumber("96566455454");
-
-        shipTo.setPhone(phone);
-        return shipTo;
-    }
-
-    private Address populateShipperAddress() {
-
-        Address address = new Address();
-
-        address.setAddressLine("usa");
-        address.setCity("georgia");
-        address.setCountryCode("US");
-        address.setPostalCode("30004");
-        address.setStateProvinceCode("GA");
-        return address;
-
-    }
-
-    private Phone populateShipperPhoneDetails() {
-
-        Phone phone = new Phone();
-
-        phone.setNumber("1234567890");
-        return phone;
-
-    }
-
-    private PaymentInformation populatePaymentInfo() {
-
-        PaymentInformation paymentInformation = new PaymentInformation();
-
-        BillShipper billShipper = paymentInformation.new BillShipper();
-
-        ShipmentCharge shipmentCharge = paymentInformation.new ShipmentCharge();
-
-        billShipper.setAccountNumber(upsAccountNumber);
-        shipmentCharge.setType("01");
-
-        return paymentInformation;
-
-    }
-
-    private Package populatePackageDetails() {
-
-        Package _package = new Package();
-
-        _package.setDescription("medical Goods");
-
-        PackageWeight pacakgeWeight = _package.new PackageWeight();
-        Packaging packaging = _package.new Packaging();
-        packaging.setCode("02");
-
-        PackageWeight.UnitOfMeasurement unitOfMeasurement = pacakgeWeight.new UnitOfMeasurement();
-        unitOfMeasurement.setCode("LBS");
-        pacakgeWeight.setWeight("45");
-
-        return _package;
-    }
-
-    private net.breezeware.dynamo.shipping.dto.Service populateServiceDetails() {
-
-        net.breezeware.dynamo.shipping.dto.Service service = new net.breezeware.dynamo.shipping.dto.Service();
-
-        service.setCode("03");
-        service.setDescription("forward postal service");
-
-        return service;
-    }
+    // private ShipmentRequest populateShippingLabelCreation() {
+    //
+    // ShipmentRequest shipmentRequest = new ShipmentRequest();
+    //
+    // Shipment shipment = new Shipment();
+    // Address address = populateShipperAddress();
+    // Phone phone = populateShipperPhoneDetails();
+    // Shipper shipper = populateShipperDetails(address, phone);
+    // PaymentInformation paymentInformation = populatePaymentInfo();
+    // Package _package = populatePackageDetails();
+    // ShipTo shipTo = populateShipToDetails();
+    // net.breezeware.dynamo.shipping.dto.Service service =
+    // populateServiceDetails();
+    //
+    // shipment.setDescription("MediKit");
+    // shipment.setShipper(shipper);
+    // shipment.setShipTo(shipTo);
+    // shipment.setPaymentInformation(paymentInformation);
+    // shipment.setService(service);
+    // shipment.setPackage(_package);
+    //
+    // shipmentRequest.setShipment(shipment);
+    //
+    // return shipmentRequest;
+    // }
+    // @Override
+    // public ShipmentRequest populateShippingLabelCreation(Shipment shipment) {
+    // // shipment = populatShipmentDto();
+    //
+    // ShipmentRequest shipmentRequest = new ShipmentRequest();
+    // shipmentRequest.setShipment(shipment);
+    // return shipmentRequest;
+    // }
+    //
+    // @Override
+    // public Shipment populatShipmentDto() {
+    //
+    // Shipment shipment = new Shipment();
+    // Address address = populateShipperAddress();
+    // Phone phone = populateShipperPhoneDetails();
+    // Shipper shipper = populateShipperDetails(address, phone);
+    // PaymentInformation paymentInformation = populatePaymentInfo();
+    // Package _package = populatePackageDetails();
+    // ShipTo shipTo = populateShipToDetails();
+    // net.breezeware.dynamo.shipping.dto.Service service =
+    // populateServiceDetails();
+    //
+    // shipment.setDescription("MediKit");
+    // shipment.setShipper(shipper);
+    // shipment.setShipTo(shipTo);
+    // shipment.setPaymentInformation(paymentInformation);
+    // shipment.setService(service);
+    // shipment.setPackage(_package);
+    // return shipment;
+    //
+    // }
+    //
+    // private Shipper populateShipperDetails(Address address, Phone phone) {
+    //
+    // Shipper shipper = new Shipper();
+    //
+    // shipper.setAddress(address);
+    // shipper.setName("breeze");
+    // shipper.setPhone(phone);
+    // shipper.setShipperNumber(upsAccountNumber);
+    //
+    // return shipper;
+    //
+    // }
+    //
+    // private ShipTo populateShipToDetails() {
+    //
+    // ShipTo shipTo = new ShipTo();
+    //
+    // shipTo.setName("john");
+    //
+    // Address address = new Address();
+    // address.setAddressLine("usa");
+    // address.setCity("georgia");
+    // address.setCountryCode("US");
+    // address.setPostalCode("30004");
+    // address.setStateProvinceCode("GA");
+    //
+    // shipTo.setAddress(address);
+    // Phone phone = new Phone();
+    // phone.setNumber("96566455454");
+    //
+    // shipTo.setPhone(phone);
+    // return shipTo;
+    // }
+    //
+    // private Address populateShipperAddress() {
+    //
+    // Address address = new Address();
+    //
+    // address.setAddressLine("usa");
+    // address.setCity("georgia");
+    // address.setCountryCode("US");
+    // address.setPostalCode("30004");
+    // address.setStateProvinceCode("GA");
+    // return address;
+    //
+    // }
+    //
+    // private Phone populateShipperPhoneDetails() {
+    //
+    // Phone phone = new Phone();
+    //
+    // phone.setNumber("1234567890");
+    // return phone;
+    //
+    // }
+    //
+    // private PaymentInformation populatePaymentInfo() {
+    //
+    // PaymentInformation paymentInformation = new PaymentInformation();
+    //
+    // BillShipper billShipper = paymentInformation.new BillShipper();
+    //
+    // ShipmentCharge shipmentCharge = paymentInformation.new ShipmentCharge();
+    //
+    // billShipper.setAccountNumber(upsAccountNumber);
+    // shipmentCharge.setType("01");
+    //
+    // return paymentInformation;
+    //
+    // }
+    //
+    // private Package populatePackageDetails() {
+    //
+    // Package _package = new Package();
+    //
+    // _package.setDescription("medical Goods");
+    //
+    // PackageWeight pacakgeWeight = _package.new PackageWeight();
+    // Packaging packaging = _package.new Packaging();
+    // packaging.setCode("02");
+    //
+    // PackageWeight.UnitOfMeasurement unitOfMeasurement = pacakgeWeight.new
+    // UnitOfMeasurement();
+    // unitOfMeasurement.setCode("LBS");
+    // pacakgeWeight.setWeight("45");
+    //
+    // return _package;
+    // }
+    //
+    // private net.breezeware.dynamo.shipping.dto.Service populateServiceDetails() {
+    //
+    // net.breezeware.dynamo.shipping.dto.Service service = new
+    // net.breezeware.dynamo.shipping.dto.Service();
+    //
+    // service.setCode("03");
+    // service.setDescription("forward postal service");
+    //
+    // return service;
+    // }
 
 }

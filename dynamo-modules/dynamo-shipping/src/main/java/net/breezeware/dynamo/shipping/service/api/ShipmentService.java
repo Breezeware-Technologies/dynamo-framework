@@ -5,10 +5,12 @@ import net.breezeware.dynamo.shipping.dto.ShipmentRequest;
 
 public interface ShipmentService {
 
-    String CreateShippingLabel(ShipmentRequest shipmentRequest);
+    String createShippingLabel(ShipmentRequest shipmentRequest);
 
-    Shipment populatShipmentDto();
+    // Shipment populatShipmentDto();
 
-    ShipmentRequest populateShippingLabelCreation(Shipment shipment);
+    String helloworld();
+
+    // ShipmentRequest populateShippingLabelCreation(Shipment shipment);
 
 }
