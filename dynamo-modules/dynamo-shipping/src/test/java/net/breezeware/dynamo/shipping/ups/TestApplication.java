@@ -1,4 +1,4 @@
-package net.breezeware.dynamo.shipping;
+package net.breezeware.dynamo.shipping.ups;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

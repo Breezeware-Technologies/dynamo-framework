@@ -1,6 +1,6 @@
-package net.breezeware.dynamo.shipping.service.api;
+package net.breezeware.dynamo.shipping.ups.service.api;
 
-import net.breezeware.dynamo.shipping.dto.ShipmentRequest;
+import net.breezeware.dynamo.shipping.ups.dto.ShipmentRequest;
 
 public interface ShipmentService {
 

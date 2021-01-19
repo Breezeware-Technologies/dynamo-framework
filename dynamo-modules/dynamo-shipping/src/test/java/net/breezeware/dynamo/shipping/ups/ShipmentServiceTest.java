@@ -1,26 +1,27 @@
-package net.breezeware.dynamo.shipping;
+package net.breezeware.dynamo.shipping.ups;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import lombok.extern.slf4j.Slf4j;
-import net.breezeware.dynamo.shipping.dto.Address;
-import net.breezeware.dynamo.shipping.dto.BillShipper;
-import net.breezeware.dynamo.shipping.dto.LabelImageFormat;
-import net.breezeware.dynamo.shipping.dto.LabelSpecification;
-import net.breezeware.dynamo.shipping.dto.Package;
-import net.breezeware.dynamo.shipping.dto.PackageWeight;
-import net.breezeware.dynamo.shipping.dto.Packaging;
-import net.breezeware.dynamo.shipping.dto.PaymentInformation;
-import net.breezeware.dynamo.shipping.dto.Phone;
-import net.breezeware.dynamo.shipping.dto.ShipTo;
-import net.breezeware.dynamo.shipping.dto.Shipment;
-import net.breezeware.dynamo.shipping.dto.ShipmentCharge;
-import net.breezeware.dynamo.shipping.dto.ShipmentRequest;
-import net.breezeware.dynamo.shipping.dto.Shipper;
-import net.breezeware.dynamo.shipping.dto.UnitOfMeasurement;
-import net.breezeware.dynamo.shipping.service.api.ShipmentService;
-import net.breezeware.dynamo.shipping.service.impl.ShipmentServiceImpl;
+import net.breezeware.dynamo.shipping.ups.dto.Address;
+import net.breezeware.dynamo.shipping.ups.dto.BillShipper;
+import net.breezeware.dynamo.shipping.ups.dto.LabelImageFormat;
+import net.breezeware.dynamo.shipping.ups.dto.LabelSpecification;
+import net.breezeware.dynamo.shipping.ups.dto.PackageWeight;
+import net.breezeware.dynamo.shipping.ups.dto.Packaging;
+import net.breezeware.dynamo.shipping.ups.dto.Package;
+import net.breezeware.dynamo.shipping.ups.dto.PaymentInformation;
+import net.breezeware.dynamo.shipping.ups.dto.Phone;
+import net.breezeware.dynamo.shipping.ups.dto.Service;
+import net.breezeware.dynamo.shipping.ups.dto.ShipTo;
+import net.breezeware.dynamo.shipping.ups.dto.Shipment;
+import net.breezeware.dynamo.shipping.ups.dto.ShipmentCharge;
+import net.breezeware.dynamo.shipping.ups.dto.ShipmentRequest;
+import net.breezeware.dynamo.shipping.ups.dto.Shipper;
+import net.breezeware.dynamo.shipping.ups.dto.UnitOfMeasurement;
+import net.breezeware.dynamo.shipping.ups.service.api.ShipmentService;
+import net.breezeware.dynamo.shipping.ups.service.impl.ShipmentServiceImpl;
 
 @Slf4j
 public class ShipmentServiceTest {
@@ -85,7 +86,7 @@ public class ShipmentServiceTest {
         ShipTo shipTo = populateShipToDetails();
         LabelSpecification labelSpecification = populateLabelSpecification();
 
-        net.breezeware.dynamo.shipping.dto.Service service = populateServiceDetails();
+        Service service = populateServiceDetails();
 
         shipment.setDescription("MediKit");
         shipment.setShipper(shipper);
@@ -130,10 +131,10 @@ public class ShipmentServiceTest {
 
         Shipper shipper = new Shipper();
 
-        shipper.setAddress(address);
         shipper.setName("breeze");
-        shipper.setPhone(phone);
         shipper.setShipperNumber("34V933");
+        shipper.setAddress(address);
+        shipper.setPhone(phone);
 
         return shipper;
 
@@ -147,9 +148,9 @@ public class ShipmentServiceTest {
 
         Address address = new Address();
         address.setAddressLine("usa");
-        address.setCity("georgia");
+        address.setCity("city");
         address.setCountryCode("US");
-        address.setPostalCode("30004");
+        address.setPostalCode("30003");
         address.setStateProvinceCode("GA");
 
         shipTo.setAddress(address);
@@ -165,7 +166,7 @@ public class ShipmentServiceTest {
         Address address = new Address();
 
         address.setAddressLine("usa");
-        address.setCity("georgia");
+        address.setCity("city");
         address.setCountryCode("US");
         address.setPostalCode("30004");
         address.setStateProvinceCode("GA");
@@ -191,8 +192,7 @@ public class ShipmentServiceTest {
 
         ShipmentCharge shipmentCharge = new ShipmentCharge();
         shipmentCharge.setType("01");
-
-        paymentInformation.setBillShipper(billShipper);
+        shipmentCharge.setBillShipper(billShipper);
         paymentInformation.setShipmentCharge(shipmentCharge);
 
         return paymentInformation;
@@ -221,9 +221,9 @@ public class ShipmentServiceTest {
         return _package;
     }
 
-    private net.breezeware.dynamo.shipping.dto.Service populateServiceDetails() {
+    private Service populateServiceDetails() {
 
-        net.breezeware.dynamo.shipping.dto.Service service = new net.breezeware.dynamo.shipping.dto.Service();
+        Service service = new Service();
 
         service.setCode("03");
         service.setDescription("forward postal service");

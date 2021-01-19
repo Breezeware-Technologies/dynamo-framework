@@ -1,4 +1,4 @@
-package net.breezeware.dynamo.shipping.dto;
+package net.breezeware.dynamo.shipping.ups.dto;
 
 import lombok.Data;
 
@@ -7,6 +7,5 @@ public class PaymentInformation {
 
     private ShipmentCharge shipmentCharge;
 
-    private BillShipper billShipper;
 
 }
