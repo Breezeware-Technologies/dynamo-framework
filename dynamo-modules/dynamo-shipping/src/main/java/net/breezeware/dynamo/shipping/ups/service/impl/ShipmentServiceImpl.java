@@ -1,6 +1,5 @@
 package net.breezeware.dynamo.shipping.ups.service.impl;
 
-import org.json.JSONObject;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -11,7 +10,6 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 
 import lombok.extern.slf4j.Slf4j;
 import net.breezeware.dynamo.shipping.ups.dto.shipping.BillingWeight;
@@ -40,12 +38,8 @@ public class ShipmentServiceImpl implements ShipmentService {
 
     private final String upsAccessKey = "1D925021583D91B2";
 
-    // private final String upsAccountNumber = "34V933";
-
     private String makeLabelCreationCall(String requestBody) {
         String LabelCreationUrl = "https://wwwcie.ups.com/ship/v1/shipments";
-        // System.out.println("HI" + LabelCreationUrl);
-        // System.out.println("AccessLicenseNumber" + upsAccessKey);
 
         WebClient client = WebClient.create(LabelCreationUrl);
 
@@ -88,9 +82,17 @@ public class ShipmentServiceImpl implements ShipmentService {
 
     private ShipmentResponse persitsResponseDataToDtos(String response) {
 
-        JsonObject jsonObject = new Gson().fromJson(response, JsonObject.class);
+        Response responseDto = populateResponse(response);
+        ShipmentResults shipmentResults = populateShipmentResults(response);
 
-        System.out.println("jsonObject" + jsonObject);
+        ShipmentResponse shipmentResponseDto = new ShipmentResponse();
+        shipmentResponseDto.setResponse(responseDto);
+        shipmentResponseDto.setShipmentResults(shipmentResults);
+        return shipmentResponseDto;
+    }
+
+    private Response populateResponse(String response) {
+        JsonObject jsonObject = new Gson().fromJson(response, JsonObject.class);
 
         JsonElement shipmentresponse = jsonObject.get("ShipmentResponse");
 
@@ -104,11 +106,26 @@ public class ShipmentServiceImpl implements ShipmentService {
 
         JsonElement description = responseStatus.getAsJsonObject().get("Description");
 
+        ResponseStatus _ResponseStatus = new ResponseStatus();
+        _ResponseStatus.setCode(code.getAsString());
+        _ResponseStatus.setDescription(description.getAsString());
+
+        Response _Response = new Response();
+        _Response.setResponseStatus(_ResponseStatus);
+        _Response.setTransactionReference(transactionReference.getAsString());
+
+        return _Response;
+
+    }
+
+    private ShipmentResults populateShipmentResults(String response) {
+
+        JsonObject jsonObject = new Gson().fromJson(response, JsonObject.class);
+        JsonElement shipmentresponse = jsonObject.get("ShipmentResponse");
+
         JsonElement shipmentResults = shipmentresponse.getAsJsonObject().get("ShipmentResults");
 
         JsonElement shipmentCharges = shipmentResults.getAsJsonObject().get("ShipmentCharges");
-
-        System.out.println(shipmentCharges);
 
         JsonElement shipmentIdentificationNumber = shipmentResults.getAsJsonObject()
                 .get("ShipmentIdentificationNumber");
@@ -139,14 +156,6 @@ public class ShipmentServiceImpl implements ShipmentService {
         JsonElement descriptionIf = imageFormat.getAsJsonObject().get("Description");
         JsonElement graphicImage = shippingLabel.getAsJsonObject().get("GraphicImage");
         JsonElement HTMLImage = shippingLabel.getAsJsonObject().get("HTMLImage");
-
-        ResponseStatus _ResponseStatus = new ResponseStatus();
-        _ResponseStatus.setCode(code.getAsString());
-        _ResponseStatus.setDescription(description.getAsString());
-
-        Response _Response = new Response();
-        _Response.setResponseStatus(_ResponseStatus);
-        _Response.setTransactionReference(transactionReference.getAsString());
 
         UnitOfMeasurement _UnitOfMeasurement = new UnitOfMeasurement();
         _UnitOfMeasurement.setCode(codeUom.getAsString());
@@ -193,12 +202,8 @@ public class ShipmentServiceImpl implements ShipmentService {
         _ShipmentResults.setShipmentCharges(_ShipmentCharges);
         _ShipmentResults.setShipmentIdentificationNumber(shipmentIdentificationNumber.getAsString());
 
-        System.out.println("Shipmentresponse is " + shipmentresponse);
+        return _ShipmentResults;
 
-        ShipmentResponse shipmentResponseDto = new ShipmentResponse();
-        shipmentResponseDto.setResponse(_Response);
-        shipmentResponseDto.setShipmentResults(_ShipmentResults);
-        return shipmentResponseDto;
     }
 
 }
