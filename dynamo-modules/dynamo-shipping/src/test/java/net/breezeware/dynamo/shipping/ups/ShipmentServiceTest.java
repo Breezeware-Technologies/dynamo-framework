@@ -5,21 +5,23 @@ import org.junit.jupiter.api.Test;
 
 import lombok.extern.slf4j.Slf4j;
 import net.breezeware.dynamo.shipping.ups.dto.Address;
-import net.breezeware.dynamo.shipping.ups.dto.BillShipper;
-import net.breezeware.dynamo.shipping.ups.dto.LabelImageFormat;
-import net.breezeware.dynamo.shipping.ups.dto.LabelSpecification;
-import net.breezeware.dynamo.shipping.ups.dto.PackageWeight;
-import net.breezeware.dynamo.shipping.ups.dto.Packaging;
-import net.breezeware.dynamo.shipping.ups.dto.Package;
-import net.breezeware.dynamo.shipping.ups.dto.PaymentInformation;
 import net.breezeware.dynamo.shipping.ups.dto.Phone;
-import net.breezeware.dynamo.shipping.ups.dto.Service;
 import net.breezeware.dynamo.shipping.ups.dto.ShipTo;
-import net.breezeware.dynamo.shipping.ups.dto.Shipment;
-import net.breezeware.dynamo.shipping.ups.dto.ShipmentCharge;
-import net.breezeware.dynamo.shipping.ups.dto.ShipmentRequest;
 import net.breezeware.dynamo.shipping.ups.dto.Shipper;
-import net.breezeware.dynamo.shipping.ups.dto.UnitOfMeasurement;
+import net.breezeware.dynamo.shipping.ups.dto.shipping.BillShipper;
+import net.breezeware.dynamo.shipping.ups.dto.shipping.LabelImageFormat;
+import net.breezeware.dynamo.shipping.ups.dto.shipping.LabelSpecification;
+import net.breezeware.dynamo.shipping.ups.dto.shipping.PackageWeight;
+import net.breezeware.dynamo.shipping.ups.dto.shipping.Packaging;
+import net.breezeware.dynamo.shipping.ups.dto.shipping.Package;
+
+import net.breezeware.dynamo.shipping.ups.dto.shipping.PaymentInformation;
+import net.breezeware.dynamo.shipping.ups.dto.shipping.Service;
+import net.breezeware.dynamo.shipping.ups.dto.shipping.Shipment;
+import net.breezeware.dynamo.shipping.ups.dto.shipping.ShipmentCharge;
+import net.breezeware.dynamo.shipping.ups.dto.shipping.ShipmentRequest;
+import net.breezeware.dynamo.shipping.ups.dto.shipping.ShipmentResponse;
+import net.breezeware.dynamo.shipping.ups.dto.shipping.UnitOfMeasurement;
 import net.breezeware.dynamo.shipping.ups.service.api.ShipmentService;
 import net.breezeware.dynamo.shipping.ups.service.impl.ShipmentServiceImpl;
 
@@ -44,7 +46,7 @@ public class ShipmentServiceTest {
 
         log.info("Shipment request {}", shipmentRequest);
         System.out.println(shipmentRequest);
-        String result = shipmentService.createShippingLabel(shipmentRequest);
+        ShipmentResponse result = shipmentService.createShippingLabel(shipmentRequest);
         System.out.println(result);
 
         log.info("leaving CreateLabelReqestTest {}", result);

@@ -1,6 +1,8 @@
-package net.breezeware.dynamo.shipping.ups.dto;
+package net.breezeware.dynamo.shipping.ups.dto.shipping;
 
 import lombok.Data;
+import net.breezeware.dynamo.shipping.ups.dto.ShipTo;
+import net.breezeware.dynamo.shipping.ups.dto.Shipper;
 
 @Data
 public class Shipment {
