@@ -12,6 +12,8 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 import lombok.extern.slf4j.Slf4j;
+import net.breezeware.dynamo.shipping.ups.dto.pickup.PickupCreationRequest;
+import net.breezeware.dynamo.shipping.ups.dto.pickup.PickupCreationResponse;
 import net.breezeware.dynamo.shipping.ups.dto.shipping.BillingWeight;
 import net.breezeware.dynamo.shipping.ups.dto.shipping.ImageFormat;
 import net.breezeware.dynamo.shipping.ups.dto.shipping.PackageResults;
@@ -203,6 +205,51 @@ public class ShipmentServiceImpl implements ShipmentService {
         _ShipmentResults.setShipmentIdentificationNumber(shipmentIdentificationNumber.getAsString());
 
         return _ShipmentResults;
+
+    }
+
+    private String makePickupCreationCall(String requestBody) {
+        String LabelCreationUrl = "https://wwwcie.ups.com/ship/v1607/pickups";
+
+        WebClient client = WebClient.create(LabelCreationUrl);
+
+        ResponseEntity<String> result = (ResponseEntity<String>) client.post().headers(httpHeaders -> {
+            httpHeaders.set("Username", upsUserName);
+            httpHeaders.set("Password", upsPassword);
+            httpHeaders.set("AccessLicenseNumber", upsAccessKey);
+        }).contentType(MediaType.APPLICATION_JSON).bodyValue(requestBody).exchange()
+                .flatMap(response -> response.toEntity(String.class)).block();
+
+        log.info("The Response Status Code = {}", result.toString());
+        System.out.println("The Response Status Code" + result);
+
+        if (result.getStatusCodeValue() == 200) {
+            return result.getBody();
+        } else {
+            return "badResponse";
+        }
+    }
+
+    @Override
+    public PickupCreationResponse pickupCreation(PickupCreationRequest pickupCreationRequest) {
+        log.info("createShippingLabel = {}", pickupCreationRequest);
+
+        Gson gson = new GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.UPPER_CAMEL_CASE).create();
+
+        JsonElement je = gson.toJsonTree(pickupCreationRequest);
+        JsonObject jo = new JsonObject();
+
+        jo.add("PickupCreationRequest", je);
+        String requestBody = jo.toString();
+        System.out.println("requestBody" + requestBody);
+        log.info("Request Body as JSON = {}", requestBody);
+        String response = makePickupCreationCall(requestBody);
+
+        System.out.println("response " + response);
+        // PickupCreationResponse pickupCreationResponse =
+        // persitsResponseDataToDtos(response);
+
+        return null;
 
     }
 
