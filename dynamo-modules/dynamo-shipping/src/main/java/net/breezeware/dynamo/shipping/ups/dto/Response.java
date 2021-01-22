@@ -1,4 +1,4 @@
-package net.breezeware.dynamo.shipping.ups.dto.shipping;
+package net.breezeware.dynamo.shipping.ups.dto;
 
 import lombok.Data;
 

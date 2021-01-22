@@ -1,5 +1,10 @@
 package net.breezeware.dynamo.shipping.ups.service.impl;
 
+import static org.springframework.test.web.client.match.MockRestRequestMatchers.queryParam;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -8,17 +13,21 @@ import org.springframework.web.reactive.function.client.WebClient;
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 import lombok.extern.slf4j.Slf4j;
+import net.breezeware.dynamo.shipping.ups.dto.Response;
+import net.breezeware.dynamo.shipping.ups.dto.ResponseStatus;
+import net.breezeware.dynamo.shipping.ups.dto.pickup.ChargeDetail;
 import net.breezeware.dynamo.shipping.ups.dto.pickup.PickupCreationRequest;
 import net.breezeware.dynamo.shipping.ups.dto.pickup.PickupCreationResponse;
+import net.breezeware.dynamo.shipping.ups.dto.pickup.RateResult;
+import net.breezeware.dynamo.shipping.ups.dto.pickup.RateStatus;
 import net.breezeware.dynamo.shipping.ups.dto.shipping.BillingWeight;
 import net.breezeware.dynamo.shipping.ups.dto.shipping.ImageFormat;
 import net.breezeware.dynamo.shipping.ups.dto.shipping.PackageResults;
-import net.breezeware.dynamo.shipping.ups.dto.shipping.Response;
-import net.breezeware.dynamo.shipping.ups.dto.shipping.ResponseStatus;
 import net.breezeware.dynamo.shipping.ups.dto.shipping.ServiceOptionsCharges;
 import net.breezeware.dynamo.shipping.ups.dto.shipping.ShipmentCharges;
 import net.breezeware.dynamo.shipping.ups.dto.shipping.ShipmentRequest;
@@ -28,6 +37,7 @@ import net.breezeware.dynamo.shipping.ups.dto.shipping.ShippingLabel;
 import net.breezeware.dynamo.shipping.ups.dto.shipping.TotalCharges;
 import net.breezeware.dynamo.shipping.ups.dto.shipping.TransportationCharges;
 import net.breezeware.dynamo.shipping.ups.dto.shipping.UnitOfMeasurement;
+import net.breezeware.dynamo.shipping.ups.dto.tracking.TrackResponse;
 import net.breezeware.dynamo.shipping.ups.service.api.ShipmentService;
 
 @Service
@@ -45,7 +55,7 @@ public class ShipmentServiceImpl implements ShipmentService {
 
         WebClient client = WebClient.create(LabelCreationUrl);
 
-        ResponseEntity<String> result = (ResponseEntity<String>) client.post().headers(httpHeaders -> {
+        ResponseEntity<String> result = client.post().headers(httpHeaders -> {
             httpHeaders.set("Username", upsUserName);
             httpHeaders.set("Password", upsPassword);
             httpHeaders.set("AccessLicenseNumber", upsAccessKey);
@@ -213,7 +223,7 @@ public class ShipmentServiceImpl implements ShipmentService {
 
         WebClient client = WebClient.create(LabelCreationUrl);
 
-        ResponseEntity<String> result = (ResponseEntity<String>) client.post().headers(httpHeaders -> {
+        ResponseEntity<String> result = client.post().headers(httpHeaders -> {
             httpHeaders.set("Username", upsUserName);
             httpHeaders.set("Password", upsPassword);
             httpHeaders.set("AccessLicenseNumber", upsAccessKey);
@@ -246,10 +256,155 @@ public class ShipmentServiceImpl implements ShipmentService {
         String response = makePickupCreationCall(requestBody);
 
         System.out.println("response " + response);
-        // PickupCreationResponse pickupCreationResponse =
-        // persitsResponseDataToDtos(response);
+        PickupCreationResponse pickupCreationResponse = persitsPickupResponseDataToDtos(response);
+
+        return pickupCreationResponse;
+
+    }
+
+    private PickupCreationResponse persitsPickupResponseDataToDtos(String response) {
+        JsonObject jsonObject = new Gson().fromJson(response, JsonObject.class);
+
+        JsonElement pickupCreationResponse = jsonObject.get("PickupCreationResponse");
+
+        JsonElement prn = pickupCreationResponse.getAsJsonObject().get("PRN");
+
+        RateStatus rateStatus = popualteRateStatusDto(response);
+        RateResult rateResult = popualteRateResultDto(response);
+        Response responseDto = popualteResponseDtoForPickResponse(response);
+
+        PickupCreationResponse _PickupCreationResponse = new PickupCreationResponse();
+
+        _PickupCreationResponse.setPRN(prn.getAsString());
+        _PickupCreationResponse.setRateStatus(rateStatus);
+        _PickupCreationResponse.setResponse(responseDto);
+        _PickupCreationResponse.setRateResult(rateResult);
+
+        return _PickupCreationResponse;
+    }
+
+    private List<ChargeDetail> popualtelistofChargeDetaildto(String response) {
+        JsonObject jsonObject = new Gson().fromJson(response, JsonObject.class);
+        List<ChargeDetail> chargeDetails = new ArrayList<ChargeDetail>();
+        JsonElement pickupCreationResponse = jsonObject.get("PickupCreationResponse");
+
+        if (pickupCreationResponse.getAsJsonObject().has("RateResult")) {
+
+            JsonElement rateResult = pickupCreationResponse.getAsJsonObject().get("RateResult");
+            JsonElement chargeDetail = rateResult.getAsJsonObject().get("ChargeDetail");
+
+            JsonArray chargeCode = chargeDetail.getAsJsonArray();
+
+            for (int charge = 0; charge < chargeCode.size(); charge++) {
+
+                JsonElement string = chargeCode.get(charge);
+
+                JsonElement chargecode = string.getAsJsonObject().get("ChargeCode");
+                JsonElement ChargeDescription = string.getAsJsonObject().get("ChargeDescription");
+
+                JsonElement ChargeAmount = string.getAsJsonObject().get("ChargeAmount");
+
+                JsonElement TaxAmount = string.getAsJsonObject().get("TaxAmount");
+                ChargeDetail _ChargeDetail = new ChargeDetail();
+
+                _ChargeDetail.setChargeCode(chargecode.getAsString());
+                _ChargeDetail.setChargeAmount(ChargeAmount.getAsString());
+                _ChargeDetail.setChargeDescription(ChargeDescription.getAsString());
+                _ChargeDetail.setTaxAmount(TaxAmount.getAsString());
+
+                chargeDetails.add(_ChargeDetail);
+            }
+        }
+        return chargeDetails;
+
+    }
+
+    private RateResult popualteRateResultDto(String response) {
+        JsonObject jsonObject = new Gson().fromJson(response, JsonObject.class);
+
+        JsonElement pickupCreationResponse = jsonObject.get("PickupCreationResponse");
+
+        JsonElement rateResult = pickupCreationResponse.getAsJsonObject().get("RateResult");
+        JsonElement rateType = rateResult.getAsJsonObject().get("RateType");
+        JsonElement currencyCode = rateResult.getAsJsonObject().get("CurrencyCode");
+        JsonElement grandTotalOfAllCharge = rateResult.getAsJsonObject().get("GrandTotalOfAllCharge");
+
+        List<ChargeDetail> chargeDetails = popualtelistofChargeDetaildto(response);
+
+        RateResult _RateResult = new RateResult();
+        _RateResult.setChargeDetails(chargeDetails);
+        _RateResult.setCurrencyCode(currencyCode.getAsString());
+        _RateResult.setRateType(rateType.getAsString());
+        _RateResult.setGrandTotalOfAllCharge(grandTotalOfAllCharge.getAsString());
+
+        return _RateResult;
+
+    }
+
+    private RateStatus popualteRateStatusDto(String response) {
+        JsonObject jsonObject = new Gson().fromJson(response, JsonObject.class);
+
+        JsonElement pickupCreationResponse = jsonObject.get("PickupCreationResponse");
+        JsonElement rateStatus = pickupCreationResponse.getAsJsonObject().get("RateStatus");
+        JsonElement rsCode = rateStatus.getAsJsonObject().get("Code");
+        JsonElement rsDescription = rateStatus.getAsJsonObject().get("Description");
+
+        RateStatus _RateStatus = new RateStatus();
+        _RateStatus.setCode(rsCode.getAsString());
+        _RateStatus.setDescription(rsDescription.getAsString());
+        return _RateStatus;
+    }
+
+    private Response popualteResponseDtoForPickResponse(String response) {
+
+        JsonObject jsonObject = new Gson().fromJson(response, JsonObject.class);
+
+        JsonElement pickupCreationResponse = jsonObject.get("PickupCreationResponse");
+
+        JsonElement responseElement = pickupCreationResponse.getAsJsonObject().get("Response");
+        JsonElement responseStatus = responseElement.getAsJsonObject().get("ResponseStatus");
+        JsonElement code = responseStatus.getAsJsonObject().get("Code");
+        JsonElement description = responseStatus.getAsJsonObject().get("Description");
+
+        ResponseStatus _ResponseStatus = new ResponseStatus();
+        _ResponseStatus.setCode(code.getAsString());
+        _ResponseStatus.setDescription(description.getAsString());
+
+        Response _Response = new Response();
+        _Response.setResponseStatus(_ResponseStatus);
+
+        return _Response;
+
+    }
+
+    @Override
+    public TrackResponse getTrackingDetails(String trackingNumber) {
+
+        String result = makeGetTrackingResponseCall(trackingNumber);
 
         return null;
+    }
+
+    private String makeGetTrackingResponseCall(String trackingNumber) {
+
+        String LabelCreationUrl = "https://wwwcie.ups.com/track/v1/details/";
+
+        WebClient client = WebClient.create(LabelCreationUrl);
+
+        ResponseEntity<String> result = client.get().uri(trackingNumber).headers(httpHeaders -> {
+            httpHeaders.set("Username", upsUserName);
+            httpHeaders.set("Password", upsPassword);
+            httpHeaders.set("AccessLicenseNumber", upsAccessKey);
+        }).exchange().flatMap(response -> response.toEntity(String.class)).block();
+
+        log.info("The Response Status Code = {}", result.toString());
+        System.out.println("The Response Status Code" + result);
+
+        if (result.getStatusCodeValue() == 200) {
+            return result.getBody();
+        } else {
+            return "badResponse";
+        }
 
     }
 

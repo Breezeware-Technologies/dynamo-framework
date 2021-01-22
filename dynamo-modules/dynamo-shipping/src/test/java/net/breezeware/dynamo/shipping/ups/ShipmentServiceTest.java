@@ -30,6 +30,7 @@ import net.breezeware.dynamo.shipping.ups.dto.shipping.ShipmentCharge;
 import net.breezeware.dynamo.shipping.ups.dto.shipping.ShipmentRequest;
 import net.breezeware.dynamo.shipping.ups.dto.shipping.ShipmentResponse;
 import net.breezeware.dynamo.shipping.ups.dto.shipping.UnitOfMeasurement;
+import net.breezeware.dynamo.shipping.ups.dto.tracking.TrackResponse;
 import net.breezeware.dynamo.shipping.ups.service.api.ShipmentService;
 import net.breezeware.dynamo.shipping.ups.service.impl.ShipmentServiceImpl;
 
@@ -45,7 +46,7 @@ public class ShipmentServiceTest {
 
     }
 
-    @Test
+    // @Test
     public void createlabelRequestTest() {
 
         log.info("Entering CreateLabelReqestTest");
@@ -61,7 +62,7 @@ public class ShipmentServiceTest {
 
     }
 
-    @Test
+    // + @Test
     public void pickupCreationtest() {
 
         PickupCreationRequest pickupCreationRequest = populatePickupCreationRequest();
@@ -70,6 +71,17 @@ public class ShipmentServiceTest {
 
         PickupCreationResponse pickupCreationResponse = shipmentService.pickupCreation(pickupCreationRequest);
         System.out.println(pickupCreationResponse);
+    }
+
+    @Test
+    public void trackingResponseTest() {
+
+        String trackingNumber = "1Z5338FF0107231059";
+
+        TrackResponse trackResponse = shipmentService.getTrackingDetails(trackingNumber);
+
+        System.out.println("result" + trackResponse);
+
     }
 
     private ShipmentRequest populateShippingLabelCreation() {

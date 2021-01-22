@@ -1,6 +1,7 @@
 package net.breezeware.dynamo.shipping.ups.dto.pickup;
 
 import lombok.Data;
+import net.breezeware.dynamo.shipping.ups.dto.Response;
 
 @Data
 public class PickupCreationResponse {
@@ -10,5 +11,7 @@ public class PickupCreationResponse {
     private String PRN;
 
     private RateStatus rateStatus;
+
+    private RateResult rateResult;
 
 }
