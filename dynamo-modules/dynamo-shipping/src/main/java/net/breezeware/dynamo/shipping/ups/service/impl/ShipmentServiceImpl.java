@@ -18,6 +18,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 import lombok.extern.slf4j.Slf4j;
+import net.breezeware.dynamo.shipping.ups.dto.Address;
 import net.breezeware.dynamo.shipping.ups.dto.Response;
 import net.breezeware.dynamo.shipping.ups.dto.ResponseStatus;
 import net.breezeware.dynamo.shipping.ups.dto.pickup.ChargeDetail;
@@ -37,6 +38,11 @@ import net.breezeware.dynamo.shipping.ups.dto.shipping.ShippingLabel;
 import net.breezeware.dynamo.shipping.ups.dto.shipping.TotalCharges;
 import net.breezeware.dynamo.shipping.ups.dto.shipping.TransportationCharges;
 import net.breezeware.dynamo.shipping.ups.dto.shipping.UnitOfMeasurement;
+import net.breezeware.dynamo.shipping.ups.dto.tracking.Activity;
+import net.breezeware.dynamo.shipping.ups.dto.tracking.Location;
+import net.breezeware.dynamo.shipping.ups.dto.tracking.Package;
+import net.breezeware.dynamo.shipping.ups.dto.tracking.Shipment;
+import net.breezeware.dynamo.shipping.ups.dto.tracking.Status;
 import net.breezeware.dynamo.shipping.ups.dto.tracking.TrackResponse;
 import net.breezeware.dynamo.shipping.ups.service.api.ShipmentService;
 
@@ -382,7 +388,9 @@ public class ShipmentServiceImpl implements ShipmentService {
 
         String result = makeGetTrackingResponseCall(trackingNumber);
 
-        return null;
+        TrackResponse trackResponse = populateTrackingResponseDto(result);
+
+        return trackResponse;
     }
 
     private String makeGetTrackingResponseCall(String trackingNumber) {
@@ -405,6 +413,116 @@ public class ShipmentServiceImpl implements ShipmentService {
         } else {
             return "badResponse";
         }
+
+    }
+
+    private TrackResponse populateTrackingResponseDto(String response) {
+
+        Shipment _Shipment = new Shipment();
+
+        List<Shipment> shipmentList = new ArrayList<Shipment>();
+
+        JsonObject jsonObject = new Gson().fromJson(response, JsonObject.class);
+
+        JsonElement trackingResponse = jsonObject.get("trackResponse");
+
+        JsonElement responseElement = trackingResponse.getAsJsonObject().get("shipment");
+
+        JsonArray shipmentArray = responseElement.getAsJsonArray();
+
+        for (int shipmentCount = 0; shipmentCount < shipmentArray.size(); shipmentCount++) {
+
+            JsonElement shipment = shipmentArray.get(shipmentCount);
+
+            JsonElement packages = shipment.getAsJsonObject().get("package");
+
+            JsonArray packagesDetails = packages.getAsJsonArray();
+
+            for (int packagesCount = 0; packagesCount < packagesDetails.size(); packagesCount++) {
+
+                JsonElement packageDetail = packagesDetails.get(packagesCount);
+
+                JsonElement trackingNumber = packageDetail.getAsJsonObject().get("trackingNumber");
+
+                JsonElement activities = packageDetail.getAsJsonObject().get("activity");
+
+                JsonArray activityArray = activities.getAsJsonArray();
+
+                for (int activityCount = 0; activityCount < activityArray.size(); activityCount++) {
+
+                    JsonElement locationsDetails = activityArray.get(activityCount);
+                    JsonElement location = locationsDetails.getAsJsonObject().get("location");
+                    JsonElement addressDetail = location.getAsJsonObject().get("address");
+                    JsonElement city = addressDetail.getAsJsonObject().get("city");
+                    JsonElement stateProvince = addressDetail.getAsJsonObject().get("stateProvince");
+
+                    JsonElement postalCode = addressDetail.getAsJsonObject().get("postalCode");
+
+                    JsonElement country = addressDetail.getAsJsonObject().get("country");
+
+                    JsonElement status = locationsDetails.getAsJsonObject().get("status");
+
+                    JsonElement type = status.getAsJsonObject().get("type");
+
+                    JsonElement description = status.getAsJsonObject().get("description");
+
+                    JsonElement code = status.getAsJsonObject().get("code");
+
+                    JsonElement date = locationsDetails.getAsJsonObject().get("date");
+
+                    JsonElement time = locationsDetails.getAsJsonObject().get("time");
+                    List<Package> packagesList = new ArrayList<Package>();
+
+                    List<Activity> activityList = new ArrayList<Activity>();
+
+                    List<Address> addressList = new ArrayList<Address>();
+
+                    List<Location> locationList = new ArrayList<Location>();
+
+                    List<Status> statusList = new ArrayList<Status>();
+
+                    Address _Address = new Address();
+                    _Address.setCity(city.getAsString());
+                    _Address.setCountryCode(country.getAsString());
+                    _Address.setPostalCode(postalCode.getAsString());
+                    _Address.setStateProvinceCode(stateProvince.getAsString());
+                    addressList.add(_Address);
+                    System.out.println("addressList" + addressList);
+
+                    Status _Status = new Status();
+                    _Status.setCode(code.getAsString());
+                    _Status.setDescription(description.getAsString());
+                    _Status.setType(type.getAsString());
+                    statusList.add(_Status);
+
+                    Location _Location = new Location();
+                    _Location.setAddressList(addressList);
+                    locationList.add(_Location);
+
+                    Activity _Activity = new Activity();
+                    _Activity.setStatusList(statusList);
+                    _Activity.setDate(date.getAsString());
+                    _Activity.setTime(time.getAsString());
+                    _Activity.setLocations(locationList);
+                    activityList.add(_Activity);
+
+                    Package _Package = new Package();
+                    _Package.setTrackingNumber(trackingNumber.getAsString());
+                    _Package.setActivities(activityList);
+                    packagesList.add(_Package);
+
+                    _Shipment.setPackages(packagesList);
+                    shipmentList.add(_Shipment);
+
+                }
+            }
+        }
+
+        TrackResponse trackResponse = new TrackResponse();
+
+        trackResponse.setShipments(shipmentList);
+
+        return trackResponse;
 
     }
 
