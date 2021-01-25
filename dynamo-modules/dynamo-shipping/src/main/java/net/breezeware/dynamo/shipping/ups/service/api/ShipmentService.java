@@ -18,8 +18,18 @@ public interface ShipmentService {
      */
     ShipmentResponse createShippingLabel(ShipmentRequest shipmentRequest);
 
+    /**
+     * create pickup request Using UPS API
+     * @param pickupCreationRequest
+     * @return PickupCreationResponse dto
+     */
     PickupCreationResponse pickupCreation(PickupCreationRequest pickupCreationRequest);
 
+    /**
+     * Get Track Details for the given Tracking Number
+     * @param trackingNumber
+     * @return TrackResponse dto
+     */
     TrackResponse getTrackingDetails(String trackingNumber);
 
 }
