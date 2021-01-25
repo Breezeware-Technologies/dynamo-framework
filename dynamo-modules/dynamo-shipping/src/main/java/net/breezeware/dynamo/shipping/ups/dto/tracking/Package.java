@@ -9,6 +9,6 @@ public class Package {
 
     private String trackingNumber;
 
-    private List<Activity> activities;
+    private List<Activity> activity;
 
 }

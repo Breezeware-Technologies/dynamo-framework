@@ -3,6 +3,9 @@ package net.breezeware.dynamo.shipping.ups.dto.pickup;
 import lombok.Data;
 import net.breezeware.dynamo.shipping.ups.dto.Phone;
 
+/**
+ * PickupCreatoin Request Dto to set the PickupAddress details.
+ */
 @Data
 public class PickupAddress {
 
@@ -17,15 +20,25 @@ public class PickupAddress {
     private String floor;
 
     private String city;
-
+    /**
+     * State Province code(eg:GA)
+     */
     private String stateProvince;
 
     private String urbanization;
-
+    /**
+     * Postal Code for the given State
+     */
     private String postalCode;
-
+    /**
+     * countryCode (eg:US)
+     */
     private String countryCode;
 
+    /**
+     * residentialIndicator for the indicate whether the pickuplocation is on the
+     * residentional area.(eg:residentialIndicator="Y")
+     */
     private String residentialIndicator;
 
     private String pickupPoint;

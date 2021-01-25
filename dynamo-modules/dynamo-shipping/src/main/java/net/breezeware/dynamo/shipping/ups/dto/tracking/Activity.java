@@ -1,15 +1,13 @@
 package net.breezeware.dynamo.shipping.ups.dto.tracking;
 
-import java.util.List;
-
 import lombok.Data;
 
 @Data
 public class Activity {
 
-    private List<Location> locations;
+    private Location location;
 
-    private List<Status> statusList;
+    private Status status;
 
     private String date;
 

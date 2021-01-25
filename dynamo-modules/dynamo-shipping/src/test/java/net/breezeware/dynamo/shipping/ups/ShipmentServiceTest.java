@@ -62,7 +62,7 @@ public class ShipmentServiceTest {
 
     }
 
-    // + @Test
+    // @Test
     public void pickupCreationtest() {
 
         PickupCreationRequest pickupCreationRequest = populatePickupCreationRequest();
