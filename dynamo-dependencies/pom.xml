@@ -1,4 +1,6 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>net.breezeware.dynamo</groupId>
@@ -57,6 +59,7 @@
 		<lombok.version>1.18.16</lombok.version>
 		<spring.restdocs.asciidoctor>2.0.3.RELEASE</spring.restdocs.asciidoctor>
 		<validation-api.version>2.0.1.Final</validation-api.version>
+		<junit.version> 5.6.2 </junit.version>
 	</properties>
 
 	<!-- #################### DEPENDENCY MANAGEMENT #################### -->
@@ -580,6 +583,34 @@
 				<artifactId>spring-restdocs-asciidoctor</artifactId>
 				<version>${spring.restdocs.asciidoctor}</version>
 			</dependency>
+
+
+			<!-- JUnit 5 -->
+			<!-- https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-api -->
+			<dependency>
+				<groupId>org.junit.jupiter</groupId>
+				<artifactId>junit-jupiter-api</artifactId>
+				<version>${junit.version}</version>
+				<scope>test</scope>
+			</dependency>
+
+			<!-- https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-engine -->
+			<dependency>
+				<groupId>org.junit.jupiter</groupId>
+				<artifactId>junit-jupiter-engine</artifactId>
+				<version>${junit.version}</version>
+				<scope>test</scope>
+			</dependency>
+
+			<!-- https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-params -->
+			<dependency>
+				<groupId>org.junit.jupiter</groupId>
+				<artifactId>junit-jupiter-params</artifactId>
+				<version>${junit.version}</version>
+				<scope>test</scope>
+			</dependency>
+
+
 		</dependencies>
 	</dependencyManagement>
 </project>

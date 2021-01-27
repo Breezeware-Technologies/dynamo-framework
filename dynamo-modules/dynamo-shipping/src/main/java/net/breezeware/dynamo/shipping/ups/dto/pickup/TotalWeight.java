@@ -3,7 +3,7 @@ package net.breezeware.dynamo.shipping.ups.dto.pickup;
 import lombok.Data;
 
 /**
- * Request Dto to set the Total Weight Of the Packages for the Current Pickup.
+ * DTO to set the TotalWeight in the PickupCreationRequest.
  */
 @Data
 public class TotalWeight {
@@ -11,5 +11,4 @@ public class TotalWeight {
     private String weight;
 
     private String unitOfMeasurement;
-
 }
