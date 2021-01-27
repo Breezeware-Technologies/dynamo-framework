@@ -19,7 +19,7 @@ public class PickupCreationRequest {
 
     private PickupDateInfo pickupDateInfo;
 
-    private PickupAddress PickupAddress;
+    private PickupAddress pickupAddress;
 
     private PickupPiece pickupPiece;
 

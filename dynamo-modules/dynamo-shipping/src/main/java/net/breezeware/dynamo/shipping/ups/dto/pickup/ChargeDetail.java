@@ -11,11 +11,11 @@ public class ChargeDetail {
      * Charge Code Refers the general charge type (eg:A = ACCESSORIAL TYPE,B = BASE
      * CHARGE TYPE,S = SURCHARGE TYPE)
      */
-    private String ChargeCode;
+    private String chargeCode;
 
-    private String ChargeDescription;
+    private String chargeDescription;
 
-    private String ChargeAmount;
+    private String chargeAmount;
 
-    private String TaxAmount;
+    private String taxAmount;
 }

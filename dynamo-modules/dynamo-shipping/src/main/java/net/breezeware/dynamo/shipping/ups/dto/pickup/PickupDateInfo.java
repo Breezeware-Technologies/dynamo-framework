@@ -10,15 +10,15 @@ public class PickupDateInfo {
     /**
      * Pickup location's local close time. (Format: HHmm, Hour: 0-23 Minute: 0-59)
      */
-    private String CloseTime;
+    private String closeTime;
     /**
      * Pickup location's local ready time. (Format: HHmm ,Hour: 0-23 Minute: 0-59)
      */
-    private String ReadyTime;
+    private String readyTime;
     /**
      * Local pickup date of the location.(Format: yyyyMMdd, yyyy = Year Applicable,
      * MM = 01– 12, dd = 01–31)
      */
-    private String PickupDate;
+    private String pickupDate;
 
 }
