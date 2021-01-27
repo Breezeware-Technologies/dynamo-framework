@@ -10,7 +10,7 @@ public class ShippingLabel {
 
     private ImageFormat imageFormat;
 
-    private String graphImage;
+    private String graphicImage;
 
     private String HTMLImage;
 

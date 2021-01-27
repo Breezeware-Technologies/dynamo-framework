@@ -12,6 +12,6 @@ public class ServiceOptionsCharges {
      */
     private String currencyCode;
 
-    private String monetaryvalue;
+    private String monetaryValue;
 
 }

@@ -72,6 +72,7 @@ public class ShipmentServiceImpl implements ShipmentService {
     }
 
     private ShipmentResponse populateShipmentResponse(String response) {
+        System.out.println("response -->" + response);
         Gson gson = new GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.UPPER_CAMEL_CASE).create();
 
         ShipmentResponseWrapper shipmentResponseWrapper = gson.fromJson(response, ShipmentResponseWrapper.class);

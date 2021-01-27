@@ -22,7 +22,7 @@ public class RateResult {
     /**
      * Detailed charges
      */
-    private List<ChargeDetail> ChargeDetails;
+    private List<ChargeDetail> chargeDetail;
     /**
      * grand Total For the Pickup
      */

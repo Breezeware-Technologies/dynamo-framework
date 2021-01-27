@@ -19,10 +19,9 @@ import net.breezeware.dynamo.shipping.ups.dto.pickup.TrackingData;
 import net.breezeware.dynamo.shipping.ups.dto.shipping.BillShipper;
 import net.breezeware.dynamo.shipping.ups.dto.shipping.LabelImageFormat;
 import net.breezeware.dynamo.shipping.ups.dto.shipping.LabelSpecification;
+import net.breezeware.dynamo.shipping.ups.dto.shipping.Package;
 import net.breezeware.dynamo.shipping.ups.dto.shipping.PackageWeight;
 import net.breezeware.dynamo.shipping.ups.dto.shipping.Packaging;
-import net.breezeware.dynamo.shipping.ups.dto.shipping.Package;
-
 import net.breezeware.dynamo.shipping.ups.dto.shipping.PaymentInformation;
 import net.breezeware.dynamo.shipping.ups.dto.shipping.Service;
 import net.breezeware.dynamo.shipping.ups.dto.shipping.Shipment;
@@ -46,7 +45,7 @@ public class ShipmentServiceTest {
 
     }
 
-    // @Test
+    @Test
     public void createlabelRequestTest() {
 
         log.info("Entering CreateLabelReqestTest");
@@ -62,7 +61,7 @@ public class ShipmentServiceTest {
 
     }
 
-    // @Test
+    @Test
     public void pickupCreationtest() {
 
         PickupCreationRequest pickupCreationRequest = populatePickupCreationRequest();
