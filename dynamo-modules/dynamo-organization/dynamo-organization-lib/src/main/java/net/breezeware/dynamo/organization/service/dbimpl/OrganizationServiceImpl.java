@@ -260,6 +260,23 @@ public class OrganizationServiceImpl implements OrganizationService {
      * {@inheritDoc}
      */
     @Transactional
+    @Auditable(event = "Retrieve User By Email or Unique User ID", argNames = "emailOrUniqueUserId")
+    public Optional<User> retrieveUserByEmailOrUniqueUserId(String emailOrUniqueUserId) {
+        Optional retVal = Optional.empty();
+        List<User> users = userRepository.findByEmailIgnoreCase(emailOrUniqueUserId);
+        if (users.size() > 0) {
+            retVal = Optional.of(users.get(0));
+        } else {
+            retVal = Optional.ofNullable(userRepository.findByUserUniqueId(emailOrUniqueUserId));
+        }
+
+        return retVal;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Transactional
     @Auditable(event = "Retrieve User by Unique User ID", argNames = "uniqueUserId")
     public User findByUniqueUserIdIgnoreCase(String uniqueUserId) {
         User user = userRepository.findByUserUniqueId(uniqueUserId);
@@ -1228,7 +1245,7 @@ public class OrganizationServiceImpl implements OrganizationService {
         List<Role> roleList = findMultipleRoles(roleIdList);
 
         // create groups for user if available
-        if (groupList != null && groupIdList.size() > 0) {
+        if (groupList != null && groupList.size() > 0) {
 
             for (Group group : groupList) {
                 UserGroupMap userGroupMap = new UserGroupMap();
