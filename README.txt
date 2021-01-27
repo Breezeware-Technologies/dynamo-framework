@@ -1,5 +1,9 @@
 Dynamo Framework - Spring based framework for developing web & mobile applications.
 
+2.2.0:
+------
+●   Added Shipping module to provide support for UPS service integration
+
 2.0.0:
 ------
 ●   Updated Spring Boot version to 2.4.0 and Spring Version to 5.3.1
