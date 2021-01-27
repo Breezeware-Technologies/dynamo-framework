@@ -45,7 +45,6 @@ public class ShipmentServiceImpl implements ShipmentService {
                 .flatMap(response -> response.toEntity(String.class)).block();
 
         log.info("The Response Status Code = {}", result.toString());
-        System.out.println("The Response Status Code" + result);
 
         if (result.getStatusCodeValue() == 200) {
             return result.getBody();
@@ -64,23 +63,18 @@ public class ShipmentServiceImpl implements ShipmentService {
         jo.add("ShipmentRequest", je);
 
         String requestBody = jo.toString();
-        System.out.println("requestBody" + requestBody);
         log.info("Request Body as JSON = {}", requestBody);
         String response = makeLabelCreationCall(requestBody);
 
         ShipmentResponse shipmentResponse = populateShipmentResponse(response);
 
-        System.out.println("shipmentResponse in create Label" + shipmentResponse);
         return shipmentResponse;
     }
 
     private ShipmentResponse populateShipmentResponse(String response) {
         Gson gson = new GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.UPPER_CAMEL_CASE).create();
 
-        System.out.println("Response String   -->" + response);
         ShipmentResponseWrapper shipmentResponseWrapper = gson.fromJson(response, ShipmentResponseWrapper.class);
-
-        System.out.println("shipmentResponseWrapper" + shipmentResponseWrapper);
 
         return shipmentResponseWrapper.getShipmentResponse();
 
@@ -99,7 +93,6 @@ public class ShipmentServiceImpl implements ShipmentService {
                 .flatMap(response -> response.toEntity(String.class)).block();
 
         log.info("The Response Status Code = {}", result.toString());
-        System.out.println("The Response Status Code" + result);
 
         if (result.getStatusCodeValue() == 200) {
             return result.getBody();
@@ -119,11 +112,9 @@ public class ShipmentServiceImpl implements ShipmentService {
 
         jo.add("PickupCreationRequest", je);
         String requestBody = jo.toString();
-        System.out.println("requestBody" + requestBody);
         log.info("Request Body as JSON = {}", requestBody);
         String response = makePickupCreationCall(requestBody);
 
-        System.out.println("response " + response);
         PickupCreationResponse pickupCreationResponse = persitsPickupResponseDataToDtos(response);
 
         return pickupCreationResponse;
@@ -133,11 +124,8 @@ public class ShipmentServiceImpl implements ShipmentService {
     private PickupCreationResponse persitsPickupResponseDataToDtos(String response) {
         Gson gson = new GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.UPPER_CAMEL_CASE).create();
 
-        System.out.println("pick upResponse String   -->" + response);
         PickupCreationResponseWrapper pickupCreationResponseWrapper = gson.fromJson(response,
                 PickupCreationResponseWrapper.class);
-
-        System.out.println("pickupCreationResponseWrapper" + pickupCreationResponseWrapper);
 
         return pickupCreationResponseWrapper.getPickupCreationResponse();
     }
@@ -165,7 +153,6 @@ public class ShipmentServiceImpl implements ShipmentService {
         }).exchange().flatMap(response -> response.toEntity(String.class)).block();
 
         log.info("The Response Status Code = {}", result.toString());
-        System.out.println("The Response Status Code" + result);
 
         if (result.getStatusCodeValue() == 200) {
             return result.getBody();
@@ -178,10 +165,7 @@ public class ShipmentServiceImpl implements ShipmentService {
     private TrackResponse populateTrackingResponseDto(String response) {
 
         Gson gson = new Gson();
-        System.out.println("TrackResponse String   -->" + response);
         TrackingResponseWrapper trackingResponseWrapper = gson.fromJson(response, TrackingResponseWrapper.class);
-
-        System.out.println("trackingResponseWrapper" + trackingResponseWrapper);
 
         return trackingResponseWrapper.getTrackResponse();
 
