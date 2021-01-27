@@ -255,21 +255,21 @@ public class OrganizationServiceImpl implements OrganizationService {
 
         return retVal;
     }
-    
+
     /**
      * {@inheritDoc}
      */
     @Transactional
     @Auditable(event = "Retrieve User By Email or Unique User ID", argNames = "emailOrUniqueUserId")
     public Optional<User> retrieveUserByEmailOrUniqueUserId(String emailOrUniqueUserId) {
-    	Optional retVal = Optional.empty();
+        Optional retVal = Optional.empty();
         List<User> users = userRepository.findByEmailIgnoreCase(emailOrUniqueUserId);
         if (users.size() > 0) {
             retVal = Optional.of(users.get(0));
         } else {
-        	retVal = Optional.ofNullable(userRepository.findByUserUniqueId(emailOrUniqueUserId));
+            retVal = Optional.ofNullable(userRepository.findByUserUniqueId(emailOrUniqueUserId));
         }
-        
+
         return retVal;
     }
 
