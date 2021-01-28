@@ -3,8 +3,7 @@ package net.breezeware.dynamo.shipping.ups.dto.shipping;
 import lombok.Data;
 
 /**
- * Shipping Request Dto to set the ShipmentRequest for the single Shipment
- * Request. Shippimg Requests intal(parent) Dto.
+ * The DTO to set Shipment in the {@link ShipmentRequest}.
  */
 @Data
 public class ShipmentRequest {

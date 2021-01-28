@@ -3,15 +3,15 @@ package net.breezeware.dynamo.shipping.ups.dto.shipping;
 import lombok.Data;
 
 /**
- * Response Dto to persits packageDetails for the given Request.
+ * The DTO to persist PackageResults for {@link ShipmentResults}.
  */
 @Data
 public class PackageResults {
 
-    private String TrackingNumber;
+    private String trackingNumber;
 
     private ServiceOptionsCharges serviceOptionsCharges;
 
-    private ShippingLabel ShippingLabel;
+    private ShippingLabel shippingLabel;
 
 }

@@ -3,7 +3,7 @@ package net.breezeware.dynamo.shipping.ups.dto.shipping;
 import lombok.Data;
 
 /**
- * Response Dto for Persits ShipmentResults.
+ * The DTO to Persists the ShipmentResults for {@link ShipmentResponse}.
  */
 @Data
 public class ShipmentResults {

@@ -3,7 +3,7 @@ package net.breezeware.dynamo.shipping.ups.dto.shipping;
 import lombok.Data;
 
 /**
- * Shipping Request Dto for set's AccountNumber Value for the Specific Shipper
+ * DTO to set the BillShipper in the {@link ShipmentCharge}.
  */
 @Data
 public class BillShipper {

@@ -5,7 +5,7 @@ import java.util.List;
 import lombok.Data;
 
 /**
- * parent Response Dto for the Tracking(parent dto)
+ * The DTO to persists the list of Shipment for {@link TrackResponse}.
  */
 @Data
 public class TrackResponse {

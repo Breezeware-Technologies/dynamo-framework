@@ -3,7 +3,7 @@ package net.breezeware.dynamo.shipping.ups.dto.shipping;
 import lombok.Data;
 
 /**
- * Response Dto for Persits TransportationCharges Details.
+ * The DTO to Persists the TotalCharges for {@link ShipmentCharges}.
  */
 @Data
 public class TransportationCharges {
@@ -12,6 +12,6 @@ public class TransportationCharges {
      */
     private String currencyCode;
 
-    private String monetaryvalue;
+    private String monetaryValue;
 
 }

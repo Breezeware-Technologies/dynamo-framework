@@ -3,7 +3,7 @@ package net.breezeware.dynamo.shipping.ups.dto.pickup;
 import lombok.Data;
 
 /**
- * Response Dto to Persits the Charge Detail of the Current Pickup Request.
+ * DTO to persist the ChargeDetail for {@link RateResult}.
  */
 @Data
 public class ChargeDetail {

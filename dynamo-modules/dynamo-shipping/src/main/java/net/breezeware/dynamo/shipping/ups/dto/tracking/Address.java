@@ -3,7 +3,7 @@ package net.breezeware.dynamo.shipping.ups.dto.tracking;
 import lombok.Data;
 
 /**
- * Response Dto to Persits the Address Details
+ * The DTO to Persits the all details For {@link Address}
  */
 @Data
 public class Address {

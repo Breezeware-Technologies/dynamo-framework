@@ -3,7 +3,7 @@ package net.breezeware.dynamo.shipping.ups.dto.tracking;
 import lombok.Data;
 
 /**
- * Response Dto to persits the Status Details
+ * The DTO to persits the {@link Status} for {@link Activity}
  */
 @Data
 public class Status {

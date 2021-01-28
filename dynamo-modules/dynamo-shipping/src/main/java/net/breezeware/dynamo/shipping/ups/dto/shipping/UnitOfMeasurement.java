@@ -3,8 +3,10 @@ package net.breezeware.dynamo.shipping.ups.dto.shipping;
 import lombok.Data;
 
 /**
- * Shipping Request Dto to set the UnitOfMeasurement Details for the single
- * Shipment Request
+ * The DTO to set the UnitOfMeasurement to {@link PackageWeight}.
+ * <p>
+ * Use this DTO to persists the UnitOfMeasurement for {@link BillingWeight}.
+ * </p>
  */
 @Data
 public class UnitOfMeasurement {

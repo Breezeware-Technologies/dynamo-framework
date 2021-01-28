@@ -3,8 +3,7 @@ package net.breezeware.dynamo.shipping.ups.dto.shipping;
 import lombok.Data;
 
 /**
- * Shipping Request Dto to set the Service Details for the single Shipment
- * Request
+ * DTO to set the Service in the {@link Shipment}
  */
 @Data
 public class Service {

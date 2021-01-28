@@ -5,8 +5,7 @@ import net.breezeware.dynamo.shipping.ups.dto.ShipTo;
 import net.breezeware.dynamo.shipping.ups.dto.Shipper;
 
 /**
- * Shipping Request Dto to set the Shipment Details for the single Shipment
- * Request.
+ * The Dto to set Shipment Details in the {@link ShipmentRequest}.
  */
 @Data
 public class Shipment {

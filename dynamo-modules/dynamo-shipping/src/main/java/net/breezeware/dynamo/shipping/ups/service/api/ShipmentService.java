@@ -12,21 +12,21 @@ import net.breezeware.dynamo.shipping.ups.dto.tracking.TrackResponse;
  */
 public interface ShipmentService {
     /**
-     * createShipping Label using UPS API.
-     * @param shipmentRequest shipment Request dto f
+     * createShippingLabel for ShipmentRequest using UPS API.
+     * @param shipmentRequest shipment Request dto
      * @return shipmentResponse dto
      */
     ShipmentResponse createShippingLabel(ShipmentRequest shipmentRequest);
 
     /**
-     * create pickup request Using UPS API
+     * create pickup request for PickupCreationRequest Using UPS API
      * @param pickupCreationRequest
      * @return PickupCreationResponse dto
      */
     PickupCreationResponse pickupCreation(PickupCreationRequest pickupCreationRequest);
 
     /**
-     * Get Track Details for the given Tracking Number
+     * Get Track Details for the given Trackingnumber
      * @param trackingNumber
      * @return TrackResponse dto
      */

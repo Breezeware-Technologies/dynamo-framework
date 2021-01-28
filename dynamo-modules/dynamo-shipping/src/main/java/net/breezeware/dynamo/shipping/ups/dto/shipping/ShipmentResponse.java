@@ -4,7 +4,7 @@ import lombok.Data;
 import net.breezeware.dynamo.shipping.ups.dto.Response;
 
 /**
- * Response Dto for Persits ShipmentResponse.(parent Shipment Response Dto).
+ * The DTO to Persist all properties in ShipmentResponse.
  */
 @Data
 public class ShipmentResponse {

@@ -3,8 +3,7 @@ package net.breezeware.dynamo.shipping.ups.dto.shipping;
 import lombok.Data;
 
 /**
- * Shipping Request Dto to set the ShipmentCharge Details for the single
- * Shipment Request.
+ * The Dto to set ShipmentCharge Details in the {@link PaymentInformation}.
  */
 @Data
 public class ShipmentCharge {

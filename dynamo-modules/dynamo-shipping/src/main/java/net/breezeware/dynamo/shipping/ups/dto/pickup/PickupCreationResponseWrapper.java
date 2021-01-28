@@ -3,7 +3,8 @@ package net.breezeware.dynamo.shipping.ups.dto.pickup;
 import lombok.Data;
 
 /**
- * Wrapper class for the Response Parsing from json to java Objects
+ * The wrapper class used for Parsing {@link PickupCreationResponseWrapper}
+ * properties.
  */
 @Data
 public class PickupCreationResponseWrapper {

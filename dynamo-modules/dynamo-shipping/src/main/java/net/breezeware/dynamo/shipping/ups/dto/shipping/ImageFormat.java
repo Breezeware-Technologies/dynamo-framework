@@ -3,12 +3,12 @@ package net.breezeware.dynamo.shipping.ups.dto.shipping;
 import lombok.Data;
 
 /**
- * Response Dto for Persits Image Format Details.
+ * DTO to persist the ImageFormat for {@link ShippingLabel}.
  */
 @Data
 public class ImageFormat {
     /**
-     * Persits Code value (eg:Code: "PNG")
+     * code value of image format (eg:Code: "PNG")
      */
     private String code;
 

@@ -3,8 +3,7 @@ package net.breezeware.dynamo.shipping.ups.dto;
 import lombok.Data;
 
 /**
- * Address Dto for set the all address oriented details for the Shipment
- * requests.
+ * The DTO to set Address in the {@link Shipper} and {@link ShipTo}.
  */
 @Data
 public class Address {

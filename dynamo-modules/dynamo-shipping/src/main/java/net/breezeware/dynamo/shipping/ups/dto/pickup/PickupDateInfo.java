@@ -3,7 +3,7 @@ package net.breezeware.dynamo.shipping.ups.dto.pickup;
 import lombok.Data;
 
 /**
- * Request Dto for set's the PickupDateInfo Details
+ * DTO to set the PickupDateInfo in the {@link PickupCreationRequest}.
  */
 @Data
 public class PickupDateInfo {
@@ -16,7 +16,7 @@ public class PickupDateInfo {
      */
     private String readyTime;
     /**
-     * Local pickup date of the location.(Format: yyyyMMdd, yyyy = Year Applicable,
+     * local pickup date of the location.(Format: yyyyMMdd, yyyy = Year Applicable,
      * MM = 01– 12, dd = 01–31)
      */
     private String pickupDate;

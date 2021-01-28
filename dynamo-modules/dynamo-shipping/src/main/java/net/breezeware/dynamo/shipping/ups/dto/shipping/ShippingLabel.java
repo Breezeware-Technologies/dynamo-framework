@@ -3,7 +3,7 @@ package net.breezeware.dynamo.shipping.ups.dto.shipping;
 import lombok.Data;
 
 /**
- * Response Dto for Persits ShippingLabel.
+ * The DTO to Persists ShippingLabel for {@link PackageResults}.
  */
 @Data
 public class ShippingLabel {

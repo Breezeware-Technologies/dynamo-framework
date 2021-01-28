@@ -5,14 +5,14 @@ import java.util.List;
 import lombok.Data;
 
 /**
- * Response dto for the persits the Rate Results Whether the
- * ratePickupIndicator=Y
+ * DTO to persist all the RateResult for {@link PickupCreationResponse} Whether
+ * the ratePickupIndicator property is true in {@link PickupCreationRequest}.
  */
 @Data
 public class RateResult {
     /**
-     * Indicates this pickup is rated as same-day or future-day pickup.(SD =
-     * Same-day Pickup FD = Future-day Pickup)
+     * indicates this pickup is rated as same-day or future-day pickup.(SD =
+     * Same-day pickup FD = Future-day pickup)
      */
     private String rateType;
     /**
@@ -20,11 +20,11 @@ public class RateResult {
      */
     private String currencyCode;
     /**
-     * Detailed charges
+     * detailed charges
      */
     private List<ChargeDetail> chargeDetail;
     /**
-     * grand Total For the Pickup
+     * grand Total For the pickup
      */
     private String grandTotalOfAllCharge;
 

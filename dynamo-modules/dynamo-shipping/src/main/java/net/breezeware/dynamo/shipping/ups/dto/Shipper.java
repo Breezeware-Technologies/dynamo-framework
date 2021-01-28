@@ -4,7 +4,7 @@ import lombok.Data;
 import net.breezeware.dynamo.shipping.ups.dto.pickup.Account;
 
 /**
- * Shipper dto to (source) set the all the details about Shipper.
+ * The DTO to Set the {@link Shipper} in the Shipment.
  */
 @Data
 public class Shipper {

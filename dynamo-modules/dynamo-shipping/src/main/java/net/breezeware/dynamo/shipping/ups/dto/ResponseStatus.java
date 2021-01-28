@@ -3,7 +3,7 @@ package net.breezeware.dynamo.shipping.ups.dto;
 import lombok.Data;
 
 /**
- * Persist all the ResponseStatus values
+ * The DTO to persists the {@link ResponseStatus} for {@link Response}.
  */
 
 @Data

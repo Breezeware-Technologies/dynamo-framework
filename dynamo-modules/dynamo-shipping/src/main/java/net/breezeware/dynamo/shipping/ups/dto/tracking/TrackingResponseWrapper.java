@@ -3,7 +3,7 @@ package net.breezeware.dynamo.shipping.ups.dto.tracking;
 import lombok.Data;
 
 /**
- * Wrapper class for the Response Parsing from json to java Objects
+ * The wrapper class used for Parsing {@link TrackResponse} properties.
  */
 @Data
 public class TrackingResponseWrapper {

@@ -3,12 +3,12 @@ package net.breezeware.dynamo.shipping.ups.dto.pickup;
 import lombok.Data;
 
 /**
- * Response dto for the persits the Rate Status
+ * * DTO to persists all the RateStatus for {@link PickupCreationResponse}.
  */
 @Data
 public class RateStatus {
     /**
-     * Code refers rating status. (01= Rate available)
+     * code refers rating status. (01= Rate available)
      */
     private String code;
 

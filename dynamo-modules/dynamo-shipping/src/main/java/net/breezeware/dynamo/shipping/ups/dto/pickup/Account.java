@@ -1,9 +1,10 @@
 package net.breezeware.dynamo.shipping.ups.dto.pickup;
 
 import lombok.Data;
+import net.breezeware.dynamo.shipping.ups.dto.Shipper;
 
 /**
- * Request Dto for set's the Account Details.
+ * DTO to set the Account details in the {@link Shipper}
  */
 @Data
 public class Account {

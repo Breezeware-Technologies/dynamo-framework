@@ -4,8 +4,8 @@ import lombok.Data;
 import net.breezeware.dynamo.shipping.ups.dto.Shipper;
 
 /**
- * PickupCreation Request Dto for set's all the PickupCreation Details.
- * PickupCreationRequest is an parent dto.
+ * The DTO represents all the properties for create
+ * {@link PickupCreationRequest}.
  */
 @Data
 public class PickupCreationRequest {
