@@ -44,8 +44,8 @@ public class InventoryItem {
 
     // Note : update active with patient status
     public enum ItemStatus {
-        IN_WAREHOUSE("inwarehouse"), SHIPPED("shipped"), DELIVERED("delivered"),
-        ACTIVE("active"), INACTIVE("inactive");
+        IN_WAREHOUSE("inwarehouse"), SHIPPED("shipped"), DELIVERED("delivered"), ACTIVE("active"), INACTIVE("inactive"),
+        ARCHIVED("archived");
 
         @Getter
         @Setter
