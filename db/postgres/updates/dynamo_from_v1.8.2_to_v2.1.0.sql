@@ -1,3 +1,9 @@
+----------------------------------------------------------------------------- 
+-- ~~~~~~~~~~#################### DYNAMO INVENTORY ####################~~~~~~~~~~
+-----------------------------------------------------------------------------
+
+-- =============== Dynamo Inventory Schema =============== 
+
 CREATE SCHEMA IF NOT EXISTS dynamo;
 
 DROP SEQUENCE IF EXISTS dynamo.inventory_item_seq;
@@ -22,5 +28,26 @@ CREATE TABLE dynamo.inventory_item
 	  CONSTRAINT inventory_item_pkey PRIMARY KEY (id)
 );
 
+DROP SEQUENCE IF EXISTS dynamo.inventory_item_location_seq;
+CREATE SEQUENCE dynamo.inventory_item_location_seq
+  INCREMENT 1
+  MINVALUE 1
+  MAXVALUE 9223372036854775807
+  START 1
+  CACHE 1;
+  
+DROP TABLE IF EXISTS dynamo.inventory_item_location;
+CREATE TABLE dynamo.inventory_item_location
+(
+	  id bigint NOT NULL DEFAULT nextval('dynamo.inventory_item_location_seq'::regclass),
+	  name  character varying(90),
+	  created_date timestamp with time zone,
+	  modified_date timestamp with time zone,
+	  CONSTRAINT inventory_item_location_pkey PRIMARY KEY (id)
+);
+
 -- Update the sequence numbers after all the sample data inserts.
 select setval('dynamo.inventory_item_seq', (select max(id)+1 from dynamo.inventory_item), false);
+select setval('dynamo.inventory_item_location_seq', (select max(id)+1 from dynamo.inventory_item_location), false);
+
+

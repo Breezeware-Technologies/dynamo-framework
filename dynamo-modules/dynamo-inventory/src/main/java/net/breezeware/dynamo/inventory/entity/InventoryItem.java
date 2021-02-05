@@ -10,7 +10,6 @@ import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
-
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
@@ -86,5 +85,6 @@ public class InventoryItem {
 
     @Column(name = "modified_date")
     private Instant modifiedDate;
+    
 
 }
