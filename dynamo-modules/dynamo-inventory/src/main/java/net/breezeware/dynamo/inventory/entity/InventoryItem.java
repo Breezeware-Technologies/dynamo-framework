@@ -10,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
+
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
@@ -41,6 +42,7 @@ public class InventoryItem {
         }
     }
 
+    // FIXME: comment for each status
     // Note : update active with patient status
     public enum ItemStatus {
         IN_WAREHOUSE("inwarehouse"), SHIPPED("shipped"), DELIVERED("delivered"), ACTIVE("active"), INACTIVE("inactive"),
@@ -85,6 +87,5 @@ public class InventoryItem {
 
     @Column(name = "modified_date")
     private Instant modifiedDate;
-    
 
 }

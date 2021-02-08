@@ -3,8 +3,6 @@ package net.breezeware.dynamo.audit.controller;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
-import java.util.HashMap;
-import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -13,12 +11,14 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.querydsl.binding.QuerydslPredicate;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.MultiValueMap;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -49,7 +49,7 @@ public class AuditManagementController {
      * @param model      the holder for Model attributes
      * @param predicate  the interface for Boolean typed expressions. Supports
      *                   binding of HTTP parameters to QueryDSL predicate
-     * @param pageable   the interface for pagination information
+     * @param pageable   the interface for paginatiosessionn information
      * @param parameters the holder for HTTP parameters in request
      * @param session    the HTTPSession object
      * @return a string to identify the Thymeleaf template
@@ -135,6 +135,45 @@ public class AuditManagementController {
         model.addAttribute("activeNav", "audit");
         logger.info("Leaving viewAuditLog()");
         return "dynamo-audit/view-audit-log";
+    }
+
+    /**
+     * Retrieves audit logs for the particular organization.
+     * @param organizationId Id of the organization to retrieve auditlogs.
+     * @param model          the holder for Model attributes
+     * @param predicate      the interface for Boolean typed expressions. Supports
+     *                       binding of HTTP parameters to QueryDSL predicate
+     * @param pageable       the interface for pagination information
+     * @param parameters     the holder for HTTP parameters in request
+     * @param session        the HTTPSession object
+     * @return a ModelAndView containing the particular organization's audit logs.
+     */
+    @RequestMapping(value = "/orgLogs/{organizationId}", method = RequestMethod.GET)
+    public ModelAndView listOrganizationAuditLogs(@PathVariable("organizationId") long organizationId, Model model,
+            @QuerydslPredicate(root = AuditItem.class) Predicate predicate,
+            @PageableDefault(sort = { "auditDate" }, page = 0, size = 12, direction = Direction.DESC) Pageable pageable,
+            @RequestParam MultiValueMap<String, String> parameters, HttpSession session) {
+
+        logger.info("Entering listAuditLogs()");
+        logger.info("# of params = " + parameters.size());
+
+        CurrentUserDto currentUserDto = (CurrentUserDto) session.getAttribute("currentUser");
+        logger.info("zone ID = " + currentUserDto.getUserTimeZoneId());
+
+        Page<AuditItem> pagedItems = auditService.findAuditItemsForOrganization(organizationId, predicate, pageable);
+        logger.info("# of items fetched = {}", pagedItems.getNumberOfElements());
+
+        pagedItems = updateDateToClientTimeZone(pagedItems, currentUserDto.getUserTimeZoneId());
+
+        model.addAttribute("pagedItems", pagedItems);
+        model.addAttribute("activeNav", "audit");
+
+        // model.addAttribute("locale", Locale.US);
+
+        logger.info("Leaving listAuditLogs()");
+
+        return new ModelAndView("dynamo-audit/list-audit-logs");
+
     }
 
     private Page<AuditItem> updateDateToClientTimeZone(Page<AuditItem> pagedItems, String zoneId) {
