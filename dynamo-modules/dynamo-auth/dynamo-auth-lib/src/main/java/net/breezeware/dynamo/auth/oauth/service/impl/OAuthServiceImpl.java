@@ -24,10 +24,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
+import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Predicate;
 
 import net.breezeware.dynamo.auth.oauth.dao.UserOAuthTokenRepository;
 import net.breezeware.dynamo.auth.oauth.dto.OAuthConnectionProperties;
+import net.breezeware.dynamo.auth.oauth.entity.QUserOAuthToken;
 import net.breezeware.dynamo.auth.oauth.entity.UserOAuthToken;
 import net.breezeware.dynamo.auth.oauth.service.api.OAuthService;
 
@@ -46,10 +48,19 @@ public class OAuthServiceImpl implements OAuthService {
     /**
      * {@inheritDoc}
      */
-    @Transactional
-    public UserOAuthToken createToken(UserOAuthToken userOAuthToken) {
+    public UserOAuthToken createOrUpdateToken(UserOAuthToken userOAuthToken) {
         log.info("Entering createToken(). UserOAuthToken = {}", userOAuthToken);
 
+        // retrieve existing access tokens for this user & application
+        BooleanBuilder bb = new BooleanBuilder();
+        bb.and(QUserOAuthToken.userOAuthToken.tokenUser.id.eq(userOAuthToken.getTokenUser().getId()));
+        bb.and(QUserOAuthToken.userOAuthToken.application.eq(userOAuthToken.getApplication()));
+        List<UserOAuthToken> tokens = retrieveToken(bb);
+
+        // delete existing tokens
+        tokens.stream().forEach(token -> deleteToken(token.getId()));
+
+        // create a new token
         userOAuthToken = userOAuthTokenRepository.save(userOAuthToken);
 
         log.info("Leaving createToken(). UserOAuthToken = {}", userOAuthToken);
@@ -128,7 +139,7 @@ public class OAuthServiceImpl implements OAuthService {
 
                     // delete existing one and persist the new token for future use
                     deleteToken(userOAuthToken);
-                    newUserOAuthToken = createToken(newUserOAuthToken);
+                    newUserOAuthToken = createOrUpdateToken(newUserOAuthToken);
 
                     log.info("Leaving renewToken(). New User OAuth Token = {}", newUserOAuthToken);
                     return Optional.ofNullable(newUserOAuthToken);

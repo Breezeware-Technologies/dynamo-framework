@@ -56,7 +56,7 @@
 					</exclusion>
 				</exclusions>
 			</dependency>
-			
+
 			<!-- Dynamo Inventory -->
 			<dependency>
 				<groupId>net.breezeware.dynamo</groupId>

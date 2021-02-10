@@ -24,13 +24,12 @@
 			<dependency>
 				<groupId>net.breezeware.dynamo</groupId>
 				<artifactId>dynamo-dependencies</artifactId>
-				<version>${project.version}</version>
+				<version>${dynamo-framework.version}</version>
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
-
 
 	<!-- #################### DEPENDENCIES #################### -->
 

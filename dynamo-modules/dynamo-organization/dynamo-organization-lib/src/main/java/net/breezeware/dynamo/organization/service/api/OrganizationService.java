@@ -86,6 +86,15 @@ public interface OrganizationService {
     User findByEmailIgnoreCase(String email);
 
     /**
+     * Retrieve a User by matching the provided value to either the email or unique
+     * user ID.
+     * @param the string value to be matched with either the email or unique user ID
+     *            of a User entity.
+     * @return a non-null User entity if a user exists, else an empty result.
+     */
+    Optional<User> retrieveUserByEmailOrUniqueUserId(String emailOrUniqueUserId);
+
+    /**
      * Retrieve the user having the specified Unique User Id.
      * @param uniqueUserId Unique user ID of the user.
      * @return User instance.

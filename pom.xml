@@ -26,7 +26,7 @@
 		<spring.boot.maven.plugin>1.4.0.RELEASE</spring.boot.maven.plugin>
 		<kie.maven.plugin>7.31.0.Final</kie.maven.plugin>
 		<maven.install.plugin>3.0.0-M1</maven.install.plugin>
-		<maven.release.plugin>2.5.3</maven.release.plugin>
+		<maven.release.plugin>3.0.0-M1</maven.release.plugin>
 		<maven.deploy.plugin>2.8.2</maven.deploy.plugin>
 		<maven.war.plugin>2.6</maven.war.plugin>
 		<maven.compiler.plugin>3.3</maven.compiler.plugin>
@@ -125,13 +125,6 @@
 							<version>${project.version}</version>
 						</dependency>
 					</dependencies>
-				</plugin>
-
-				<!-- Maven Site Plugin -->
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-site-plugin</artifactId>
-					<version>${maven-site-plugin-version}</version>
 				</plugin>
 
 				<!-- QueryDSL -->
