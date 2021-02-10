@@ -47,9 +47,10 @@ public class FileSystemStorageService {
         String filePath = "";
 
         try {
+            // NOTE: thrown exception is changed from uniqueFilename to originalFilename
             if (file.isEmpty()) {
                 logger.info("MultiPartfile is empty!");
-                throw new StorageException("Failed to store empty file " + uniqueFilename);
+                throw new StorageException("Failed to store empty file " + originalFilename);
             }
 
             // check for accepted file type
