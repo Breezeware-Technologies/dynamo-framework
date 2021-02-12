@@ -1,5 +1,9 @@
 Dynamo Framework - Spring based framework for developing web & mobile applications.
 
+2.1.0:
+------
+●   Added Inventory module for Inventory item management.
+
 2.0.0:
 ------
 ●   Updated Spring Boot version to 2.4.0 and Spring Version to 5.3.1
