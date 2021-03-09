@@ -1,11 +1,9 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>net.breezeware.dynamo</groupId>
 		<artifactId>dynamo-framework</artifactId>
-		<version>2.1.0</version>
+		<version>2.1.4-SNAPSHOT</version>
 	</parent>
 	<artifactId>dynamo-webapp</artifactId>
 	<packaging>war</packaging>
@@ -14,17 +12,14 @@
 
 
 	<!-- #################### PROPERTIES #################### -->
-	<properties>
-		<dynamo-framework.version>${project.version}</dynamo-framework.version>
-	</properties>
-
+	
 	<!-- #################### DEPENDENCY MANAGEMENT #################### -->
 	<dependencyManagement>
 		<dependencies>
 			<dependency>
 				<groupId>net.breezeware.dynamo</groupId>
 				<artifactId>dynamo-dependencies</artifactId>
-				<version>${dynamo-framework.version}</version>
+				<version>${project.version}</version>
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>
@@ -38,14 +33,14 @@
 		<dependency>
 			<groupId>net.breezeware.dynamo</groupId>
 			<artifactId>dynamo-util</artifactId>
-			<version>${dynamo-framework.version}</version>
+			<version>${project.version}</version>
 		</dependency>
 
 		<!-- ******************** Dynamo Config Module ******************** -->
 		<dependency>
 			<groupId>net.breezeware.dynamo</groupId>
 			<artifactId>dynamo-config-lib</artifactId>
-			<version>${dynamo-framework.version}</version>
+			<version>${project.version}</version>
 
 			<exclusions>
 				<exclusion>
@@ -60,35 +55,35 @@
 		<dependency>
 			<groupId>net.breezeware.dynamo</groupId>
 			<artifactId>dynamo-audit-lib</artifactId>
-			<version>${dynamo-framework.version}</version>
+			<version>${project.version}</version>
 		</dependency>
 
 		<!-- ******************** Dynamo Apps Module ******************** -->
 		<dependency>
 			<groupId>net.breezeware.dynamo</groupId>
 			<artifactId>dynamo-apps-lib</artifactId>
-			<version>${dynamo-framework.version}</version>
+			<version>${project.version}</version>
 		</dependency>
 
 		<!-- ******************** Dynamo Organization Module ******************** -->
 		<dependency>
 			<groupId>net.breezeware.dynamo</groupId>
 			<artifactId>dynamo-organization-lib</artifactId>
-			<version>${dynamo-framework.version}</version>
+			<version>${project.version}</version>
 		</dependency>
 
 		<!-- ******************** Dynamo Auth Module ******************** -->
 		<dependency>
 			<groupId>net.breezeware.dynamo</groupId>
 			<artifactId>dynamo-auth-lib</artifactId>
-			<version>${dynamo-framework.version}</version>
+			<version>${project.version}</version>
 		</dependency>
 
 		<!-- ******************** Dynamo Communication Module ******************** -->
 		<dependency>
 			<groupId>net.breezeware.dynamo</groupId>
 			<artifactId>dynamo-communication-lib</artifactId>
-			<version>${dynamo-framework.version}</version>
+			<version>${project.version}</version>
 		</dependency>
 
 		<!-- ******************** Thymeleaf support for Spring Security ******************** -->
