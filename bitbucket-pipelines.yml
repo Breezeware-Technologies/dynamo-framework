@@ -17,7 +17,7 @@ definitions:
         max-time: 2
         script:
           - mvn clean validate
-          - mvn clean install -Dmaven.test.skip=true
+          - mvn clean package -Dmaven.test.skip=true
 
 pipelines:
   branches:
