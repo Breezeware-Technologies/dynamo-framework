@@ -1,8 +1,5 @@
 image: breezewaredev/alpine-13openjdk-3.6-maven:latest
 
-options:
-  max-time: 3
-
 definitions: 
   steps:
     - step: &verify-config
@@ -13,9 +10,7 @@ definitions:
     - step: &build-artifacts
         caches:
           - maven
-          - docker
         name: Build project
-        max-time: 2
         script:
           - mvn clean validate
           - mvn clean package -Dmaven.test.skip=true
