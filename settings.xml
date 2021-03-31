@@ -1,0 +1,14 @@
+<settings>
+	<servers>
+		<server>
+			<id>nexus-leapforge-dynamo</id>
+			<username>%NEXUS_REPO_USERNAME%</username>
+			<password>%NEXUS_REPO_PASSWORD%</password>
+		</server>
+		<server>
+			<id>nexus-leapforge-dynamo-snapshots</id>
+			<username>%NEXUS_REPO_USERNAME%</username>
+			<password>%NEXUS_REPO_PASSWORD%</password>
+		</server>
+	</servers>
+</settings>

@@ -1,20 +1,51 @@
-# This is a sample build configuration for Java (Maven).
-# Check our guides at https://confluence.atlassian.com/x/zd-5Mw for more examples.
-# Only use spaces to indent your .yml configuration.
-# -----
-# You can specify a custom docker image from Docker Hub as your build environment.
-image: openjdk:13-alpine
+image: breezewaredev/alpine-13openjdk-3.6-maven:latest
 
-pipelines:
-  default:
-    - step:
+definitions: 
+  steps:
+    - step: &verify-config
+        name: Verify Technology config
+        script:
+          - which java
+          - which mvn
+    - step: &build-artifacts
         caches:
           - maven
-        script: # Modify the commands below to build your repository.
-          - mkdir ~/downloads
-          - wget -P  ~/downloads/ https://downloads.apache.org/maven/maven-3/3.6.3/binaries/apache-maven-3.6.3-bin.zip
-          - unzip ~/downloads/apache-maven-3.6.3-bin.zip -d /usr/local/
-          - ls -alt /usr/local/
-          - echo "Hello World! I am Dynamo Framework"
-          - which java
-          - /usr/local/apache-maven-3.6.3/bin/mvn clean package -Dmaven.test.skip=true
+        name: Build project
+        script:
+          - mvn clean validate
+          - mvn clean package -Dmaven.test.skip=true
+
+pipelines:
+  branches:
+    '**':   
+    - step: *verify-config
+    - step: *build-artifacts
+
+    master:
+    - step:
+        name: Build artifacts for 'master' branch
+        script:
+          - echo "Running pipeline from $BITBUCKET_BRANCH branch"
+    - step: *verify-config
+    - step: *build-artifacts
+
+    '{release/*,feature/*}':
+      - step:
+          name: Build artifacts for 'release/*' or 'feature/*' branch
+          script:
+            - echo "Running pipeline from $BITBUCKET_BRANCH branch"
+      - step: *verify-config
+      - step: *build-artifacts
+
+  tags:
+    DF_*:
+      - step: *verify-config
+      - step: *build-artifacts
+      - step:
+          name: Deploy artifacts to Nexus Repository when 'tag' is created
+          script:
+            - echo "Triggering pipeline for tag '$BITBUCKET_TAG'"
+            - cat settings.xml
+            - bash update-settings-dot-xml.sh
+            - cat settings.xml
+            - mvn -s settings.xml clean deploy -Dmaven.test.skip=true
