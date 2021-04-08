@@ -66,18 +66,26 @@ public class AuditAspect {
 
         if (dynamoAuditConfigProperties.isEnableAuditing()) {
 
-            HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes())
-                    .getRequest();
+            // NOTE: Setting following values based on RequestContextHolder availability.
+            // This was required for call made from RabbitMQ.
+            String clientDetails = "";
+            String protocol = "";
+            String ipAddress = "";
 
-            // Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-            // logger.info("auth inside audit = {}", auth);
-
-            // logger.info("auth principal inside audit = {}", auth.getPrincipal());
-
-            // CurrentUserDto currentUserDto = (CurrentUserDto)
-            // session.getAttribute("currentUser");
-            // String email = currentUserDto.getEmail();
-            // long orgId = Long.valueOf(currentUserDto.getOrganizationId());
+            try {
+                HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder
+                        .currentRequestAttributes()).getRequest();
+                clientDetails = request.getHeader("User-Agent");
+                protocol = request.getProtocol();
+                ipAddress = request.getHeader("X-FORWARDED-FOR");
+                if (ipAddress == null) {
+                    ipAddress = request.getRemoteAddr();
+                }
+            } catch (Exception e) {
+                clientDetails = "Not Available";
+                protocol = "Not Available";
+                ipAddress = "Not Available";
+            }
 
             String email = dynamoAppBootstrapBean.getCurrentUserEmail();
             long orgId = dynamoAppBootstrapBean.getCurrentUserOrganizationId();
@@ -93,12 +101,8 @@ public class AuditAspect {
             auditItem.setModifiedDate(Calendar.getInstance());
 
             // client details, IP address & protocol
-            auditItem.setClientDetails(request.getHeader("User-Agent"));
-            auditItem.setProtocol(request.getProtocol());
-            String ipAddress = request.getHeader("X-FORWARDED-FOR");
-            if (ipAddress == null) {
-                ipAddress = request.getRemoteAddr();
-            }
+            auditItem.setClientDetails(clientDetails);
+            auditItem.setProtocol(protocol);
             auditItem.setIpAddress(ipAddress);
 
             // populate input data
@@ -111,6 +115,17 @@ public class AuditAspect {
 
             // store the audit item entity in DB
             auditService.saveItem(auditItem);
+
+            // Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+            // logger.info("auth inside audit = {}", auth);
+
+            // logger.info("auth principal inside audit = {}", auth.getPrincipal());
+
+            // CurrentUserDto currentUserDto = (CurrentUserDto)
+            // session.getAttribute("currentUser");
+            // String email = currentUserDto.getEmail();
+            // long orgId = Long.valueOf(currentUserDto.getOrganizationId());
+
             logger.info("Leaving logAuditActivity().");
         } else {
             logger.info("Leaving logAuditActivity(). Auditing is disabled. Not recording any data");
