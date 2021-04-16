@@ -72,7 +72,7 @@ public class AuditItem implements Serializable {
      */
     @Expose
     @Column(name = "audit_date")
-    @DateTimeFormat(pattern = "dd-MM-yyyy")
+    @DateTimeFormat(pattern = "MM-dd-yyyy")
     @Getter
     @Setter
     private Instant auditDate;
@@ -84,13 +84,13 @@ public class AuditItem implements Serializable {
     private String auditDateString;
 
     @Transient
-    @DateTimeFormat(pattern = "dd-MM-yyyy")
+    @DateTimeFormat(pattern = "MM-dd-yyyy")
     @Getter
     @Setter
     private Date auditDateFrom;
 
     @Transient
-    @DateTimeFormat(pattern = "dd-MM-yyyy")
+    @DateTimeFormat(pattern = "MM-dd-yyyy")
     @Getter
     @Setter
     private Date auditDateTo;
