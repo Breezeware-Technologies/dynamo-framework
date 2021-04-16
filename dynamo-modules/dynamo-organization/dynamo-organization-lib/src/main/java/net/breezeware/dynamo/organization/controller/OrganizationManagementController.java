@@ -600,7 +600,8 @@ public class OrganizationManagementController {
                 user = organizationService.createUserWithOrganizationAndRoleAndGroup(user, organizationId,
                         user.getUserRoleId(), user.getUserGroupId());
             } catch (DynamoDataAccessException e) {
-                List<Group> groups = organizationService.findAllGroups();
+                List<Group> groups = organizationService
+                        .getGroupsInOrganization(dynamoAppBootstrapBean.getCurrentUserOrganizationId());
                 List<Role> roles = organizationService
                         .getRolesInOrganization(dynamoAppBootstrapBean.getCurrentUserOrganizationId());
                 model.addAttribute("groups", groups);

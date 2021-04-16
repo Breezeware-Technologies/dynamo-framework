@@ -1,5 +1,10 @@
 Dynamo Framework - Spring based framework for developing web & mobile applications.
 
+2.1.5 (April 16, 2021)
+----------------------
+●   Fixed date format to MM/dd/YYYY in Audit log.
+●   Fixed Group error during User creation.
+
 2.1.1 -2.1.4: (April 6, 2021)
 ----------------------------
 ●   Fixed issues while using maven versions plugin.
