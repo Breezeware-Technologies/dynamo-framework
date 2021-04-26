@@ -16,15 +16,17 @@ public class UserCreationEventListener {
     @Autowired
     RabbitTemplate rabbitTemplate;
 
-    @Value("${rabbitmq.dynamoOrgExchange}")
-    String dynamoExchangeName;
+    @Value("${rabbitmq.dynamo.org.user.exchange}")
+    String dynamoUserExchange;
 
     @TransactionalEventListener(phase = TransactionPhase.AFTER_COMMIT)
     public void dynamoUserCreatedListener(UserCreatedMessage userCreatedMessage) {
 
         // sending message to RabbitMQ
         log.info("Sending message to RabbitMQ from Dynamo Organization module...");
-        rabbitTemplate.convertAndSend(dynamoExchangeName, "key.dyn_org.user.created", userCreatedMessage);
+        rabbitTemplate.convertAndSend(dynamoUserExchange, "key.dyn_org.user.created", userCreatedMessage);
+        log.info("Sent message to RabbitMQ from Dynamo Organization module... UserCreatedMessage {}",
+                userCreatedMessage);
 
     }
 
