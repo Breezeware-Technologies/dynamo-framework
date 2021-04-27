@@ -24,6 +24,13 @@
 			<artifactId>dynamo-config-lib</artifactId>
 			<version>${project.version}</version>
 		</dependency>
+		
+		<!-- ******************** Dynamo RabbitMQ Module ******************** -->
+		<dependency>
+			<groupId>net.breezeware.dynamo</groupId>
+			<artifactId>dynamo-rabbitmq</artifactId>
+			<version>${project.version}</version>
+		</dependency>
 
 		<!-- ******************** Spring Boot Starter - Mail ******************** -->
 		<dependency>
