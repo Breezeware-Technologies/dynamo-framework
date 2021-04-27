@@ -16,7 +16,7 @@ public class UserCreationEventListener {
     @Autowired
     RabbitTemplate rabbitTemplate;
 
-    @Value("${rabbitmq.dynamo.org.user.exchange}")
+    @Value("${rabbitmq.dynamo.org.exchange}")
     String dynamoUserExchange;
 
     @TransactionalEventListener(phase = TransactionPhase.AFTER_COMMIT)

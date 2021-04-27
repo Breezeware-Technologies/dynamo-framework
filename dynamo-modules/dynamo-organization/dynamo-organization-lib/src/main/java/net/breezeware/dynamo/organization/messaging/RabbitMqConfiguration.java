@@ -12,11 +12,11 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class RabbitMqConfiguration {
 
-    @Value("${rabbitmq.dynamo.org.user.exchange}")
-    String dynamoUserExchange;
+    @Value("${rabbitmq.dynamo.org.exchange}")
+    String dynamoOrgExchange;
 
     @Bean
-    public TopicExchange dynamoUserTopicExchange() {
-        return new TopicExchange(dynamoUserExchange);
+    public TopicExchange dynamoOrgTopicExchange() {
+        return new TopicExchange(dynamoOrgExchange);
     }
 }
