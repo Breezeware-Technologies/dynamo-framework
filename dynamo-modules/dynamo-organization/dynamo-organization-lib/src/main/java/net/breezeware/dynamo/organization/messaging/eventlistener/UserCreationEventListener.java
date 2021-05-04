@@ -1,4 +1,4 @@
-package net.breezeware.dynamo.organization.messaging;
+package net.breezeware.dynamo.organization.messaging.eventlistener;
 
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +8,7 @@ import org.springframework.transaction.event.TransactionPhase;
 import org.springframework.transaction.event.TransactionalEventListener;
 
 import lombok.extern.slf4j.Slf4j;
+import net.breezeware.dynamo.organization.messaging.entity.UserCreatedMessage;
 
 @Component
 @Slf4j

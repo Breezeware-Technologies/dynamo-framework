@@ -1,4 +1,4 @@
-package net.breezeware.dynamo.organization.messaging;
+package net.breezeware.dynamo.organization.messaging.config;
 
 import org.springframework.amqp.core.TopicExchange;
 import org.springframework.beans.factory.annotation.Value;
@@ -15,7 +15,7 @@ public class RabbitMqConfiguration {
     @Value("${rabbitmq.dynamo.org.exchange}")
     String dynamoOrgExchange;
 
-    @Bean
+    @Bean(name = "dynamoOrgTopicExchange")
     public TopicExchange dynamoOrgTopicExchange() {
         return new TopicExchange(dynamoOrgExchange);
     }
