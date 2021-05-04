@@ -10,7 +10,7 @@ import org.springframework.context.annotation.Configuration;
  * @author guru
  */
 @Configuration
-public class RabbitMqConfiguration {
+public class DynamoOrganizationRabbitMqConfig {
 
     @Value("${rabbitmq.dynamo.org.exchange}")
     String dynamoOrgExchange;
