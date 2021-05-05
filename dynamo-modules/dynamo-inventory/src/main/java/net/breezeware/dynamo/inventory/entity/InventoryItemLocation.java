@@ -1,5 +1,6 @@
 package net.breezeware.dynamo.inventory.entity;
 
+import java.io.Serializable;
 import java.time.Instant;
 
 import javax.persistence.Column;
@@ -15,7 +16,12 @@ import lombok.Data;
 @Data
 @Table(name = "inventory_item_location", schema = "dynamo")
 @Entity
-public class InventoryItemLocation {
+public class InventoryItemLocation implements Serializable {
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 1L;
+
     /**
      * Unique key to identify a inventory item location,auto-generated value.
      */

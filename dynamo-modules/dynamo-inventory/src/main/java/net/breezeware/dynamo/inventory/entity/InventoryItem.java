@@ -1,5 +1,6 @@
 package net.breezeware.dynamo.inventory.entity;
 
+import java.io.Serializable;
 import java.time.Instant;
 
 import javax.persistence.Column;
@@ -19,7 +20,12 @@ import lombok.Setter;
 @Table(name = "inventory_item", schema = "dynamo",
         uniqueConstraints = { @UniqueConstraint(columnNames = { "item_sku" }) })
 @Entity
-public class InventoryItem {
+public class InventoryItem implements Serializable {
+
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 1L;
 
     public enum ItemSku {
         BT_BP_v1("BT-BP-v1"), BT_WS_v1("BT-WS-v1"), IG_BG_v1("IG-BG-v1");

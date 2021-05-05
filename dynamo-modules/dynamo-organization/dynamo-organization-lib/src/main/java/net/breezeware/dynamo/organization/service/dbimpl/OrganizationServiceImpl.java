@@ -55,7 +55,7 @@ import net.breezeware.dynamo.organization.entity.User;
 import net.breezeware.dynamo.organization.entity.UserGroupMap;
 import net.breezeware.dynamo.organization.entity.UserRegistrationToken;
 import net.breezeware.dynamo.organization.entity.UserRoleMap;
-import net.breezeware.dynamo.organization.messaging.UserCreatedMessage;
+import net.breezeware.dynamo.organization.messaging.entity.UserCreatedMessage;
 import net.breezeware.dynamo.organization.service.api.OrganizationService;
 import net.breezeware.dynamo.util.exeption.DynamoDataAccessException;
 import net.breezeware.dynamo.util.mail.api.EmailService;

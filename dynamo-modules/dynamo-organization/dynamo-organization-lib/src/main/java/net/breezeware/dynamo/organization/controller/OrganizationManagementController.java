@@ -112,9 +112,6 @@ public class OrganizationManagementController {
     @Autowired
     RabbitTemplate rabbitTemplate;
 
-    @Value("${rabbitmq.dynamoOrgExchange}")
-    String dynamoOrgExchange;
-
     @Autowired
     ApplicationEventPublisher applicationEventPublisher;
 

@@ -23,6 +23,7 @@
 		<module>dynamo-config</module>
 		<module>dynamo-communication</module>
 		<module>dynamo-inventory</module>
+		<module>dynamo-rabbitmq</module>
 	</modules>
 
 	<!-- #################### DEPENDENCY MANAGEMENT #################### -->

@@ -1,11 +1,11 @@
-package net.breezeware.dynamo.organization.messaging;
+package net.breezeware.dynamo.organization.messaging.entity;
 
 import java.io.Serializable;
 
+import lombok.Data;
 import net.breezeware.dynamo.organization.entity.Organization;
 import net.breezeware.dynamo.organization.entity.User;
-
-import lombok.Data;
+import net.breezeware.dynamo.rabbitmq.entity.RabbitMqMessage;
 
 @Data
 public class UserCreatedMessage extends RabbitMqMessage implements Serializable {
