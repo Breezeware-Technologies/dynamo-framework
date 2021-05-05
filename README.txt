@@ -1,5 +1,10 @@
 Dynamo Framework - Spring based framework for developing web & mobile applications.
 
+2.2.0 (May 5, 2021)
+-------------------
+●	Added RabbitMQ module.
+●	Updated RabbitMQ configuration.
+
 2.1.5 (April 16, 2021)
 ----------------------
 ●   Fixed date format to MM/dd/YYYY in Audit log.
