@@ -1,15 +1,14 @@
 package net.breezeware.dynamo.aws.iam.service.impl;
 
 import java.time.Instant;
+import java.util.Optional;
 
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.amazonaws.regions.Regions;
 import com.amazonaws.services.identitymanagement.AmazonIdentityManagement;
-import com.amazonaws.services.identitymanagement.AmazonIdentityManagementClientBuilder;
 import com.amazonaws.services.identitymanagement.model.AttachUserPolicyRequest;
 import com.amazonaws.services.identitymanagement.model.AttachUserPolicyResult;
 import com.amazonaws.services.identitymanagement.model.CreateAccessKeyRequest;
@@ -36,23 +35,26 @@ public class AwsIdentityAccessManagementServiceImpl implements AwsIdentityAccess
     @Autowired
     OrganizationService organizationService;
 
-    // @Autowired
-    // AmazonIdentityManagement awsIamConfiguration;
+     @Autowired
+     AmazonIdentityManagement awsIamuserConfiguration;
 
-    final AmazonIdentityManagement iam = AmazonIdentityManagementClientBuilder.standard()
-            .withRegion(Regions.US_EAST_1.getName()).build();
+//    final AmazonIdentityManagement iam = AmazonIdentityManagementClientBuilder.standard()
+//            .withRegion(Regions.US_EAST_1.getName()).build();
 
     @Transactional
-    public CreateUserResult createIamUser(CreateUserRequest createUserRequest) {
-        log.info("Entering createIamUser() {}", createUserRequest);
+    public Optional<CreateUserResult> createIamUser(CreateUserRequest createUserRequest) {
+        log.info("Entering createIamUser() {}", createUserRequest.getUserName());
 
-        ListUsersResult useresult = iam.listUsers();
-        CreateUserResult userResult = null;
-        for (User user : useresult.getUsers()) {
-            if (user.getUserName() != createUserRequest.getUserName()) {
-                userResult = iam.createUser(createUserRequest);
+        ListUsersResult userList = awsIamuserConfiguration.listUsers();
+        Optional<CreateUserResult> userResult = Optional.empty();
+        for (User user : userList.getUsers()) {
+        	log.info("User --->{},get ----> {}",user.getUserName(),createUserRequest.getUserName());
+            if (!user.getUserName().equals(createUserRequest.getUserName())) {
+            	log.info("User --->{} get --> {}",user.getUserName(),createUserRequest.getUserName());
+                userResult = Optional.of(awsIamuserConfiguration.createUser(createUserRequest));
+            }else {
+                break;
             }
-            break;
         }
 
         log.info("Leaving createIamUser() {}", userResult);
@@ -65,7 +67,7 @@ public class AwsIdentityAccessManagementServiceImpl implements AwsIdentityAccess
         log.info("Entering createIamUserAccessKey() {}", createUserResult);
         CreateAccessKeyRequest createAccessKeyRequest = new CreateAccessKeyRequest();
         createAccessKeyRequest.setUserName(createUserResult.getUser().getUserName());
-        CreateAccessKeyResult createAccessKeyResult = iam.createAccessKey(createAccessKeyRequest);
+        CreateAccessKeyResult createAccessKeyResult = awsIamuserConfiguration.createAccessKey(createAccessKeyRequest);
         log.info("Leaving createIamUserAccessKey() {}", createAccessKeyResult);
         return createAccessKeyResult;
     }
@@ -76,7 +78,7 @@ public class AwsIdentityAccessManagementServiceImpl implements AwsIdentityAccess
         AttachUserPolicyRequest attachUserPolicyRequest = new AttachUserPolicyRequest();
         attachUserPolicyRequest.setPolicyArn("arn:aws:iam::aws:policy/AmazonS3FullAccess");
         attachUserPolicyRequest.setUserName(createUserResult.getUser().getUserName());
-        AttachUserPolicyResult attachUserPolicyResult = iam.attachUserPolicy(attachUserPolicyRequest);
+        AttachUserPolicyResult attachUserPolicyResult = awsIamuserConfiguration.attachUserPolicy(attachUserPolicyRequest);
         log.info("Leaving attachPolicyForIamUser() {}", attachUserPolicyResult);
 
         return attachUserPolicyResult;
@@ -84,20 +86,23 @@ public class AwsIdentityAccessManagementServiceImpl implements AwsIdentityAccess
     }
 
     @Transactional
-    public OrganizationIamUserCredential CreateIamUserWithAwsServicePolicy(Organization organization,
+    public Optional<OrganizationIamUserCredential> CreateIamUserWithAwsServicePolicy(Organization organization,
             String organizationAdminName) {
         log.info("Entering CreateIamUserWithAwsServicePolicy() Organization{} ,organizationAdminName{} ", organization,
                 organizationAdminName);
         CreateUserRequest createUserRequest = new CreateUserRequest();
         createUserRequest.setUserName(organizationAdminName);
+        Optional<OrganizationIamUserCredential> organizationIamUserCredential = Optional.empty();
+        Optional<CreateUserResult> createUserResult = createIamUser(createUserRequest);
+        if(createUserResult.isPresent()) {
+        
+        attachPolicyForIamUser(createUserResult.get());
+        CreateAccessKeyResult createAccessKeyResult = createIamUserAccessKey(createUserResult.get());
 
-        CreateUserResult createUserResult = createIamUser(createUserRequest);
-        attachPolicyForIamUser(createUserResult);
-        CreateAccessKeyResult createAccessKeyResult = createIamUserAccessKey(createUserResult);
-
-        OrganizationIamUserCredential organizationIamUserCredential = buildAndSaveOrganizationIamUserCredential(
-                organization, createUserResult, createAccessKeyResult);
+         organizationIamUserCredential = Optional.of(buildAndSaveOrganizationIamUserCredential(
+                organization, createUserResult.get(), createAccessKeyResult));
         log.info("Leaving CreateIamUserWithAwsServicePolicy() {}", organizationIamUserCredential);
+        }
         return organizationIamUserCredential;
     }
 

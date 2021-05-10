@@ -10,8 +10,8 @@ import com.amazonaws.services.identitymanagement.AmazonIdentityManagementClientB
 @Configuration
 public class AwsIamConfiguration {
 
-    @Bean
-    private AmazonIdentityManagement awsIamConfiguration() {
+    @Bean(name= "awsIamuserConfiguration")
+    public AmazonIdentityManagement awsIamuserConfiguration() {
         AmazonIdentityManagement iamClient = AmazonIdentityManagementClientBuilder.standard()
                 .withRegion(Regions.US_EAST_1.getName()).build();
         return iamClient;
