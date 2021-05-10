@@ -31,5 +31,41 @@ CREATE TABLE dynamo.organization_iam_user_credential
 
 );
 
+DROP SEQUENCE IF EXISTS dynamo.organization_s3_bucket_seq;
+CREATE SEQUENCE dynamo.organization_s3_bucket_seq
+  INCREMENT 1
+  MINVALUE 1
+  MAXVALUE 9223372036854775807
+  START 1
+  CACHE 1;
+
+DROP TABLE IF EXISTS dynamo.organization_s3_bucket;
+CREATE TABLE dynamo.organization_s3_bucket
+(
+	  id bigint NOT NULL DEFAULT nextval('dynamo.organization_s3_bucket_seq'::regclass),
+	  bucket_name character varying(90),
+	  created_user bigint,
+	  organization_id bigint,
+	  created_date timestamp with time zone,
+	  modified_date timestamp with time zone,
+	  CONSTRAINT organization_s3_bucket_pkey PRIMARY KEY (id),
+	  CONSTRAINT org_s3_bucket_reference_organization_constraint FOREIGN KEY (organization_id)
+      REFERENCES dynamo.organization (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+      CONSTRAINT org_s3_bucket_reference_user_constraint FOREIGN KEY (created_user)
+      REFERENCES dynamo.dynamo_user (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION
+
+);
+
 -- Update the sequence numbers after all the sample data inserts.
 select setval('dynamo.organization_iam_user_credential_seq', (select max(id)+1 from dynamo.organization_iam_user_credential), false);
+select setval('dynamo.organization_s3_bucket_seq', (select max(id)+1 from dynamo.organization_s3_bucket), false);
+
+
+
+
+
+
+
+

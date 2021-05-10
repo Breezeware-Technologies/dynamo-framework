@@ -1,5 +1,6 @@
 package net.breezeware.dynamo.aws.iam.service.api;
 
+import java.util.Optional;
 
 import com.amazonaws.services.identitymanagement.model.AttachUserPolicyResult;
 import com.amazonaws.services.identitymanagement.model.CreateAccessKeyResult;
@@ -19,6 +20,8 @@ public interface AwsIdentityAccessManagementServiceApi {
     AttachUserPolicyResult attachPolicyForIamUser(CreateUserResult createUserResult);
 
     OrganizationIamUserCredential CreateIamUserWithAwsServicePolicy(Organization organization,
-            String organizationAdminName)throws EntityAlreadyExistsException;
+            String organizationAdminName) throws EntityAlreadyExistsException;
+
+    Optional<OrganizationIamUserCredential> retriveOrganizationIamUserCredential(Organization organization);
 
 }
