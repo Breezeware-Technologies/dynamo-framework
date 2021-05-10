@@ -19,27 +19,27 @@ import net.breezeware.dynamo.organization.service.api.OrganizationService;
 @RequestMapping("/create")
 public class AwsIdentityAccessManagementRestController {
 
-	@Autowired
-	AwsIdentityAccessManagementServiceApi accessManagementServiceApi;
-
-	@Autowired
-	OrganizationService organizationService;
-
-	@GetMapping(value = "/iamUser")
-	public OrganizationIamUserCredential createIamUserwithPolicyController() {
-		log.info("Entering createIamUserwithPolicyController ");
-		OrganizationIamUserCredential credential = new OrganizationIamUserCredential();
-		Organization organization = organizationService.findOrganizationByName("Breeze Tech");
-		try {
-		 credential = accessManagementServiceApi
-					.CreateIamUserWithAwsServicePolicy(organization, "Siva1");
-		} catch (EntityAlreadyExistsException e) {
-			return new OrganizationIamUserCredential();
-		}
-
-		log.info("Leaving createIamUserwithPolicyController {}");
-		return credential;
-
-	}
+//	@Autowired
+//	AwsIdentityAccessManagementServiceApi accessManagementServiceApi;
+//
+//	@Autowired
+//	OrganizationService organizationService;
+//
+//	@GetMapping(value = "/iamUser")
+//	public OrganizationIamUserCredential createIamUserwithPolicyController() {
+//		log.info("Entering createIamUserwithPolicyController ");
+//		OrganizationIamUserCredential credential = new OrganizationIamUserCredential();
+//		Organization organization = organizationService.findOrganizationByName("Breeze Tech");
+//		try {
+//		 credential = accessManagementServiceApi
+//					.CreateIamUserWithAwsServicePolicy(organization, "Siva1");
+//		} catch (EntityAlreadyExistsException e) {
+//			return new OrganizationIamUserCredential();
+//		}
+//
+//		log.info("Leaving createIamUserwithPolicyController {}");
+//		return credential;
+//
+//	}
 
 }

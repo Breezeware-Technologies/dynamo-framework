@@ -14,6 +14,7 @@ import javax.persistence.Table;
 
 import lombok.Data;
 import net.breezeware.dynamo.organization.entity.Organization;
+import net.breezeware.dynamo.organization.entity.User;
 
 @Data
 @Table(name = "organization_iam_user_credential", schema = "dynamo")
@@ -35,6 +36,10 @@ public class OrganizationIamUserCredential {
 
     @Column(name = "secert_key")
     private String secertKey;
+    
+    @OneToOne
+    @JoinColumn(name = "user_admin_id", referencedColumnName = "id")
+    private User user;
 
     @OneToOne
     @JoinColumn(name = "organization_id", referencedColumnName = "id")

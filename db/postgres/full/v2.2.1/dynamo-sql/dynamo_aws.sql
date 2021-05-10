@@ -19,6 +19,7 @@ CREATE TABLE dynamo.organization_iam_user_credential
 (
 	  id bigint NOT NULL DEFAULT nextval('dynamo.organization_iam_user_credential_seq'::regclass),
 	  iam_arn character varying(90),
+	  user_admin_id bigint,
 	  access_key character varying(90),
 	  secert_key character varying(90),
 	  organization_id bigint,
@@ -27,6 +28,9 @@ CREATE TABLE dynamo.organization_iam_user_credential
 	  CONSTRAINT organization_iam_user_credential_pkey PRIMARY KEY (id),
 	  CONSTRAINT org_iam_user_credential_reference_constraint FOREIGN KEY (organization_id)
       REFERENCES dynamo.organization (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+      CONSTRAINT org_iam_user_user_constraint FOREIGN KEY (user_admin_id)
+      REFERENCES dynamo.dynamo_user (id) MATCH SIMPLE
       ON UPDATE NO ACTION ON DELETE NO ACTION
 
 );

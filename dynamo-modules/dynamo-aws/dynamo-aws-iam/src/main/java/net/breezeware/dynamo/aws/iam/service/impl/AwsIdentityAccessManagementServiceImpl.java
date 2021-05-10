@@ -22,6 +22,7 @@ import net.breezeware.dynamo.aws.iam.dao.OrganizationIamUserCredentialRepository
 import net.breezeware.dynamo.aws.iam.entity.OrganizationIamUserCredential;
 import net.breezeware.dynamo.aws.iam.service.api.AwsIdentityAccessManagementServiceApi;
 import net.breezeware.dynamo.organization.entity.Organization;
+import net.breezeware.dynamo.organization.entity.User;
 import net.breezeware.dynamo.organization.service.api.OrganizationService;
 
 @Slf4j
@@ -42,7 +43,7 @@ public class AwsIdentityAccessManagementServiceImpl implements AwsIdentityAccess
     // .withRegion(Regions.US_EAST_1.getName()).build();
 
     @Transactional
-    public CreateUserResult createIamUser(CreateUserRequest createUserRequest) throws EntityAlreadyExistsException {
+    public CreateUserResult createIamUser(CreateUserRequest createUserRequest) {
         log.info("Entering createIamUser() {}", createUserRequest);
 
         CreateUserResult userResult = awsIamuserConfiguration.createUser(createUserRequest);
@@ -77,20 +78,27 @@ public class AwsIdentityAccessManagementServiceImpl implements AwsIdentityAccess
     }
 
     @Transactional
-    public OrganizationIamUserCredential CreateIamUserWithAwsServicePolicy(Organization organization,
-            String organizationAdminName) throws EntityAlreadyExistsException {
+    public Optional<OrganizationIamUserCredential> CreateIamUserWithAwsServicePolicy(Organization organization,
+            User user) throws EntityAlreadyExistsException {
         log.info("Entering CreateIamUserWithAwsServicePolicy() Organization{} ,organizationAdminName{} ", organization,
-                organizationAdminName);
+                user);
+        
         CreateUserRequest createUserRequest = new CreateUserRequest();
-        createUserRequest.setUserName(organizationAdminName);
-        OrganizationIamUserCredential organizationIamUserCredential = new OrganizationIamUserCredential();
-        CreateUserResult createUserResult = createIamUser(createUserRequest);
+        createUserRequest.setUserName(user.getFirstName()+user.getLastName());
+        
+        Optional<OrganizationIamUserCredential> organizationIamUserCredential = Optional.empty();
+        
+//        Optional<OrganizationIamUserCredential> optorganizationIamUserCredential = Optional.ofNullable(organizationIamUserCredentialRepository.findByUser(user));
+//        if(optorganizationIamUserCredential.isEmpty()) {
+        	 CreateUserResult createUserResult = createIamUser(createUserRequest);
 
-        attachPolicyForIamUser(createUserResult);
-        CreateAccessKeyResult createAccessKeyResult = createIamUserAccessKey(createUserResult);
+             attachPolicyForIamUser(createUserResult);
+             CreateAccessKeyResult createAccessKeyResult = createIamUserAccessKey(createUserResult);
 
-        organizationIamUserCredential = buildAndSaveOrganizationIamUserCredential(organization, createUserResult,
-                createAccessKeyResult);
+             organizationIamUserCredential = Optional.of(buildAndSaveOrganizationIamUserCredential(organization, createUserResult,
+                     createAccessKeyResult));
+//        }
+       
         log.info("Leaving CreateIamUserWithAwsServicePolicy() {}", organizationIamUserCredential);
 
         return organizationIamUserCredential;
@@ -129,5 +137,6 @@ public class AwsIdentityAccessManagementServiceImpl implements AwsIdentityAccess
         log.info("Leaving retriveOrganizationIamUserCredential() Organization{},", organization);
         return organizationIamUserCredential;
     }
+
 
 }

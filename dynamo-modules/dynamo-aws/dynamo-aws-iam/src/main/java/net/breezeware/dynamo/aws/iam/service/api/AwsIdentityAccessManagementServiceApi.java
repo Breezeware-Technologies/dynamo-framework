@@ -10,17 +10,18 @@ import com.amazonaws.services.identitymanagement.model.EntityAlreadyExistsExcept
 
 import net.breezeware.dynamo.aws.iam.entity.OrganizationIamUserCredential;
 import net.breezeware.dynamo.organization.entity.Organization;
+import net.breezeware.dynamo.organization.entity.User;
 
 public interface AwsIdentityAccessManagementServiceApi {
 
-    CreateUserResult createIamUser(CreateUserRequest createUserRequest) throws EntityAlreadyExistsException;
+    CreateUserResult createIamUser(CreateUserRequest createUserRequest) ;
 
     CreateAccessKeyResult createIamUserAccessKey(CreateUserResult createUserResult);
 
     AttachUserPolicyResult attachPolicyForIamUser(CreateUserResult createUserResult);
 
-    OrganizationIamUserCredential CreateIamUserWithAwsServicePolicy(Organization organization,
-            String organizationAdminName) throws EntityAlreadyExistsException;
+    Optional<OrganizationIamUserCredential> CreateIamUserWithAwsServicePolicy(Organization organization,
+            User user) ;
 
     Optional<OrganizationIamUserCredential> retriveOrganizationIamUserCredential(Organization organization);
 

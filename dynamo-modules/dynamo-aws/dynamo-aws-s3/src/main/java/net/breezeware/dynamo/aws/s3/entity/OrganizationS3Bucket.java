@@ -23,7 +23,7 @@ public class OrganizationS3Bucket {
 
     @Id
     @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "organization_s3_bucket_seq")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "organization_s3_bucket_seq_gen")
     @SequenceGenerator(name = "organization_s3_bucket_seq_gen", sequenceName = "organization_s3_bucket_seq",
             schema = "dynamo", allocationSize = 1)
     private long id;
@@ -31,6 +31,7 @@ public class OrganizationS3Bucket {
     @Column(name = "bucket_name")
     private String bucketName;
 
+    @OneToOne
     @JoinColumn(name = "created_user", referencedColumnName = "id")
     private User user;
 

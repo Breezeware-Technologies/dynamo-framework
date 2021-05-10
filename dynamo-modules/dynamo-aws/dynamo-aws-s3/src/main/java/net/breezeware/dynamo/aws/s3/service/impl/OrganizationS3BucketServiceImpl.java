@@ -8,12 +8,18 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.amazonaws.services.identitymanagement.model.EntityAlreadyExistsException;
+import com.amazonaws.auth.AWSCredentials;
+import com.amazonaws.auth.AWSCredentialsProvider;
+import com.amazonaws.auth.AWSStaticCredentialsProvider;
+import com.amazonaws.auth.BasicAWSCredentials;
+import com.amazonaws.regions.Regions;
 import com.amazonaws.services.s3.AmazonS3;
+import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import com.amazonaws.services.s3.model.Bucket;
 import com.amazonaws.services.s3.model.CreateBucketRequest;
 
 import lombok.extern.slf4j.Slf4j;
+import net.breezeware.dynamo.aws.iam.dao.OrganizationIamUserCredentialRepository;
 import net.breezeware.dynamo.aws.iam.entity.OrganizationIamUserCredential;
 import net.breezeware.dynamo.aws.iam.service.api.AwsIdentityAccessManagementServiceApi;
 import net.breezeware.dynamo.aws.s3.dao.OrganizationS3BucketRepository;
@@ -26,67 +32,87 @@ import net.breezeware.dynamo.organization.entity.User;
 @Slf4j
 public class OrganizationS3BucketServiceImpl implements OrganizationS3BucketService {
 
-    @Autowired
-    AmazonS3 awsS3ClientBuilder;
+	@Autowired
+	OrganizationS3BucketRepository organizationS3BucketRepository;
 
-    @Autowired
-    OrganizationS3BucketRepository organizationS3BucketRepository;
+	@Autowired
+	AwsIdentityAccessManagementServiceApi awsIdentityAccessManagementService;
 
-    @Autowired
-    AwsIdentityAccessManagementServiceApi awsIdentityAccessManagementService;
+	@Autowired
+	OrganizationIamUserCredentialRepository organizationIamUserCredentialRepository;
 
-    public Bucket createBucket(CreateBucketRequest bucketRequest) {
-        log.info("Entering createBucketForOrganization bucketRequest {}", bucketRequest);
-        Bucket bucket = awsS3ClientBuilder.createBucket(bucketRequest);
-        log.info("Leaving createBucketForOrganization,bucket {}", bucket);
+	@Transactional
+	public Bucket createBucket(CreateBucketRequest bucketRequest, AmazonS3 amazonS3) {
+		log.info("Entering createBucketForOrganization bucketRequest {}", bucketRequest.getBucketName());
+		Bucket bucket = amazonS3.createBucket(bucketRequest);
+		log.info("Leaving createBucketForOrganization,bucket {}", bucket);
 
-        return bucket;
-    }
+		return bucket;
+	}
 
-    public OrganizationS3Bucket createBucketForOrganization(Organization organization, User user)
-            throws EntityAlreadyExistsException {
-        log.info("Entering createBucketForOrganization organization {},User {}", organization, user);
+	
+	public Optional<OrganizationS3Bucket> createBucketForOrganization(Organization organization, User user) {
+		log.info("Entering createBucketForOrganization organization {},User {}", organization, user);
 
-        Optional<OrganizationS3Bucket> optOrganizationS3Bucket = Optional
-                .ofNullable(organizationS3BucketRepository.findByOrganization(organization));
+		Optional<OrganizationS3Bucket> optOrganizationS3Bucket = Optional
+				.ofNullable(organizationS3BucketRepository.findByOrganization(organization));
 
-        if (optOrganizationS3Bucket.isEmpty()) {
+		if (optOrganizationS3Bucket.isEmpty()) {
+			Optional<OrganizationIamUserCredential> optorganizationIamUserCredential = Optional
+					.ofNullable(organizationIamUserCredentialRepository.findByUser(user));
+			if (optorganizationIamUserCredential.isEmpty()) {
+				optorganizationIamUserCredential = awsIdentityAccessManagementService
+						.CreateIamUserWithAwsServicePolicy(organization, user);
 
-            OrganizationIamUserCredential organizationIamUserCredential = awsIdentityAccessManagementService
-                    .CreateIamUserWithAwsServicePolicy(organization, user.getFirstName() + user.getLastName());
+			}
+			log.info("optorganizationIamUserCredential{}",optorganizationIamUserCredential.get());
+			AmazonS3 amazonS3 = awsS3ClientBuilder(optorganizationIamUserCredential.get());
 
-            CreateBucketRequest bucketRequest = new CreateBucketRequest(
-                    organization.getName().replaceAll(" ", "_").toLowerCase());
+			CreateBucketRequest bucketRequest = new CreateBucketRequest(
+					organization.getName().replaceAll(" ", "-").toLowerCase(),Regions.US_EAST_1.name());
+			
+			Bucket bucket = amazonS3.createBucket(bucketRequest);
 
-            Bucket bucket = createBucket(bucketRequest);
-            optOrganizationS3Bucket = Optional
-                    .of(buildOrganizationS3Bucket(bucket, organizationIamUserCredential.getOrganization(), user));
 
-        }
+//			Bucket bucket = createBucket(bucketRequest, amazonS3);
+			optOrganizationS3Bucket = Optional.of(buildOrganizationS3Bucket(bucket, organization, user));
 
-        log.info("Leaving createBucketForOrganization bucket optOrganizationS3Bucket{}");
-        return null;
+		}
 
-    }
+		log.info("Leaving createBucketForOrganization bucket optOrganizationS3Bucket{}");
+		return optOrganizationS3Bucket;
 
-    @Transactional
-    public OrganizationS3Bucket buildOrganizationS3Bucket(Bucket bucket, Organization organization, User user) {
-        OrganizationS3Bucket organizationS3Bucket = new OrganizationS3Bucket();
+	}
 
-        organizationS3Bucket.setBucketName(bucket.getName());
-        organizationS3Bucket.setOrganization(organization);
-        organizationS3Bucket.setUser(user);
-        organizationS3Bucket.setCreatedDate(Instant.now());
-        organizationS3Bucket.setModifiedDate(Instant.now());
+	private AmazonS3 awsS3ClientBuilder(OrganizationIamUserCredential organizationIamUserCredential) {
+		AWSCredentials credentials = new BasicAWSCredentials(organizationIamUserCredential.getAccessKey().toString(),
+				organizationIamUserCredential.getSecertKey().toString());
 
-        organizationS3Bucket = saveOrganizationS3Bucket(organizationS3Bucket);
-        return organizationS3Bucket;
+		AmazonS3 amazonS3ClientBuilder = AmazonS3ClientBuilder.standard()
+				.withCredentials(new AWSStaticCredentialsProvider(credentials)).withRegion(Regions.US_EAST_1.name())
+				.build();
+		return amazonS3ClientBuilder;
 
-    }
+	}
 
-    private OrganizationS3Bucket saveOrganizationS3Bucket(OrganizationS3Bucket OrganizationS3Bucket) {
-        log.info("Entering saveOrganizationIamUserCredential()");
-        return organizationS3BucketRepository.save(OrganizationS3Bucket);
-    }
+	@Transactional
+	public OrganizationS3Bucket buildOrganizationS3Bucket(Bucket bucket, Organization organization, User user) {
+		OrganizationS3Bucket organizationS3Bucket = new OrganizationS3Bucket();
+
+		organizationS3Bucket.setBucketName(bucket.getName());
+		organizationS3Bucket.setOrganization(organization);
+		organizationS3Bucket.setUser(user);
+		organizationS3Bucket.setCreatedDate(Instant.now());
+		organizationS3Bucket.setModifiedDate(Instant.now());
+
+		organizationS3Bucket = saveOrganizationS3Bucket(organizationS3Bucket);
+		return organizationS3Bucket;
+
+	}
+
+	private OrganizationS3Bucket saveOrganizationS3Bucket(OrganizationS3Bucket OrganizationS3Bucket) {
+		log.info("Entering saveOrganizationIamUserCredential()");
+		return organizationS3BucketRepository.save(OrganizationS3Bucket);
+	}
 
 }
