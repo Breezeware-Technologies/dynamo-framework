@@ -20,9 +20,10 @@ CREATE TABLE dynamo.organization_iam_user_credential
 	  id bigint NOT NULL DEFAULT nextval('dynamo.organization_iam_user_credential_seq'::regclass),
 	  iam_arn character varying(90),
 	  access_key character varying(90),
-	  secret_key character varying(90),
+	  secert_key character varying(90),
 	  organization_id bigint,
 	  created_date timestamp with time zone,
+	  modified_date timestamp with time zone,
 	  CONSTRAINT organization_iam_user_credential_pkey PRIMARY KEY (id),
 	  CONSTRAINT org_iam_user_credential_reference_constraint FOREIGN KEY (organization_id)
       REFERENCES dynamo.organization (id) MATCH SIMPLE

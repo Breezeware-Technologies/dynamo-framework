@@ -31,7 +31,7 @@ public class OrganizationIamUserCredential {
     @Column(name = "access_key")
     private String accessKey;
 
-    @Column(name = "secret_key")
+    @Column(name = "secert_key")
     private String secertKey;
 
     @OneToOne
@@ -40,5 +40,8 @@ public class OrganizationIamUserCredential {
 
     @Column(name = "created_date")
     private Instant createdDate;
+
+    @Column(name = "modified_date")
+    private Instant modifiedDate;
 
 }

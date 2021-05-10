@@ -18,11 +18,7 @@
 			<artifactId>aws-java-sdk-iam</artifactId>
 			<version>1.11.1009</version>
 		</dependency>
-		<dependency>
-			<groupId>net.breezeware.dynamo</groupId>
-			<artifactId>dynamo-organization-lib</artifactId>
-			<version>${project.version}</version>
-		</dependency>
+
 	</dependencies>
 
 </project>
