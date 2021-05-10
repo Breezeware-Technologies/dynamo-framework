@@ -1,7 +1,6 @@
 package net.breezeware.dynamo.aws.iam.service.impl;
 
 import java.time.Instant;
-import java.util.Optional;
 
 import javax.transaction.Transactional;
 
@@ -15,8 +14,7 @@ import com.amazonaws.services.identitymanagement.model.CreateAccessKeyRequest;
 import com.amazonaws.services.identitymanagement.model.CreateAccessKeyResult;
 import com.amazonaws.services.identitymanagement.model.CreateUserRequest;
 import com.amazonaws.services.identitymanagement.model.CreateUserResult;
-import com.amazonaws.services.identitymanagement.model.ListUsersResult;
-import com.amazonaws.services.identitymanagement.model.User;
+import com.amazonaws.services.identitymanagement.model.EntityAlreadyExistsException;
 
 import lombok.extern.slf4j.Slf4j;
 import net.breezeware.dynamo.aws.iam.dao.OrganizationIamUserCredentialRepository;
@@ -29,104 +27,94 @@ import net.breezeware.dynamo.organization.service.api.OrganizationService;
 @Service
 public class AwsIdentityAccessManagementServiceImpl implements AwsIdentityAccessManagementServiceApi {
 
-    @Autowired
-    OrganizationIamUserCredentialRepository organizationIamUserCredentialRepository;
+	@Autowired
+	OrganizationIamUserCredentialRepository organizationIamUserCredentialRepository;
 
-    @Autowired
-    OrganizationService organizationService;
+	@Autowired
+	OrganizationService organizationService;
 
-     @Autowired
-     AmazonIdentityManagement awsIamuserConfiguration;
+	@Autowired
+	AmazonIdentityManagement awsIamuserConfiguration;
 
 //    final AmazonIdentityManagement iam = AmazonIdentityManagementClientBuilder.standard()
 //            .withRegion(Regions.US_EAST_1.getName()).build();
 
-    @Transactional
-    public Optional<CreateUserResult> createIamUser(CreateUserRequest createUserRequest) {
-        log.info("Entering createIamUser() {}", createUserRequest.getUserName());
+	@Transactional
+	public CreateUserResult createIamUser(CreateUserRequest createUserRequest) throws EntityAlreadyExistsException {
+		log.info("Entering createIamUser() {}", createUserRequest);
 
-        ListUsersResult userList = awsIamuserConfiguration.listUsers();
-        Optional<CreateUserResult> userResult = Optional.empty();
-        for (User user : userList.getUsers()) {
-        	log.info("User --->{},get ----> {}",user.getUserName(),createUserRequest.getUserName());
-            if (!user.getUserName().equals(createUserRequest.getUserName())) {
-            	log.info("User --->{} get --> {}",user.getUserName(),createUserRequest.getUserName());
-                userResult = Optional.of(awsIamuserConfiguration.createUser(createUserRequest));
-            }else {
-                break;
-            }
-        }
+		CreateUserResult userResult = awsIamuserConfiguration.createUser(createUserRequest);
 
-        log.info("Leaving createIamUser() {}", userResult);
+		log.info("Leaving createIamUser() {}", userResult);
 
-        return userResult;
-    }
+		return userResult;
+	}
 
-    @Transactional
-    public CreateAccessKeyResult createIamUserAccessKey(CreateUserResult createUserResult) {
-        log.info("Entering createIamUserAccessKey() {}", createUserResult);
-        CreateAccessKeyRequest createAccessKeyRequest = new CreateAccessKeyRequest();
-        createAccessKeyRequest.setUserName(createUserResult.getUser().getUserName());
-        CreateAccessKeyResult createAccessKeyResult = awsIamuserConfiguration.createAccessKey(createAccessKeyRequest);
-        log.info("Leaving createIamUserAccessKey() {}", createAccessKeyResult);
-        return createAccessKeyResult;
-    }
+	@Transactional
+	public CreateAccessKeyResult createIamUserAccessKey(CreateUserResult createUserResult) {
+		log.info("Entering createIamUserAccessKey() {}", createUserResult);
+		CreateAccessKeyRequest createAccessKeyRequest = new CreateAccessKeyRequest();
+		createAccessKeyRequest.setUserName(createUserResult.getUser().getUserName());
+		CreateAccessKeyResult createAccessKeyResult = awsIamuserConfiguration.createAccessKey(createAccessKeyRequest);
+		log.info("Leaving createIamUserAccessKey() {}", createAccessKeyResult);
+		return createAccessKeyResult;
+	}
 
-    @Transactional
-    public AttachUserPolicyResult attachPolicyForIamUser(CreateUserResult createUserResult) {
-        log.info("Entering attachPolicyForIamUser() {}", createUserResult);
-        AttachUserPolicyRequest attachUserPolicyRequest = new AttachUserPolicyRequest();
-        attachUserPolicyRequest.setPolicyArn("arn:aws:iam::aws:policy/AmazonS3FullAccess");
-        attachUserPolicyRequest.setUserName(createUserResult.getUser().getUserName());
-        AttachUserPolicyResult attachUserPolicyResult = awsIamuserConfiguration.attachUserPolicy(attachUserPolicyRequest);
-        log.info("Leaving attachPolicyForIamUser() {}", attachUserPolicyResult);
+	@Transactional
+	public AttachUserPolicyResult attachPolicyForIamUser(CreateUserResult createUserResult) {
+		log.info("Entering attachPolicyForIamUser() {}", createUserResult);
+		AttachUserPolicyRequest attachUserPolicyRequest = new AttachUserPolicyRequest();
+		attachUserPolicyRequest.setPolicyArn("arn:aws:iam::aws:policy/AmazonS3FullAccess");
+		attachUserPolicyRequest.setUserName(createUserResult.getUser().getUserName());
+		AttachUserPolicyResult attachUserPolicyResult = awsIamuserConfiguration
+				.attachUserPolicy(attachUserPolicyRequest);
+		log.info("Leaving attachPolicyForIamUser() {}", attachUserPolicyResult);
 
-        return attachUserPolicyResult;
+		return attachUserPolicyResult;
 
-    }
+	}
 
-    @Transactional
-    public Optional<OrganizationIamUserCredential> CreateIamUserWithAwsServicePolicy(Organization organization,
-            String organizationAdminName) {
-        log.info("Entering CreateIamUserWithAwsServicePolicy() Organization{} ,organizationAdminName{} ", organization,
-                organizationAdminName);
-        CreateUserRequest createUserRequest = new CreateUserRequest();
-        createUserRequest.setUserName(organizationAdminName);
-        Optional<OrganizationIamUserCredential> organizationIamUserCredential = Optional.empty();
-        Optional<CreateUserResult> createUserResult = createIamUser(createUserRequest);
-        if(createUserResult.isPresent()) {
-        
-        attachPolicyForIamUser(createUserResult.get());
-        CreateAccessKeyResult createAccessKeyResult = createIamUserAccessKey(createUserResult.get());
+	@Transactional
+	public OrganizationIamUserCredential CreateIamUserWithAwsServicePolicy(Organization organization,
+			String organizationAdminName) throws EntityAlreadyExistsException {
+		log.info("Entering CreateIamUserWithAwsServicePolicy() Organization{} ,organizationAdminName{} ", organization,
+				organizationAdminName);
+		CreateUserRequest createUserRequest = new CreateUserRequest();
+		createUserRequest.setUserName(organizationAdminName);
+		OrganizationIamUserCredential organizationIamUserCredential = new OrganizationIamUserCredential();
+		CreateUserResult createUserResult = createIamUser(createUserRequest);
 
-         organizationIamUserCredential = Optional.of(buildAndSaveOrganizationIamUserCredential(
-                organization, createUserResult.get(), createAccessKeyResult));
-        log.info("Leaving CreateIamUserWithAwsServicePolicy() {}", organizationIamUserCredential);
-        }
-        return organizationIamUserCredential;
-    }
+		attachPolicyForIamUser(createUserResult);
+		CreateAccessKeyResult createAccessKeyResult = createIamUserAccessKey(createUserResult);
 
-    private OrganizationIamUserCredential buildAndSaveOrganizationIamUserCredential(Organization organization,
-            CreateUserResult createUserResult, CreateAccessKeyResult createAccessKeyResult) {
-        log.info(
-                "Entering buildAndSaveOrganizationIamUserCredential() Organization{}, CreateUserResult {},CreateAccessKeyResult{}",
-                organization, createUserResult, createAccessKeyResult);
-        OrganizationIamUserCredential organizationIamUserCredential = new OrganizationIamUserCredential();
-        organizationIamUserCredential.setAccessKey(createAccessKeyResult.getAccessKey().getAccessKeyId());
-        organizationIamUserCredential.setSecertKey(createAccessKeyResult.getAccessKey().getSecretAccessKey());
-        organizationIamUserCredential.setOrganization(organization);
-        organizationIamUserCredential.setIamArn(createUserResult.getUser().getArn());
-        organizationIamUserCredential.setCreatedDate(Instant.now());
+		organizationIamUserCredential = buildAndSaveOrganizationIamUserCredential(organization, createUserResult,
+				createAccessKeyResult);
+		log.info("Leaving CreateIamUserWithAwsServicePolicy() {}", organizationIamUserCredential);
 
-        organizationIamUserCredential = saveOrganizationIamUserCredential(organizationIamUserCredential);
-        log.info("Leaving buildAndSaveOrganizationIamUserCredential() {}", organizationIamUserCredential);
-        return organizationIamUserCredential;
-    }
+		return organizationIamUserCredential;
+	}
 
-    private OrganizationIamUserCredential saveOrganizationIamUserCredential(
-            OrganizationIamUserCredential organizationIamUserCredential) {
-        log.info("Entering saveOrganizationIamUserCredential()");
-        return organizationIamUserCredentialRepository.save(organizationIamUserCredential);
-    }
+	private OrganizationIamUserCredential buildAndSaveOrganizationIamUserCredential(Organization organization,
+			CreateUserResult createUserResult, CreateAccessKeyResult createAccessKeyResult) {
+		log.info(
+				"Entering buildAndSaveOrganizationIamUserCredential() Organization{}, CreateUserResult {},CreateAccessKeyResult{}",
+				organization, createUserResult, createAccessKeyResult);
+		OrganizationIamUserCredential organizationIamUserCredential = new OrganizationIamUserCredential();
+		organizationIamUserCredential.setAccessKey(createAccessKeyResult.getAccessKey().getAccessKeyId());
+		organizationIamUserCredential.setSecertKey(createAccessKeyResult.getAccessKey().getSecretAccessKey());
+		organizationIamUserCredential.setOrganization(organization);
+		organizationIamUserCredential.setIamArn(createUserResult.getUser().getArn());
+		organizationIamUserCredential.setCreatedDate(Instant.now());
+
+		organizationIamUserCredential = saveOrganizationIamUserCredential(organizationIamUserCredential);
+		log.info("Leaving buildAndSaveOrganizationIamUserCredential() {}", organizationIamUserCredential);
+		return organizationIamUserCredential;
+	}
+
+	private OrganizationIamUserCredential saveOrganizationIamUserCredential(
+			OrganizationIamUserCredential organizationIamUserCredential) {
+		log.info("Entering saveOrganizationIamUserCredential()");
+		return organizationIamUserCredentialRepository.save(organizationIamUserCredential);
+	}
 
 }

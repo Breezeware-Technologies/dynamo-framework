@@ -1,4 +1,4 @@
-package net.breezeware.dynamo.aws.iam;
+package net.breezeware.dynamo.aws.iam.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

@@ -7,8 +7,4 @@ import net.breezeware.dynamo.aws.iam.entity.OrganizationIamUserCredential;
 
 @Repository
 public interface OrganizationIamUserCredentialRepository extends JpaRepository<OrganizationIamUserCredential, Long> {
-
-    
-    
-    
 }

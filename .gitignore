@@ -87,3 +87,4 @@ dynamo-webapp/pom.xml.versionsBackup
 pom.xml.versionsBackup
 dynamo-modules/dynamo-audit/dynamo-audit-lib/.factorypath
 dynamo-modules/dynamo-organization/dynamo-organization-lib/.factorypath
+dynamo-modules/dynamo-aws/dynamo-aws-iam/.factorypath

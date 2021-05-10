@@ -13,6 +13,7 @@
 	<description>Dynamo module for managing aws services like iam,s3,etc..</description>
 	<modules>
 		<module>dynamo-aws-iam</module>
+		<module>dynamo-aws-s3</module>
 	</modules>
 
 	<!-- #################### DEPENDENCIES #################### -->
