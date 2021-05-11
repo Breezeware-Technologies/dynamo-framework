@@ -16,6 +16,7 @@ import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import com.amazonaws.services.s3.model.Bucket;
 import com.amazonaws.services.s3.model.CreateBucketRequest;
+import com.amazonaws.services.s3.model.PutObjectResult;
 
 import lombok.extern.slf4j.Slf4j;
 import net.breezeware.dynamo.aws.iam.dao.OrganizationIamUserCredentialRepository;
@@ -49,11 +50,11 @@ public class OrganizationS3BucketServiceImpl implements OrganizationS3BucketServ
         return bucket;
     }
 
+    // TODO: change repository iam to iam service.
     public Optional<OrganizationS3Bucket> createBucketForOrganization(Organization organization, User user) {
         log.info("Entering createBucketForOrganization organization {},User {}", organization, user);
 
-        Optional<OrganizationS3Bucket> optOrganizationS3Bucket = Optional
-                .ofNullable(organizationS3BucketRepository.findByOrganization(organization));
+        Optional<OrganizationS3Bucket> optOrganizationS3Bucket = retriveOrganizationS3Bucket(organization);
 
         if (optOrganizationS3Bucket.isEmpty()) {
             Optional<OrganizationIamUserCredential> optorganizationIamUserCredential = Optional
@@ -88,6 +89,12 @@ public class OrganizationS3BucketServiceImpl implements OrganizationS3BucketServ
 
     }
 
+    public Optional<OrganizationS3Bucket> retriveOrganizationS3Bucket(Organization organization) {
+        Optional<OrganizationS3Bucket> optOrganizationS3Bucket = Optional
+                .ofNullable(organizationS3BucketRepository.findByOrganization(organization));
+        return optOrganizationS3Bucket;
+    }
+
     private AmazonS3 awsS3ClientBuilder(OrganizationIamUserCredential organizationIamUserCredential) {
         log.info("Entering awsS3ClientBuilder organizationIamUserCredential{}", organizationIamUserCredential);
         AWSCredentials credentials = new BasicAWSCredentials(organizationIamUserCredential.getAccessKey(),
@@ -120,6 +127,22 @@ public class OrganizationS3BucketServiceImpl implements OrganizationS3BucketServ
     private OrganizationS3Bucket saveOrganizationS3Bucket(OrganizationS3Bucket OrganizationS3Bucket) {
         log.info("Entering saveOrganizationIamUserCredential()");
         return organizationS3BucketRepository.save(OrganizationS3Bucket);
+    }
+
+    @Transactional
+    public Optional<PutObjectResult> createDirectory(String bucketName, String folderName, Organization organization) {
+        log.info("Entering createDirectory bucketName{} ,folderName{}", bucketName, folderName);
+        Optional<OrganizationIamUserCredential> optOrganizationIamUserCredential = awsIdentityAccessManagementService
+                .retriveOrganizationIamUserCredential(organization);
+        Optional<PutObjectResult> putObjectResult = Optional.empty();
+        if (optOrganizationIamUserCredential.isPresent()) {
+            AmazonS3 amazonS3 = awsS3ClientBuilder(optOrganizationIamUserCredential.get());
+            putObjectResult = Optional.of(amazonS3.putObject(bucketName, folderName + "/", ""));
+        }
+
+        log.info("Leaving createDirectory ");
+
+        return putObjectResult;
     }
 
 }
