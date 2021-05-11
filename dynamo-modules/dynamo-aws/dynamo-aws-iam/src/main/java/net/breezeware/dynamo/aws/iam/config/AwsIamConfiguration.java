@@ -3,6 +3,9 @@ package net.breezeware.dynamo.aws.iam.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import com.amazonaws.auth.AWSCredentials;
+import com.amazonaws.auth.AWSStaticCredentialsProvider;
+import com.amazonaws.auth.BasicAWSCredentials;
 import com.amazonaws.regions.Regions;
 import com.amazonaws.services.identitymanagement.AmazonIdentityManagement;
 import com.amazonaws.services.identitymanagement.AmazonIdentityManagementClientBuilder;
@@ -10,10 +13,15 @@ import com.amazonaws.services.identitymanagement.AmazonIdentityManagementClientB
 @Configuration
 public class AwsIamConfiguration {
 
-    @Bean(name= "awsIamuserConfiguration")
+    @Bean(name = "awsIamuserConfiguration")
     public AmazonIdentityManagement awsIamuserConfiguration() {
+
+        AWSCredentials credentials = new BasicAWSCredentials("***REMOVED***",
+                "***REMOVED***");
+
         AmazonIdentityManagement iamClient = AmazonIdentityManagementClientBuilder.standard()
-                .withRegion(Regions.US_EAST_1.getName()).build();
+                .withCredentials(new AWSStaticCredentialsProvider(credentials)).withRegion(Regions.US_EAST_1.getName())
+                .build();
         return iamClient;
 
     }

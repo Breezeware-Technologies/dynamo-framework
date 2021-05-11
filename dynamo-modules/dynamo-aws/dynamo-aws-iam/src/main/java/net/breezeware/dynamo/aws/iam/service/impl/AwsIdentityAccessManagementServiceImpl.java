@@ -16,10 +16,6 @@ import com.amazonaws.services.identitymanagement.model.CreateAccessKeyResult;
 import com.amazonaws.services.identitymanagement.model.CreateUserRequest;
 import com.amazonaws.services.identitymanagement.model.CreateUserResult;
 import com.amazonaws.services.identitymanagement.model.EntityAlreadyExistsException;
-import com.amazonaws.services.identitymanagement.model.GetServerCertificateRequest;
-import com.amazonaws.services.identitymanagement.model.GetUserRequest;
-import com.amazonaws.services.identitymanagement.model.GetUserResult;
-import com.amazonaws.util.EC2MetadataUtils.IAMSecurityCredential;
 
 import lombok.extern.slf4j.Slf4j;
 import net.breezeware.dynamo.aws.iam.dao.OrganizationIamUserCredentialRepository;
@@ -86,30 +82,31 @@ public class AwsIdentityAccessManagementServiceImpl implements AwsIdentityAccess
             User user) throws EntityAlreadyExistsException {
         log.info("Entering CreateIamUserWithAwsServicePolicy() Organization{} ,organizationAdminName{} ", organization,
                 user);
-        
+
         CreateUserRequest createUserRequest = new CreateUserRequest();
-        createUserRequest.setUserName(user.getFirstName()+user.getLastName());
-        
+        createUserRequest.setUserName(user.getFirstName() + user.getLastName());
+
         Optional<OrganizationIamUserCredential> organizationIamUserCredential = Optional.empty();
-        
-//        Optional<OrganizationIamUserCredential> optorganizationIamUserCredential = Optional.ofNullable(organizationIamUserCredentialRepository.findByUser(user));
-//        if(optorganizationIamUserCredential.isEmpty()) {
-        	 CreateUserResult createUserResult = createIamUser(createUserRequest);
 
-             attachPolicyForIamUser(createUserResult);
-             CreateAccessKeyResult createAccessKeyResult = createIamUserAccessKey(createUserResult);
+        // Optional<OrganizationIamUserCredential> optorganizationIamUserCredential =
+        // Optional.ofNullable(organizationIamUserCredentialRepository.findByUser(user));
+        // if(optorganizationIamUserCredential.isEmpty()) {
+        CreateUserResult createUserResult = createIamUser(createUserRequest);
 
-             organizationIamUserCredential = Optional.of(buildAndSaveOrganizationIamUserCredential(organization,user, createUserResult,
-                     createAccessKeyResult));
-//        }
-       
+        attachPolicyForIamUser(createUserResult);
+        CreateAccessKeyResult createAccessKeyResult = createIamUserAccessKey(createUserResult);
+
+        organizationIamUserCredential = Optional.of(
+                buildAndSaveOrganizationIamUserCredential(organization, user, createUserResult, createAccessKeyResult));
+        // }
+
         log.info("Leaving CreateIamUserWithAwsServicePolicy() {}", organizationIamUserCredential);
 
         return organizationIamUserCredential;
     }
 
-    private OrganizationIamUserCredential buildAndSaveOrganizationIamUserCredential(Organization organization,User user,
-            CreateUserResult createUserResult, CreateAccessKeyResult createAccessKeyResult) {
+    private OrganizationIamUserCredential buildAndSaveOrganizationIamUserCredential(Organization organization,
+            User user, CreateUserResult createUserResult, CreateAccessKeyResult createAccessKeyResult) {
         log.info(
                 "Entering buildAndSaveOrganizationIamUserCredential() Organization{}, CreateUserResult {},CreateAccessKeyResult{}",
                 organization, createUserResult, createAccessKeyResult);
@@ -142,17 +139,5 @@ public class AwsIdentityAccessManagementServiceImpl implements AwsIdentityAccess
         log.info("Leaving retriveOrganizationIamUserCredential() Organization{},", organization);
         return organizationIamUserCredential;
     }
-    
-	public GetUserResult retrieveUserCredential(String userName) {
-        log.info("Entering retrieveUserCredential() userName{},", userName);
-		GetUserRequest getUserRequest = new GetUserRequest();
-		getUserRequest.setUserName(userName);
-		GetUserResult getUserResult = awsIamuserConfiguration.getUser(getUserRequest);
-//		getUserResult.getUser().get
-        log.info("Leaving retrieveUserCredential()");
-		return getUserResult;
-		
-	}
-
 
 }
