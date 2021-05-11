@@ -67,9 +67,10 @@ public class OrganizationS3BucketServiceImpl implements OrganizationS3BucketServ
 			}
 			log.info("optorganizationIamUserCredential{}",optorganizationIamUserCredential.get());
 			AmazonS3 amazonS3 = awsS3ClientBuilder(optorganizationIamUserCredential.get());
+			log.info("amazonS3{}",amazonS3);
 
 			CreateBucketRequest bucketRequest = new CreateBucketRequest(
-					organization.getName().replaceAll(" ", "-").toLowerCase(),Regions.US_EAST_1.name());
+					organization.getName().replaceAll(" ", "-").toLowerCase());
 			
 			Bucket bucket = amazonS3.createBucket(bucketRequest);
 
@@ -79,18 +80,20 @@ public class OrganizationS3BucketServiceImpl implements OrganizationS3BucketServ
 
 		}
 
-		log.info("Leaving createBucketForOrganization bucket optOrganizationS3Bucket{}");
+		log.info("Leaving createBucketForOrganization bucket optOrganizationS3Bucket{}",optOrganizationS3Bucket);
 		return optOrganizationS3Bucket;
 
 	}
 
 	private AmazonS3 awsS3ClientBuilder(OrganizationIamUserCredential organizationIamUserCredential) {
-		AWSCredentials credentials = new BasicAWSCredentials(organizationIamUserCredential.getAccessKey().toString(),
-				organizationIamUserCredential.getSecertKey().toString());
-
+		log.info("Entering awsS3ClientBuilder organizationIamUserCredential{}",organizationIamUserCredential);
+		AWSCredentials credentials = new BasicAWSCredentials(organizationIamUserCredential.getAccessKey(),
+				organizationIamUserCredential.getSecertKey());
+		log.info("credentialsAccesskey {},credentialsSecretkey{}",credentials.getAWSAccessKeyId(),credentials.getAWSSecretKey());
 		AmazonS3 amazonS3ClientBuilder = AmazonS3ClientBuilder.standard()
-				.withCredentials(new AWSStaticCredentialsProvider(credentials)).withRegion(Regions.US_EAST_1.name())
+				.withCredentials(new AWSStaticCredentialsProvider(credentials)).withRegion(Regions.US_EAST_1.getName())
 				.build();
+		log.info("Leaving awsS3ClientBuilder amazonS3ClientBuilder{}",amazonS3ClientBuilder.toString());
 		return amazonS3ClientBuilder;
 
 	}

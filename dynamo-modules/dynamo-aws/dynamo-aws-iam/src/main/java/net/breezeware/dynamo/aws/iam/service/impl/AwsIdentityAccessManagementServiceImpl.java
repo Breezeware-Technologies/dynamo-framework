@@ -16,6 +16,10 @@ import com.amazonaws.services.identitymanagement.model.CreateAccessKeyResult;
 import com.amazonaws.services.identitymanagement.model.CreateUserRequest;
 import com.amazonaws.services.identitymanagement.model.CreateUserResult;
 import com.amazonaws.services.identitymanagement.model.EntityAlreadyExistsException;
+import com.amazonaws.services.identitymanagement.model.GetServerCertificateRequest;
+import com.amazonaws.services.identitymanagement.model.GetUserRequest;
+import com.amazonaws.services.identitymanagement.model.GetUserResult;
+import com.amazonaws.util.EC2MetadataUtils.IAMSecurityCredential;
 
 import lombok.extern.slf4j.Slf4j;
 import net.breezeware.dynamo.aws.iam.dao.OrganizationIamUserCredentialRepository;
@@ -95,7 +99,7 @@ public class AwsIdentityAccessManagementServiceImpl implements AwsIdentityAccess
              attachPolicyForIamUser(createUserResult);
              CreateAccessKeyResult createAccessKeyResult = createIamUserAccessKey(createUserResult);
 
-             organizationIamUserCredential = Optional.of(buildAndSaveOrganizationIamUserCredential(organization, createUserResult,
+             organizationIamUserCredential = Optional.of(buildAndSaveOrganizationIamUserCredential(organization,user, createUserResult,
                      createAccessKeyResult));
 //        }
        
@@ -104,7 +108,7 @@ public class AwsIdentityAccessManagementServiceImpl implements AwsIdentityAccess
         return organizationIamUserCredential;
     }
 
-    private OrganizationIamUserCredential buildAndSaveOrganizationIamUserCredential(Organization organization,
+    private OrganizationIamUserCredential buildAndSaveOrganizationIamUserCredential(Organization organization,User user,
             CreateUserResult createUserResult, CreateAccessKeyResult createAccessKeyResult) {
         log.info(
                 "Entering buildAndSaveOrganizationIamUserCredential() Organization{}, CreateUserResult {},CreateAccessKeyResult{}",
@@ -115,6 +119,7 @@ public class AwsIdentityAccessManagementServiceImpl implements AwsIdentityAccess
         organizationIamUserCredential.setOrganization(organization);
         organizationIamUserCredential.setIamArn(createUserResult.getUser().getArn());
         organizationIamUserCredential.setCreatedDate(Instant.now());
+        organizationIamUserCredential.setUser(user);
 
         organizationIamUserCredential = saveOrganizationIamUserCredential(organizationIamUserCredential);
         log.info("Leaving buildAndSaveOrganizationIamUserCredential() {}", organizationIamUserCredential);
@@ -137,6 +142,17 @@ public class AwsIdentityAccessManagementServiceImpl implements AwsIdentityAccess
         log.info("Leaving retriveOrganizationIamUserCredential() Organization{},", organization);
         return organizationIamUserCredential;
     }
+    
+	public GetUserResult retrieveUserCredential(String userName) {
+        log.info("Entering retrieveUserCredential() userName{},", userName);
+		GetUserRequest getUserRequest = new GetUserRequest();
+		getUserRequest.setUserName(userName);
+		GetUserResult getUserResult = awsIamuserConfiguration.getUser(getUserRequest);
+//		getUserResult.getUser().get
+        log.info("Leaving retrieveUserCredential()");
+		return getUserResult;
+		
+	}
 
 
 }

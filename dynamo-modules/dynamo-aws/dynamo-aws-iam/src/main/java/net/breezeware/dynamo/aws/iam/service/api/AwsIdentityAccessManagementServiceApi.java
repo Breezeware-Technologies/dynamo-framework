@@ -6,7 +6,7 @@ import com.amazonaws.services.identitymanagement.model.AttachUserPolicyResult;
 import com.amazonaws.services.identitymanagement.model.CreateAccessKeyResult;
 import com.amazonaws.services.identitymanagement.model.CreateUserRequest;
 import com.amazonaws.services.identitymanagement.model.CreateUserResult;
-import com.amazonaws.services.identitymanagement.model.EntityAlreadyExistsException;
+import com.amazonaws.services.identitymanagement.model.GetUserResult;
 
 import net.breezeware.dynamo.aws.iam.entity.OrganizationIamUserCredential;
 import net.breezeware.dynamo.organization.entity.Organization;
@@ -24,5 +24,7 @@ public interface AwsIdentityAccessManagementServiceApi {
             User user) ;
 
     Optional<OrganizationIamUserCredential> retriveOrganizationIamUserCredential(Organization organization);
+    
+    GetUserResult retrieveUserCredential(String userName);
 
 }

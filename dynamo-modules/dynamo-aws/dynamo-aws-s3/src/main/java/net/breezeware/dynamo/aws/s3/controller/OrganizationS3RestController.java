@@ -24,8 +24,8 @@ public class OrganizationS3RestController {
 	
 	@GetMapping(value = "/createBucket")
 	public OrganizationS3Bucket createBucket() {
-		Organization organization = organizationService.findOrganizationById(2);
-		User user = organizationService.getUserById(1);
+		Organization organization = organizationService.findOrganizationByName("Breeze Tech");
+		User user = organizationService.findByEmailIgnoreCase("karthik@breezeware.net");
 		
 		Optional<OrganizationS3Bucket> optOrganizationS3Bucket = organizationS3BucketService.createBucketForOrganization(organization, user);
 		return optOrganizationS3Bucket.get();
