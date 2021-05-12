@@ -28,7 +28,7 @@ public class AwsIdentityAccessManagementTest extends AbstractTestNGSpringContext
         organization.setId(2);
         organization.setName("Breeze Tech");
         OrganizationIamUserCredential credential = accessManagementServiceApi
-                .CreateIamUserWithAwsServicePolicy(organization, "admin");
+                .createIamUserWithAwsServicePolicy(organization, "admin");
         log.info("Leaving createIamUserwithPolicyTest() {}", credential);
 
     }
