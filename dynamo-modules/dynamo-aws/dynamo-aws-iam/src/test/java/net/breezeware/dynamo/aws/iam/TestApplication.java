@@ -13,9 +13,9 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @SpringBootApplication
 @PropertySources({ @PropertySource(value = { "classpath:test.properties" }) })
-@ComponentScan(basePackages = { "net.breezeware.dynamo.aws" })
-@EnableJpaRepositories(basePackages = { "net.breezeware.dynamo.aws" })
-@EntityScan(basePackages = { "net.breezeware.dynamo.aws" })
+@ComponentScan(basePackages = { "net.breezeware" })
+@EnableJpaRepositories(basePackages = { "net.breezeware.dynamo.organization.dao" })
+@EntityScan(basePackages = { "net.breezeware" })
 public class TestApplication extends SpringBootServletInitializer {
 
     Logger logger = LoggerFactory.getLogger(TestApplication.class);

@@ -24,6 +24,13 @@
 			<groupId>net.breezeware.dynamo</groupId>
 			<artifactId>dynamo-organization-lib</artifactId>
 			<version>${project.version}</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.testng</groupId>
+					<artifactId>testng</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
+
 	</dependencies>
 </project>

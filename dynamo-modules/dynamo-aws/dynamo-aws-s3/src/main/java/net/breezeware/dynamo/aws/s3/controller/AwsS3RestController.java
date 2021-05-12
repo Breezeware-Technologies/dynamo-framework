@@ -21,40 +21,42 @@ import net.breezeware.dynamo.organization.service.api.OrganizationService;
 @RequestMapping(value = "/s3")
 @Slf4j
 public class AwsS3RestController {
-	@Autowired
-	AwsS3BucketService organizationS3BucketService;
+    @Autowired
+    AwsS3BucketService organizationS3BucketService;
 
-	@Autowired
-	OrganizationService organizationService;
+    @Autowired
+    OrganizationService organizationService;
 
-	@PostMapping(value = "/createBucket")
-	public List<OrganizationS3Bucket> createBucket() {
-		log.info("Entering createBucket()");
-		List<Organization> organizationList = organizationService.findAllOrganizations();
+    @PostMapping(value = "/createBucket")
+    public List<OrganizationS3Bucket> createBucket() {
+        log.info("Entering createBucket()");
+        List<Organization> organizationList = organizationService.findAllOrganizations();
 
-		List<OrganizationS3Bucket> organizationS3BucketList = new ArrayList<OrganizationS3Bucket>();
+        List<OrganizationS3Bucket> organizationS3BucketList = new ArrayList<OrganizationS3Bucket>();
 
-		Optional<OrganizationS3Bucket> optOrganizationS3Bucket = Optional.empty();
+        Optional<OrganizationS3Bucket> optOrganizationS3Bucket = Optional.empty();
 
-		for (Organization organization : organizationList) {
-			log.info("organization{}", organization);
-			Optional<Role> currentRole = organizationService.findRoleByName(organization.getId(), "ORGANIZATION_ADMIN");
-			log.info("currentRole1{}", currentRole);
-			if (currentRole.isPresent()) {
-				log.info("currentRole2{}", currentRole);
-				List<User> userList = organizationService.findUsers(organization.getId(), currentRole.get().getName());
-				log.info("userList{}", userList);
-				optOrganizationS3Bucket = organizationS3BucketService.createBucketForOrganization(organization,
-						userList.get(0));
-			}
-			if(optOrganizationS3Bucket.isPresent()) {
-			organizationS3BucketList.add(optOrganizationS3Bucket.get());
-			}
-			log.info("Leaving createBucket1 ----> organizationS3BucketList{}()",organizationS3BucketList);
-		}
-		log.info("Leaving createBucket2 ----> organizationS3BucketList{}()",organizationS3BucketList);
+        for (Organization organization : organizationList) {
+            log.info("organization{}", organization);
+            Optional<Role> currentRole = organizationService.findRoleByName(organization.getId(), "ORGANIZATION_ADMIN");
+            log.info("currentRole1{}", currentRole);
+            if (currentRole.isPresent()) {
+                log.info("currentRole2{}", currentRole);
+                List<User> userList = organizationService.findUsers(organization.getId(), currentRole.get().getName());
+                log.info("userList{}", userList);
+                optOrganizationS3Bucket = organizationS3BucketService.createBucketForOrganization(organization,
+                        userList.get(0));
+            } else {
+                continue;
+            }
+            if (optOrganizationS3Bucket.isPresent()) {
+                organizationS3BucketList.add(optOrganizationS3Bucket.get());
+            }
+            log.info("Leaving createBucket1 ----> organizationS3BucketList{}()", organizationS3BucketList);
+        }
+        log.info("Leaving createBucket2 ----> organizationS3BucketList{}()", organizationS3BucketList);
 
-		return organizationS3BucketList;
-	}
+        return organizationS3BucketList;
+    }
 
 }
