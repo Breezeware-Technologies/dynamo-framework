@@ -17,11 +17,12 @@ import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import com.amazonaws.services.s3.model.AmazonS3Exception;
 import com.amazonaws.services.s3.model.Bucket;
 import com.amazonaws.services.s3.model.CreateBucketRequest;
+import com.amazonaws.services.s3.model.DeleteObjectRequest;
 import com.amazonaws.services.s3.model.PutObjectResult;
 
 import lombok.extern.slf4j.Slf4j;
 import net.breezeware.dynamo.aws.iam.entity.OrganizationIamUserCredential;
-import net.breezeware.dynamo.aws.iam.service.api.AwsIdentityAccessManagementServiceApi;
+import net.breezeware.dynamo.aws.iam.service.api.AwsIdentityAccessManagementService;
 import net.breezeware.dynamo.aws.s3.dao.OrganizationS3BucketRepository;
 import net.breezeware.dynamo.aws.s3.entity.OrganizationS3Bucket;
 import net.breezeware.dynamo.aws.s3.service.api.AwsS3BucketService;
@@ -36,7 +37,7 @@ public class AwsS3BucketServiceImpl implements AwsS3BucketService {
     OrganizationS3BucketRepository organizationS3BucketRepository;
 
     @Autowired
-    AwsIdentityAccessManagementServiceApi awsIdentityAccessManagementService;
+    AwsIdentityAccessManagementService awsIdentityAccessManagementService;
 
     // private Bucket createBucket(CreateBucketRequest bucketRequest, AmazonS3
     // amazonS3) {
@@ -156,6 +157,12 @@ public class AwsS3BucketServiceImpl implements AwsS3BucketService {
         log.info("Leaving createDirectory ");
 
         return putObjectResult;
+    }
+    
+    public void deleteobjectInBucket(DeleteObjectRequest deleteObjectRequest) {
+        awsS3ClientBuilder(null);
+        amazonS3ClientBuilder.deleteObject(deleteObjectRequest);
+
     }
 
 }

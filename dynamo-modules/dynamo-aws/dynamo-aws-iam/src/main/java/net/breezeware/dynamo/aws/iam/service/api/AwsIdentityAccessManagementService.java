@@ -6,7 +6,7 @@ import net.breezeware.dynamo.aws.iam.entity.OrganizationIamUserCredential;
 import net.breezeware.dynamo.organization.entity.Organization;
 import net.breezeware.dynamo.organization.entity.User;
 
-public interface AwsIdentityAccessManagementServiceApi {
+public interface AwsIdentityAccessManagementService {
 
 //    CreateUserResult createIamUser(CreateUserRequest createUserRequest);
 

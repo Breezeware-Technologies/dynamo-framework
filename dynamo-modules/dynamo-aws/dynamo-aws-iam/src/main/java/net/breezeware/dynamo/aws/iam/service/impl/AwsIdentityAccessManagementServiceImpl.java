@@ -20,14 +20,14 @@ import com.amazonaws.services.identitymanagement.model.EntityAlreadyExistsExcept
 import lombok.extern.slf4j.Slf4j;
 import net.breezeware.dynamo.aws.iam.dao.OrganizationIamUserCredentialRepository;
 import net.breezeware.dynamo.aws.iam.entity.OrganizationIamUserCredential;
-import net.breezeware.dynamo.aws.iam.service.api.AwsIdentityAccessManagementServiceApi;
+import net.breezeware.dynamo.aws.iam.service.api.AwsIdentityAccessManagementService;
 import net.breezeware.dynamo.organization.entity.Organization;
 import net.breezeware.dynamo.organization.entity.User;
 import net.breezeware.dynamo.organization.service.api.OrganizationService;
 
 @Slf4j
 @Service
-public class AwsIdentityAccessManagementServiceImpl implements AwsIdentityAccessManagementServiceApi {
+public class AwsIdentityAccessManagementServiceImpl implements AwsIdentityAccessManagementService {
 
 	@Autowired
 	OrganizationIamUserCredentialRepository organizationIamUserCredentialRepository;
