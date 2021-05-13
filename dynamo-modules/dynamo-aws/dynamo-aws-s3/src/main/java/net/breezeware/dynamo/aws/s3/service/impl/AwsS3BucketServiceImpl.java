@@ -158,11 +158,14 @@ public class AwsS3BucketServiceImpl implements AwsS3BucketService {
 
         return putObjectResult;
     }
-    
-    public void deleteobjectInBucket(DeleteObjectRequest deleteObjectRequest) {
-        awsS3ClientBuilder(null);
-        amazonS3ClientBuilder.deleteObject(deleteObjectRequest);
 
+    @Transactional
+    public void deleteobjectInBucket(OrganizationIamUserCredential organizationIamUserCredential, String bucketName,
+            String keyName) {
+        log.info("Entering deleteobjectInBucket bucketName{} ,keyName{}", bucketName, keyName);
+        AmazonS3 amazonS3 = awsS3ClientBuilder(organizationIamUserCredential);
+        amazonS3.deleteObject(bucketName, keyName);
+        log.info("Entering deleteobjectInBucket");
     }
 
 }
