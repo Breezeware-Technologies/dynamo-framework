@@ -1,6 +1,9 @@
 package net.breezeware.dynamo.aws.s3.service.impl;
 
 import java.time.Instant;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
 import javax.transaction.Transactional;
@@ -16,9 +19,13 @@ import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import com.amazonaws.services.s3.model.AmazonS3Exception;
 import com.amazonaws.services.s3.model.Bucket;
+import com.amazonaws.services.s3.model.BucketCrossOriginConfiguration;
+import com.amazonaws.services.s3.model.BucketVersioningConfiguration;
+import com.amazonaws.services.s3.model.CORSRule;
 import com.amazonaws.services.s3.model.CreateBucketRequest;
 import com.amazonaws.services.s3.model.DeleteObjectRequest;
 import com.amazonaws.services.s3.model.PutObjectResult;
+import com.amazonaws.services.s3.model.SetBucketVersioningConfigurationRequest;
 
 import lombok.extern.slf4j.Slf4j;
 import net.breezeware.dynamo.aws.iam.entity.OrganizationIamUserCredential;
@@ -87,6 +94,32 @@ public class AwsS3BucketServiceImpl implements AwsS3BucketService {
 
     }
 
+    private void provideCrosForBucket(String bucketName, Organization organization) {
+        log.info("Enetering provideVersionForBucket bucketName{},organization{}", bucketName,organization);
+        List<CORSRule.AllowedMethods> rule1AM = new ArrayList<CORSRule.AllowedMethods>();
+        rule1AM.add(CORSRule.AllowedMethods.PUT);
+        rule1AM.add(CORSRule.AllowedMethods.POST);
+        rule1AM.add(CORSRule.AllowedMethods.DELETE);
+        rule1AM.add(CORSRule.AllowedMethods.GET);
+        CORSRule rule1 = new CORSRule().withId("CORSRule").withAllowedMethods(rule1AM)
+                .withAllowedOrigins(Arrays.asList("http://localhost:8443","https://refreshconnectedcare.com:8443","https://www.refresh.health:8443"));
+
+        List<CORSRule> rules = new ArrayList<CORSRule>();
+        rules.add(rule1);
+
+        // Add the rules to a new CORS configuration.
+        BucketCrossOriginConfiguration configuration = new BucketCrossOriginConfiguration();
+        configuration.setRules(rules);
+        
+        Optional<OrganizationIamUserCredential> optorganizationIamUserCredential = awsIdentityAccessManagementService
+                .retriveOrganizationIamUserCredential(organization);
+        if (optorganizationIamUserCredential.isPresent()) {
+            AmazonS3 amazonS3 = awsS3ClientBuilder(optorganizationIamUserCredential.get());
+            amazonS3.setBucketCrossOriginConfiguration(bucketName, configuration);
+        }
+        log.info("Leaving provideVersionForBucket");
+    }
+
     private Optional<OrganizationS3Bucket> presistAwsS3Bucket(Organization organization, User user,
             Optional<OrganizationIamUserCredential> optorganizationIamUserCredential) {
         Optional<OrganizationS3Bucket> optOrganizationS3Bucket;
@@ -95,10 +128,13 @@ public class AwsS3BucketServiceImpl implements AwsS3BucketService {
 
         CreateBucketRequest bucketRequest = new CreateBucketRequest(
                 organization.getName().replaceAll(" ", "-").toLowerCase());
-
+        
         Bucket bucket = amazonS3.createBucket(bucketRequest);
 
         optOrganizationS3Bucket = Optional.of(buildOrganizationS3Bucket(bucket, organization, user));
+
+        provideCrosForBucket(optOrganizationS3Bucket.get().getBucketName(), organization);
+
         return optOrganizationS3Bucket;
     }
 
