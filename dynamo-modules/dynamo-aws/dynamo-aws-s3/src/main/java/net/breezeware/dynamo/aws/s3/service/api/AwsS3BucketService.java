@@ -25,6 +25,4 @@ public interface AwsS3BucketService {
     void deleteobjectInBucket(OrganizationIamUserCredential organizationIamUserCredential, String bucketName,
             String keyName);
     
-    
-
 }

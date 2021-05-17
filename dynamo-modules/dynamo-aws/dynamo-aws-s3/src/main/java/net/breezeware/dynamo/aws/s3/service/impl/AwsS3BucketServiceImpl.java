@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 import javax.transaction.Transactional;
 
@@ -24,6 +25,8 @@ import com.amazonaws.services.s3.model.BucketVersioningConfiguration;
 import com.amazonaws.services.s3.model.CORSRule;
 import com.amazonaws.services.s3.model.CreateBucketRequest;
 import com.amazonaws.services.s3.model.DeleteObjectRequest;
+import com.amazonaws.services.s3.model.DeleteObjectTaggingRequest;
+import com.amazonaws.services.s3.model.DeleteObjectsRequest;
 import com.amazonaws.services.s3.model.PutObjectResult;
 import com.amazonaws.services.s3.model.SetBucketVersioningConfigurationRequest;
 
@@ -73,7 +76,7 @@ public class AwsS3BucketServiceImpl implements AwsS3BucketService {
             // // FIXME: you could use this logic.
             // optorganizationIamUserCredential = awsIdentityAccessManagementService
             // .retriveOrganizationIamUserCredential(user);
-            // while (optorganizationIamUserCredential.isEmpty()) {
+            // while (optorganizationIamUserCredential.isEmpty()) {       
             // optorganizationIamUserCredential = awsIdentityAccessManagementService
             // .retriveOrganizationIamUserCredential(user);
             // }
@@ -84,6 +87,7 @@ public class AwsS3BucketServiceImpl implements AwsS3BucketService {
                 log.info("optorganizationIamUserCredential--->{}", optorganizationIamUserCredential.get());
                 optOrganizationS3Bucket = presistAwsS3Bucket(organization, user, optorganizationIamUserCredential);
             } catch (AmazonS3Exception e) {
+                log.info("Exception occured e {}",e);
                 createBucketForOrganization(organization, user);
             }
 
@@ -127,7 +131,7 @@ public class AwsS3BucketServiceImpl implements AwsS3BucketService {
         log.info("amazonS3{}", amazonS3);
 
         CreateBucketRequest bucketRequest = new CreateBucketRequest(
-                organization.getName().replaceAll(" ", "-").toLowerCase());
+                UUID.randomUUID().toString());
         
         Bucket bucket = amazonS3.createBucket(bucketRequest);
 
@@ -201,7 +205,7 @@ public class AwsS3BucketServiceImpl implements AwsS3BucketService {
         log.info("Entering deleteobjectInBucket bucketName{} ,keyName{}", bucketName, keyName);
         AmazonS3 amazonS3 = awsS3ClientBuilder(organizationIamUserCredential);
         amazonS3.deleteObject(bucketName, keyName);
-        log.info("Entering deleteobjectInBucket");
+        log.info("Leaving deleteobjectInBucket");
     }
 
 }
