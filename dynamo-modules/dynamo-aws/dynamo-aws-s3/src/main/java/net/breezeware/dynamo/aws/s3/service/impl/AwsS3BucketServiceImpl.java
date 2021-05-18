@@ -100,12 +100,14 @@ public class AwsS3BucketServiceImpl implements AwsS3BucketService {
 
     private void provideCrosForBucket(String bucketName, Organization organization) {
         log.info("Enetering provideVersionForBucket bucketName{},organization{}", bucketName,organization);
+        List<String> allowedHeaders = new ArrayList<>();
+        allowedHeaders.add("*");
         List<CORSRule.AllowedMethods> rule1AM = new ArrayList<CORSRule.AllowedMethods>();
         rule1AM.add(CORSRule.AllowedMethods.PUT);
         rule1AM.add(CORSRule.AllowedMethods.POST);
         rule1AM.add(CORSRule.AllowedMethods.DELETE);
         rule1AM.add(CORSRule.AllowedMethods.GET);
-        CORSRule rule1 = new CORSRule().withId("CORSRule").withAllowedMethods(rule1AM)
+        CORSRule rule1 = new CORSRule().withId("CORSRule").withAllowedHeaders(allowedHeaders).withAllowedMethods(rule1AM)
                 .withAllowedOrigins(Arrays.asList("http://localhost:8443","https://refreshconnectedcare.com:8443","https://www.refresh.health:8443"));
 
         List<CORSRule> rules = new ArrayList<CORSRule>();
