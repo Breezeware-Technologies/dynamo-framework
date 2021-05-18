@@ -122,22 +122,20 @@ public class AwsIdentityAccessManagementServiceImpl implements AwsIdentityAccess
 	public Optional<OrganizationIamUserCredential> retriveOrganizationIamUserCredential(Organization organization) {
 		log.info("Entering retriveOrganizationIamUserCredential() Organization{},", organization);
 
-		Optional<OrganizationIamUserCredential> organizationIamUserCredential = Optional
-				.ofNullable(organizationIamUserCredentialRepository.findByOrganization(organization));
+		Optional<OrganizationIamUserCredential> optOrganizationIamUserCredential = organizationIamUserCredentialRepository.findByOrganization(organization);
 
-		log.info("Leaving retriveOrganizationIamUserCredential() Organization{},", organization);
-		return organizationIamUserCredential;
+		log.info("Leaving retriveOrganizationIamUserCredential()");
+		return optOrganizationIamUserCredential;
 	}
 	
 	@Transactional
 	public Optional<OrganizationIamUserCredential> retriveOrganizationIamUserCredential(User user) {
 		log.info("Entering retriveOrganizationIamUserCredential() Organization{},", user);
 
-		Optional<OrganizationIamUserCredential> organizationIamUserCredential = Optional
-				.ofNullable(organizationIamUserCredentialRepository.findByUser(user));
+		Optional<OrganizationIamUserCredential> optOrganizationIamUserCredential = organizationIamUserCredentialRepository.findByUser(user);
 
-		log.info("Leaving retriveOrganizationIamUserCredential() Organization{},", user);
-		return organizationIamUserCredential;
+		log.info("Leaving retriveOrganizationIamUserCredential()");
+		return optOrganizationIamUserCredential;
 	}
 
 }

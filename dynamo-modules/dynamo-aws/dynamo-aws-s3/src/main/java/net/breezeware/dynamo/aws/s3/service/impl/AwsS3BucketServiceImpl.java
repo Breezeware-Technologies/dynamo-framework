@@ -21,15 +21,9 @@ import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import com.amazonaws.services.s3.model.AmazonS3Exception;
 import com.amazonaws.services.s3.model.Bucket;
 import com.amazonaws.services.s3.model.BucketCrossOriginConfiguration;
-import com.amazonaws.services.s3.model.BucketVersioningConfiguration;
 import com.amazonaws.services.s3.model.CORSRule;
 import com.amazonaws.services.s3.model.CreateBucketRequest;
-import com.amazonaws.services.s3.model.DeleteObjectRequest;
-import com.amazonaws.services.s3.model.DeleteObjectTaggingRequest;
-import com.amazonaws.services.s3.model.DeleteObjectsRequest;
 import com.amazonaws.services.s3.model.PutObjectResult;
-import com.amazonaws.services.s3.model.SetBucketVersioningConfigurationRequest;
-
 import lombok.extern.slf4j.Slf4j;
 import net.breezeware.dynamo.aws.iam.entity.OrganizationIamUserCredential;
 import net.breezeware.dynamo.aws.iam.service.api.AwsIdentityAccessManagementService;
@@ -48,16 +42,6 @@ public class AwsS3BucketServiceImpl implements AwsS3BucketService {
 
     @Autowired
     AwsIdentityAccessManagementService awsIdentityAccessManagementService;
-
-    // private Bucket createBucket(CreateBucketRequest bucketRequest, AmazonS3
-    // amazonS3) {
-    // log.info("Entering createBucketForOrganization bucketRequest {}",
-    // bucketRequest.getBucketName());
-    // Bucket bucket = amazonS3.createBucket(bucketRequest);
-    // log.info("Leaving createBucketForOrganization,bucket {}", bucket);
-    //
-    // return bucket;
-    // }
 
     @Transactional
     public Optional<OrganizationS3Bucket> createBucketForOrganization(Organization organization, User user) {
@@ -87,7 +71,6 @@ public class AwsS3BucketServiceImpl implements AwsS3BucketService {
                 log.info("optorganizationIamUserCredential--->{}", optorganizationIamUserCredential.get());
                 optOrganizationS3Bucket = presistAwsS3Bucket(organization, user, optorganizationIamUserCredential);
             } catch (AmazonS3Exception e) {
-                log.info("Exception occured e {}",e);
                 createBucketForOrganization(organization, user);
             }
 
@@ -98,8 +81,8 @@ public class AwsS3BucketServiceImpl implements AwsS3BucketService {
 
     }
 
-    private void provideCrosForBucket(String bucketName, Organization organization) {
-        log.info("Enetering provideVersionForBucket bucketName{},organization{}", bucketName,organization);
+    private void provideCorsForBucket(String bucketName, Organization organization) {
+        log.info("Enetering provideCorsForBucket() bucketName{},organization{}", bucketName,organization);
         List<String> allowedHeaders = new ArrayList<>();
         allowedHeaders.add("*");
         List<CORSRule.AllowedMethods> rule1AM = new ArrayList<CORSRule.AllowedMethods>();
@@ -123,11 +106,12 @@ public class AwsS3BucketServiceImpl implements AwsS3BucketService {
             AmazonS3 amazonS3 = awsS3ClientBuilder(optorganizationIamUserCredential.get());
             amazonS3.setBucketCrossOriginConfiguration(bucketName, configuration);
         }
-        log.info("Leaving provideVersionForBucket");
+        log.info("Leaving provideCorsForBucket()");
     }
 
     private Optional<OrganizationS3Bucket> presistAwsS3Bucket(Organization organization, User user,
             Optional<OrganizationIamUserCredential> optorganizationIamUserCredential) {
+        log.info("Entering presistAwsS3Bucket() organization{} , user {}, optorganizationIamUserCredential {}",organization,user,optorganizationIamUserCredential);
         Optional<OrganizationS3Bucket> optOrganizationS3Bucket;
         AmazonS3 amazonS3 = awsS3ClientBuilder(optorganizationIamUserCredential.get());
         log.info("amazonS3{}", amazonS3);
@@ -139,7 +123,9 @@ public class AwsS3BucketServiceImpl implements AwsS3BucketService {
 
         optOrganizationS3Bucket = Optional.of(buildOrganizationS3Bucket(bucket, organization, user));
 
-        provideCrosForBucket(optOrganizationS3Bucket.get().getBucketName(), organization);
+        provideCorsForBucket(optOrganizationS3Bucket.get().getBucketName(), organization);
+        
+        log.info("Leaving presistAwsS3Bucket()");
 
         return optOrganizationS3Bucket;
     }
@@ -160,6 +146,7 @@ public class AwsS3BucketServiceImpl implements AwsS3BucketService {
     }
 
     private OrganizationS3Bucket buildOrganizationS3Bucket(Bucket bucket, Organization organization, User user) {
+        log.info("Leaving buildOrganizationS3Bucket bucket {} , user {}", bucket,user);
         OrganizationS3Bucket organizationS3Bucket = new OrganizationS3Bucket();
 
         organizationS3Bucket.setBucketName(bucket.getName());
@@ -169,6 +156,7 @@ public class AwsS3BucketServiceImpl implements AwsS3BucketService {
         organizationS3Bucket.setModifiedDate(Instant.now());
 
         organizationS3Bucket = saveOrganizationS3Bucket(organizationS3Bucket);
+        log.info("Leaving buildOrganizationS3Bucket organizationS3Bucket {}",organizationS3Bucket);
         return organizationS3Bucket;
 
     }
@@ -180,8 +168,9 @@ public class AwsS3BucketServiceImpl implements AwsS3BucketService {
 
     @Transactional
     public Optional<OrganizationS3Bucket> retriveOrganizationS3Bucket(Organization organization) {
-        Optional<OrganizationS3Bucket> optOrganizationS3Bucket = Optional
-                .ofNullable(organizationS3BucketRepository.findByOrganization(organization));
+        log.info("Entering retriveOrganizationS3Bucket() organization {}",organization);
+        Optional<OrganizationS3Bucket> optOrganizationS3Bucket = organizationS3BucketRepository.findByOrganization(organization);
+        log.info("Leaving retriveOrganizationS3Bucket()");
         return optOrganizationS3Bucket;
     }
 
