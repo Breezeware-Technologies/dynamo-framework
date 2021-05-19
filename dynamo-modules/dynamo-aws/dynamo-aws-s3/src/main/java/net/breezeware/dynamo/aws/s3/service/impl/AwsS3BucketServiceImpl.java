@@ -46,7 +46,6 @@ public class AwsS3BucketServiceImpl implements AwsS3BucketService {
     @Transactional
     public Optional<OrganizationS3Bucket> createBucketForOrganization(Organization organization, User user) {
         log.info("Entering createBucketForOrganization organization {},User {}", organization, user);
-
         Optional<OrganizationS3Bucket> optOrganizationS3Bucket = retriveOrganizationS3Bucket(organization);
 
         if (optOrganizationS3Bucket.isEmpty()) {
