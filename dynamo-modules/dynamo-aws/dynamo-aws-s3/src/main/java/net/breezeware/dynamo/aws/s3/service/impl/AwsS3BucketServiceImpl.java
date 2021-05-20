@@ -191,7 +191,7 @@ public class AwsS3BucketServiceImpl implements AwsS3BucketService {
 
     @Transactional
     public void deleteobjectInBucket(OrganizationIamUserCredential organizationIamUserCredential, String bucketName,
-            String keyName) {
+            String keyName) throws AmazonS3Exception{
         log.info("Entering deleteobjectInBucket bucketName{} ,keyName{}", bucketName, keyName);
         AmazonS3 amazonS3 = awsS3ClientBuilder(organizationIamUserCredential);
         amazonS3.deleteObject(bucketName, keyName);

@@ -2,6 +2,7 @@ package net.breezeware.dynamo.aws.s3.service.api;
 
 import java.util.Optional;
 
+import com.amazonaws.services.s3.model.AmazonS3Exception;
 import com.amazonaws.services.s3.model.PutObjectResult;
 
 import net.breezeware.dynamo.aws.iam.entity.OrganizationIamUserCredential;
@@ -23,6 +24,6 @@ public interface AwsS3BucketService {
     Optional<OrganizationS3Bucket> retriveOrganizationS3Bucket(Organization organization);
 
     void deleteobjectInBucket(OrganizationIamUserCredential organizationIamUserCredential, String bucketName,
-            String keyName);
+            String keyName)throws AmazonS3Exception;
     
 }
