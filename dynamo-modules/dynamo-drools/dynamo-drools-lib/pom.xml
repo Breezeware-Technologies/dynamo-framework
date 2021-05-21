@@ -1,4 +1,6 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>net.breezeware.dynamo</groupId>
@@ -36,42 +38,37 @@
 			</exclusions>
 		</dependency>
 
-		<!-- ******************** Drools ******************** -->
 		<dependency>
 			<groupId>org.drools</groupId>
 			<artifactId>drools-core</artifactId>
 		</dependency>
 
+		<!-- https://mvnrepository.com/artifact/org.drools/drools-decisiontables -->
 		<dependency>
 			<groupId>org.drools</groupId>
-			<artifactId>drools-compiler</artifactId>
-			<exclusions>
-				<!-- Note: default 4.4.2 is causing issues when using Drools with Java 
-					8. So adding 4.6.1 version below. -->
-				<exclusion>
-					<groupId>org.eclipse.jdt.core.compiler</groupId>
-					<artifactId>ecj</artifactId>
-				</exclusion>
-			</exclusions>
+			<artifactId>drools-decisiontables</artifactId>
 		</dependency>
 
-		<!-- ******************** KIE ******************** -->
 		<dependency>
 			<groupId>org.kie</groupId>
-			<artifactId>kie-api</artifactId>
-		</dependency>
-
-		<!-- <dependency> <groupId>org.kie.server</groupId> <artifactId>kie-server-client</artifactId> 
-			</dependency> -->
-
-		<dependency>
-			<groupId>org.mvel</groupId>
-			<artifactId>mvel2</artifactId>
+			<artifactId>kie-ci</artifactId>
 		</dependency>
 
 		<dependency>
 			<groupId>org.eclipse.jdt.core.compiler</groupId>
 			<artifactId>ecj</artifactId>
 		</dependency>
+
+		<!-- ******************** Drools ******************** -->
+		<!-- <dependency> <groupId>org.drools</groupId> <artifactId>drools-core</artifactId> 
+			</dependency> <dependency> <groupId>org.drools</groupId> <artifactId>drools-compiler</artifactId> 
+			<exclusions> Note: default 4.4.2 is causing issues when using Drools with 
+			Java 8. So adding 4.6.1 version below. <exclusion> <groupId>org.eclipse.jdt.core.compiler</groupId> 
+			<artifactId>ecj</artifactId> </exclusion> </exclusions> </dependency> ******************** 
+			KIE ******************** <dependency> <groupId>org.kie</groupId> <artifactId>kie-api</artifactId> 
+			</dependency> <dependency> <groupId>org.kie.server</groupId> <artifactId>kie-server-client</artifactId> 
+			</dependency> <dependency> <groupId>org.mvel</groupId> <artifactId>mvel2</artifactId> 
+			</dependency> <dependency> <groupId>org.eclipse.jdt.core.compiler</groupId> 
+			<artifactId>ecj</artifactId> </dependency> -->
 	</dependencies>
 </project>
