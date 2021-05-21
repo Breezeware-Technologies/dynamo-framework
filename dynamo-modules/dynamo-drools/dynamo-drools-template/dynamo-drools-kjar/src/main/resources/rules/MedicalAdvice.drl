@@ -1,4 +1,4 @@
-package net.breezeware.dynamo.drools.kjar;
+package rules;
 
 
 import net.breezeware.dynamo.drools.kjar.entity.Person;

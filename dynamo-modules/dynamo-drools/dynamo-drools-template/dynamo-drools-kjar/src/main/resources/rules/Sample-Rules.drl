@@ -1,0 +1,12 @@
+package rules;
+import net.breezeware.dynamo.drools.kjar.entity.Person;
+import net.breezeware.dynamo.drools.kjar.entity.MedicalAdvice;
+
+rule "Male Test using KJar"
+when
+    $p : Person( sex.equalsIgnoreCase(Person.MALE))
+then
+        System.out.println("Fire : " + kcontext.getRule().getName());
+
+    System.out.println("Person is male.  A master health checkup is recommended.");
+end
