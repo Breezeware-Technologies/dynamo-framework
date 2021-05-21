@@ -2,6 +2,9 @@ package net.breezeware.dynamo.drools;
 
 import static org.junit.Assert.assertNotNull;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.kie.api.runtime.KieSession;
@@ -10,7 +13,10 @@ import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import net.breezeware.dynamo.drools.kjar.entity.Customer;
+import net.breezeware.dynamo.drools.kjar.entity.Customer.CustomerType;
 import net.breezeware.dynamo.drools.kjar.entity.Person;
+import net.breezeware.dynamo.drools.kjar.entity.Year;
 import net.breezeware.dynamo.drools.service.DroolsService;
 
 @SpringBootTest
@@ -29,13 +35,13 @@ public class DroolsConfigurationTest {
     public void droolsDefaultConfigurationTest() {
         System.out.println("Entering droolsDefaultConfigurationTest()");
         xmlBasedSession = defaultKieContainer.kieContainer().newKieSession(sessionName);
-   //     System.out.println("Xml " + xmlBasedSession.toString());
+        // System.out.println("Xml " + xmlBasedSession.toString());
         assertNotNull(xmlBasedSession);
         System.out.println("Leaving droolsDefaultConfigurationTest()");
 
     }
 
-    @Test
+   // @Test
     public void MaleTest() {
         Person person = new Person();
         person.setSex(Person.MALE);
@@ -45,4 +51,25 @@ public class DroolsConfigurationTest {
 
     }
 
+    @Test
+    public void spreadSheetTest() {
+        List<Customer> customerList = new ArrayList<>();
+        List<Year> yearList = new ArrayList<>();
+
+        for (int i = 1; i <= 7; i++) {
+            Customer customer = new Customer(CustomerType.INDIVIDUAL, "aa" + i);
+            Year year = new Year(i);
+            xmlBasedSession.insert(customer);
+            xmlBasedSession.insert(year);
+            customerList.add(customer);
+            yearList.add(year);
+        }
+
+        xmlBasedSession.fireAllRules();
+        for (int j = 0; j < customerList.size(); j++) {
+            System.out.println("Customer years \t " + customerList.get(j).getYears() + " \t Customer discount \t "
+                    + customerList.get(j).getDiscount() + "\n" + "Experience \t " + yearList.get(j).getExperience()
+                    + " \t Customer Rating \t " + yearList.get(j).getRating());
+        }
+    }
 }
