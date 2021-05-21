@@ -11,6 +11,9 @@ import net.breezeware.dynamo.aws.s3.entity.OrganizationS3Bucket;
 import net.breezeware.dynamo.aws.s3.service.api.AwsS3BucketService;
 import net.breezeware.dynamo.organization.messaging.entity.UserCreatedMessage;
 
+/**
+ * RabbitMQ Configuration for Dynamo aws s3.
+ */
 @Slf4j
 @Component
 public class OrganizationS3BucketListener {

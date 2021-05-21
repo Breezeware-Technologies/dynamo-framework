@@ -1,4 +1,4 @@
-package net.breezeware.dynamo.aws.s3.controller;
+package net.breezeware.dynamo.aws.s3.util;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,6 +17,9 @@ import net.breezeware.dynamo.organization.entity.Role;
 import net.breezeware.dynamo.organization.entity.User;
 import net.breezeware.dynamo.organization.service.api.OrganizationService;
 
+/**
+ * create AWS IAM user and AWS s3 bucket for the specific organization.
+ */
 @RestController
 @RequestMapping(value = "/s3")
 @Slf4j

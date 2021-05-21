@@ -38,6 +38,11 @@ public class AwsIdentityAccessManagementServiceImpl implements AwsIdentityAccess
     @Autowired
     AmazonIdentityManagement awsIamuserConfiguration;
 
+    /**
+     * create IamUser using IAM SDK.
+     * @param createUserRequest contains user name.
+     * @return CreateUserResult contains IAM user metadata.
+     */
     private CreateUserResult createIamUser(CreateUserRequest createUserRequest) {
         log.info("Entering createIamUser() {}", createUserRequest);
 
@@ -48,6 +53,11 @@ public class AwsIdentityAccessManagementServiceImpl implements AwsIdentityAccess
         return userResult;
     }
 
+    /**
+     * Attach policy for an iam user using IAM SDK.
+     * @param createUserResult contains IAM user metadata.
+     * @return AttachUserPolicyResult.
+     */
     private AttachUserPolicyResult attachPolicyForIamUser(CreateUserResult createUserResult) {
         log.info("Entering attachPolicyForIamUser() {}", createUserResult);
         AttachUserPolicyRequest attachUserPolicyRequest = new AttachUserPolicyRequest();
@@ -61,6 +71,11 @@ public class AwsIdentityAccessManagementServiceImpl implements AwsIdentityAccess
 
     }
 
+    /**
+     * provide security credential for an iam user using IAM SDK.
+     * @param createUserResult contains IAM user metadata.
+     * @return CreateAccessKeyResult.
+     */
     private CreateAccessKeyResult createIamUserAccessKey(CreateUserResult createUserResult) {
         log.info("Entering createIamUserAccessKey() {}", createUserResult);
         CreateAccessKeyRequest createAccessKeyRequest = new CreateAccessKeyRequest();
@@ -70,6 +85,14 @@ public class AwsIdentityAccessManagementServiceImpl implements AwsIdentityAccess
         return createAccessKeyResult;
     }
 
+    /**
+     * build and save the OrganizationIamUserCredential entity.
+     * @param organization          for which iam user created.
+     * @param user                  iam user created for this user.
+     * @param createUserResult      iam user metadata.
+     * @param createAccessKeyResult iam user metadata with security credentials.
+     * @return organizationIamUserCredential
+     */
     private OrganizationIamUserCredential buildAndSaveOrganizationIamUserCredential(Organization organization,
             User user, CreateUserResult createUserResult, CreateAccessKeyResult createAccessKeyResult) {
         log.info(
@@ -81,6 +104,7 @@ public class AwsIdentityAccessManagementServiceImpl implements AwsIdentityAccess
         organizationIamUserCredential.setOrganization(organization);
         organizationIamUserCredential.setIamArn(createUserResult.getUser().getArn());
         organizationIamUserCredential.setCreatedDate(Instant.now());
+        organizationIamUserCredential.setModifiedDate(Instant.now());
         organizationIamUserCredential.setUser(user);
 
         organizationIamUserCredential = saveOrganizationIamUserCredential(organizationIamUserCredential);
@@ -88,12 +112,20 @@ public class AwsIdentityAccessManagementServiceImpl implements AwsIdentityAccess
         return organizationIamUserCredential;
     }
 
+    /**
+     * save a organizationIamUserCredential.
+     * @param organizationIamUserCredential OrganizationIamUserCredential instance.
+     * @return OrganizationIamUserCredential.
+     */
     private OrganizationIamUserCredential saveOrganizationIamUserCredential(
             OrganizationIamUserCredential organizationIamUserCredential) {
         log.info("Entering saveOrganizationIamUserCredential()");
         return organizationIamUserCredentialRepository.save(organizationIamUserCredential);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Transactional
     public Optional<OrganizationIamUserCredential> createIamUserWithAwsServicePolicy(Organization organization,
             User user) throws EntityAlreadyExistsException {
@@ -102,8 +134,7 @@ public class AwsIdentityAccessManagementServiceImpl implements AwsIdentityAccess
 
         CreateUserRequest createUserRequest = new CreateUserRequest();
         String userName = user.getFirstName() + user.getLastName();
-        createUserRequest
-                .setUserName(userName.trim().replaceAll("\\s", ""));
+        createUserRequest.setUserName(userName.trim().replaceAll("\\s", ""));
 
         Optional<OrganizationIamUserCredential> organizationIamUserCredential = Optional.empty();
 
@@ -120,6 +151,9 @@ public class AwsIdentityAccessManagementServiceImpl implements AwsIdentityAccess
         return organizationIamUserCredential;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Transactional
     public Optional<OrganizationIamUserCredential> retriveOrganizationIamUserCredential(Organization organization) {
         log.info("Entering retriveOrganizationIamUserCredential() Organization{},", organization);
@@ -131,6 +165,9 @@ public class AwsIdentityAccessManagementServiceImpl implements AwsIdentityAccess
         return optOrganizationIamUserCredential;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Transactional
     public Optional<OrganizationIamUserCredential> retriveOrganizationIamUserCredential(User user) {
         log.info("Entering retriveOrganizationIamUserCredential() Organization{},", user);

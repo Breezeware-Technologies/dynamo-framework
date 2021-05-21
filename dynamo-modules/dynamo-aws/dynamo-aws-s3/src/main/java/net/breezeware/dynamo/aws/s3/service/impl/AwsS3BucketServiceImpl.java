@@ -24,6 +24,7 @@ import com.amazonaws.services.s3.model.BucketCrossOriginConfiguration;
 import com.amazonaws.services.s3.model.CORSRule;
 import com.amazonaws.services.s3.model.CreateBucketRequest;
 import com.amazonaws.services.s3.model.PutObjectResult;
+
 import lombok.extern.slf4j.Slf4j;
 import net.breezeware.dynamo.aws.iam.entity.OrganizationIamUserCredential;
 import net.breezeware.dynamo.aws.iam.service.api.AwsIdentityAccessManagementService;
@@ -43,6 +44,9 @@ public class AwsS3BucketServiceImpl implements AwsS3BucketService {
     @Autowired
     AwsIdentityAccessManagementService awsIdentityAccessManagementService;
 
+    /**
+     * {@inheritDoc}
+     */
     @Transactional
     public Optional<OrganizationS3Bucket> createBucketForOrganization(Organization organization, User user) {
         log.info("Entering createBucketForOrganization organization {},User {}", organization, user);
@@ -59,7 +63,7 @@ public class AwsS3BucketServiceImpl implements AwsS3BucketService {
             // // FIXME: you could use this logic.
             // optorganizationIamUserCredential = awsIdentityAccessManagementService
             // .retriveOrganizationIamUserCredential(user);
-            // while (optorganizationIamUserCredential.isEmpty()) {       
+            // while (optorganizationIamUserCredential.isEmpty()) {
             // optorganizationIamUserCredential = awsIdentityAccessManagementService
             // .retriveOrganizationIamUserCredential(user);
             // }
@@ -80,8 +84,15 @@ public class AwsS3BucketServiceImpl implements AwsS3BucketService {
 
     }
 
+    /**
+     * provide CORS configuratin for a bucket.
+     * @param bucketName   name of the bucket for which the CORS configuration is
+     *                     specified.
+     * @param organization organizationId Key assigned in the
+     *                     OrganizationIamUserCredential.
+     */
     private void provideCorsForBucket(String bucketName, Organization organization) {
-        log.info("Enetering provideCorsForBucket() bucketName{},organization{}", bucketName,organization);
+        log.info("Enetering provideCorsForBucket() bucketName{},organization{}", bucketName, organization);
         List<String> allowedHeaders = new ArrayList<>();
         allowedHeaders.add("*");
         List<CORSRule.AllowedMethods> rule1AM = new ArrayList<CORSRule.AllowedMethods>();
@@ -89,8 +100,9 @@ public class AwsS3BucketServiceImpl implements AwsS3BucketService {
         rule1AM.add(CORSRule.AllowedMethods.POST);
         rule1AM.add(CORSRule.AllowedMethods.DELETE);
         rule1AM.add(CORSRule.AllowedMethods.GET);
-        CORSRule rule1 = new CORSRule().withId("CORSRule").withAllowedHeaders(allowedHeaders).withAllowedMethods(rule1AM)
-                .withAllowedOrigins(Arrays.asList("http://localhost:8443","https://refreshconnectedcare.com:8443","https://www.refresh.health:8443"));
+        CORSRule rule1 = new CORSRule().withId("CORSRule").withAllowedHeaders(allowedHeaders)
+                .withAllowedMethods(rule1AM).withAllowedOrigins(Arrays.asList("http://localhost:8443",
+                        "https://refreshconnectedcare.com:8443", "https://www.refresh.health:8443"));
 
         List<CORSRule> rules = new ArrayList<CORSRule>();
         rules.add(rule1);
@@ -98,7 +110,7 @@ public class AwsS3BucketServiceImpl implements AwsS3BucketService {
         // Add the rules to a new CORS configuration.
         BucketCrossOriginConfiguration configuration = new BucketCrossOriginConfiguration();
         configuration.setRules(rules);
-        
+
         Optional<OrganizationIamUserCredential> optorganizationIamUserCredential = awsIdentityAccessManagementService
                 .retriveOrganizationIamUserCredential(organization);
         if (optorganizationIamUserCredential.isPresent()) {
@@ -108,27 +120,41 @@ public class AwsS3BucketServiceImpl implements AwsS3BucketService {
         log.info("Leaving provideCorsForBucket()");
     }
 
+    /**
+     * persits AWS s3 bucket.
+     * @param organization
+     * @param user
+     * @param optorganizationIamUserCredential
+     * @return OrganizationS3Bucket
+     */
     private Optional<OrganizationS3Bucket> presistAwsS3Bucket(Organization organization, User user,
             Optional<OrganizationIamUserCredential> optorganizationIamUserCredential) {
-        log.info("Entering presistAwsS3Bucket() organization{} , user {}, optorganizationIamUserCredential {}",organization,user,optorganizationIamUserCredential);
+        log.info("Entering presistAwsS3Bucket() organization{} , user {}, optorganizationIamUserCredential {}",
+                organization, user, optorganizationIamUserCredential);
         Optional<OrganizationS3Bucket> optOrganizationS3Bucket;
         AmazonS3 amazonS3 = awsS3ClientBuilder(optorganizationIamUserCredential.get());
         log.info("amazonS3{}", amazonS3);
 
-        CreateBucketRequest bucketRequest = new CreateBucketRequest(
-                UUID.randomUUID().toString());
-        
+        CreateBucketRequest bucketRequest = new CreateBucketRequest(UUID.randomUUID().toString());
+
         Bucket bucket = amazonS3.createBucket(bucketRequest);
 
         optOrganizationS3Bucket = Optional.of(buildOrganizationS3Bucket(bucket, organization, user));
 
         provideCorsForBucket(optOrganizationS3Bucket.get().getBucketName(), organization);
-        
+
         log.info("Leaving presistAwsS3Bucket()");
 
         return optOrganizationS3Bucket;
     }
 
+    /**
+     * Aws S3 client builder.
+     * @param organizationIamUserCredential OrganizationIamUserCredential to create
+     *                                      S3 builder.
+     * @return AmazonS3
+     * @throws AmazonS3Exception
+     */
     private AmazonS3 awsS3ClientBuilder(OrganizationIamUserCredential organizationIamUserCredential)
             throws AmazonS3Exception {
         log.info("Entering awsS3ClientBuilder organizationIamUserCredential{}", organizationIamUserCredential);
@@ -144,8 +170,15 @@ public class AwsS3BucketServiceImpl implements AwsS3BucketService {
 
     }
 
+    /**
+     * build and save organizations3Bucket.
+     * @param bucket       created bucket metadata.
+     * @param organization maps the organization for the created bucket.
+     * @param user         maps the user for the created bucket.
+     * @return OrganizationS3Bucket.
+     */
     private OrganizationS3Bucket buildOrganizationS3Bucket(Bucket bucket, Organization organization, User user) {
-        log.info("Leaving buildOrganizationS3Bucket bucket {} , user {}", bucket,user);
+        log.info("Leaving buildOrganizationS3Bucket bucket {} , user {}", bucket, user);
         OrganizationS3Bucket organizationS3Bucket = new OrganizationS3Bucket();
 
         organizationS3Bucket.setBucketName(bucket.getName());
@@ -155,24 +188,36 @@ public class AwsS3BucketServiceImpl implements AwsS3BucketService {
         organizationS3Bucket.setModifiedDate(Instant.now());
 
         organizationS3Bucket = saveOrganizationS3Bucket(organizationS3Bucket);
-        log.info("Leaving buildOrganizationS3Bucket organizationS3Bucket {}",organizationS3Bucket);
+        log.info("Leaving buildOrganizationS3Bucket organizationS3Bucket {}", organizationS3Bucket);
         return organizationS3Bucket;
 
     }
 
+    /**
+     * save OrganizationS3Bucket.
+     * @param OrganizationS3Bucket OrganizationS3Bucket instance.
+     * @return OrganizationS3Bucket.
+     */
     private OrganizationS3Bucket saveOrganizationS3Bucket(OrganizationS3Bucket OrganizationS3Bucket) {
         log.info("Entering saveOrganizationS3Bucket()");
         return organizationS3BucketRepository.save(OrganizationS3Bucket);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Transactional
     public Optional<OrganizationS3Bucket> retriveOrganizationS3Bucket(Organization organization) {
-        log.info("Entering retriveOrganizationS3Bucket() organization {}",organization);
-        Optional<OrganizationS3Bucket> optOrganizationS3Bucket = organizationS3BucketRepository.findByOrganization(organization);
+        log.info("Entering retriveOrganizationS3Bucket() organization {}", organization);
+        Optional<OrganizationS3Bucket> optOrganizationS3Bucket = organizationS3BucketRepository
+                .findByOrganization(organization);
         log.info("Leaving retriveOrganizationS3Bucket()");
         return optOrganizationS3Bucket;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Transactional
     public Optional<PutObjectResult> createDirectory(String bucketName, String folderName, Organization organization) {
         log.info("Entering createDirectory bucketName{} ,folderName{}", bucketName, folderName);
@@ -189,9 +234,12 @@ public class AwsS3BucketServiceImpl implements AwsS3BucketService {
         return putObjectResult;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Transactional
     public void deleteobjectInBucket(OrganizationIamUserCredential organizationIamUserCredential, String bucketName,
-            String keyName) throws AmazonS3Exception{
+            String keyName) throws AmazonS3Exception {
         log.info("Entering deleteobjectInBucket bucketName{} ,keyName{}", bucketName, keyName);
         AmazonS3 amazonS3 = awsS3ClientBuilder(organizationIamUserCredential);
         amazonS3.deleteObject(bucketName, keyName);
