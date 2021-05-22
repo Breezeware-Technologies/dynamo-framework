@@ -23,7 +23,7 @@ import net.breezeware.dynamo.organization.service.api.OrganizationService;
 @RestController
 @RequestMapping(value = "/s3")
 @Slf4j
-public class AwsS3RestController {
+public class AwsS3UtilsService {
     @Autowired
     AwsS3BucketService organizationS3BucketService;
 
