@@ -1,5 +1,9 @@
 Dynamo Framework - Spring based framework for developing web & mobile applications.
 
+2.3.0 (May 24, 2021)
+-------------------
+●	Added AWS IAM management & S3 Bucket management module.
+
 2.2.0 (May 5, 2021)
 -------------------
 ●	Added RabbitMQ module.
