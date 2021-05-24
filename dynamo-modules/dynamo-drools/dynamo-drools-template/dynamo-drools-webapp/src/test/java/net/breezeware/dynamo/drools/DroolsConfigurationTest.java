@@ -30,7 +30,6 @@ import net.breezeware.dynamo.drools.service.DroolsService;
 
 @SpringBootTest
 @EnableAutoConfiguration(exclude = { DataSourceAutoConfiguration.class })
-
 public class DroolsConfigurationTest {
 
     final String sessionName = "dynamo-drools-kjar-ksession";
@@ -82,20 +81,20 @@ public class DroolsConfigurationTest {
         }
     }
 
-   // @Test
-    public void lockOnActiveTest() {
 
-        File dtf = new File(
-                "/home/guru/Projects/dynamo-framework/dynamo-modules/dynamo-drools/dynamo-drools-template/dynamo-drools-kjar"
-                + "/src/main/resources/rules/Order.xlsx");
+    @Test
+    public void spreadsheetToDrlTest() {
+        File dtf = new File("src/main/resources/rules/sample-drools-dt.xls");
         InputStream is;
         try {
-            is = new FileInputStream(new File(""));
+            is = new FileInputStream(dtf);
+
             SpreadsheetCompiler ssComp = new SpreadsheetCompiler();
             String s = ssComp.compile(is, InputType.XLS);
             System.out.println("=== Begin generated DRL ===");
             System.out.println(s);
             System.out.println("=== End generated DRL ===");
+
 
             Order order = new Order(1, "Guitar", 6000, 0);
             System.out.println("--- before rule firing");
@@ -161,7 +160,5 @@ public class DroolsConfigurationTest {
         
     }
     
-    
-    
-
+  
 }
