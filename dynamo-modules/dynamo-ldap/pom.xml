@@ -3,7 +3,7 @@
 	<parent>
 		<groupId>net.breezeware.dynamo</groupId>
 		<artifactId>dynamo-modules</artifactId>
-		<version>2.2.0</version>
+		<version>2.3.0</version>
 	</parent>
 	<artifactId>dynamo-ldap</artifactId>
 	<packaging>pom</packaging>
