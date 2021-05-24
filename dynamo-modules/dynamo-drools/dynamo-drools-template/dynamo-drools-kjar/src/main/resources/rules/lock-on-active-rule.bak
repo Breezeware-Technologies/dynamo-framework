@@ -22,3 +22,4 @@ rule Guitar_Discount
         $o.setDiscount($o.getDiscount() + 250);
         update($o);
 end
+

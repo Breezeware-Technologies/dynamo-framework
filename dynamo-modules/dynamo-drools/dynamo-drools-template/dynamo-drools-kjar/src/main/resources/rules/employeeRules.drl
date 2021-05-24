@@ -1,0 +1,21 @@
+import net.breezeware.dynamo.drools.kjar.entity.*;
+import java.util.*;
+
+rule "Rule Name"
+when
+    employee : Employee()
+    employeeLeavesMap : Map() from employee.employeeLeavesMap
+    $deductSalary : Number(intValue > 20) from accumulate
+        ($t:List() from employeeLeavesMap.values  , init(Integer totalNoOfLeaves = 0;),
+                                 action( 
+                                 for(int i = 0 ; i < $t.size() ; i++) {
+                                    totalNoOfLeaves = totalNoOfLeaves + (Integer) $t.get(i);
+                                 }
+                                 System.out.println("Total No Of Leaves taken : "+totalNoOfLeaves);
+                                 ),
+                                 result( new Integer(totalNoOfLeaves) ) )
+    
+then
+    employee.setDeductSalary(true);
+    System.out.println("Salary deducted for two days");
+end

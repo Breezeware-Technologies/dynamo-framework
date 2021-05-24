@@ -1,0 +1,20 @@
+package rules
+import net.breezeware.dynamo.drools.kjar.entity.BpPatient
+rule "Counter shower 3"
+when 
+ $alarms : Number(intValue >= 3)
+              from accumulate( 
+              	$bpPatient:BpPatient(),
+       			init(Integer criticalCount= 0;), 
+            	action( for(int i=0;i<$bpPatient.getBpValueList().size();i++)
+            			{ 
+            				if($bpPatient.getBpValueList().get(i) > 120)
+            				{
+            					criticalCount++;
+            				}
+            			}), 
+              	result(new Integer(criticalCount))
+              	)
+then 
+		System.out.println(" "+$alarms );
+end
