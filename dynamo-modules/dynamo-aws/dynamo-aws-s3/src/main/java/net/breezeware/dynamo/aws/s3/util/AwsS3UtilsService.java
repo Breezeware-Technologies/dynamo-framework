@@ -21,7 +21,7 @@ import net.breezeware.dynamo.organization.service.api.OrganizationService;
  * create AWS IAM user and AWS s3 bucket for the specific organization.
  */
 @RestController
-@RequestMapping(value = "/s3")
+@RequestMapping(value = "/dynamoS3-utils/")
 @Slf4j
 public class AwsS3UtilsService {
     @Autowired
