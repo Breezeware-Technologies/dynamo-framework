@@ -6,20 +6,21 @@ when
  $alarms : Number(intValue == 3)
               from accumulate( 
               	$t:BpPatient(),
-       			init(Integer criticalCount= 0;), 
+       			init(Integer criticalBpCount= 0;), 
             	action( 
             		for( int i = 0; i < $bpPatient.getBpValueList().size()&&
-            			criticalCount <=3; i++) { 		
-            				System.out.println("hai"+
+            			criticalBpCount <=3; i++) { 		
+            	if($bpPatient.getBpValueList().get(i).getSystolic() > 120 && 
+            					$bpPatient.getBpValueList().get(i).getDiastolic() > 80) {
+            						criticalBpCount++;
+            						System.out.println();
+            						System.out.println(
             				$bpPatient.getBpValueList().get(i).getSystolic()+" "+
             				$bpPatient.getBpValueList().get(i).getDiastolic());
-            				
-            				if($bpPatient.getBpValueList().get(i).getSystolic() > 120 && 
-            					$bpPatient.getBpValueList().get(i).getDiastolic() > 80) {
-            						criticalCount++;
+            				System.out.println();
             				}
             			}), 
-              	result(new Integer(criticalCount))
+              	result(new Integer(criticalBpCount))
               	)
 then 
 		System.out.println("Found the patient with high Bp Reading setting warning message");

@@ -13,7 +13,10 @@ import org.drools.decisiontable.InputType;
 import org.drools.decisiontable.SpreadsheetCompiler;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.kie.api.event.rule.DebugAgendaEventListener;
+import org.kie.api.event.rule.DebugRuleRuntimeEventListener;
 import org.kie.api.runtime.KieSession;
+import org.kie.api.runtime.rule.FactHandle;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
@@ -81,9 +84,10 @@ public class DroolsConfigurationTest {
         }
     }
 
-  // @Test
+    // @Test
     public void spreadsheetToDrlTest() {
-        File dtf = new File("/home/guru/Projects/dynamo-framework/dynamo-modules/dynamo-drools/dynamo-drools-template/dynamo-drools-kjar/src/main/resources/rules/bp_rules_xls.xlsx");
+        File dtf = new File(
+                "/home/guru/Projects/dynamo-framework/dynamo-modules/dynamo-drools/dynamo-drools-template/dynamo-drools-kjar/src/main/resources/rules/bp_rules_xls.xlsx");
         InputStream is;
         try {
             is = new FileInputStream(dtf);
@@ -94,13 +98,13 @@ public class DroolsConfigurationTest {
             System.out.println(s);
             System.out.println("=== End generated DRL ===");
 
-//            Order order = new Order(1, "Guitar", 6000, 0);
-//            System.out.println("--- before rule firing");
-//            System.out.println(order);
-//            xmlBasedSession.insert(order);
-//            xmlBasedSession.fireAllRules();
-//            System.out.println("--- after rule firing");
-//            System.out.println(order);
+            // Order order = new Order(1, "Guitar", 6000, 0);
+            // System.out.println("--- before rule firing");
+            // System.out.println(order);
+            // xmlBasedSession.insert(order);
+            // xmlBasedSession.fireAllRules();
+            // System.out.println("--- after rule firing");
+            // System.out.println(order);
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -110,57 +114,93 @@ public class DroolsConfigurationTest {
     @Test()
     public void bpPatientTest() {
         BpPatient bpPatient = new BpPatient();
+
+        BpPatient bpPatient2 = new BpPatient();
+        BpPatient bpPatient3 = new BpPatient();
+        BpPatient bpPatient4 = new BpPatient();
+
         // List<Integer> bpValueList = new ArrayList<>();
         // bpValueList.add(200);
         // bpValueList.add(200);
         // bpValueList.add(200);
         List<BpReading> bpReadingList = new ArrayList<>();
-      
+
         BpReading bpReading = new BpReading();
         bpReading.setSystolic(120);
         bpReading.setDiastolic(80);
+
         BpReading bpReading1 = new BpReading();
         bpReading1.setSystolic(150);
         bpReading1.setDiastolic(90);
-      
+
         BpReading bpReading2 = new BpReading();
         bpReading2.setSystolic(170);
         bpReading2.setDiastolic(100);
-      
+
         BpReading bpReading3 = new BpReading();
         bpReading3.setSystolic(160);
         bpReading3.setDiastolic(100);
-        
+
         bpReadingList.add(bpReading);
         bpReadingList.add(bpReading1);
         bpReadingList.add(bpReading2);
         bpReadingList.add(bpReading3);
 
-
         bpPatient.setBpValueList(bpReadingList);
+        bpPatient2.setBpValueList(bpReadingList);
+        bpPatient3.setBpValueList(bpReadingList);
+        bpPatient4.setBpValueList(bpReadingList);
 
         Counter cnt1 = new Counter(1, "cnt1");
         Counter cnt2 = new Counter(1, "cnt2");
 
-        System.out.println();
-        System.out.println("fire rules after inserting counter1"+bpPatient.getWarningMessage());
-        System.out.println();
         // kSession.insert(cnt1);
         // fire rules with counter1
         // kSession.fireAllRules();
 
-     
         // kSession.insert(cnt2);
         // fire rules with already existing counter1 and newly inserted counter2
         // kSession.fireAllRules();
-        xmlBasedSession.insert(bpPatient);
-        // xmlBasedSession.insert(cnt2);
+
+        xmlBasedSession.addEventListener(new DebugRuleRuntimeEventListener());
+        xmlBasedSession.addEventListener(new DebugAgendaEventListener());
+
+        FactHandle firstFact = xmlBasedSession.insert(bpPatient);
         xmlBasedSession.fireAllRules();
-        
-        System.out.println();
-        System.out.println("fire rules after inserting counter2"+ bpPatient.getWarningMessage());
-        System.out.println();
+        xmlBasedSession.delete(firstFact);
+        System.out.println("After firing rules" + bpPatient.getWarningMessage());
+
+        FactHandle secondFact = xmlBasedSession.insert(bpPatient2);
+
+        xmlBasedSession.fireAllRules();
+        // if we didn't retract the old fact from the memory it will be worked as we
+        // expect. The readingList will be taken from any existing BpPatient.
+        xmlBasedSession.delete(secondFact);
+
+        System.out.println("After firing rules" + bpPatient2.getWarningMessage());
+
+        FactHandle thirdFact = xmlBasedSession.insert(bpPatient3);
+
+        xmlBasedSession.fireAllRules();
+        xmlBasedSession.delete(thirdFact);
+
+        System.out.println("After firing rules" + bpPatient3.getWarningMessage());
+
+        FactHandle fourthFact = xmlBasedSession.insert(bpPatient4);
+
+        xmlBasedSession.fireAllRules();
+        xmlBasedSession.delete(fourthFact);
+
+        System.out.println("After firing rules" + bpPatient4.getWarningMessage());
+
         xmlBasedSession.dispose();
+
+        System.out.println();
+
+        // System.out.println("fire rules after inserting counter2"+
+        // bpPatient.getWarningMessage());
+        System.out.println();
+        // xmlBasedSession.dispose();
 
     }
 

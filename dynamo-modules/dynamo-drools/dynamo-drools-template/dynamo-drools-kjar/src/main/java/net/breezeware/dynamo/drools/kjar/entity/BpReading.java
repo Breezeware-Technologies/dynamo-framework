@@ -20,4 +20,9 @@ public class BpReading {
     public void setDiastolic(int diastolic) {
         this.diastolic = diastolic;
     }
+
+    @Override
+    public String toString() {
+        return "BpReading [systolic=" + systolic + ", diastolic=" + diastolic + "]";
+    }
 }

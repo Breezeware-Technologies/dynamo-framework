@@ -25,4 +25,12 @@ public class BpPatient implements Serializable{
     public void setBpValueList(List<BpReading> bpValueList) {
         this.bpValueList = bpValueList;
     }
+
+    @Override
+    public String toString() {
+        final int maxLen = 10;
+        return "BpPatient [" + (bpValueList != null
+                ? "bpValueList=" + bpValueList.subList(0, Math.min(bpValueList.size(), maxLen)) + ", "
+                : "") + (warningMessage != null ? "warningMessage=" + warningMessage : "") + "]";
+    }
 }
