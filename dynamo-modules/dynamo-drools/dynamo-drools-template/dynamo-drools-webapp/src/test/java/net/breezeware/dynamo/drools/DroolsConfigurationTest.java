@@ -20,10 +20,10 @@ import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import net.breezeware.dynamo.drools.kjar.entity.BpPatient;
+import net.breezeware.dynamo.drools.kjar.entity.BpReading;
 import net.breezeware.dynamo.drools.kjar.entity.Counter;
 import net.breezeware.dynamo.drools.kjar.entity.Customer;
 import net.breezeware.dynamo.drools.kjar.entity.Customer.CustomerType;
-import net.breezeware.dynamo.drools.kjar.entity.Order;
 import net.breezeware.dynamo.drools.kjar.entity.Person;
 import net.breezeware.dynamo.drools.kjar.entity.Year;
 import net.breezeware.dynamo.drools.service.DroolsService;
@@ -81,10 +81,9 @@ public class DroolsConfigurationTest {
         }
     }
 
-
-    @Test
+  // @Test
     public void spreadsheetToDrlTest() {
-        File dtf = new File("src/main/resources/rules/sample-drools-dt.xls");
+        File dtf = new File("/home/guru/Projects/dynamo-framework/dynamo-modules/dynamo-drools/dynamo-drools-template/dynamo-drools-kjar/src/main/resources/rules/bp_rules_xls.xlsx");
         InputStream is;
         try {
             is = new FileInputStream(dtf);
@@ -95,70 +94,74 @@ public class DroolsConfigurationTest {
             System.out.println(s);
             System.out.println("=== End generated DRL ===");
 
-
-            Order order = new Order(1, "Guitar", 6000, 0);
-            System.out.println("--- before rule firing");
-            System.out.println(order);
-            xmlBasedSession.insert(order);
-            xmlBasedSession.fireAllRules();
-            System.out.println("--- after rule firing");
-            System.out.println(order);
+//            Order order = new Order(1, "Guitar", 6000, 0);
+//            System.out.println("--- before rule firing");
+//            System.out.println(order);
+//            xmlBasedSession.insert(order);
+//            xmlBasedSession.fireAllRules();
+//            System.out.println("--- after rule firing");
+//            System.out.println(order);
 
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
-    
+
     @Test()
     public void bpPatientTest() {
         BpPatient bpPatient = new BpPatient();
-        List<Integer> bpValueList = new ArrayList<>();
-        bpValueList.add(200);
-        bpValueList.add(200);
-        bpValueList.add(200);
+        // List<Integer> bpValueList = new ArrayList<>();
+        // bpValueList.add(200);
+        // bpValueList.add(200);
+        // bpValueList.add(200);
+        List<BpReading> bpReadingList = new ArrayList<>();
+      
+        BpReading bpReading = new BpReading();
+        bpReading.setSystolic(120);
+        bpReading.setDiastolic(80);
+        BpReading bpReading1 = new BpReading();
+        bpReading1.setSystolic(150);
+        bpReading1.setDiastolic(90);
+      
+        BpReading bpReading2 = new BpReading();
+        bpReading2.setSystolic(170);
+        bpReading2.setDiastolic(100);
+      
+        BpReading bpReading3 = new BpReading();
+        bpReading3.setSystolic(160);
+        bpReading3.setDiastolic(100);
+        
+        bpReadingList.add(bpReading);
+        bpReadingList.add(bpReading1);
+        bpReadingList.add(bpReading2);
+        bpReadingList.add(bpReading3);
 
-        bpPatient.setBpValueList(bpValueList);
-//        Map<Integer, List<Person>> map = new HashMap<Integer, List<Person>>();  
-//        Employee employee = new Employee();  
-//        Map<String, List<Integer>> employeeLeavesMap = new HashMap<String, List<Integer>>();  
-//        List<Integer> integers = new ArrayList<Integer>();  
-//        integers.add(2);  
-//        integers.add(3);  
-//        integers.add(1);  
-//        integers.add(5);  
-//        integers.add(3);  
-//        integers.add(8);  
-//        integers.add(1);  
-//        integers.add(0);  
-//        integers.add(0);  
-//        integers.add(0);  
-//        integers.add(1);  
-//        integers.add(3);  
-//        employeeLeavesMap.put("Kumar", integers);  
-//        employee.setEmployeeLeavesMap(employeeLeavesMap);  
-         
+
+        bpPatient.setBpValueList(bpReadingList);
+
         Counter cnt1 = new Counter(1, "cnt1");
         Counter cnt2 = new Counter(1, "cnt2");
 
         System.out.println();
-        System.out.println("fire rules after inserting counter1");
+        System.out.println("fire rules after inserting counter1"+bpPatient.getWarningMessage());
         System.out.println();
-      //  kSession.insert(cnt1);
-        //fire rules with counter1
-        //kSession.fireAllRules();
+        // kSession.insert(cnt1);
+        // fire rules with counter1
+        // kSession.fireAllRules();
 
-        System.out.println();
-        System.out.println("fire rules after inserting counter2");
-        System.out.println();
-      //  kSession.insert(cnt2);
-        //fire rules with already existing counter1 and newly inserted counter2
-      //  kSession.fireAllRules();
+     
+        // kSession.insert(cnt2);
+        // fire rules with already existing counter1 and newly inserted counter2
+        // kSession.fireAllRules();
         xmlBasedSession.insert(bpPatient);
-     //   xmlBasedSession.insert(cnt2);
+        // xmlBasedSession.insert(cnt2);
         xmlBasedSession.fireAllRules();
-        xmlBasedSession.dispose();
         
+        System.out.println();
+        System.out.println("fire rules after inserting counter2"+ bpPatient.getWarningMessage());
+        System.out.println();
+        xmlBasedSession.dispose();
+
     }
-    
-  
+
 }

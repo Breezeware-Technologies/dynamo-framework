@@ -2,19 +2,29 @@ package rules
 import net.breezeware.dynamo.drools.kjar.entity.BpPatient
 rule "Counter shower 3"
 when 
- $alarms : Number(intValue >= 3)
+	$bpPatient:BpPatient()
+ $alarms : Number(intValue == 3)
               from accumulate( 
-              	$bpPatient:BpPatient(),
+              	$t:BpPatient(),
        			init(Integer criticalCount= 0;), 
-            	action( for(int i=0;i<$bpPatient.getBpValueList().size();i++)
-            			{ 
-            				if($bpPatient.getBpValueList().get(i) > 120)
-            				{
-            					criticalCount++;
+            	action( 
+            		for( int i = 0; i < $bpPatient.getBpValueList().size()&&
+            			criticalCount <=3; i++) { 		
+            				System.out.println("hai"+
+            				$bpPatient.getBpValueList().get(i).getSystolic()+" "+
+            				$bpPatient.getBpValueList().get(i).getDiastolic());
+            				
+            				if($bpPatient.getBpValueList().get(i).getSystolic() > 120 && 
+            					$bpPatient.getBpValueList().get(i).getDiastolic() > 80) {
+            						criticalCount++;
             				}
             			}), 
               	result(new Integer(criticalCount))
               	)
 then 
-		System.out.println(" "+$alarms );
+		System.out.println("Found the patient with high Bp Reading setting warning message");
+		$bpPatient.setWarningMessage("Marked as Bp critical"); 
 end
+
+
+	

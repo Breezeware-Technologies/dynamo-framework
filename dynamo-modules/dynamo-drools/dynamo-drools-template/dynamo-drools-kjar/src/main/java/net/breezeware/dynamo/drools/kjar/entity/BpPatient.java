@@ -7,7 +7,7 @@ import java.util.List;
 public class BpPatient implements Serializable{
 
     private static final long serialVersionUID = 1L;
-    private List<Integer> bpValueList;
+    private List<BpReading> bpValueList;
     private String warningMessage;
 
     public String getWarningMessage() {
@@ -18,11 +18,11 @@ public class BpPatient implements Serializable{
         this.warningMessage = warningMessage;
     }
 
-    public List<Integer> getBpValueList() {
+    public List<BpReading> getBpValueList() {
         return bpValueList;
     }
 
-    public void setBpValueList(List<Integer> bpValueList) {
+    public void setBpValueList(List<BpReading> bpValueList) {
         this.bpValueList = bpValueList;
     }
 }
