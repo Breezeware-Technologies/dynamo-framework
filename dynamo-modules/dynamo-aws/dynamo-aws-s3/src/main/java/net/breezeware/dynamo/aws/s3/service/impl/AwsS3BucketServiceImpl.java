@@ -2,7 +2,6 @@ package net.breezeware.dynamo.aws.s3.service.impl;
 
 import java.time.Instant;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -11,6 +10,8 @@ import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.beans.factory.annotation.Value;
+
 
 import com.amazonaws.auth.AWSCredentials;
 import com.amazonaws.auth.AWSStaticCredentialsProvider;
@@ -34,6 +35,7 @@ import net.breezeware.dynamo.aws.s3.service.api.AwsS3BucketService;
 import net.breezeware.dynamo.organization.entity.Organization;
 import net.breezeware.dynamo.organization.entity.User;
 
+
 @Service
 @Slf4j
 public class AwsS3BucketServiceImpl implements AwsS3BucketService {
@@ -43,6 +45,9 @@ public class AwsS3BucketServiceImpl implements AwsS3BucketService {
 
     @Autowired
     AwsIdentityAccessManagementService awsIdentityAccessManagementService;
+
+    @Value("#{'${dynamo.s3.cors.allowedOrigins}'.split(',')}")
+    private List<String> corsAllowedOrigins;
 
     /**
      * {@inheritDoc}
@@ -101,8 +106,7 @@ public class AwsS3BucketServiceImpl implements AwsS3BucketService {
         rule1AM.add(CORSRule.AllowedMethods.DELETE);
         rule1AM.add(CORSRule.AllowedMethods.GET);
         CORSRule rule1 = new CORSRule().withId("CORSRule").withAllowedHeaders(allowedHeaders)
-                .withAllowedMethods(rule1AM).withAllowedOrigins(Arrays.asList("http://localhost:8443",
-                        "https://refreshconnectedcare.com:8443", "https://www.refresh.health:8443"));
+                .withAllowedMethods(rule1AM).withAllowedOrigins(corsAllowedOrigins);
 
         List<CORSRule> rules = new ArrayList<CORSRule>();
         rules.add(rule1);
