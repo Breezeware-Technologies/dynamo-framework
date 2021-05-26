@@ -101,8 +101,10 @@ public class AwsS3BucketServiceImpl implements AwsS3BucketService {
         rule1AM.add(CORSRule.AllowedMethods.DELETE);
         rule1AM.add(CORSRule.AllowedMethods.GET);
         CORSRule rule1 = new CORSRule().withId("CORSRule").withAllowedHeaders(allowedHeaders)
-                .withAllowedMethods(rule1AM).withAllowedOrigins(Arrays.asList("http://localhost:8443",
-                        "https://refreshconnectedcare.com:8443", "https://www.refresh.health:8443"));
+                .withAllowedMethods(rule1AM)
+                .withAllowedOrigins(Arrays.asList("http://localhost:8443", "https://localhost:8443",
+                        "https://refreshconnectedcare.com:8443", "https://www.refreshconnectedcare.com:8443",
+                        "https://www.refresh.health:8443", "https://refresh.health:8443"));
 
         List<CORSRule> rules = new ArrayList<CORSRule>();
         rules.add(rule1);
