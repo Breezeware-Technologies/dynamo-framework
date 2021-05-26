@@ -3,7 +3,7 @@
 	<parent>
 		<groupId>net.breezeware.dynamo</groupId>
 		<artifactId>dynamo-framework</artifactId>
-		<version>2.3.1</version>
+		<version>2.3.2</version>
 	</parent>
 	<artifactId>dynamo-framework-bom</artifactId>
 	<packaging>pom</packaging>
