@@ -91,7 +91,7 @@ public class AwsS3BucketServiceImpl implements AwsS3BucketService {
      * @param organization organizationId Key assigned in the
      *                     OrganizationIamUserCredential.
      */
-    private void provideCorsForBucket(String bucketName, Organization organization) {
+    private void provideCorsForBucket(String bucketName, Organization organization, AmazonS3 amazonS3) {
         log.info("Enetering provideCorsForBucket() bucketName{},organization{}", bucketName, organization);
         List<String> allowedHeaders = new ArrayList<>();
         allowedHeaders.add("*");
@@ -111,12 +111,14 @@ public class AwsS3BucketServiceImpl implements AwsS3BucketService {
         BucketCrossOriginConfiguration configuration = new BucketCrossOriginConfiguration();
         configuration.setRules(rules);
 
-        Optional<OrganizationIamUserCredential> optorganizationIamUserCredential = awsIdentityAccessManagementService
-                .retriveOrganizationIamUserCredential(organization);
-        if (optorganizationIamUserCredential.isPresent()) {
-            AmazonS3 amazonS3 = awsS3ClientBuilder(optorganizationIamUserCredential.get());
-            amazonS3.setBucketCrossOriginConfiguration(bucketName, configuration);
-        }
+        // Optional<OrganizationIamUserCredential> optorganizationIamUserCredential =
+        // awsIdentityAccessManagementService
+        // .retriveOrganizationIamUserCredential(organization);
+        // if (optorganizationIamUserCredential.isPresent()) {
+        // AmazonS3 amazonS3 =
+        // awsS3ClientBuilder(optorganizationIamUserCredential.get());
+        amazonS3.setBucketCrossOriginConfiguration(bucketName, configuration);
+        // }
         log.info("Leaving provideCorsForBucket()");
     }
 
@@ -132,20 +134,33 @@ public class AwsS3BucketServiceImpl implements AwsS3BucketService {
         log.info("Entering presistAwsS3Bucket() organization{} , user {}, optorganizationIamUserCredential {}",
                 organization, user, optorganizationIamUserCredential);
         Optional<OrganizationS3Bucket> optOrganizationS3Bucket;
+
         AmazonS3 amazonS3 = awsS3ClientBuilder(optorganizationIamUserCredential.get());
-        log.info("amazonS3{}", amazonS3);
 
-        CreateBucketRequest bucketRequest = new CreateBucketRequest(UUID.randomUUID().toString());
-
-        Bucket bucket = amazonS3.createBucket(bucketRequest);
+        Bucket bucket = createBucket(amazonS3);
 
         optOrganizationS3Bucket = Optional.of(buildOrganizationS3Bucket(bucket, organization, user));
 
-        provideCorsForBucket(optOrganizationS3Bucket.get().getBucketName(), organization);
+        provideCorsForBucket(optOrganizationS3Bucket.get().getBucketName(), organization, amazonS3);
 
         log.info("Leaving presistAwsS3Bucket()");
 
         return optOrganizationS3Bucket;
+    }
+
+    /**
+     * Create Aws s3 bucket.
+     * @param amazonS3 iam user credential bulider.
+     * @return Bucket
+     */
+    private Bucket createBucket(AmazonS3 amazonS3) {
+        log.info("Entering createBucket() amazonS3 {}", amazonS3);
+
+        CreateBucketRequest bucketRequest = new CreateBucketRequest(UUID.randomUUID().toString());
+        Bucket bucket = amazonS3.createBucket(bucketRequest);
+
+        log.info("Leaving createBucket() bucket {}", bucket);
+        return bucket;
     }
 
     /**
