@@ -2,6 +2,7 @@ package net.breezeware.dynamo.aws.iam.service.impl;
 
 import java.time.Instant;
 import java.util.Optional;
+import java.util.UUID;
 
 import javax.transaction.Transactional;
 
@@ -133,8 +134,9 @@ public class AwsIdentityAccessManagementServiceImpl implements AwsIdentityAccess
                 user);
 
         CreateUserRequest createUserRequest = new CreateUserRequest();
-        String userName = user.getFirstName() + user.getLastName();
-        createUserRequest.setUserName(userName.trim().replaceAll("\\s", ""));
+        // String userName = user.getFirstName() + user.getLastName();
+        // createUserRequest.setUserName(userName.trim().replaceAll("\\s", ""));
+        createUserRequest.setUserName(UUID.randomUUID().toString());
 
         Optional<OrganizationIamUserCredential> organizationIamUserCredential = Optional.empty();
 
