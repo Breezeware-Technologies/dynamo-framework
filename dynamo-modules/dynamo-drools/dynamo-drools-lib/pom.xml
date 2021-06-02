@@ -54,6 +54,11 @@
 			<groupId>org.kie</groupId>
 			<artifactId>kie-ci</artifactId>
 		</dependency>
+		
+		<dependency>
+			<groupId>org.kie</groupId>
+			<artifactId>kie-dmn-core</artifactId>
+		</dependency>
 
 		<dependency>
 			<groupId>org.eclipse.jdt.core.compiler</groupId>

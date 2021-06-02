@@ -1,0 +1,243 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<dmn:definitions xmlns:dmn="http://www.omg.org/spec/DMN/20180521/MODEL/" xmlns="https://kiegroup.org/dmn/_01CC543D-7C05-4E97-B394-01E96D3DD2B4" xmlns:di="http://www.omg.org/spec/DMN/20180521/DI/" xmlns:kie="http://www.drools.org/kie/dmn/1.2" xmlns:feel="http://www.omg.org/spec/DMN/20180521/FEEL/" xmlns:dmndi="http://www.omg.org/spec/DMN/20180521/DMNDI/" xmlns:dc="http://www.omg.org/spec/DMN/20180521/DC/" id="_B3B6F71D-A092-4E8C-A317-D1D0B0A4CF84" name="Bmi_calc" expressionLanguage="http://www.omg.org/spec/DMN/20180521/FEEL/" typeLanguage="http://www.omg.org/spec/DMN/20180521/FEEL/" namespace="https://kiegroup.org/dmn/_01CC543D-7C05-4E97-B394-01E96D3DD2B4">
+  <dmn:extensionElements/>
+  <dmn:itemDefinition id="_92AB2E32-A02C-48B8-9731-91067DC9CC61" name="BmiResult" isCollection="false">
+    <dmn:typeRef>string</dmn:typeRef>
+  </dmn:itemDefinition>
+  <dmn:inputData id="_0FCDA33A-0C2C-4B17-867E-D0B3D294D6F0" name="Weight">
+    <dmn:extensionElements/>
+    <dmn:variable id="_121F2F63-22B8-4025-8997-395130DF0032" name="Weight"/>
+  </dmn:inputData>
+  <dmn:decision id="_E5E6C4FE-9906-45BA-9810-DF4D9893530A" name="Find BMI">
+    <dmn:extensionElements/>
+    <dmn:variable id="_8EAE67AC-C098-4F6E-9F46-F4E1BE966838" name="Find BMI" typeRef="number"/>
+    <dmn:informationRequirement id="_5A4068D3-7227-4BD8-8036-D0240337FD1A#_C2E854BE-05F0-4F83-AC0F-8221B0624220">
+      <dmn:requiredInput href="#_061C8DA3-8A7E-457C-81B9-F41CB4B7F6E0"/>
+    </dmn:informationRequirement>
+    <dmn:informationRequirement id="_5A4068D3-7227-4BD8-8036-D0240337FD1A#_E6B2AB30-F8F1-461A-A2C4-CCB83FB2DD28">
+      <dmn:requiredInput href="#_0FCDA33A-0C2C-4B17-867E-D0B3D294D6F0"/>
+    </dmn:informationRequirement>
+    <dmn:knowledgeRequirement id="_5A4068D3-7227-4BD8-8036-D0240337FD1A#_42072C83-738F-45A9-A3D7-D60987F11986">
+      <dmn:requiredKnowledge href="#_0188FBDF-0F6D-49A4-8173-9629021F64E1"/>
+    </dmn:knowledgeRequirement>
+    <dmn:context id="_8EDEC459-F8EC-42D9-B210-3AB8FD6633B6">
+      <dmn:contextEntry>
+        <dmn:variable id="_E344BB76-C8E9-4A53-8909-6D05EE20D753" name="BMI Score" typeRef="number"/>
+        <dmn:invocation id="_547A3D85-3D73-43C0-8085-B5A6F7C445DE">
+          <dmn:literalExpression id="_0591F487-9B2D-4B0E-8187-C8AF29BA913E">
+            <dmn:text>Bmi Calc</dmn:text>
+          </dmn:literalExpression>
+          <dmn:binding>
+            <dmn:parameter id="_E024F614-F4DA-428F-8F3D-54F0FD24CF3B" name="height" typeRef="number"/>
+            <dmn:literalExpression id="_A68DBE95-3AC9-4B20-89A3-B2353C644414">
+              <dmn:text>Height</dmn:text>
+            </dmn:literalExpression>
+          </dmn:binding>
+          <dmn:binding>
+            <dmn:parameter id="_3910A37D-C433-46CB-9DA4-1115EAE3A8B9" name="weight" typeRef="number"/>
+            <dmn:literalExpression id="_4E81BE43-8290-4F52-8B05-E87FDD6BAA1E">
+              <dmn:text>Weight</dmn:text>
+            </dmn:literalExpression>
+          </dmn:binding>
+        </dmn:invocation>
+      </dmn:contextEntry>
+      <dmn:contextEntry>
+        <dmn:variable id="_4C9CA0D4-57EF-4E02-9810-28A107BC8D0F" name="BMI Category" typeRef="BmiResult"/>
+        <dmn:decisionTable id="_1F46988D-A2D8-4657-828D-23CC662CF654" hitPolicy="UNIQUE" preferredOrientation="Rule-as-Row">
+          <dmn:input id="_A6ABBE8E-5827-4518-98C4-D55689B428C6">
+            <dmn:inputExpression id="_2D820747-47DF-4B9E-AE34-4082B58CA7B8" typeRef="number">
+              <dmn:text>BMI Score</dmn:text>
+            </dmn:inputExpression>
+          </dmn:input>
+          <dmn:output id="_F9016212-6461-4602-AEAF-1B6D1B36DA09"/>
+          <dmn:annotation name="annotation-1"/>
+          <dmn:rule id="_13BB23C6-9999-48F8-B331-82BD64130559">
+            <dmn:inputEntry id="_3B1FBB6A-D7F2-473B-9CD6-C49D03793059">
+              <dmn:text>&lt;18.5</dmn:text>
+            </dmn:inputEntry>
+            <dmn:outputEntry id="_573C03FD-0500-4660-856E-CF28073E2843">
+              <dmn:text>"Under Weight"</dmn:text>
+            </dmn:outputEntry>
+            <dmn:annotationEntry>
+              <dmn:text></dmn:text>
+            </dmn:annotationEntry>
+          </dmn:rule>
+          <dmn:rule id="_1876FCBE-3EAC-4376-A933-DC77E0FC839D">
+            <dmn:inputEntry id="_6B4B2363-B03D-4326-BF0B-948CFCCB9D6F">
+              <dmn:text>(18.5..25.0]</dmn:text>
+            </dmn:inputEntry>
+            <dmn:outputEntry id="_F2005D80-E2E7-47A3-B513-513746BABE97">
+              <dmn:text>"Normal Weight"</dmn:text>
+            </dmn:outputEntry>
+            <dmn:annotationEntry>
+              <dmn:text></dmn:text>
+            </dmn:annotationEntry>
+          </dmn:rule>
+          <dmn:rule id="_ABD649D2-1ECA-4DA0-8E8A-2EE4418B082B">
+            <dmn:inputEntry id="_EBA91137-DCC9-4D2D-B363-B41F2763D7D1">
+              <dmn:text>(25.0..30.0]</dmn:text>
+            </dmn:inputEntry>
+            <dmn:outputEntry id="_0B3D0FA7-0862-4DA5-A109-404A7B8817B5">
+              <dmn:text>"Over Weight"</dmn:text>
+            </dmn:outputEntry>
+            <dmn:annotationEntry>
+              <dmn:text></dmn:text>
+            </dmn:annotationEntry>
+          </dmn:rule>
+          <dmn:rule id="_96522F68-69B4-43D5-91E8-C7FC413ADCFF">
+            <dmn:inputEntry id="_E12F3D1C-7D90-4707-8E2E-B6BFE2250F1E">
+              <dmn:text>&gt;30.0</dmn:text>
+            </dmn:inputEntry>
+            <dmn:outputEntry id="_8471BC1B-600F-4C03-9B54-735F2AD5CDA7">
+              <dmn:text>"Obese"</dmn:text>
+            </dmn:outputEntry>
+            <dmn:annotationEntry>
+              <dmn:text></dmn:text>
+            </dmn:annotationEntry>
+          </dmn:rule>
+        </dmn:decisionTable>
+      </dmn:contextEntry>
+      <dmn:contextEntry>
+        <dmn:literalExpression id="_043A33A1-6EB5-403E-A9B4-380DB368FC73">
+          <dmn:text>BMI Category</dmn:text>
+        </dmn:literalExpression>
+      </dmn:contextEntry>
+    </dmn:context>
+  </dmn:decision>
+  <dmn:inputData id="_061C8DA3-8A7E-457C-81B9-F41CB4B7F6E0" name="Height">
+    <dmn:extensionElements/>
+    <dmn:variable id="_D3E0C06C-2879-44F0-A411-A33DEDAF5D57" name="Height"/>
+  </dmn:inputData>
+  <dmn:businessKnowledgeModel id="_0188FBDF-0F6D-49A4-8173-9629021F64E1" name="Bmi Calc">
+    <dmn:extensionElements/>
+    <dmn:variable id="_4C0C3219-89EE-46B2-98A4-B7041843C18B" name="Bmi Calc" typeRef="number"/>
+    <dmn:encapsulatedLogic id="_27605436-B205-44F7-9CEC-69AACB833312" kind="FEEL">
+      <dmn:formalParameter id="_8F09A44F-1F16-4BE8-994A-D55099C22538" name="weight" typeRef="number"/>
+      <dmn:formalParameter id="_94083C07-4325-40C2-8AD3-1225C30E2E9D" name="height" typeRef="number"/>
+      <dmn:literalExpression id="_82653C07-85BE-4E74-AD9A-651F62A0323E">
+        <dmn:text>decimal((weight/(height**2)),1)</dmn:text>
+      </dmn:literalExpression>
+    </dmn:encapsulatedLogic>
+  </dmn:businessKnowledgeModel>
+  <dmn:association id="_0BF8C069-66DB-438B-B4A5-9C5BFEA1CB8A" associationDirection="None">
+    <dmn:sourceRef href="#_061C8DA3-8A7E-457C-81B9-F41CB4B7F6E0"/>
+    <dmn:targetRef href="#_58C94BC3-DB4C-4E75-A6E8-18E9F73623A8"/>
+  </dmn:association>
+  <dmn:textAnnotation id="_58C94BC3-DB4C-4E75-A6E8-18E9F73623A8" textFormat="text/plain">
+    <dmn:text>Height in meter</dmn:text>
+  </dmn:textAnnotation>
+  <dmn:textAnnotation id="_459B38D9-18EF-404D-96D3-2CD1704E3397" textFormat="text/plain">
+    <dmn:text>Weight in Kilogram</dmn:text>
+  </dmn:textAnnotation>
+  <dmndi:DMNDI>
+    <dmndi:DMNDiagram>
+      <di:extension>
+        <kie:ComponentsWidthsExtension>
+          <kie:ComponentWidths dmnElementRef="_8EDEC459-F8EC-42D9-B210-3AB8FD6633B6">
+            <kie:width>50.0</kie:width>
+            <kie:width>100.0</kie:width>
+            <kie:width>579.0</kie:width>
+          </kie:ComponentWidths>
+          <kie:ComponentWidths dmnElementRef="_547A3D85-3D73-43C0-8085-B5A6F7C445DE">
+            <kie:width>50.0</kie:width>
+            <kie:width>100.0</kie:width>
+            <kie:width>409.0</kie:width>
+          </kie:ComponentWidths>
+          <kie:ComponentWidths dmnElementRef="_0591F487-9B2D-4B0E-8187-C8AF29BA913E"/>
+          <kie:ComponentWidths dmnElementRef="_A68DBE95-3AC9-4B20-89A3-B2353C644414">
+            <kie:width>409.0</kie:width>
+          </kie:ComponentWidths>
+          <kie:ComponentWidths dmnElementRef="_4E81BE43-8290-4F52-8B05-E87FDD6BAA1E">
+            <kie:width>409.0</kie:width>
+          </kie:ComponentWidths>
+          <kie:ComponentWidths dmnElementRef="_1F46988D-A2D8-4657-828D-23CC662CF654">
+            <kie:width>50.0</kie:width>
+            <kie:width>135.0</kie:width>
+            <kie:width>174.0</kie:width>
+            <kie:width>200.0</kie:width>
+          </kie:ComponentWidths>
+          <kie:ComponentWidths dmnElementRef="_043A33A1-6EB5-403E-A9B4-380DB368FC73">
+            <kie:width>579.0</kie:width>
+          </kie:ComponentWidths>
+          <kie:ComponentWidths dmnElementRef="_82653C07-85BE-4E74-AD9A-651F62A0323E">
+            <kie:width>292.0</kie:width>
+          </kie:ComponentWidths>
+          <kie:ComponentWidths dmnElementRef="_27605436-B205-44F7-9CEC-69AACB833312">
+            <kie:width>50.0</kie:width>
+            <kie:width>292.0</kie:width>
+          </kie:ComponentWidths>
+        </kie:ComponentsWidthsExtension>
+      </di:extension>
+      <dmndi:DMNShape id="dmnshape-_E5E6C4FE-9906-45BA-9810-DF4D9893530A" dmnElementRef="_E5E6C4FE-9906-45BA-9810-DF4D9893530A" isCollapsed="false">
+        <dmndi:DMNStyle>
+          <dmndi:FillColor red="255" green="255" blue="255"/>
+          <dmndi:StrokeColor red="0" green="0" blue="0"/>
+          <dmndi:FontColor red="0" green="0" blue="0"/>
+        </dmndi:DMNStyle>
+        <dc:Bounds x="250.32532265242548" y="34" width="100" height="50"/>
+        <dmndi:DMNLabel/>
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="dmnshape-_459B38D9-18EF-404D-96D3-2CD1704E3397" dmnElementRef="_459B38D9-18EF-404D-96D3-2CD1704E3397" isCollapsed="false">
+        <dmndi:DMNStyle>
+          <dmndi:FillColor red="255" green="255" blue="255"/>
+          <dmndi:StrokeColor red="0" green="0" blue="0"/>
+          <dmndi:FontColor red="0" green="0" blue="0"/>
+        </dmndi:DMNStyle>
+        <dc:Bounds x="371" y="230" width="100" height="50"/>
+        <dmndi:DMNLabel/>
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="dmnshape-_0188FBDF-0F6D-49A4-8173-9629021F64E1" dmnElementRef="_0188FBDF-0F6D-49A4-8173-9629021F64E1" isCollapsed="false">
+        <dmndi:DMNStyle>
+          <dmndi:FillColor red="255" green="255" blue="255"/>
+          <dmndi:StrokeColor red="0" green="0" blue="0"/>
+          <dmndi:FontColor red="0" green="0" blue="0"/>
+        </dmndi:DMNStyle>
+        <dc:Bounds x="427" y="32.684210526315795" width="100" height="50"/>
+        <dmndi:DMNLabel/>
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="dmnshape-_58C94BC3-DB4C-4E75-A6E8-18E9F73623A8" dmnElementRef="_58C94BC3-DB4C-4E75-A6E8-18E9F73623A8" isCollapsed="false">
+        <dmndi:DMNStyle>
+          <dmndi:FillColor red="255" green="255" blue="255"/>
+          <dmndi:StrokeColor red="0" green="0" blue="0"/>
+          <dmndi:FontColor red="0" green="0" blue="0"/>
+        </dmndi:DMNStyle>
+        <dc:Bounds x="132" y="201" width="100" height="50"/>
+        <dmndi:DMNLabel/>
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="dmnshape-_0FCDA33A-0C2C-4B17-867E-D0B3D294D6F0" dmnElementRef="_0FCDA33A-0C2C-4B17-867E-D0B3D294D6F0" isCollapsed="false">
+        <dmndi:DMNStyle>
+          <dmndi:FillColor red="255" green="255" blue="255"/>
+          <dmndi:StrokeColor red="0" green="0" blue="0"/>
+          <dmndi:FontColor red="0" green="0" blue="0"/>
+        </dmndi:DMNStyle>
+        <dc:Bounds x="338.29906542056074" y="149.3421052631579" width="100" height="50"/>
+        <dmndi:DMNLabel/>
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="dmnshape-_061C8DA3-8A7E-457C-81B9-F41CB4B7F6E0" dmnElementRef="_061C8DA3-8A7E-457C-81B9-F41CB4B7F6E0" isCollapsed="false">
+        <dmndi:DMNStyle>
+          <dmndi:FillColor red="255" green="255" blue="255"/>
+          <dmndi:StrokeColor red="0" green="0" blue="0"/>
+          <dmndi:FontColor red="0" green="0" blue="0"/>
+        </dmndi:DMNStyle>
+        <dc:Bounds x="148" y="137" width="100" height="50"/>
+        <dmndi:DMNLabel/>
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="dmnedge-_5A4068D3-7227-4BD8-8036-D0240337FD1A#_C2E854BE-05F0-4F83-AC0F-8221B0624220" dmnElementRef="_5A4068D3-7227-4BD8-8036-D0240337FD1A#_C2E854BE-05F0-4F83-AC0F-8221B0624220">
+        <di:waypoint x="198" y="137"/>
+        <di:waypoint x="300.3253226524255" y="84"/>
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="dmnedge-_5A4068D3-7227-4BD8-8036-D0240337FD1A#_E6B2AB30-F8F1-461A-A2C4-CCB83FB2DD28" dmnElementRef="_5A4068D3-7227-4BD8-8036-D0240337FD1A#_E6B2AB30-F8F1-461A-A2C4-CCB83FB2DD28">
+        <di:waypoint x="388.29906542056074" y="149.3421052631579"/>
+        <di:waypoint x="300.3253226524255" y="84"/>
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="dmnedge-_5A4068D3-7227-4BD8-8036-D0240337FD1A#_42072C83-738F-45A9-A3D7-D60987F11986" dmnElementRef="_5A4068D3-7227-4BD8-8036-D0240337FD1A#_42072C83-738F-45A9-A3D7-D60987F11986">
+        <di:waypoint x="477" y="57.684210526315795"/>
+        <di:waypoint x="350.3253226524255" y="59"/>
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="dmnedge-_0BF8C069-66DB-438B-B4A5-9C5BFEA1CB8A" dmnElementRef="_0BF8C069-66DB-438B-B4A5-9C5BFEA1CB8A">
+        <di:waypoint x="198" y="162"/>
+        <di:waypoint x="182" y="226"/>
+      </dmndi:DMNEdge>
+    </dmndi:DMNDiagram>
+  </dmndi:DMNDI>
+</dmn:definitions>

@@ -36,6 +36,13 @@
 				<version>${drools-version}</version>
 			</dependency>
 
+			<!-- Required for the DMN runtime API -->
+			<dependency>
+				<groupId>org.kie</groupId>
+				<artifactId>kie-dmn-core</artifactId>
+				<version>${drools-version}</version>
+			</dependency>
+
 			<dependency>
 				<groupId>org.kie</groupId>
 				<artifactId>kie-ci</artifactId>

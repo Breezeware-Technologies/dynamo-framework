@@ -40,6 +40,9 @@
 				<groupId>org.kie</groupId>
 				<artifactId>kie-maven-plugin</artifactId>
 				<extensions>true</extensions>
+				<configuration>
+					<validateDMN>ANALYZE_DECISION_TABLE</validateDMN>
+				</configuration>
 			</plugin>
 
 			<plugin>

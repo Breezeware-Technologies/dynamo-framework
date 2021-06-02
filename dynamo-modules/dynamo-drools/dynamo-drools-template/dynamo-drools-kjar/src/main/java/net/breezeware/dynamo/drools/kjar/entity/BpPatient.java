@@ -7,6 +7,7 @@ import java.util.List;
 public class BpPatient implements Serializable{
 
     private static final long serialVersionUID = 1L;
+    private String patientName;
     private List<BpReading> bpValueList;
     private String warningMessage;
 
@@ -26,11 +27,11 @@ public class BpPatient implements Serializable{
         this.bpValueList = bpValueList;
     }
 
-    @Override
-    public String toString() {
-        final int maxLen = 10;
-        return "BpPatient [" + (bpValueList != null
-                ? "bpValueList=" + bpValueList.subList(0, Math.min(bpValueList.size(), maxLen)) + ", "
-                : "") + (warningMessage != null ? "warningMessage=" + warningMessage : "") + "]";
+    public String getPatientName() {
+        return patientName;
+    }
+
+    public void setPatientName(String patientName) {
+        this.patientName = patientName;
     }
 }
