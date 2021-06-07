@@ -3,8 +3,13 @@ package net.breezeware.dynamo.drools.kjar.entity;
 import java.io.Serializable;
 import java.util.List;
 
+/**
+ * Used this model for Testing the functionalities in DRL AND SPREADSHEET for
+ * DMN Utilized Patient Model in same package.
+ * @author guru
+ */
 
-public class BpPatient implements Serializable{
+public class BpPatient implements Serializable {
 
     private static final long serialVersionUID = 1L;
     private String patientName;

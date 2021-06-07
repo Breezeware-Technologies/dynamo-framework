@@ -1,0 +1,157 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<dmn:definitions xmlns:dmn="http://www.omg.org/spec/DMN/20180521/MODEL/" xmlns="https://kiegroup.org/dmn/_7826706D-8FE3-4C62-99FE-F7A97A255631" 
+xmlns:di="http://www.omg.org/spec/DMN/20180521/DI/" xmlns:kie="http://www.drools.org/kie/dmn/1.2"
+ xmlns:feel="http://www.omg.org/spec/DMN/20180521/FEEL/" 
+ xmlns:dmndi="http://www.omg.org/spec/DMN/20180521/DMNDI/" 
+ xmlns:dc="http://www.omg.org/spec/DMN/20180521/DC/" id="_13EB5420-28D2-4929-BED4-F56C7A8646B5" name="BpPatientCriticality" expressionLanguage="http://www.omg.org/spec/DMN/20180521/FEEL/" typeLanguage="http://www.omg.org/spec/DMN/20180521/FEEL/" namespace="https://kiegroup.org/dmn/_7826706D-8FE3-4C62-99FE-F7A97A255631">
+  <dmn:extensionElements/>
+  <dmn:itemDefinition id="_4A867ABF-1905-4F7E-8278-918C878A06B3" name="Patient" isCollection="false">
+    <dmn:itemComponent id="_2BE6EE3A-C546-4060-969E-614BC2A51753" name="name" isCollection="false">
+      <dmn:typeRef>string</dmn:typeRef>
+    </dmn:itemComponent>
+    <dmn:itemComponent id="_F3179D79-E84C-42A3-8F8B-F185D8EF8BBD" name="age" isCollection="false">
+      <dmn:typeRef>number</dmn:typeRef>
+    </dmn:itemComponent>
+    <dmn:itemComponent id="_81B46DC8-7E60-4478-A995-432DEF388A68" name="bpVitalList" isCollection="true">
+      <dmn:typeRef>BpVital</dmn:typeRef>
+    </dmn:itemComponent>
+  </dmn:itemDefinition>
+  <dmn:itemDefinition id="_011F3FFD-24C3-4B3B-A8D4-E03F134B1C02" name="BpVital" isCollection="false">
+    <dmn:itemComponent id="_0B8867A7-E92C-4ECD-919B-99938962F1EF" name="systolic" isCollection="false">
+      <dmn:typeRef>number</dmn:typeRef>
+    </dmn:itemComponent>
+    <dmn:itemComponent id="_2B808E82-13C0-4139-8C2A-85BAC8690387" name="diastolic" isCollection="false">
+      <dmn:typeRef>number</dmn:typeRef>
+    </dmn:itemComponent>
+  </dmn:itemDefinition>
+  <dmn:inputData id="_576FF8A5-BDA8-4F4F-8409-0354FA1B2D6E" name="Patient">
+    <dmn:extensionElements/>
+    <dmn:variable id="_57858D80-5D56-433F-9D3F-34F51A6A5147" name="Patient" typeRef="Patient"/>
+  </dmn:inputData>
+  <dmn:businessKnowledgeModel id="_E60B6264-88D3-4D8B-BF96-682DE1877E0D" name="BpCriticality">
+    <dmn:extensionElements/>
+    <dmn:variable id="_838BE4FF-CE89-4651-977B-54367644AE4F" name="BpCriticality" typeRef="boolean"/>
+    <dmn:encapsulatedLogic id="_05029C46-C718-4D5F-B89B-28F73B90BF24" kind="FEEL">
+      <dmn:formalParameter id="_DA9CB3F0-48F7-4AF3-AFD7-C33C6F93298C" name="patient" typeRef="Patient"/>
+      <dmn:context id="_19DC053A-8804-4E50-89B4-33A9AA39C8ED">
+        <dmn:contextEntry>
+          <dmn:variable id="_BA92FECA-6FE2-4D5C-8B6F-93ADFF46DD88" name="isBpCritical" typeRef="boolean"/>
+          <dmn:literalExpression id="_C0309FC4-0400-4F5A-A29B-374A9772461D">
+            <dmn:text>if count(patient.bpVitalList[item.systolic > 120 and item.diastolic > 80]) >= 3 then true else false</dmn:text>
+          </dmn:literalExpression>
+        </dmn:contextEntry>
+        <dmn:contextEntry>
+          <dmn:literalExpression id="_FA3CA83E-CB37-4B47-9B26-88156A0BDBC4">
+            <dmn:text>isBpCritical</dmn:text>
+          </dmn:literalExpression>
+        </dmn:contextEntry>
+      </dmn:context>
+    </dmn:encapsulatedLogic>
+  </dmn:businessKnowledgeModel>
+  <dmn:decision id="_7A0D1E47-1D0A-48F0-BB3B-4DA77DC98FE3" name="isCritical">
+    <dmn:extensionElements/>
+    <dmn:variable id="_D2057D24-BE3B-4940-908F-857BEF517097" name="isCritical" typeRef="string"/>
+    <dmn:informationRequirement id="_D4914144-8B0B-4C94-9921-ECD4CD89BA12#_3472E8E7-02DF-4A74-97FD-45669E4D2B3C">
+      <dmn:requiredInput href="#_576FF8A5-BDA8-4F4F-8409-0354FA1B2D6E"/>
+    </dmn:informationRequirement>
+    <dmn:knowledgeRequirement id="_D4914144-8B0B-4C94-9921-ECD4CD89BA12#_4CDF0C64-962E-4DEB-85C2-246D5992BA61">
+      <dmn:requiredKnowledge href="#_E60B6264-88D3-4D8B-BF96-682DE1877E0D"/>
+    </dmn:knowledgeRequirement>
+    <dmn:context id="_6282C676-3E5F-45FB-869C-B30296DD1DFB">
+      <dmn:contextEntry>
+        <dmn:variable id="_3B6EA24D-B240-4150-B31D-9E24E5061B80" name="bpCriticality" typeRef="boolean"/>
+        <dmn:invocation id="_23ACAA7E-CDA3-4E28-9473-A8DA482AE0CA">
+          <dmn:literalExpression id="_17D7DB70-5B55-4CFF-B3E5-AE99ED38A0DB">
+            <dmn:text>BpCriticality</dmn:text>
+          </dmn:literalExpression>
+          <dmn:binding>
+            <dmn:parameter id="_FDBA3C9C-F737-44FF-8FC1-8BC4A6D21646" name="patient" typeRef="Patient"/>
+            <dmn:literalExpression id="_F2EF6186-78DA-4345-A43A-F3C61DB2828F">
+              <dmn:text>Patient</dmn:text>
+            </dmn:literalExpression>
+          </dmn:binding>
+        </dmn:invocation>
+      </dmn:contextEntry>
+      <dmn:contextEntry>
+        <dmn:literalExpression id="_DB2386FF-1FB1-4F93-B616-33B879E125D1">
+          <dmn:text>if bpCriticality then Patient.name+" is critical" else Patient.name+" is normal"</dmn:text>
+        </dmn:literalExpression>
+      </dmn:contextEntry>
+    </dmn:context>
+  </dmn:decision>
+  <dmndi:DMNDI>
+    <dmndi:DMNDiagram>
+      <di:extension>
+        <kie:ComponentsWidthsExtension>
+          <kie:ComponentWidths dmnElementRef="_6282C676-3E5F-45FB-869C-B30296DD1DFB">
+            <kie:width>50.0</kie:width>
+            <kie:width>100.0</kie:width>
+            <kie:width>659.0</kie:width>
+          </kie:ComponentWidths>
+          <kie:ComponentWidths dmnElementRef="_23ACAA7E-CDA3-4E28-9473-A8DA482AE0CA">
+            <kie:width>50.0</kie:width>
+            <kie:width>100.0</kie:width>
+            <kie:width>489.0</kie:width>
+          </kie:ComponentWidths>
+          <kie:ComponentWidths dmnElementRef="_17D7DB70-5B55-4CFF-B3E5-AE99ED38A0DB"/>
+          <kie:ComponentWidths dmnElementRef="_F2EF6186-78DA-4345-A43A-F3C61DB2828F">
+            <kie:width>489.0</kie:width>
+          </kie:ComponentWidths>
+          <kie:ComponentWidths dmnElementRef="_DB2386FF-1FB1-4F93-B616-33B879E125D1">
+            <kie:width>659.0</kie:width>
+          </kie:ComponentWidths>
+          <kie:ComponentWidths dmnElementRef="_19DC053A-8804-4E50-89B4-33A9AA39C8ED">
+            <kie:width>50.0</kie:width>
+            <kie:width>159.0</kie:width>
+            <kie:width>1150.0</kie:width>
+          </kie:ComponentWidths>
+          <kie:ComponentWidths dmnElementRef="_C0309FC4-0400-4F5A-A29B-374A9772461D">
+            <kie:width>1150.0</kie:width>
+          </kie:ComponentWidths>
+          <kie:ComponentWidths dmnElementRef="_FA3CA83E-CB37-4B47-9B26-88156A0BDBC4">
+            <kie:width>1150.0</kie:width>
+          </kie:ComponentWidths>
+          <kie:ComponentWidths dmnElementRef="_05029C46-C718-4D5F-B89B-28F73B90BF24">
+            <kie:width>50.0</kie:width>
+            <kie:width>1379.0</kie:width>
+          </kie:ComponentWidths>
+        </kie:ComponentsWidthsExtension>
+      </di:extension>
+      <dmndi:DMNShape id="dmnshape-_7A0D1E47-1D0A-48F0-BB3B-4DA77DC98FE3" dmnElementRef="_7A0D1E47-1D0A-48F0-BB3B-4DA77DC98FE3" isCollapsed="false">
+        <dmndi:DMNStyle>
+          <dmndi:FillColor red="255" green="255" blue="255"/>
+          <dmndi:StrokeColor red="0" green="0" blue="0"/>
+          <dmndi:FontColor red="0" green="0" blue="0"/>
+        </dmndi:DMNStyle>
+        <dc:Bounds x="391" y="151" width="100" height="50"/>
+        <dmndi:DMNLabel/>
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="dmnshape-_576FF8A5-BDA8-4F4F-8409-0354FA1B2D6E" dmnElementRef="_576FF8A5-BDA8-4F4F-8409-0354FA1B2D6E" isCollapsed="false">
+        <dmndi:DMNStyle>
+          <dmndi:FillColor red="255" green="255" blue="255"/>
+          <dmndi:StrokeColor red="0" green="0" blue="0"/>
+          <dmndi:FontColor red="0" green="0" blue="0"/>
+        </dmndi:DMNStyle>
+        <dc:Bounds x="391" y="275" width="100" height="50"/>
+        <dmndi:DMNLabel/>
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="dmnshape-_E60B6264-88D3-4D8B-BF96-682DE1877E0D" dmnElementRef="_E60B6264-88D3-4D8B-BF96-682DE1877E0D" isCollapsed="false">
+        <dmndi:DMNStyle>
+          <dmndi:FillColor red="255" green="255" blue="255"/>
+          <dmndi:StrokeColor red="0" green="0" blue="0"/>
+          <dmndi:FontColor red="0" green="0" blue="0"/>
+        </dmndi:DMNStyle>
+        <dc:Bounds x="582" y="151" width="100" height="50"/>
+        <dmndi:DMNLabel/>
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="dmnedge-_D4914144-8B0B-4C94-9921-ECD4CD89BA12#_3472E8E7-02DF-4A74-97FD-45669E4D2B3C" dmnElementRef="_D4914144-8B0B-4C94-9921-ECD4CD89BA12#_3472E8E7-02DF-4A74-97FD-45669E4D2B3C">
+        <di:waypoint x="441" y="300"/>
+        <di:waypoint x="441" y="201"/>
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="dmnedge-_D4914144-8B0B-4C94-9921-ECD4CD89BA12#_4CDF0C64-962E-4DEB-85C2-246D5992BA61" dmnElementRef="_D4914144-8B0B-4C94-9921-ECD4CD89BA12#_4CDF0C64-962E-4DEB-85C2-246D5992BA61">
+        <di:waypoint x="632" y="176"/>
+        <di:waypoint x="491" y="176"/>
+      </dmndi:DMNEdge>
+    </dmndi:DMNDiagram>
+  </dmndi:DMNDI>
+</dmn:definitions>
