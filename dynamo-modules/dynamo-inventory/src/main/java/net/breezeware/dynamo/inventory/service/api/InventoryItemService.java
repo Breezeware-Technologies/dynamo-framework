@@ -14,4 +14,6 @@ public interface InventoryItemService {
     Optional<InventoryItemLocation> retrieveInventoryItemLocationByName(String locationName);
 
     InventoryItemLocation saveInventoryItemLocation(InventoryItemLocation inventoryItemLocation);
+
+    void deleteInventoryItem(InventoryItem inventoryItem);
 }

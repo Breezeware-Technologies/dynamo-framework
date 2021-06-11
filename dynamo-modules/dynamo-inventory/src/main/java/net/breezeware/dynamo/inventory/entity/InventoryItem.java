@@ -28,7 +28,7 @@ public class InventoryItem implements Serializable {
     private static final long serialVersionUID = 1L;
 
     public enum ItemSku {
-        BT_BP_v1("BT-BP-v1"), BT_WS_v1("BT-WS-v1"), IG_BG_v1("IG-BG-v1");
+        BT_BP_v1("BT-BP-v1"), BT_WS_v1("BT-WS-v1"), SM_IB_BP_v1("SM-IB-BP-v1"), SM_IG_BG_v1("SM-IG-BG-v1");
 
         @Getter
         @Setter
