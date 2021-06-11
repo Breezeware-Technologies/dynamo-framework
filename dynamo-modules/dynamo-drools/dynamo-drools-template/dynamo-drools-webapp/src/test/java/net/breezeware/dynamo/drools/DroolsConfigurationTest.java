@@ -18,6 +18,7 @@ import org.drools.decisiontable.InputType;
 import org.drools.decisiontable.SpreadsheetCompiler;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.kie.api.runtime.KieContainer;
 import org.kie.api.runtime.KieRuntimeFactory;
 import org.kie.api.runtime.KieSession;
 import org.kie.api.runtime.rule.FactHandle;
@@ -39,9 +40,9 @@ import org.kie.dmn.core.api.event.DefaultDMNRuntimeEventListener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.boot.test.context.SpringBootTest;
+
+import com.google.gson.Gson;
 
 import net.breezeware.dynamo.drools.kjar.entity.BpPatient;
 import net.breezeware.dynamo.drools.kjar.entity.BpReading;
@@ -51,23 +52,21 @@ import net.breezeware.dynamo.drools.kjar.entity.Customer.CustomerType;
 import net.breezeware.dynamo.drools.kjar.entity.Patient;
 import net.breezeware.dynamo.drools.kjar.entity.Person;
 import net.breezeware.dynamo.drools.kjar.entity.Year;
-import net.breezeware.dynamo.drools.service.DroolsService;
 
 @SpringBootTest
 
-@EnableAutoConfiguration(exclude = { DataSourceAutoConfiguration.class })
 public class DroolsConfigurationTest {
 
     final String sessionName = "dynamo-drools-kjar-ksession";
     @Autowired
-    DroolsService defaultKieContainer;
+    KieContainer defaultKieContainer;
     Logger logger = LoggerFactory.getLogger(DroolsConfigurationTest.class);
     KieSession xmlBasedSession = null;
 
     @BeforeEach
     public void droolsDefaultConfigurationTest() {
         System.out.println("Entering droolsDefaultConfigurationTest()");
-        xmlBasedSession = defaultKieContainer.kieContainer().newKieSession(sessionName);
+        xmlBasedSession = defaultKieContainer.newKieSession(sessionName);
         // System.out.println("Xml " + xmlBasedSession.toString());
         assertNotNull(xmlBasedSession);
         System.out.println("Leaving droolsDefaultConfigurationTest()");
@@ -127,9 +126,6 @@ public class DroolsConfigurationTest {
 
     @Test
     public void bpCriticalityTest() {
-
-        DMNRuntime dmnRuntime = KieRuntimeFactory
-                .of(defaultKieContainer.kieContainer().getKieBase("dynamo-drools-kjar-kbase")).get(DMNRuntime.class);
 
         Patient bpPatient = new Patient();
         bpPatient.setName("Kumar");
@@ -205,13 +201,15 @@ public class DroolsConfigurationTest {
         // SETTING NORMAL BP VALUES
         bpPatient2.setBpVitalList(normalBpReadingList);
 
+        // final DMNModel dmnModel =
+        // dmnRuntime.getModel("https://kiegroup.org/dmn/_7826706D-8FE3-4C62-99FE-F7A97A255631",
+        // "BpPatientCriticality");
+
         String avgDMNNameSpace = "https://kiegroup.org/dmn/_D7B05B10-F592-431A-95FA-4F5DEE9A11AD";
         String avgDMNModelName = "BpCriticalityBasedonAvg";
-
-//        final DMNModel dmnModel = dmnRuntime.getModel("https://kiegroup.org/dmn/_7826706D-8FE3-4C62-99FE-F7A97A255631",
-//                "BpPatientCriticality");
-        final DMNModel dmnModel = dmnRuntime.getModel(avgDMNNameSpace,
-                avgDMNModelName);
+        DMNRuntime dmnRuntime = KieRuntimeFactory.of(defaultKieContainer.getKieBase("dynamo-drools-kjar-kbase"))
+                .get(DMNRuntime.class);
+        final DMNModel dmnModel = dmnRuntime.getModel(avgDMNNameSpace, avgDMNModelName);
         if (dmnModel != null) {
             if (dmnModel.hasErrors()) {
                 System.out.println("Error while creating dmn" + dmnModel.getMessages());
@@ -230,7 +228,10 @@ public class DroolsConfigurationTest {
         for (DMNDecisionResult dr : dmnResult.getDecisionResults()) {
             System.out.println("Decision: '" + dr.getDecisionName() + "', " + "Result: " + dr.getResult());
         }
-        System.out.println("Json " + (bpPatient).toString());
+
+        String json = new Gson().toJson(bpPatient);
+        System.out.println("Json " + json);
+
         //
         // System.out.println(result.get("Prioritized Waiting List"));
         // System.out.println(result.get("Rebooked Passengers"));

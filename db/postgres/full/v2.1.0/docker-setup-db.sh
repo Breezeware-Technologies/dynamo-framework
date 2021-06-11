@@ -12,3 +12,4 @@ psql -U dynamo_webapp_usr dynamo_webapp < /tmp/psql_data/dynamo/dynamo_apps.sql
 psql -U dynamo_webapp_usr dynamo_webapp < /tmp/psql_data/dynamo/dynamo_auth.sql
 psql -U dynamo_webapp_usr dynamo_webapp < /tmp/psql_data/dynamo/dynamo_audit.sql
 psql -U dynamo_webapp_usr dynamo_webapp < /tmp/psql_data/dynamo/dynamo_config.sql
+psql -U dynamo_webapp_usr dynamo_webapp < /tmp/psql_data/dynamo/dynamo_inventory.sql

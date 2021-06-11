@@ -1,0 +1,103 @@
+
+<!DOCTYPE html>
+<html class="no-js" lang="">
+<head>
+<meta charset="utf-8" />
+<meta name="description" content="" />
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+
+
+<link rel="shortcut icon" th:href="@{/images/customer/fav-icon.ico}" />
+
+
+<title
+	th:text="${@environment.getProperty('dynamo.app-title') + ' - Login'}"></title>
+
+
+<link rel="stylesheet" href="../../static/css/refresh-style.css"
+	th:href="@{/css/refresh-style.css}">
+
+<link rel="stylesheet" href="../../static/css/fontawesome-all.css"
+	th:href="@{/css/fontawesome-all.css}">
+</head>
+
+<body style="background: #fff; margin-bottom: 0px !important">
+	<nav class="navbar navbar-expand-md navbar-dark fixed-top"
+		style="background: #004892">
+		<div>
+			<a href="#"><img class="mr-4"
+				th:src="@{/images/app-logo-white.png}" style="padding: 5px" /></a>
+		</div>
+	</nav>
+
+	<div class="container-fluid">
+		<div class="row" style="height: calc(100vh - 42px); margin-top: 42px">
+			
+			<div class="login-mobile m-auto box-shadow">
+				<div class="py-5">
+					<div class="card-block p-0 text-center">
+						<img th:src="@{/images/app-logo-color.png}" />
+					</div>
+					<div class="card-block">
+						<div class="font-16">
+							<p
+								style="width: 243px; margin: auto; line-height: 17px; font-style: italic; font-family: serif; margin-top: 10px; color: #004891;">
+								<span th:text="${@environment.getProperty('dynamo.appTagLine')}"></span>
+							</p>
+						</div>
+					</div>
+					<div class="card-block">
+						<div class="row">
+							<form action="/login" method="post" class="col-10 m-auto">
+
+								<div class="border-0 my-3">
+									<div th:if="${param.error}"
+										class="alert alert-dismissible alert-danger text-center">Invalid
+										username and password.</div>
+									<div th:if="${param.authError}"
+										class="alert alert-dismissible alert-danger text-center">Invalid
+										username and password.</div>
+									<div th:if="${mailSent}"
+										class="alert alert-success text-center">Mail has been
+										sent. Continue with login</div>
+									<div th:if="${param.logout}" class="alert alert-success">You
+										have been logged out.</div>
+									<div th:if="${successMessage != null}"
+										th:text="${successMessage}" class="alert alert-success">You
+										have been logged out.</div>
+								</div>
+
+								<div class="form-group mt-1">
+									<label>Username (Email)</label><input type="text"
+										autofocus="autofocus" name="username"
+										class="form-control w-100 p-2" placeholder="Username">
+								</div>
+								<div class="form-group mb-4">
+									<label>Password</label> <input type="password" name="password"
+										class="form-control w-100 p-2" placeholder="Password">
+
+								</div>
+
+								<div class="card-block text-center">
+									<button class="btn btn-blue px-3 py-1">
+										<i class="fas fa-check"></i> Login
+									</button>
+								</div>
+							</form>
+						</div>
+					</div>
+
+					<!-- 					<div class="card-block text-center mt-2">
+						<div class="border-0 pb-3">
+							<a href="/forgotPassword" class="btn btn-white-gray"
+								role="button">Forgot Password?</a>
+						</div>
+					</div> -->
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
+

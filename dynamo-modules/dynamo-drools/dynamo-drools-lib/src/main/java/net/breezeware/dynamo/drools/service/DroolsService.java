@@ -13,7 +13,7 @@ public class DroolsService {
 
     Logger logger = LoggerFactory.getLogger(DroolsService.class);
 
-    @Bean(name = "defaultKieContainer")
+  @Bean(name = "defaultKieContainer")
     public KieContainer kieContainer() {
         return KieServices.Factory.get().getKieClasspathContainer();
     }

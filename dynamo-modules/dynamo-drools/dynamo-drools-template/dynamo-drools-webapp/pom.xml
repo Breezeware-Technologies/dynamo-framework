@@ -13,10 +13,87 @@
 	<description>Sample project for creating a Drools web application using Dynamo. 
 	This web application uses KJARs provided to them as JAR dependencies.</description>
 
+
+	<properties>
+		<java.version>13</java.version>
+		<maven.compiler.source>1.8</maven.compiler.source>
+		<maven.compiler.target>13</maven.compiler.target>
+		<dynamo-framework.version>2.2.0</dynamo-framework.version>
+	</properties>
+	
+	<repositories>
+		<repository>
+			<id>mavenrepositorydotcom</id>
+			<url>https://mvnrepository.com</url>
+		</repository>
+
+		<!-- Dynamo repository on Leapforge -->
+		<repository>
+			<id>nexus-leapforge-dynamo-snapshots</id>
+			<url>http://nexus.leapforge.net/repository/dynamo-snapshots/</url>
+			<name>Dynamo Snapshots Repository on Leapforge using Nexus</name>
+		</repository>
+
+		<!-- Dynamo snapshots repository on Leapforge -->
+		<repository>
+			<id>nexus-leapforge-dynamo</id>
+			<url>http://nexus.leapforge.net/repository/dynamo/</url>
+			<name>Dynamo Release Repository on Leapforge using Nexus</name>
+		</repository>
+	</repositories>
+	
+	
+	
+	<dependencyManagement>
+		<dependencies>
+
+			<!-- ******************** Dynamo Dependencies ******************** -->
+			<dependency>
+				<groupId>net.breezeware.dynamo</groupId>
+				<artifactId>dynamo-dependencies</artifactId>
+				<version>${dynamo-framework.version}</version>
+				<scope>import</scope>
+				<type>pom</type>
+			</dependency>
+
+			<!-- ******************** Dynamo Framework BOM ******************** -->
+			<dependency>
+				<groupId>net.breezeware.dynamo</groupId>
+				<artifactId>dynamo-framework-bom</artifactId>
+				<version>${dynamo-framework.version}</version>
+				<scope>import</scope>
+				<type>pom</type>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
 	<!-- #################### DEPENDENCIES #################### -->
 
 	<dependencies>
 
+
+		<dependency>
+			<groupId>net.breezeware.dynamo</groupId>
+			<artifactId>dynamo-auth-lib</artifactId>
+			<exclusions>
+				<exclusion>
+					<groupId>org.springframework.cloud</groupId>
+					<artifactId>spring-cloud-config-server</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.springframework.cloud</groupId>
+					<artifactId>spring-cloud-config-client</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
+
+	<!-- JSON for compilation error -->
+		<dependency>
+			<groupId>org.json</groupId>
+			<artifactId>json</artifactId>
+			<version>20201115</version>
+		</dependency>
 		<!-- ******************** Dynamo Drools KJar ******************** -->
 
 		<dependency>
@@ -31,6 +108,13 @@
 			<version>${project.version}</version>
 		</dependency>
 
+
+		<dependency>
+			<groupId>org.springframework.security.oauth.boot</groupId>
+			<artifactId>spring-security-oauth2-autoconfigure</artifactId>
+		</dependency>
+
+
 		<!-- ******************** Drools Library ******************** -->
 		<!-- <dependency> <groupId>org.drools</groupId> <artifactId>drools-core</artifactId> 
 			</dependency> <dependency> <groupId>org.drools</groupId> <artifactId>drools-compiler</artifactId> 
@@ -41,24 +125,28 @@
 			<dependency> <groupId>org.eclipse.jdt.core.compiler</groupId> <artifactId>ecj</artifactId> 
 			</dependency> -->
 
-		<!-- ******************** Spring Boot JPA starter ******************** -->
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-data-jpa</artifactId>
-		</dependency>
 
-		<!-- ******************** Spring Boot starter web ******************** -->
+
+	<!-- ******************** Spring Boot starter web ******************** -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
-			<exclusions>
-				<exclusion>
-					<groupId>org.springframework.boot</groupId>
-					<artifactId>spring-boot-starter-tomcat</artifactId>
-				</exclusion>
-			</exclusions>
+			<!-- <exclusions> <exclusion> <groupId>org.springframework.boot</groupId> 
+				<artifactId>spring-boot-starter-tomcat</artifactId> </exclusion> </exclusions> -->
 		</dependency>
+		
+		 <!-- ******************** Spring Boot JPA starter ******************** -->
+		 <dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-jpa</artifactId>
+		</dependency> 
 
+	
+		<!-- Java Servlet -->
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+		</dependency>
 		<!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-test -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -67,7 +155,12 @@
 		</dependency>
 
 
-		<!-- ******************** Spring Boot starter Jersey ******************** -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-tomcat</artifactId>
+		</dependency>
+
+		 <!-- ******************** Spring Boot starter Jersey ******************** -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-jersey</artifactId>
@@ -85,6 +178,24 @@
 					<artifactId>spring-boot-starter-validation</artifactId>
 				</exclusion>
 			</exclusions>
+		</dependency> 
+
+
+<!-- ******************** Spring data dialect support ******************** -->
+		<dependency>
+			<groupId>io.github.jpenren</groupId>
+			<artifactId>thymeleaf-spring-data-dialect</artifactId>
+			<!-- <exclusions> <exclusion> <groupId>org.thymeleaf</groupId> <artifactId>thymeleaf</artifactId> 
+				</exclusion> <exclusion> <groupId>org.springframework.data</groupId> <artifactId>spring-data-commons</artifactId> 
+				</exclusion> </exclusions> -->
+		</dependency>
+
+		<!-- ******************** Spring layout dialect support ******************** -->
+		<dependency>
+			<groupId>nz.net.ultraq.thymeleaf</groupId>
+			<artifactId>thymeleaf-layout-dialect</artifactId>
+			<!-- <exclusions> <exclusion> <groupId>org.thymeleaf</groupId> <artifactId>thymeleaf</artifactId> 
+				</exclusion> </exclusions> -->
 		</dependency>
 
 		<!-- ******************** Swagger Documentation ******************** -->
@@ -110,6 +221,8 @@
 			<groupId>com.wordnik</groupId>
 			<artifactId>swagger-annotations</artifactId>
 		</dependency>
+
+
 	</dependencies>
 
 	<!-- #################### BUILD CONFIGURATIONS #################### -->

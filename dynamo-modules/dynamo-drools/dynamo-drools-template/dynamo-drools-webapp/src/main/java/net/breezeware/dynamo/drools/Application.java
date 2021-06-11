@@ -1,27 +1,31 @@
 package net.breezeware.dynamo.drools;
 
+import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
-import org.springframework.boot.autoconfigure.web.servlet.DispatcherServletAutoConfiguration;
-import org.springframework.boot.builder.SpringApplicationBuilder;
-import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
-@SpringBootApplication(exclude = DispatcherServletAutoConfiguration.class)
-@EnableJpaRepositories("net.breezeware")
-@EntityScan("net.breezeware")
-@ComponentScan("net.breezeware")
+
+@SpringBootApplication
+@EnableScheduling
+@ComponentScan(basePackages = { "net.breezeware" })
+@EnableJpaRepositories(basePackages = { "net.breezeware" })
+@EntityScan(basePackages = { "net.breezeware" })
 @EnableAutoConfiguration
-// @PropertySources({
-// @PropertySource(value = { "classpath:internal.properties" })
+
+ @PropertySource(value = { "classpath:internal.properties" })
+@PropertySource(value = {"classpath:dynamo.properties"})
 // //,@PropertySource(value =
 // "file:/usr/local/tulasi/carejoy/conf/application.properties",
 // ignoreResourceNotFound = true)
 // })
-public class Application extends SpringBootServletInitializer {
+public class Application {
     public static void main(String[] args) {
-        new Application().configure(new SpringApplicationBuilder(Application.class)).run(args);
+//        new Application().configure(new SpringApplicationBuilder(Application.class)).run(args);
+        SpringApplication.run(Application.class, args);
     }
 }
