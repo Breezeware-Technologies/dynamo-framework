@@ -45,4 +45,9 @@ public class InventoryItemServiceImpl implements InventoryItemService {
         return inventoryItemLocation;
     }
 
+    @Transactional
+    public void deleteInventoryItem(InventoryItem inventoryItem) {
+        inventoryItemRepository.delete(inventoryItem);
+    }
+
 }
