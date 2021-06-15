@@ -8,7 +8,7 @@ import java.util.List;
  * @author guru
  *
  */
-public class Patient implements Serializable {
+public class DroolsBpPatient implements Serializable {
     /**
      * 
      */

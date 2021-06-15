@@ -27,10 +27,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import net.breezeware.dynamo.drools.kjar.entity.Patient;
+import net.breezeware.dynamo.drools.kjar.entity.DroolsBpPatient;
 
 @RestController
-@RequestMapping("/api/dynamo-drools/decision")
+@RequestMapping("/dcs/dynamo-drools/decision")
 public class DroolsDecisionServiceRestController {
 
     final String sessionName = "dynamo-drools-kjar-ksession";
@@ -48,7 +48,7 @@ public class DroolsDecisionServiceRestController {
     }
 
     @PostMapping(value = "/checkBp", consumes = "application/json")
-    public ResponseEntity<?> checkBpPatientCriticality(@RequestBody Patient patient) {
+    public ResponseEntity<?> checkBpPatientCriticality(@RequestBody DroolsBpPatient patient) {
         logger.info("Entering checkBpPatientCriticality() patient value{}",patient);
         String avgDMNNameSpace = "https://kiegroup.org/dmn/_D7B05B10-F592-431A-95FA-4F5DEE9A11AD";
         String avgDMNModelName = "BpCriticalityBasedonAvg";

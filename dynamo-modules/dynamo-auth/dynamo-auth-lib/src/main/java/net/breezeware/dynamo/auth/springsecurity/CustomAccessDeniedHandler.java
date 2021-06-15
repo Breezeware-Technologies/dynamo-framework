@@ -30,6 +30,6 @@ public class CustomAccessDeniedHandler implements AccessDeniedHandler {
         }
 
         // response.sendRedirect(request.getContextPath() + "/accessDenied");
-        response.getWriter().print("You do not required permissions to access this resource.");
+        response.getWriter().print("You do not have required permissions to access this resource.");
     }
 }

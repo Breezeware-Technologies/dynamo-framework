@@ -49,7 +49,7 @@ import net.breezeware.dynamo.drools.kjar.entity.BpReading;
 import net.breezeware.dynamo.drools.kjar.entity.BpVital;
 import net.breezeware.dynamo.drools.kjar.entity.Customer;
 import net.breezeware.dynamo.drools.kjar.entity.Customer.CustomerType;
-import net.breezeware.dynamo.drools.kjar.entity.Patient;
+import net.breezeware.dynamo.drools.kjar.entity.DroolsBpPatient;
 import net.breezeware.dynamo.drools.kjar.entity.Person;
 import net.breezeware.dynamo.drools.kjar.entity.Year;
 
@@ -127,19 +127,19 @@ public class DroolsConfigurationTest {
     @Test
     public void bpCriticalityTest() {
 
-        Patient bpPatient = new Patient();
+        DroolsBpPatient bpPatient = new DroolsBpPatient();
         bpPatient.setName("Kumar");
         bpPatient.setAge(60);
 
-        Patient bpPatient2 = new Patient();
+        DroolsBpPatient bpPatient2 = new DroolsBpPatient();
         bpPatient2.setName("Baskar");
         bpPatient2.setAge(30);
 
-        Patient bpPatient3 = new Patient();
+        DroolsBpPatient bpPatient3 = new DroolsBpPatient();
         bpPatient3.setName("John Doe");
         bpPatient3.setAge(40);
 
-        Patient bpPatient4 = new Patient();
+        DroolsBpPatient bpPatient4 = new DroolsBpPatient();
         bpPatient4.setName("Jonas");
         bpPatient4.setAge(50);
 

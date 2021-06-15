@@ -36,7 +36,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 .antMatchers("/", "/oauth/token", "/oauth/authorize", "/oauth/check_token", "/oauth/confirm_access",
                         "/oauth/error", "/registerUser/**", "/forgotPassword", "/resetPassword", "/login", "/css/**",
-                        "/styles/**", "/js/**", "/scripts/**", "/images/**", "/fonts/**", "/request/**",
+                        "/styles/**", "/js/**", "/scripts/**","/dcs/**" ,"/images/**", "/fonts/**", "/request/**",
                         "/ascend-utils/**")
                 .permitAll().anyRequest().authenticated().and().csrf().disable().formLogin()
                 .defaultSuccessUrl(defaultSuccessUrl, true).loginPage(loginPagePath).usernameParameter("username")
