@@ -30,7 +30,7 @@ import org.springframework.web.bind.annotation.RestController;
 import net.breezeware.dynamo.drools.kjar.entity.DroolsBpPatient;
 
 @RestController
-@RequestMapping("/dcs/dynamo-drools/decision")
+@RequestMapping("/api/dynamo-drools/decision")
 public class DroolsDecisionServiceRestController {
 
     final String sessionName = "dynamo-drools-kjar-ksession";
