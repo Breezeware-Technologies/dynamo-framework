@@ -1,5 +1,9 @@
 Dynamo Framework - Spring based framework for developing web & mobile applications.
 
+2.3.4 (June 15, 2021)
+-------------------
+●	New Inventory Item added.
+
 2.3.3 (June 1, 2021)
 -------------------
 ●	Updated IAM user creation policy.
