@@ -64,7 +64,7 @@
 		<!-- <dependency> <groupId>org.kie.server</groupId> <artifactId>kie-server-client</artifactId> 
 			</dependency> -->
 
-		<dependency>
+		<!-- <dependency>
 			<groupId>org.mvel</groupId>
 			<artifactId>mvel2</artifactId>
 		</dependency>
@@ -72,6 +72,6 @@
 		<dependency>
 			<groupId>org.eclipse.jdt.core.compiler</groupId>
 			<artifactId>ecj</artifactId>
-		</dependency>
+		</dependency> -->
 	</dependencies>
 </project>
