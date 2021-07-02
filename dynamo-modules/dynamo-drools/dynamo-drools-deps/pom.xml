@@ -38,6 +38,26 @@
 					<artifactId>ecj</artifactId> </exclusion> </exclusions> -->
 			</dependency>
 
+			<!-- https://mvnrepository.com/artifact/org.drools/drools-decisiontables -->
+			<dependency>
+				<groupId>org.drools</groupId>
+				<artifactId>drools-decisiontables</artifactId>
+				<version>${drools-version}</version>
+			</dependency>
+
+			<!-- Required for the DMN runtime API -->
+			<dependency>
+				<groupId>org.kie</groupId>
+				<artifactId>kie-dmn-core</artifactId>
+				<version>${drools-version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.kie</groupId>
+				<artifactId>kie-ci</artifactId>
+				<version>${drools-version}</version>
+			</dependency>
+
 			<dependency>
 				<groupId>org.kie</groupId>
 				<artifactId>kie-api</artifactId>
