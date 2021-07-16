@@ -1,5 +1,9 @@
 Dynamo Framework - Spring based framework for developing web & mobile applications.
 
+2.4.0 (July 16, 2021)
+-------------------
+●	Updated Drools Decision support libraries.
+
 2.3.4 (June 15, 2021)
 -------------------
 ●	New Inventory Item added.
