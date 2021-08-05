@@ -24,14 +24,16 @@
 	<properties>
 		<java.servlet.version>4.0.0</java.servlet.version>
 
-		<spring.boot.starter.version>2.4.0</spring.boot.starter.version>
-		<spring.integration.core.version>5.4.1</spring.integration.core.version>
-		<spring-cloud-config.version>2.2.6.RELEASE</spring-cloud-config.version>
-		<spring.security.oauth2.client.version>5.4.2</spring.security.oauth2.client.version>
-		<spring.security.oauth2.jose.version>5.4.2</spring.security.oauth2.jose.version>
-		<spring.security.oauth2.test.version>5.4.2</spring.security.oauth2.test.version>
-		<spring.security.ldap.version>5.4.2</spring.security.ldap.version>
-		<spring.security.oauth2.version>2.5.0.RELEASE</spring.security.oauth2.version>
+		<spring.boot.starter.version>2.5.3</spring.boot.starter.version>
+		<spring.integration.core.version>5.5.2</spring.integration.core.version>
+		<spring-cloud-config.version>3.0.4</spring-cloud-config.version>
+		
+		<spring.security.oauth2.client.version>5.5.1</spring.security.oauth2.client.version>
+		<spring.security.oauth2.jose.version>5.5.1</spring.security.oauth2.jose.version>
+		<spring.security.oauth2.test.version>5.5.1</spring.security.oauth2.test.version>
+		<spring.security.ldap.version>5.5.1</spring.security.ldap.version>
+		<spring.security.oauth2.version>2.5.1.RELEASE</spring.security.oauth2.version>
+		<spring.security.oauth2.autoconfigure>2.5.2</spring.security.oauth2.autoconfigure>
 
 		<testng.version>7.3.0</testng.version>
 		<querydsl.version>4.4.0</querydsl.version>
@@ -236,7 +238,7 @@
 			<dependency>
 				<groupId>org.springframework.security.oauth.boot</groupId>
 				<artifactId>spring-security-oauth2-autoconfigure</artifactId>
-				<version>${spring.boot.starter.version}</version>
+				<version>${spring.security.oauth2.autoconfigure}</version>
 			</dependency>
 
 			<dependency>
